@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+"-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="app">
+
+	<select id="app.appenterpark.selectPageList"
+		parameterType="com.winpow.services.app.appenterpark.bean.Appenterpark"
+		resultType="hashMap">
+		select * from (
+		SELECT ROW_NUMBER() over(order by updatedate desc) as rownumber ,*
+		from tb_app_enterpark where 1=1 
+		<if test="cname !=null and  cname !=''">
+           and cname like '%'+#{cname}+'%'
+        </if>
+        <if test="chstatus !=null and  chstatus !=''">
+           and chstatus = #{chstatus}
+        </if>
+		)t where rownumber &gt; #{offset} and rownumber
+		&lt; = #{pageSize}+#{offset}
+	</select>
+	
+	<select id="app.appenterpark.selectPageCount"
+		parameterType="com.winpow.services.app.appenterpark.bean.Appenterpark"
+		resultType="java.lang.Integer">
+		select count(*) from tb_app_enterpark 
+	</select>
+
+	<select id="app.appenterpark.selectOne"
+		parameterType="com.winpow.services.app.appenterpark.bean.Appenterpark"
+		resultType="com.winpow.services.app.appenterpark.bean.Appenterpark">
+		select * from tb_app_enterpark t where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+		<if test="userid !=null and userid !=''">
+            and t.userid=#{userid}
+        </if>
+        <if test="parkname !=null and parkname !=''">
+            and t.parkname=#{parkname}
+        </if>
+	</select>
+
+	<select id="app.appenterpark.selectCount"
+		parameterType="com.winpow.services.app.appenterpark.bean.Appenterpark"
+		resultType="int">
+		select count(*)
+		FROM tb_app_enterpark t where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+
+	<select id="app.appenterpark.selectOneByCondition"
+		parameterType="com.winpow.services.app.appenterpark.bean.Appenterpark"
+		resultType="com.winpow.services.app.appenterpark.bean.Appenterpark">
+		select * from tb_app_enterpark t where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+
+	<select id="app.appenterpark.selectList"
+		parameterType="com.winpow.services.app.appenterpark.bean.Appenterpark"
+		resultType="com.winpow.services.app.appenterpark.bean.Appenterpark">
+		select * from tb_app_enterpark t where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+
+	<insert id="app.appenterpark.insert"
+		parameterType="com.winpow.services.app.appenterpark.bean.Appenterpark"
+		useGeneratedKeys="true" keyProperty="id">
+		declare @cnno int
+        exec @cnno =  getchnoseq
+		insert into tb_app_enterpark (
+		pkid,
+		chno,
+		userid,
+		cname,
+		industry,
+		cmpscope,
+		cellphone,
+		parkname,
+		chstatus,
+		createby,
+		createdate,
+		updateby,
+		updatedate,
+		remark,
+        reviwer_id,
+        reviwer_date,
+        reviwer_remark,parkid,area
+		) values (
+		#{pkid},
+		(select 'rzyq' + right('0000000000' + cast(@cnno as varchar(10)), 10)),
+		#{userid},
+		#{cname},
+		#{industry},
+		#{cmpscope},
+		#{cellphone},
+		#{parkname},
+		#{chstatus},
+		#{createby},
+		getdate(),
+		#{updateby},
+		getdate(),
+		#{remark},
+        #{reviwer_id},
+        #{reviwer_date},
+        #{reviwer_remark},
+        #{parkid},
+        #{area}
+		)
+
+	</insert>
+
+	<update id="app.appenterpark.update"
+		parameterType="com.winpow.services.app.appenterpark.bean.Appenterpark">
+		update tb_app_enterpark set
+		<if test=" userid !=null and  userid !=''">
+			userid=#{userid},
+		</if>
+
+		<if test=" cname !=null and  cname !=''">
+			cname=#{cname},
+		</if>
+
+		<if test=" industry !=null and  industry !=''">
+			industry=#{industry},
+		</if>
+
+		<if test=" cmpscope !=null and  cmpscope !=''">
+			cmpscope=#{cmpscope},
+		</if>
+
+		<if test=" cellphone !=null and  cellphone !=''">
+			cellphone=#{cellphone},
+		</if>
+
+		<if test=" parkname !=null and  parkname !=''">
+			parkname=#{parkname},
+		</if>
+
+		<if test=" chstatus !=null and  chstatus !=''">
+			chstatus=#{chstatus},
+		</if>
+
+		<if test=" updateby !=null and  updateby !=''">
+			updateby=#{updateby},
+		</if>
+
+		<if test="remark!=null and remark !=''">
+			remark=#{remark},
+		</if>
+
+        <if test=" reviwer_id !=null and  reviwer_id !=''">
+            reviwer_id=#{reviwer_id},
+        </if>
+        <if test=" reviwer_date !=null and  reviwer_date !=''">
+            reviwer_date=getdate(),
+        </if>
+        <if test=" reviwer_remark !=null and  reviwer_remark !=''">
+            reviwer_remark=#{reviwer_remark},
+        </if>
+        
+        <if test=" parkid !=null and  parkid !=''">
+            parkid=#{parkid},
+        </if>
+        <if test=" area !=null and  area !=''">
+            area=#{area},
+        </if>
+		updatedate=getdate()
+		where pkid=#{pkid}
+	</update>
+
+	<select id="app.appenterpark.selectListByIds" resultType="com.winpow.services.app.appenterpark.bean.Appenterpark" parameterType="list">
+    	select * from tb_app_enterpark where 1=1 and pkid in
+        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">  
+            #{item}  
+        </foreach>
+    </select>
+    
+    <select id="app.appenterpark.selectPageByUserid" parameterType="com.winpow.services.app.appenterpark.bean.Appenterpark" 
+		resultType="com.winpow.services.app.appenterpark.bean.Appenterpark">
+		select top ${pageSize} * from (
+	        select row_number() over (order by createdate desc) as rownumber,* from(
+				select * from tb_app_enterpark where 1=1
+				<choose>
+			        <when test=" userid !=null and  userid !=''">
+			            and userid=#{userid}
+			        </when>
+			        <when test=" pkid !=null and  pkid !=''">
+			            and userid in (select userid from tb_cust where f_id=#{pkid})
+			        </when>
+			        <when test=" reviwer_id !=null and  reviwer_id !=''">
+		            	and reviwer_id=#{reviwer_id}
+		        	</when>
+	       		</choose>
+	       		<if test=" chstatus !=null and  chstatus !=''">
+					and chstatus=#{chstatus}
+				</if>
+			) b  
+	    ) a   where rownumber > ${pageSize}*(${offset} - 1)
+	</select>
+    
+</mapper>  

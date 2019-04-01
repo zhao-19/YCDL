@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.winpow.services.manage.declare.mapper.DeclareZZGBMapper">
+
+	<select id="selectPageList" parameterType="com.winpow.services.manage.declare.bean.DeclareZZGB"
+		resultType="hashMap">
+		select * from (
+		SELECT ROW_NUMBER() over(order by a.lastchgtime desc) as rownumber ,
+		a.id,
+		a.userid,
+		a.zzgbje,
+		a.ggsj,
+		a.zzgbsj,
+		a.oldsell,
+		a.oldinte,
+		a.oldtax,
+		a.newsell,
+		a.newinte,
+		a.newtax,
+		a.qysqje,
+		a.xtjsje,
+		a.status,a.pichi,
+		a.memo,
+		a.lurushijian,
+		a.inputuser,
+		a.lastchgtime,
+		b.qiyemingcheng,
+		a.zlsfwz,
+		a.stock_amount,
+		a.stock_price,
+		a.stock_tax
+		from tb_sb_zzgb a left join 
+		(select t.* from(select b.*,row_number() over (partition by userid order by lurushijian desc) rn from tb_sb_base b) t where rn=1)b
+		on a.userid = b.userid where 1=1
+		<if test="userid != null and userid !=''">
+			and a.userid like '%' + #{userid} + '%'
+		</if>
+		<if test="status != null and status !=''">
+			and a.status = #{status}
+		</if>
+		<if test="qiyemingcheng != null and qiyemingcheng !=''">
+			and b.qiyemingcheng like '%' + #{qiyemingcheng} + '%'
+		</if>
+		<if test="startTime != null and startTime !=''">
+			and a.lurushijian &gt;= #{startTime}
+		</if>
+		<if test="endTime != null and endTime !=''">
+			and a.lurushijian &lt; #{endTime}
+		</if>
+		)t where rownumber &gt; = #{offset} and rownumber &lt; =
+		#{pageSize}+#{offset}
+	</select>
+	<select id="selectPageCount" parameterType="com.winpow.services.manage.declare.bean.DeclareZZGB"
+		resultType="java.lang.Integer">
+		select count(id) from (
+		SELECT ROW_NUMBER() over(order by a.lastchgtime desc) as rownumber ,
+		a.id,
+		a.userid,
+		a.zzgbje,
+		a.ggsj,
+		a.zzgbsj,
+		a.oldsell,
+		a.oldinte,
+		a.oldtax,
+		a.newsell,
+		a.newinte,
+		a.newtax,
+		a.qysqje,
+		a.xtjsje,
+		a.status,a.pichi,
+		a.memo,
+		a.lurushijian,
+		a.inputuser,
+		a.lastchgtime,
+		b.qiyemingcheng,
+		a.stock_amount,
+		a.stock_price,
+		a.stock_tax
+		from tb_sb_zzgb a left join 
+		(select t.* from(select b.*,row_number() over (partition by userid order by lurushijian desc) rn from tb_sb_base b) t where rn=1)b
+		on a.userid = b.userid where 1=1
+		<if test="userid != null and userid !=''">
+			and a.userid like '%' + #{userid} + '%'
+		</if>
+
+		<if test="status != null and status !=''">
+			and a.status = #{status}
+		</if>
+		<if test="qiyemingcheng != null and qiyemingcheng !=''">
+			and b.qiyemingcheng like '%' + #{qiyemingcheng} + '%'
+		</if>
+		<if test="startTime != null and startTime !=''">
+			and a.lurushijian &gt;= #{startTime}
+		</if>
+		<if test="endTime != null and endTime !=''">
+			and a.lurushijian &lt; #{endTime}
+		</if>
+		)t
+	</select>
+
+	<select id="selectOne" parameterType="com.winpow.services.manage.declare.bean.DeclareZZGB"
+		resultType="com.winpow.services.manage.declare.bean.DeclareZZGB">
+		SELECT TOP 1
+		a.id,
+		a.userid,
+		a.zzgbje,
+		a.ggsj,
+		a.zzgbsj,
+		a.oldsell,
+		a.oldinte,
+		a.oldtax,
+		a.newsell,
+		a.newinte,
+		a.newtax,
+		a.qysqje,
+		a.xtjsje,
+		a.status,a.pichi,
+		a.memo,
+		a.lurushijian,
+		a.inputuser,
+		a.lastchgtime,
+		a.zlsfwz,
+		b.qiyemingcheng,
+		a.stock_amount,
+		a.stock_price,
+		a.stock_tax
+		from tb_sb_zzgb a left join tb_sb_base b on a.userid = b.userid where
+		a.id=#{id}
+		
+		<if test="pichi != null  and pichi != ''">
+            and a.pichi = #{pichi}
+        </if>
+        
+	</select>
+
+	<select id="selectAllList" parameterType="com.winpow.services.manage.declare.bean.DeclareZZGB"
+		resultType="com.winpow.services.manage.declare.bean.DeclareZZGB">
+		SELECT
+		id,
+		userid,
+		zzgbje,
+		ggsj,
+		zzgbsj,
+		oldsell,
+		oldinte,
+		oldtax,
+		newsell,
+		newinte,
+		newtax,
+		qysqje,
+		xtjsje,
+		status,pichi, 
+		memo,
+		lurushijian,
+		inputuser,
+		lastchgtime,
+		zlsfwz,
+		stock_amount,
+		stock_price,
+		stock_tax
+		from tb_sb_zzgb t where 1=1
+		<if test="userid != null and userid !=''">
+			and userid = #{userid}
+		</if>
+		<if test="pichi != null  and pichi != ''">
+            and pichi = #{pichi}
+        </if>
+	</select>
+
+	<insert id="insert" parameterType="com.winpow.services.manage.declare.bean.DeclareZZGB"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into tb_sb_zzgb (
+		userid,
+		zzgbje,
+		ggsj,
+		zzgbsj,
+		oldsell,
+		oldinte,
+		oldtax,
+		newsell,
+		newinte,
+		newtax,
+		qysqje,
+		xtjsje,
+		status,pichi, 
+		memo,
+		lurushijian,
+		inputuser,
+		lastchgtime,
+		zlsfwz,
+		stock_amount,
+		stock_price,
+		stock_tax
+		) values (
+		#{userid},
+		#{zzgbje},
+		#{ggsj},
+		#{zzgbsj},
+		#{oldsell},
+		#{oldinte},
+		#{oldtax},
+		#{newsell},
+		#{newinte},
+		#{newtax},
+		#{qysqje},
+		#{xtjsje},
+		#{status},#{pichi},
+		#{memo},
+		getdate(),
+		#{inputuser},
+		getdate(),
+		#{zlsfwz},
+		#{stock_amount},
+		#{stock_price},
+		#{stock_tax}
+		)
+	</insert>
+
+	<update id="update" parameterType="com.winpow.services.manage.declare.bean.DeclareZZGB">
+		update tb_sb_zzgb set
+
+		<if test=" userid !=null and  userid !=''">
+			userid=#{userid},
+		</if>
+
+		<if test=" zzgbje !=null and  zzgbje !=''">
+			zzgbje=#{zzgbje},
+		</if>
+
+		<if test=" ggsj !=null and  ggsj !=''">
+			ggsj=#{ggsj},
+		</if>
+
+		<if test=" zzgbsj !=null and  zzgbsj !=''">
+			zzgbsj=#{zzgbsj},
+		</if>
+
+		<if test=" oldsell !=null and  oldsell !=''">
+			oldsell=#{oldsell},
+		</if>
+
+		<if test=" oldinte !=null and  oldinte !=''">
+			oldinte=#{oldinte},
+		</if>
+
+		<if test=" oldtax !=null and  oldtax !=''">
+			oldtax=#{oldtax},
+		</if>
+
+		<if test=" newsell !=null and  newsell !=''">
+			newsell=#{newsell},
+		</if>
+
+		<if test=" newinte !=null and  newinte !=''">
+			newinte=#{newinte},
+		</if>
+
+		<if test=" newtax !=null and  newtax !=''">
+			newtax=#{newtax},
+		</if>
+
+		<if test=" qysqje !=null and  qysqje !=''">
+			qysqje=#{qysqje},
+		</if>
+
+		<if test=" xtjsje !=null  ">
+			xtjsje=#{xtjsje},
+		</if>
+
+		<if test=" status !=null and  status !=''">
+			status=#{status},
+		</if>
+
+		<if test=" memo !=null and  memo !=''">
+			memo=#{memo},
+		</if>
+
+		<if test=" zlsfwz !=null and  zlsfwz !=''">
+			zlsfwz=#{zlsfwz},
+		</if>
+		
+		<if test=" stock_amount !=null and  stock_amount !=''">
+			stock_amount=#{stock_amount},
+		</if>
+		
+		<if test=" stock_price !=null">
+			stock_price=#{stock_price},
+		</if>
+		
+		<if test=" stock_tax !=null">
+			stock_tax=#{stock_tax},
+		</if>
+
+		lastchgtime=getdate()
+		where id=#{id}
+	</update>
+	
+	<delete id="delete">
+		delete tb_sb_zzgb where id=#{id}
+	</delete>
+</mapper>  

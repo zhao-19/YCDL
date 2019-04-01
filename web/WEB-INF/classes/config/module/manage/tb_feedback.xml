@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+"-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="manage">
+
+	<select id="manage.feedback.selectPageList" parameterType="com.winpow.services.manage.feedback.bean.Feedback"
+		resultType="hashMap">
+		select * from (
+		SELECT ROW_NUMBER() over(order by id desc ) as
+		rownumber ,
+		id,
+		feedtype,
+		feedcontent,
+		feedreply,
+		replyuser,
+		email,
+		cellphone,
+		lurushijian,
+		inputuser,
+		lastchgtime,
+		source
+		from tb_feedback where 1=1
+
+		<if test="feedtype!=null and feedtype!=''">
+			and feedtype=#{feedtype}
+		</if>
+		<if test="cellphone!=null and cellphone!=''">
+			and cellphone=#{cellphone}
+		</if>
+		)t where rownumber &gt; = #{offset} and rownumber &lt; =
+		#{pageSize}+#{offset}
+	</select>
+	<select id="manage.feedback.selectPageCount" parameterType="com.winpow.services.manage.feedback.bean.Feedback"
+		resultType="java.lang.Integer">
+
+		select count(*) from (
+		SELECT ROW_NUMBER() over(order by id) as rownumber ,
+		id,
+		feedtype,
+		feedcontent,
+		feedreply,
+		replyuser,
+		email,
+		cellphone,
+		lurushijian,
+		inputuser,
+		lastchgtime,
+		source
+		from tb_feedback where 1=1
+
+		<if test="feedtype!=null and feedtype!=''">
+			and feedtype=#{feedtype}
+		</if>
+		<if test="cellphone!=null and cellphone!=''">
+			and cellphone=#{cellphone}
+		</if>
+		)t
+
+	</select>
+
+	<select id="manage.feedback.selectOne" parameterType="com.winpow.services.manage.feedback.bean.Feedback"
+		resultType="com.winpow.services.manage.feedback.bean.Feedback">
+		SELECT
+		id,
+		feedtype,
+		feedcontent,
+		feedreply,
+		replyuser,
+		email,
+		cellphone,
+		lurushijian,
+		inputuser,
+		lastchgtime,
+		source
+		from tb_feedback t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+	</select>
+
+	<select id="manage.feedback.selectCount" parameterType="com.winpow.services.manage.feedback.bean.Feedback"
+		resultType="int">
+		select count(*)
+		FROM tb_feedback t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+	</select>
+
+	<select id="manage.feedback.selectOneByCondition" parameterType="com.winpow.services.manage.feedback.bean.Feedback"
+		resultType="com.winpow.services.manage.feedback.bean.Feedback">
+		SELECT
+		id,
+		feedtype,
+		feedcontent,
+		feedreply,
+		replyuser,
+		email,
+		cellphone,
+		lurushijian,
+		inputuser,
+		lastchgtime,
+		source
+		from tb_feedback t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+	</select>
+
+
+
+	<select id="manage.feedback.selectList" parameterType="com.winpow.services.manage.feedback.bean.Feedback"
+		resultType="com.winpow.services.manage.feedback.bean.Feedback">
+		SELECT
+		id,
+		feedtype,
+		feedcontent,
+		feedreply,
+		replyuser,
+		email,
+		cellphone,
+		lurushijian,
+		inputuser,
+		lastchgtime,
+		source
+		from tb_feedback t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+	</select>
+
+
+
+
+	<insert id="manage.feedback.insert" parameterType="com.winpow.services.manage.feedback.bean.Feedback"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into tb_feedback (
+
+		feedtype,
+		feedcontent,
+		feedreply,
+		replyuser,
+		email,
+		cellphone,
+		lurushijian,
+		inputuser,
+		lastchgtime,
+		source
+		) values (
+
+		#{feedtype},
+		#{feedcontent},
+		#{feedreply},
+		#{replyuser},
+		#{email},
+		#{cellphone},
+		getdate(),
+		#{inputuser},
+		getdate(),
+		#{source}
+		)
+
+	</insert>
+
+	<update id="manage.feedback.update" parameterType="com.winpow.services.manage.feedback.bean.Feedback">
+		update tb_feedback set
+
+
+		<if test=" feedtype !=null and  feedtype !=''">
+			feedtype=#{feedtype},
+		</if>
+
+		<if test=" feedcontent !=null and  feedcontent !=''">
+			feedcontent=#{feedcontent},
+		</if>
+
+		<if test=" feedreply !=null and  feedreply !=''">
+			feedreply=#{feedreply},
+		</if>
+
+		<if test=" replyuser !=null and  replyuser !=''">
+			replyuser=#{replyuser},
+		</if>
+
+		<if test=" email !=null and  email !=''">
+			email=#{email},
+		</if>
+
+		<if test=" cellphone !=null and  cellphone !=''">
+			cellphone=#{cellphone},
+		</if>
+
+		<if test=" inputuser !=null and  inputuser !=''">
+			inputuser=#{inputuser},
+		</if>
+		<if test=" source !=null">
+			source=#{source},
+		</if>
+		lastchgtime=getdate()
+		where id=#{id}
+	</update>
+
+</mapper>  

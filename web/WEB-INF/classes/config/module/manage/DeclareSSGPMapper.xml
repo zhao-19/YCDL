@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.winpow.services.manage.declare.mapper.DeclareSSGPMapper">
+
+    <select id="selectPageList"
+            parameterType="com.winpow.services.manage.declare.bean.DeclareSSGP" resultType="hashMap">
+        select * from (
+        SELECT  ROW_NUMBER() over(order by a.lastchgtime desc) as  rownumber ,
+        a.id,
+        a.userid,
+        a.nssjys,
+        a.sssj,
+        a.gpdm,
+        a.qysqje,
+        a.xtjsje,
+        a.status,a.pichi,
+        a.memo,
+        a.lurushijian,
+        a.inputuser,
+        a.lastchgtime,
+        b.qiyemingcheng,
+        a.zlsfwz
+        from tb_sb_ssgp a left join 
+		(select t.* from(select b.*,row_number() over (partition by userid order by lurushijian desc) rn from tb_sb_base b) t where rn=1)b
+		on a.userid = b.userid  where 1=1
+        <if test="userid != null and userid !=''">
+            and a.userid like '%' + #{userid} + '%'
+        </if>
+        <if test="gpdm != null and gpdm !=''">
+            and a.gpdm like '%' + #{gpdm} + '%'
+        </if>
+        <if test="status != null and status !=''">
+            and a.status = #{status}
+        </if>
+        <if test="qiyemingcheng != null and qiyemingcheng !=''">
+            and b.qiyemingcheng like '%' + #{qiyemingcheng} + '%'
+        </if>
+        <if test="startTime != null and startTime !=''">
+            and a.lurushijian &gt;= #{startTime}
+        </if>
+        <if test="endTime != null and endTime !=''">
+            and a.lurushijian &lt; #{endTime}
+        </if>
+        )t  where rownumber &gt; = #{offset} and rownumber &lt; = #{pageSize}+#{offset}
+    </select>
+    <select id="selectPageCount"
+            parameterType="com.winpow.services.manage.declare.bean.DeclareSSGP"
+            resultType="java.lang.Integer">
+        select count(id) from (
+        SELECT  ROW_NUMBER() over(order by a.lastchgtime desc) as  rownumber ,
+        a.id,
+        a.userid,
+        a.nssjys,
+        a.sssj,
+        a.gpdm,
+        a.qysqje,
+        a.xtjsje,
+        a.status,a.pichi,
+        a.memo,
+        a.lurushijian,
+        a.inputuser,
+        a.lastchgtime,
+        b.qiyemingcheng
+        from tb_sb_ssgp a left join 
+		(select t.* from(select b.*,row_number() over (partition by userid order by lurushijian desc) rn from tb_sb_base b) t where rn=1)b
+		on a.userid = b.userid  where 1=1
+        <if test="userid != null and userid !=''">
+            and a.userid like '%' + #{userid} + '%'
+        </if>
+        <if test="gpdm != null and gpdm !=''">
+            and a.gpdm like '%' + #{gpdm} + '%'
+        </if>
+        <if test="status != null and status !=''">
+            and a.status = #{status}
+        </if>
+        <if test="qiyemingcheng != null and qiyemingcheng !=''">
+            and b.qiyemingcheng like '%' + #{qiyemingcheng} + '%'
+        </if>
+        <if test="startTime != null and startTime !=''">
+            and a.lurushijian &gt;= #{startTime}
+        </if>
+        <if test="endTime != null and endTime !=''">
+            and a.lurushijian &lt; #{endTime}
+        </if>
+         )t
+
+    </select>
+
+    <select id="selectOne"
+            parameterType="com.winpow.services.manage.declare.bean.DeclareSSGP"
+            resultType="com.winpow.services.manage.declare.bean.DeclareSSGP">
+        SELECT TOP 1
+        a.id,
+        a.userid,
+        a.nssjys,
+        a.sssj,
+        a.gpdm,
+        a.qysqje,
+        a.xtjsje,
+        a.status,a.pichi,
+        a.memo,
+        a.lurushijian,
+        a.inputuser,
+        a.lastchgtime,
+        a.zlsfwz,
+        b.qiyemingcheng
+        from tb_sb_ssgp a left join tb_sb_base b on a.userid = b.userid  where a.id=#{id}
+        <if test="pichi != null  and pichi != ''">
+            and a.pichi = #{pichi}
+        </if>
+    </select>
+
+    <select id="selectAllList"
+            parameterType="com.winpow.services.manage.declare.bean.DeclareSSGP"
+            resultType="com.winpow.services.manage.declare.bean.DeclareSSGP">
+        SELECT
+        id,
+        userid,
+        nssjys,
+        sssj,
+        gpdm,
+        qysqje,
+        xtjsje,
+        status,pichi, 
+        memo,
+        lurushijian,
+        inputuser,
+        lastchgtime,
+        zlsfwz
+        from  tb_sb_ssgp t where 1=1
+        <if test="userid != null and userid !=''">
+            and userid = #{userid}
+        </if>
+        <if test="pichi != null  and pichi != ''">
+            and pichi = #{pichi}
+        </if>
+    </select>
+
+    <insert id="insert"
+            parameterType="com.winpow.services.manage.declare.bean.DeclareSSGP" useGeneratedKeys="true"
+            keyProperty="id">
+		insert into tb_sb_ssgp (
+													 	userid,
+													 	nssjys,
+													 	sssj,
+													 	gpdm,
+													 	qysqje,
+													 	xtjsje,
+													 	status,pichi, 
+													 	memo,
+													 	lurushijian,
+													 	inputuser,
+													  lastchgtime,
+													  zlsfwz
+			 						) values (
+				 										 	#{userid},
+				 										 	#{nssjys},
+				 										 	#{sssj},
+				 										 	#{gpdm},
+				 										 	#{qysqje},
+				 										 	#{xtjsje},
+				 										 	#{status},#{pichi},
+				 										 	#{memo},
+				 										 	getdate(),
+				 										 	#{inputuser},
+				 											getdate(),
+				 											#{zlsfwz}
+				 						)
+	</insert>
+
+    <update id="update"
+            parameterType="com.winpow.services.manage.declare.bean.DeclareSSGP">
+        update tb_sb_ssgp set
+
+        <if test=" userid !=null and  userid !=''">
+            userid=#{userid},
+        </if>
+
+        <if test=" nssjys !=null and  nssjys !=''">
+            nssjys=#{nssjys},
+        </if>
+
+        <if test=" sssj !=null and  sssj !=''">
+            sssj=#{sssj},
+        </if>
+
+        <if test=" gpdm !=null and  gpdm !=''">
+            gpdm=#{gpdm},
+        </if>
+
+        <if test=" qysqje !=null and  qysqje !=''">
+            qysqje=#{qysqje},
+        </if>
+
+        <if test=" xtjsje !=null ">
+            xtjsje=#{xtjsje},
+        </if>
+
+        <if test=" status !=null and  status !=''">
+            status=#{status},
+        </if>
+
+        <if test=" memo !=null and  memo !=''">
+            memo=#{memo},
+        </if>
+
+        <if test=" zlsfwz !=null and  zlsfwz !=''">
+            zlsfwz=#{zlsfwz},
+        </if>
+
+            lastchgtime=getdate()
+
+        where id=#{id}
+    </update>
+    <delete id="delete">
+        delete tb_sb_ssgp where id=#{id}
+    </delete>
+</mapper>  

@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC 
+"-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="manage">
+
+	<select id="manage.custmanagelog.selectPageList"
+		parameterType="com.winpow.services.manage.custmanagelog.bean.Custmanagelog"
+		resultType="hashMap">
+		select top ${pageSize} * from (
+			select row_number() over(order by inputtime desc) as rownumber ,* 
+			from tb_custmanage_log where 1=1
+			<if test=" userid !=null and  userid !=''">
+				and userid = #{userid}
+			</if>
+			<if test=" qiyename !=null and  qiyename !=''">
+				and qiyename like '%'+#{qiyename}+'%'
+			</if>
+	    ) a where rownumber > ${pageSize}*(${offset} - 1)
+	</select>
+	
+	<select id="manage.custmanagelog.selectPageCount"
+		parameterType="com.winpow.services.manage.custmanagelog.bean.Custmanagelog"
+		resultType="java.lang.Integer">
+		select count(*) from tb_custmanage_log where 1=1
+		<if test=" userid !=null and  userid !=''">
+			and userid = #{userid}
+		</if>
+		<if test=" qiyename !=null and  qiyename !=''">
+			and qiyename like '%'+#{qiyename}+'%'
+		</if>
+	</select>
+
+	<select id="manage.custmanagelog.selectOne"
+		parameterType="com.winpow.services.manage.custmanagelog.bean.Custmanagelog"
+		resultType="com.winpow.services.manage.custmanagelog.bean.Custmanagelog">
+		select * from tb_custmanage_log t where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+
+	<select id="manage.custmanagelog.selectCount"
+		parameterType="com.winpow.services.manage.custmanagelog.bean.Custmanagelog"
+		resultType="int">
+		select count(*) from tb_custmanage_log t where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+
+	<select id="manage.custmanagelog.selectOneByCondition"
+		parameterType="com.winpow.services.manage.custmanagelog.bean.Custmanagelog"
+		resultType="com.winpow.services.manage.custmanagelog.bean.Custmanagelog">
+		select * from tb_custmanage_log t where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+
+	<select id="manage.custmanagelog.selectList"
+		parameterType="com.winpow.services.manage.custmanagelog.bean.Custmanagelog"
+		resultType="com.winpow.services.manage.custmanagelog.bean.Custmanagelog">
+		select * from tb_custmanage_log t where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+
+	<insert id="manage.custmanagelog.insert"
+		parameterType="com.winpow.services.manage.custmanagelog.bean.Custmanagelog"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into tb_custmanage_log (
+		pkid,
+		userid,
+		qiyeid,
+		qiyename,
+		oldcustmanage,
+		oldcustmanagesource,
+		newcustmanage,
+		newcustmanagesource,
+		inputtime,
+		inputuser,
+		lastchgtime
+		) values (
+		#{pkid},
+		#{userid},
+		#{qiyeid},
+		#{qiyename},
+		#{oldcustmanage},
+		#{oldcustmanagesource},
+		#{newcustmanage},
+		#{newcustmanagesource},
+		getdate(),
+		#{inputuser},
+		getdate()
+		)
+
+	</insert>
+
+	<update id="manage.custmanagelog.update"
+		parameterType="com.winpow.services.manage.custmanagelog.bean.Custmanagelog">
+		update tb_custmanage_log set
+		<if test=" pkid !=null and  pkid !=''">
+			pkid=#{pkid},
+		</if>
+
+		<if test=" userid !=null and  userid !=''">
+			userid=#{userid},
+		</if>
+
+		<if test=" qiyeid !=null and  qiyeid !=''">
+			qiyeid=#{qiyeid},
+		</if>
+		
+		<if test=" qiyename !=null and  qiyename !=''">
+			qiyename=#{qiyename},
+		</if>
+
+		<if test=" oldcustmanage !=null and  oldcustmanage !=''">
+			oldcustmanage=#{oldcustmanage},
+		</if>
+
+		<if test=" oldcustmanagesource !=null and  oldcustmanagesource !=''">
+			oldcustmanagesource=#{oldcustmanagesource},
+		</if>
+
+		<if test=" newcustmanage !=null and  newcustmanage !=''">
+			newcustmanage=#{newcustmanage},
+		</if>
+
+		<if test=" newcustmanagesource !=null and  newcustmanagesource !=''">
+			newcustmanagesource=#{newcustmanagesource},
+		</if>
+		
+		lastchgtime=getdate()
+		where pkid=#{pkid}
+	</update>
+	
+	<select id="manage.custmanagelog.selectQiye" parameterType="java.util.List" resultType="hashMap">
+		select c.userid,c.custmanage,c.custmanagesource,q.pk_qiyeid,q.qiyemingcheng,q.custmanage qiyecustmanage,q.custmanagesource qiyecustmanagesource
+		from tb_qiye q
+		left join tb_cust c on q.pk_qiyeid=c.f_id 
+		where q.pk_qiyeid in
+        <foreach collection="array" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+	</select>
+	
+	<insert id="manage.custmanagelog.inserts" parameterType="java.util.List">
+		insert into tb_custmanage_log (
+		pkid,
+		userid,
+		qiyeid,
+		qiyename,
+		oldcustmanage,
+		oldcustmanagesource,
+		newcustmanage,
+		newcustmanagesource,
+		inputtime,
+		inputuser,
+		lastchgtime
+		) values 
+		<foreach collection="list" item="item" index="index" separator="," >  
+	        (#{item.pkid},#{item.userid},#{item.qiyeid},#{item.qiyename},#{item.oldcustmanage},#{item.oldcustmanagesource},
+			#{item.newcustmanage},#{item.newcustmanagesource},getdate(),#{item.inputuser},getdate())  
+   		</foreach>
+	</insert>
+
+</mapper>  

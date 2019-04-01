@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+"-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="app">
+
+	<select id="app.pcsbregion.selectPageList" parameterType="com.winpow.services.app.pcsbregion.bean.Pcsbregion"
+		resultType="hashMap">
+		select * from (
+		SELECT ROW_NUMBER() over(order by updatedate
+		desc) as rownumber ,
+		pkid,
+		province,
+		city,
+		county,
+		gener,
+		policy,
+		createby,
+		createdate,
+		updateby,
+		updatedate
+		from tb_pc_sbregion )t where rownumber
+		&gt; = #{offset} and rownumber &lt;
+		= #{pageSize}+#{offset}
+	</select>
+	<select id="app.pcsbregion.selectPageCount" parameterType="com.winpow.services.app.pcsbregion.bean.Pcsbregion"
+		resultType="java.lang.Integer">
+
+		select count(*) from (
+		SELECT ROW_NUMBER() over(order by
+		updatedate desc) as rownumber ,
+		pkid,
+		province,
+		city,
+		county,
+		gener,
+		policy,
+		createby,
+		createdate,
+		updateby,
+		updatedate
+		from tb_pc_sbregion )t
+
+	</select>
+
+	<select id="app.pcsbregion.selectOne" parameterType="com.winpow.services.app.pcsbregion.bean.Pcsbregion"
+		resultType="com.winpow.services.app.pcsbregion.bean.Pcsbregion">
+		SELECT
+		pkid,
+		province,
+		city,
+		county,
+		gener,
+		policy,
+		createby,
+		createdate,
+		updateby,
+		updatedate
+		from tb_pc_sbregion t where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+
+	<select id="app.pcsbregion.selectCount" parameterType="com.winpow.services.app.pcsbregion.bean.Pcsbregion"
+		resultType="int">
+		select count(*)
+		FROM tb_pc_sbregion t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+	</select>
+
+	<select id="app.pcsbregion.selectOneByCondition" parameterType="com.winpow.services.app.pcsbregion.bean.Pcsbregion"
+		resultType="com.winpow.services.app.pcsbregion.bean.Pcsbregion">
+		SELECT
+		pkid,
+		province,
+		city,
+		county,
+		gener,
+		policy,
+		createby,
+		createdate,
+		updateby,
+		updatedate
+		from tb_pc_sbregion t where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+
+	<select id="app.pcsbregion.selectList" parameterType="com.winpow.services.app.pcsbregion.bean.Pcsbregion"
+		resultType="com.winpow.services.app.pcsbregion.bean.Pcsbregion">
+		SELECT
+		pkid,
+		province,
+		city,
+		county,
+		gener,
+		policy,
+		createby,
+		createdate,
+		updateby,
+		updatedate
+		from tb_pc_sbregion t where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+	
+	<select id="app.pcsbregion.selectAll" parameterType="com.winpow.services.app.pcsbregion.bean.Pcsbregion"
+		resultType="com.winpow.services.app.pcsbregion.bean.Pcsbregion">
+		SELECT
+		pkid,
+		province,
+		city,
+		county,
+		gener,
+		policy,
+		createby,
+		createdate,
+		updateby,
+		updatedate
+		from tb_pc_sbregion order by updatedate
+	</select>
+	
+	<insert id="app.pcsbregion.insert" parameterType="com.winpow.services.app.pcsbregion.bean.Pcsbregion"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into tb_pc_sbregion (
+		pkid,
+		province,
+		city,
+		county,
+		gener,
+		policy,
+		createby,
+		createdate,
+		updateby,
+		updatedate
+		) values (
+		#{pkid},
+		#{province},
+		#{city},
+		#{county},
+		#{gener},
+		#{policy},
+		#{createby},
+		getdate(),
+		#{updateby},
+		getdate()
+		)
+
+	</insert>
+
+	<update id="app.pcsbregion.update" parameterType="com.winpow.services.app.pcsbregion.bean.Pcsbregion">
+		update tb_pc_sbregion set
+		<if test=" province !=null and  province !=''">
+			province=#{province},
+		</if>
+
+		<if test=" city !=null and  city !=''">
+			city=#{city},
+		</if>
+
+		<if test=" county !=null and  county !=''">
+			county=#{county},
+		</if>
+		<if test=" gener !=null and  gener !=''">
+			gener=#{gener},
+		</if>
+
+		<if test=" policy !=null and  policy !=''">
+			policy=#{policy},
+		</if>
+
+		<if test=" updateby !=null and  updateby !=''">
+			updateby=#{updateby},
+		</if>
+
+		updatedate=getdate()
+		where pkid=#{pkid}
+	</update>
+
+</mapper>  

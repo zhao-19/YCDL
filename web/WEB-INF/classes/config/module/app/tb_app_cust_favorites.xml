@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+"-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="app">
+
+	<select id="app.appcustfavorites.selectPageList"
+		parameterType="com.winpow.services.app.appcustfavorites.bean.Appcustfavorites"
+		resultType="hashMap">
+		select * from (
+		SELECT ROW_NUMBER() over(order by update_at desc) as rownumber ,
+		pkid,
+		userid,
+		genre,
+		releid,
+		title,
+		bewrite,
+		amount,
+		chstatus,
+		create_time,
+		update_at,
+		imgurl,
+		org_address,
+		org_info
+		from tb_app_cust_favorites )t where rownumber &gt; = #{offset} and
+		rownumber &lt; = #{pageSize}+#{offset}
+	</select>
+	<select id="app.appcustfavorites.selectPageCount"
+		parameterType="com.winpow.services.app.appcustfavorites.bean.Appcustfavorites"
+		resultType="java.lang.Integer">
+
+		select count(*) from (
+		SELECT ROW_NUMBER() over(order by update_at desc) as rownumber ,
+		pkid,
+		userid,
+		genre,
+		releid,
+		title,
+		bewrite,
+		amount,
+		chstatus,
+		create_time,
+		update_at,
+        imgurl,
+        org_address,
+        org_info
+		from tb_app_cust_favorites )t
+
+	</select>
+
+	<select id="app.appcustfavorites.selectOne"
+		parameterType="com.winpow.services.app.appcustfavorites.bean.Appcustfavorites"
+		resultType="com.winpow.services.app.appcustfavorites.bean.Appcustfavorites">
+		SELECT
+		pkid,
+		userid,
+		genre,
+		releid,
+		title,
+		bewrite,
+		amount,
+		chstatus,
+		create_time,
+		update_at,
+        imgurl,
+        org_address,
+        org_info
+		from tb_app_cust_favorites t where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+		<if test="userid !=null and userid !=''">
+            and t.userid=#{userid}
+        </if>
+        <if test="releid !=null and releid !=''">
+            and t.releid=#{releid}
+        </if>
+        <if test="genre !=null and genre !=''">
+            and t.genre=#{genre}
+        </if>
+	</select>
+
+	<select id="app.appcustfavorites.selectCount"
+		parameterType="com.winpow.services.app.appcustfavorites.bean.Appcustfavorites"
+		resultType="int">
+		select count(*)
+		FROM tb_app_cust_favorites t where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+
+	<select id="app.appcustfavorites.selectOneByCondition"
+		parameterType="com.winpow.services.app.appcustfavorites.bean.Appcustfavorites"
+		resultType="com.winpow.services.app.appcustfavorites.bean.Appcustfavorites">
+		SELECT
+		pkid,
+		userid,
+		genre,
+		releid,
+		title,
+		bewrite,
+		amount,
+		chstatus,
+		create_time,
+		update_at,
+        imgurl,
+        org_address,
+        org_info
+		from tb_app_cust_favorites t where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+
+	<select id="app.appcustfavorites.selectList"
+		parameterType="com.winpow.services.app.appcustfavorites.bean.Appcustfavorites"
+		resultType="com.winpow.services.app.appcustfavorites.bean.Appcustfavorites">
+		SELECT
+		pkid,
+		userid,
+		genre,
+		releid,
+		title,
+		bewrite,
+		amount,
+		chstatus,
+		create_time,
+		update_at,
+        imgurl,
+        org_address,
+        org_info
+		from tb_app_cust_favorites t where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+		<if test="userid!=null and userid!=''">
+			and t.userid=#{userid}
+		</if>
+		order by update_at desc;
+	</select>
+
+	<select id="app.appcustfavorites.selectPageByUserid" parameterType="com.winpow.services.app.appcustfavorites.bean.Appcustfavorites"
+		resultType="com.winpow.services.app.appcustfavorites.bean.Appcustfavorites">
+		select top ${pageSize} * from (
+			select row_number() over (order by create_time desc) as rownumber,* from(
+				<if test='genre=="1"'>
+					select f.pkid,f.genre,f.create_time,f.releid,
+					g.mingcheng title,g.jianjie bewrite,g.rongziedu amount,g.tuijianpic imgurl,'' org_address,'' org_info
+					from tb_app_cust_favorites f left join tb_guquan g on f.releid=g.id
+					where f.userid=#{userid} and f.genre='11501'
+				</if>
+				<if test='genre=="2"'>
+					select f.pkid,f.genre,f.create_time,f.releid,
+					i.increname title,i.incredescrip bewrite,increprice amount,i.picture imgurl,'' org_address,'' org_info
+					from tb_app_cust_favorites f left join tb_incre i on f.releid=convert(varchar, i.id)
+					where f.userid=#{userid} and f.genre='11502'
+					union all
+					select f.pkid,f.genre,f.create_time,f.releid,
+					g.title title,g.bewrite bewrite,g.price amount,g.prologo imgurl,'' org_address,'' org_info
+					from tb_app_cust_favorites f left join tb_pc_goods g on f.releid=g.pkid
+					where f.userid=#{userid} and f.genre in ('11503','11504','11505','11506')
+				</if>
+				<if test='genre=="3"'>
+					select f.pkid,f.genre,f.create_time,f.releid,
+					i.increname title,i.incredescrip bewrite,increprice amount,i.picture imgurl,'' org_address,'' org_info
+					from tb_app_cust_favorites f left join tb_incre i on f.releid=convert(varchar, i.id)
+					where f.userid=#{userid} and f.genre='11502'
+					union all
+					select f.pkid,f.genre,f.create_time,f.releid,
+					g.title title,g.bewrite bewrite,g.price amount,g.prologo imgurl,'' org_address,'' org_info
+					from tb_app_cust_favorites f left join tb_pc_goods g on f.releid=g.pkid
+					where f.userid=#{userid} and f.genre in ('11503','11504','11505')
+				</if>
+				<if test='genre=="4"'>
+					select f.pkid,f.genre,f.create_time,f.releid,
+					j.jigoumingcheng title,j.jigoujianjie bewrite,null amount,j.jigoulogo imgurl,j.bangongdizhi org_address,j.jigoujianjie org_info
+					from tb_app_cust_favorites f left join tb_jigou j on f.releid=j.id
+					where f.userid=#{userid} and f.genre='11506'
+				</if>
+			) b
+		) a where rownumber > ${pageSize}*(${offset} - 1)
+	</select>
+
+	<insert id="app.appcustfavorites.insert"
+		parameterType="com.winpow.services.app.appcustfavorites.bean.Appcustfavorites"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into tb_app_cust_favorites
+		(
+		pkid,
+		userid,
+		genre,
+		releid,
+		title,
+		bewrite,
+		amount,
+		chstatus,
+		create_time,
+		update_at,
+        imgurl,
+        org_address,
+        org_info
+		) values (
+		#{pkid},
+		#{userid},
+		#{genre},
+		#{releid},
+		#{title},
+		#{bewrite},
+		#{amount},
+		#{chstatus},
+		getdate(),
+		getdate(),
+        #{imgurl},
+        #{org_address},
+        #{org_info}
+		)
+
+	</insert>
+
+	<update id="app.appcustfavorites.update"
+		parameterType="com.winpow.services.app.appcustfavorites.bean.Appcustfavorites">
+		update tb_app_cust_favorites set
+
+		<if test=" userid !=null and  userid !=''">
+			userid=#{userid},
+		</if>
+
+		<if test=" genre !=null and  genre !=''">
+			genre=#{genre},
+		</if>
+
+		<if test=" releid !=null and  releid !=''">
+			releid=#{releid},
+		</if>
+
+		<if test=" title !=null and  title !=''">
+			title=#{title},
+		</if>
+
+		<if test=" bewrite !=null and  bewrite !=''">
+			bewrite=#{bewrite},
+		</if>
+
+		<if test=" amount !=null ">
+			amount=#{amount},
+		</if>
+
+		<if test=" chstatus !=null ">
+			chstatus=#{chstatus},
+		</if>
+        <if test=" imgurl !=null and  imgurl !=''">
+            imgurl=#{imgurl},
+        </if>
+        <if test=" org_address !=null and  org_address !=''">
+            org_address=#{org_address},
+        </if>
+        <if test=" org_info !=null and  org_info !=''">
+            org_info=#{org_info},
+        </if>
+		update_at=getdate()
+		where pkid=#{pkid}
+	</update>
+	<select id="app.appcustfavorites.selectCountByReleid"
+		parameterType="com.winpow.services.app.appcustfavorites.bean.Appcustfavorites"
+		resultType="int">
+		select count(*) from tb_app_cust_favorites where releid=#{releid}
+		<if test=" genre !=null and  genre !=''">
+			and genre=#{genre}
+		</if>
+	</select>
+	
+	<delete id="app.appcustfavorites.delfavo" parameterType="com.winpow.services.app.appcustfavorites.bean.Appcustfavorites">
+		delete from tb_app_cust_favorites where userid=#{userid} 
+		<if test="pkid!=null and pkid!=''">
+			and pkid=#{pkid}
+		</if>
+		<if test="releid!=null and releid!=''">
+			and releid=#{releid} and genre=#{genre} 
+		</if>
+	</delete>
+</mapper>  

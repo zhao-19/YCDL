@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC 
+"-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="app">
+
+	<select id="app.appticketshare.selectPageList"
+		parameterType="com.winpow.services.app.appticketshare.bean.Appticketshare"
+		resultType="hashMap">
+		select * from (
+		SELECT ROW_NUMBER() over(order by id) as rownumber ,*
+		from tb_app_ticketshare )t where rownumber &gt; = #{offset} and rownumber
+		&lt; = #{pageSize}+#{offset}
+	</select>
+	<select id="app.appticketshare.selectPageCount"
+		parameterType="com.winpow.services.app.appticketshare.bean.Appticketshare"
+		resultType="java.lang.Integer">
+		select count(*) from tb_app_ticketshare 
+	</select>
+
+	<select id="app.appticketshare.selectOne"
+		parameterType="com.winpow.services.app.appticketshare.bean.Appticketshare"
+		resultType="com.winpow.services.app.appticketshare.bean.Appticketshare">
+		select top(1) * from tb_app_ticketshare t where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+		<if test="openid != null and openid != ''">
+			and t.openid=#{openid}
+		</if>
+	</select>
+
+	<select id="app.appticketshare.selectCount"
+		parameterType="com.winpow.services.app.appticketshare.bean.Appticketshare"
+		resultType="int">
+		select count(*) from tb_app_ticketshare t where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+
+	<select id="app.appticketshare.selectOneByCondition"
+		parameterType="com.winpow.services.app.appticketshare.bean.Appticketshare"
+		resultType="com.winpow.services.app.appticketshare.bean.Appticketshare">
+		select * from tb_app_ticketshare t where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+
+	<select id="app.appticketshare.selectList"
+		parameterType="com.winpow.services.app.appticketshare.bean.Appticketshare"
+		resultType="com.winpow.services.app.appticketshare.bean.Appticketshare">
+		select * from tb_app_ticketshare t where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+		<if test="openid != null and openid != ''">
+			and t.openid=#{openid}
+		</if>
+	</select>
+
+	<insert id="app.appticketshare.insert"
+		parameterType="com.winpow.services.app.appticketshare.bean.Appticketshare"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into tb_app_ticketshare (
+		pkid,
+		shareuserid,
+		sharephone,
+		registerphone,
+		tickettime,
+		lurushijian,
+		lastchgtime,openid,wxname
+		) values (
+		#{pkid},
+		#{shareuserid},
+		#{sharephone},
+		#{registerphone},
+		#{tickettime},
+		getdate(),
+		getdate(),#{openid},#{wxname}
+		)
+
+	</insert>
+
+	<update id="app.appticketshare.update"
+		parameterType="com.winpow.services.app.appticketshare.bean.Appticketshare">
+		update tb_app_ticketshare set
+		<if test=" shareuserid !=null and  shareuserid !=''">
+			shareuserid=#{shareuserid},
+		</if>
+
+		<if test=" sharephone !=null and  sharephone !=''">
+			sharephone=#{sharephone},
+		</if>
+
+		<if test=" registerphone !=null and  registerphone !=''">
+			registerphone=#{registerphone},
+		</if>
+		
+		<if test=" openid !=null and  openid !=''">
+			openid=#{openid},
+		</if>
+		
+		<if test=" wxname !=null and  wxname !=''">
+			wxname=#{wxname},
+		</if>
+
+		<if test=" tickettime !=null and  tickettime =='date'">
+			tickettime=getdate(),
+		</if>
+		lastchgtime=getdate()
+		where pkid=#{pkid}
+	</update>
+
+</mapper>  

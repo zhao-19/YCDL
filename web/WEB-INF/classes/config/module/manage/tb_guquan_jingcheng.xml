@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE mapper PUBLIC 
+"-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="manage">
+
+	<select id="manage.guquanjingcheng.selectPageList"
+		parameterType="com.winpow.services.manage.guquanjingcheng.bean.Guquanjingcheng"
+		resultType="hashMap">
+		select * from (
+		SELECT ROW_NUMBER() over(order by id) as rownumber ,
+		id,
+		guquanid,
+		convert(char(10) ,riqi ,120) as riqi,
+		shijian,
+		lurushijian
+		from tb_guquan_jingcheng )t where rownumber &gt; = #{offset} and rownumber
+		&lt; = #{pageSize}+#{offset}
+	</select>
+	<select id="manage.guquanjingcheng.selectPageCount"
+		parameterType="com.winpow.services.manage.guquanjingcheng.bean.Guquanjingcheng"
+		resultType="java.lang.Integer">
+
+		select count(*) from (
+		SELECT ROW_NUMBER() over(order by id) as rownumber ,
+		id,
+		guquanid,
+		convert(char(10) ,riqi ,120) as riqi,
+		shijian,
+		lurushijian
+		from tb_guquan_jingcheng )t
+
+	</select>
+
+	<select id="manage.guquanjingcheng.selectOne"
+		parameterType="com.winpow.services.manage.guquanjingcheng.bean.Guquanjingcheng"
+		resultType="com.winpow.services.manage.guquanjingcheng.bean.Guquanjingcheng">
+		SELECT
+		id,
+		guquanid,
+		convert(char(10) ,riqi ,120) as riqi,
+		shijian,
+		lurushijian
+		from tb_guquan_jingcheng t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+	</select>
+
+	<select id="manage.guquanjingcheng.selectCount"
+		parameterType="com.winpow.services.manage.guquanjingcheng.bean.Guquanjingcheng"
+		resultType="int">
+		select count(*)
+		FROM tb_guquan_jingcheng t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+	</select>
+
+	<select id="manage.guquanjingcheng.selectOneByCondition"
+		parameterType="com.winpow.services.manage.guquanjingcheng.bean.Guquanjingcheng"
+		resultType="com.winpow.services.manage.guquanjingcheng.bean.Guquanjingcheng">
+		SELECT
+		id,
+		guquanid,
+		convert(char(10) ,riqi ,120) as riqi,
+		shijian,
+		lurushijian
+		from tb_guquan_jingcheng t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+	</select>
+
+
+	<select id="manage.guquanjingcheng.selectList"
+		parameterType="com.winpow.services.manage.guquanjingcheng.bean.Guquanjingcheng"
+		resultType="com.winpow.services.manage.guquanjingcheng.bean.Guquanjingcheng">
+		SELECT
+		id,
+		guquanid,
+		convert(char(10) ,riqi ,120) as riqi,
+		shijian,
+		lurushijian
+		from tb_guquan_jingcheng t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+		<if test="guquanid!=null and guquanid!=''">
+			and t.guquanid=#{guquanid}
+		</if>
+		<if test="orderStr!=null and orderStr!=''">
+			ORDER BY ${orderStr}
+		</if>
+	</select>
+
+
+	<insert id="manage.guquanjingcheng.insert"
+		parameterType="com.winpow.services.manage.guquanjingcheng.bean.Guquanjingcheng"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into tb_guquan_jingcheng (
+
+		guquanid,
+		riqi,
+		shijian,
+		lurushijian
+		) values (
+
+		#{guquanid},
+		#{riqi},
+		#{shijian},
+		getdate()
+		)
+
+	</insert>
+
+	<update id="manage.guquanjingcheng.update"
+		parameterType="com.winpow.services.manage.guquanjingcheng.bean.Guquanjingcheng">
+		update tb_guquan_jingcheng set
+
+
+		<if test="guquanid!=null and guquanid!=''">
+			guquanid=#{guquanid},
+		</if>
+
+		<if test="riqi!=null and riqi!=''">
+			riqi=#{riqi},
+		</if>
+
+		<if test="shijian!=null and shijian!=''">
+			shijian=#{shijian},
+		</if>
+
+
+		lurushijian=getdate()
+
+
+		where id=#{id}
+	</update>
+	<delete id="manage.guquanjingcheng.delete"
+		parameterType="com.winpow.services.manage.guquanjingcheng.bean.Guquanjingcheng">
+		delete from Tb_guquan_jingcheng where 1=1 and guquanid=#{guquanid}
+	</delete>
+</mapper>  

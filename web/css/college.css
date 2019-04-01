@@ -1,0 +1,259 @@
+
+*{margin: 0px;padding: 0px; }
+ul{list-style:none; padding:0px; margin:0px; }
+ul li,ol li{list-style:none; padding:0px; margin:0px;}
+a {text-decoration: none;}
+/*基本信息*/
+body{font-family:"微软雅黑";margin:0px;padding: 0px; background:#fff;min-width: 1200px;}
+
+.cj_container{
+    width: 1200px;
+    margin: 0 auto;
+}
+
+/*盈创学院banner*/
+.cj_college_banner{
+    width: 100%;
+    /*height: 269px;*/
+    overflow: hidden;
+}
+.cj_college_banner img{
+    width: 100%;
+    display: block;
+}
+
+/*盈创学院content*/
+.cj_college_main{
+    background: #f4f5f7;
+    padding-bottom: 50px;
+}
+.cj_college_content{
+    padding-top: 50px;
+    overflow: hidden;
+}
+.cj_college_content_left{
+    float: left;
+    margin-right: 30px;
+    background: #fff;
+    width: 330px;
+}
+.cj_college_content_right{
+    float: left;
+    background: #fff;
+    width: 840px;
+    border-top:2px solid #ea5504;
+}
+.cj_panel_body{
+    padding: 0 20px;
+}
+.cj_panel_body_title{
+    font-size: 16px;
+    color:#000000;
+    padding: 25px 0;
+}
+.cj_tab_content{
+  overflow: hidden;
+}
+.cj_tab_content ul li{
+    margin-bottom: 23px;overflow: hidden;
+    /*height: 76px;*/
+}
+.cj_tab_content ul li:hover{border: 1px solid #FF7F27;}
+.rank_item_image{
+    float: left;
+    width: 84px;
+    height: 75px;
+    line-height: 75px;
+    overflow: hidden;
+}
+.rank_item_text{
+    margin-left: 100px;
+    font-size: 13px;
+    color:#000000;
+}
+.rank_item_text a{
+    font-size: 13px;
+    color:#000000;
+    line-height: 22px;
+}
+.rank_item_text a:hover{
+    color: #ea5504;
+}
+.cj_college_right_box{
+
+}
+.cj_college_right_title{
+    font-size: 22px;
+    line-height: 40px;
+    color:#333333;
+    padding: 67px 28px 50px 40px;
+}
+.cj_college_right_intro{
+    padding-top: 27px;
+    padding-bottom: 20px;
+    background: #fafafa;
+    border-top:#a9a9a9 dashed 1px;
+    border-bottom:#a9a9a9 dashed 1px;
+    position: relative;
+}
+.cj_college_right_intro_item1{
+    font-size: 14px;
+    color:#ea5504;
+    line-height: 30px;
+    padding: 0 46px;
+}
+.cj_college_right_intro_item1 span{
+    float: right;
+}
+
+.cj_right_intro_buttom a{
+    font-size: 16px;
+    color:#ffffff;
+    background: #ea5504;
+    padding: 5px 28px;
+    border-radius: 5px;
+}
+.cj_right_intro_buttom a:hover{
+    background: #EC651B;
+}
+.cj_right_intro_buttom{
+      position: absolute;
+        right: 150px;
+        bottom: 20px;
+        height: 31px;
+        line-height: 31px;
+}
+
+.cj_right_intro_buttom1 a{
+    font-size: 16px;
+    color:#ffffff;
+    background: #ea5504;
+    padding: 5px 28px;
+    border-radius: 5px;
+}
+.cj_right_intro_buttom1 a:hover{
+    background: #EC651B;
+}
+.cj_right_intro_buttom1{
+      position: absolute;
+        right:0px;
+        bottom: 20px;
+        height: 31px;
+    	line-height: 31px;
+}
+
+.activity_box{
+    margin-top: 45px;
+    padding: 0 25px;
+    padding-bottom: 45px;
+}
+.activity_content_item{
+    color:#333333;
+    margin-top: 43px;
+}
+.activity_title{
+    background: #ea5504;
+    line-height: 40px;
+    font-size: 18px;
+    color:#fff;
+    padding-left: 22px;
+    border-radius: 5px;
+    margin-bottom: 40px;
+}
+
+.activity_content_item_title{
+    font-size: 16px;
+    color:#333333;
+    background: url("../image/college/icon.png") no-repeat;
+    padding-left: 10px;
+}
+
+.activity_content_item_content{
+    font-size: 14px;
+    margin-top: 30px;
+    margin-bottom: 40px;
+}
+.activity_content_item_content .img1{
+    width: 602px;
+    margin: 0 auto;
+    display: block;
+    padding-bottom: 40px;
+}
+.activity_content_item_content p{
+    line-height: 30px;
+}
+/*盈创活动我要参加 start */
+#ldksq{display:none;width: 100%;height: 100%;position: fixed;left: 0;top:0;bottom: 0;right: 0;margin:auto;z-index: 9999!important;background:url("../img/lobg_03.png") repeat;}
+#ldksq_c{background-color: #fff;width: 520px;min-height:140px;/*position: absolute;top:0;left:0;right:0;bottom: 0;*/margin:auto;border-radius: 5px;behavior: url(PIE.htc);padding:10px;}
+#ldksq_lose{background: url("../img/delete.png") no-repeat;position: absolute;right: 10px;top:10px;width: 16px;height: 16px;cursor: pointer;}
+#ldksq_c .title{width: 100%;height: 40px;text-align: center;font-size: 22px;border-radius: 5px;}
+#ldksq_c .note{text-align: right;font-size: 14px;color:#bfbfbf;margin-bottom:5px;}
+#ldksq_c .title p{width: 100%;color: #ea5504;font-weight: bold;}
+#ldksq_c .title p.c{margin-top: 27px;font-size: 18px;}
+#ldksq_c .title p.e{font-family:"arial";}
+#ldksq_c .loc{ padding: 17px 0;width: 100%;background-color: #BBCDF1;overflow: hidden;border-radius: 3px;}
+#ldksq_c .loc .ifperson{ width:486px;margin:0 auto;height: 21px;overflow: auto;}
+#ldksq_c .loc .ifperson span{ margin-right:5px;}
+#ldksq_c .loc .ifperson input{ margin-right:5px;position: static;}
+#ldksq_c .loc  input.inp1{height: 28px;width: 100px;;}
+#ldksq_c .loc  table{cellpadding:0;cellspacing:0;border-collapse:collapse;}
+#ldksq_c .loc  table tr{margin-top:6px; display: inline-table;margin-left: 16px;color:#333;}
+#ldksq_c .loc  td.more{cursor: pointer;}
+#ldksq_c .loc  td,th{border: 1px solid #fff;padding:3px;}
+#ldksq_c .loc  #nomore{background-color:#ccc;color:#ccc;}
+#ldksq_c .loc  td.more:hover{font-weight:bold;;color:#fff;}
+#ldksq_c .loc .ybm{display:none;}
+
+
+#ldksq_c .nrk{width: 438pxpx;float: left;display: inline;padding: 30px 30px 15px 30px;}
+#ldksq_c .nrk .nrkl{width: 100%;height: 40px;line-height: 40px;float: left;display: inline;margin-top: 10px;}
+#ldksq_c .nrk .nrkl .mc{width: 130px;height: 40px;line-height: 40px;float: left;font-size: 14px;font-weight: normal;color: #777;text-align: right;padding: 0px 20px 0px 10px;}
+#ldksq_c .nrk .nrkl .mc_r #tarea{width: 277px;height: 40px;}
+#ldksq_c .nrk .nrkl .mc_r #tarea:hover{background: none;box-shadow: none;}
+#ldksq_c .nrk .nrkl .mc_r{width: 350px;height: 40px;line-height: 40px;float: left;text-align: left;margin-top: 2px;position: relative;}
+#ldksq_c .nrk .nrkl .mc_r .mc_rinput{width: 265px;padding-left: 10px;height: 35px;line-height: 35px;border: 1px solid #ccc;outline: none;font-size: 14px;}
+#ldksq_c .list{width: 100%; margin-bottom: 15px;}
+#ldksq_c .lf{margin-top: 34px;}
+#ldksq_c .list span{height: 34px;color: #fff;letter-spacing: 1px;margin-top: 5px;}
+#ldksq_c .list input{border: none;outline: none;height: 34px;background-color: #fff;border-radius: 17px;line-height: 34px;text-indent: 16px;behavior: url(PIE.htc);position: relative;}
+#ldksq_c  input.ip1{width: 100px;}
+#ldksq_c  table #numtr2{display:none;}
+#ldksq_c  table #numtr3{display:none;}
+#ldksq_c  table tr.trshow{display:inline-block!important;}
+#ldksq_c  table #delete2:hover{color:#ea5504;}
+#ldksq_c  table #delete3:hover{color:#ea5504;}
+
+#ldksq_c .list input.ip2{width: 241px;}
+#ldksq_c .list input.ip3{width: 140px;}
+#ldksq_c .list span{display:inline-block;width: 70px;height: 34px;background: url("../img/yzm_03.png") no-repeat;position: absolute;margin-left: 20px;    margin-top: 1px}
+
+#ldksq_c .tj{width: 100%;height: 94px;line-height: 50px;text-align: center;float: left;border-radius: 0px 0px 9px 9px;}
+#ldksq_c .tj input{cursor:pointer;line-height:45px;background: url("../img/loinp.png") no-repeat ;width: 283px;heiht:45px;border: none;outline: none;margin-top: 24px;font-size: 20px;color: #fff;}
+#ldksq_c .tj input:hover{background: url("../img/loinph.png") no-repeat ;}
+#ldksq_c .tj a{padding: 12px 50px;_padding: 0px 50px;color: #fff;background: #00b2ec;font-size: 14px;}
+.hqyzm{width: 74px;height: 26px;background: #ddd;text-align: center;cursor: pointer;margin-left: 6px;}
+.hqyzm:hover{font-weight: bold;}
+/*盈创活动我要参加 end */
+
+
+
+
+
+
+#table1 {
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 20px;
+    border-collapse:collapse;
+}
+#table1 tr td,#table1 tr th{
+    border: 1px solid #ddd;
+    text-align: center;
+    height: 40px;
+    background: #fafafa;
+}
+.cj_share_box{
+    float: right;
+    margin-right: 28px;
+    padding-bottom: 33px;
+}

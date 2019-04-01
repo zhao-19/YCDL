@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="manage">
+
+    <select id="manage.custmanagexgjl.selectPageList"
+            parameterType="com.winpow.services.manage.cust.bean.CustManageXGJL"
+            resultType="hashMap">
+        select * from (
+        SELECT
+        ROW_NUMBER() over(order by lurushijian desc) as rownumber , pk_qiyeid as id,
+        c.userid userid,
+        c.qiyemingcheng qiyemingcheng,
+        c.zzjgdm zzjgdm,
+        case when tc.custmanage is not null then tc.CUSTMANAGE else c.custmanage end as custmanage,
+        case when tc.custmanagesource is not null then tc.custmanagesource else c.custmanagesource end as custmanagesource
+        from
+        tb_Qiye c left join tb_cust tc on c.USERID = tc.USERID
+        where 1=1
+       
+        <if test="qiyemingcheng!=null and qiyemingcheng!=''">
+            and c.qiyemingcheng like '%' + #{qiyemingcheng} + '%'
+        </if>
+        )t where rownumber &gt; = #{offset} and rownumber &lt; = #{pageSize}+#{offset}
+    </select>
+    <select id="manage.custmanagexgjl.selectPageCount"
+            parameterType="com.winpow.services.manage.cust.bean.CustManageXGJL"
+            resultType="java.lang.Integer">
+        select count(*) from (
+        select pk_qiyeid as id,
+        userid,
+        qiyemingcheng,
+        zzjgdm
+        FROM
+        tb_Qiye c
+        where 1=1
+        <if test="qiyemingcheng!=null and qiyemingcheng!=''">
+            and qiyemingcheng like '%' + #{qiyemingcheng} + '%'
+        </if>
+        ) a
+
+    </select>
+
+    <select id="manage.custmanagexgjl.selectOne" parameterType="com.winpow.services.manage.cust.bean.CustManageXGJL"
+            resultType="com.winpow.services.manage.cust.bean.CustManageXGJL">
+        SELECT top 1
+        id,
+        qiyemingcheng,
+        zzjgdm,
+        xingming,
+        yidongdianhua,
+        oldcustmanage,
+        oldcustmanagesource,
+        custmanage,
+        custmanagesource,
+        lurushijian,
+        inputuser,
+        lastchgtime
+        from tb_custmanage_xgjl t where 1=1
+        <if test="id!=null and id!=''">
+            and t.id=#{id}
+        </if>
+    </select>
+
+    <insert id="manage.custmanagexgjl.insert" parameterType="com.winpow.services.manage.cust.bean.CustManageXGJL"
+            useGeneratedKeys="true"
+            keyProperty="id">
+	 		insert into tb_custmanage_xgjl (
+	 		                            qiyemingcheng,
+	 		                            zzjgdm,
+	 		                            xingming,
+	 		                            yidongdianhua,
+	 		                            oldcustmanage,
+	 		                            oldcustmanagesource,
+	 		                            custmanage,
+	 		                            custmanagesource,
+	 								 	lurushijian,
+	 								 	inputuser,
+	 								 	lastchgtime
+			 						) values (
+			 						#{qiyemingcheng},
+			 						#{zzjgdm},
+			 						#{xingming},
+			 						#{yidongdianhua},
+			 						#{oldcustmanage},
+			 						#{oldcustmanagesource},
+			 						#{custmanage},
+			 						#{custmanagesource},
+			 						getdate()，
+			 						#{inputuser},
+			 						getdate()
+				 					)
+		 
+	</insert>
+
+    <update id="manage.custmanagexgjl.update" parameterType="com.winpow.services.manage.cust.bean.CustManageXGJL">
+        update tb_custmanage_xgjl set
+        <if test="qiyemingcheng!=null and qiyemingcheng!=''">
+            qiyemingcheng=#{qiyemingcheng},
+        </if>
+        <if test="zzjgdm!=null and zzjgdm!=''">
+            zzjgdm=#{zzjgdm},
+        </if>
+        <if test="xingming!=null and xingming!=''">
+            xingming=#{xingming},
+        </if>
+        <if test="yidongdianhua!=null and yidongdianhua!=''">
+            yidongdianhua=#{yidongdianhua},
+        </if>
+        <if test="oldcustmanage!=null and oldcustmanage!=''">
+            oldcustmanage=#{oldcustmanage},
+        </if>
+        <if test="oldcustmanagesource!=null and oldcustmanagesource!=''">
+            oldcustmanagesource=#{oldcustmanagesource},
+        </if>
+        <if test="custmanage!=null and custmanage!=''">
+            custmanage=#{custmanage},
+        </if>
+        <if test="custmanagesource!=null and custmanagesource!=''">
+            custmanagesource=#{custmanagesource},
+        </if>
+        lastchgtime = getdate()
+        where id=#{id}
+    </update>
+
+    <update id="manage.custmanagexgjl.updateQiye" parameterType="hashMap">
+        update tb_qiye set custmanage=#{custmanage}, custmanagesource=#{managesource}
+        where pk_qiyeid in
+        <foreach collection="ids" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>;
+        update tb_cust set custmanage=#{custmanage}, custmanagesource=#{managesource}
+        where userid is not null and f_id in 
+        <foreach collection="ids" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>;
+        update tb_product_czd_base set checkuser=#{custmanage}
+        where userid is not null and userid in (select userid from tb_cust where f_id in 
+        <foreach collection="ids" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>);
+        update tb_product_app set checkuser=#{custmanage}
+        where userid is not null and userid in (select userid from tb_cust where f_id in 
+        <foreach collection="ids" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>);
+    </update>
+
+    <update id="manage.custmanagexgjl.updateCust" parameterType="hashMap">
+        update tb_cust set CUSTMANAGE=#{custManage}, custmanagesource=#{manageSource}
+        where userid in (select userid from tb_qiye where PK_QIYEID in
+        <foreach collection="ids" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        and userid is not null
+        )
+    </update>
+
+    <update id="manage.custmanagexgjl.updateProBase" parameterType="hashMap">
+        update Tb_product_czd_base set checkuser=#{custManage}
+        where userid in (select userid from tb_qiye where PK_QIYEID in
+        <foreach collection="ids" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        and userid is not null
+        )
+    </update>
+
+    <update id="manage.custmanagexgjl.updateProApp" parameterType="hashMap">
+        update Tb_product_app set checkuser=#{custManage}
+        where userid in (select userid from tb_qiye where PK_QIYEID in
+        <foreach collection="ids" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        and userid is not null
+        )
+    </update>
+</mapper>  

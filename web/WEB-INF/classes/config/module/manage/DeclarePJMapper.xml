@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.winpow.services.manage.declare.mapper.DeclarePJMapper">
+
+    <select id="selectPageList"
+            parameterType="com.winpow.services.manage.declare.bean.DeclarePJ" resultType="hashMap">
+        select * from (
+        SELECT  ROW_NUMBER() over(order by a.lastchgtime desc) as  rownumber ,
+        a.id,
+        a.userid,
+        a.zcfx,
+        a.pjorg,
+        a.pjjg,
+        a.pjsj,
+        a.pjfy,
+        a.sbje,
+        a.xtjsje,
+        a.status,a.pichi,
+        a.memo,
+        a.lurushijian,
+        a.inputuser,
+        a.lastchgtime,
+        a.zlsfwz,
+        b.qiyemingcheng
+        from tb_sb_pj a left join 
+        (select t.* from(select b.*,row_number() over (partition by userid order by lurushijian desc) rn from tb_sb_base b) t where rn=1)b
+        on a.userid = b.userid  where 1=1
+        <if test="userid != null and userid !=''">
+            and a.userid like '%' + #{userid} + '%'
+        </if>
+        <if test="pjorg != null and pjorg !=''">
+            and a.pjorg like '%' + #{pjorg} + '%'
+        </if>
+        <if test="status != null and status !=''">
+            and a.status = #{status}
+        </if>
+        <if test="qiyemingcheng != null and qiyemingcheng !=''">
+            and b.qiyemingcheng like '%' + #{qiyemingcheng} + '%'
+        </if>
+        <if test="startTime != null and startTime !=''">
+            and a.lurushijian &gt;= #{startTime}
+        </if>
+        <if test="endTime != null and endTime !=''">
+            and a.lurushijian &lt; #{endTime}
+        </if>
+        )t  where rownumber &gt; = #{offset} and rownumber &lt; = #{pageSize}+#{offset}
+    </select>
+    <select id="selectPageCount"
+            parameterType="com.winpow.services.manage.declare.bean.DeclarePJ"
+            resultType="java.lang.Integer">
+        select count(id) from (
+        SELECT  ROW_NUMBER() over(order by a.lastchgtime) as  rownumber ,
+        a.id,
+        a.userid,
+        a.zcfx,
+        a.pjorg,
+        a.pjjg,
+        a.pjsj,
+        a.pjfy,
+        a.sbje,
+        a.xtjsje,
+        a.status,a.pichi,
+        a.memo,
+        a.lurushijian,
+        a.inputuser,
+        a.lastchgtime,
+        b.qiyemingcheng
+        from tb_sb_pj a left join tb_sb_base b on a.userid = b.userid where 1=1
+        <if test="userid != null and userid !=''">
+            and a.userid like '%' + #{userid} + '%'
+        </if>
+        <if test="pjorg != null and pjorg !=''">
+            and a.pjorg like '%' + #{pjorg} + '%'
+        </if>
+        <if test="status != null and status !=''">
+            and a.status = #{status}
+        </if>
+        <if test="qiyemingcheng != null and qiyemingcheng !=''">
+            and b.qiyemingcheng like '%' + #{qiyemingcheng} + '%'
+        </if>
+        <if test="startTime != null and startTime !=''">
+            and a.lurushijian &gt;= #{startTime}
+        </if>
+        <if test="endTime != null and endTime !=''">
+            and a.lurushijian &lt; #{endTime}
+        </if>
+         )t
+    </select>
+
+    <select id="selectOne"
+            parameterType="com.winpow.services.manage.declare.bean.DeclarePJ"
+            resultType="com.winpow.services.manage.declare.bean.DeclarePJ">
+        SELECT TOP 1
+        a.id,
+        a.userid,
+        a.zcfx,
+        a.pjorg,
+        a.pjjg,
+        a.pjsj,
+        a.pjfy,
+        a.sbje,
+        a.xtjsje,
+        a.status,a.pichi,
+        a.memo,
+        a.lurushijian,
+        a.inputuser,
+        a.lastchgtime,
+        a.zlsfwz,
+        b.qiyemingcheng
+        from tb_sb_pj a left join 
+		(select t.* from(select b.*,row_number() over (partition by userid order by lurushijian desc) rn from tb_sb_base b) t where rn=1)b
+		on a.userid = b.userid  where a.id=#{id}
+        <if test="pichi != null  and pichi != ''">
+            and a.pichi = #{pichi}
+        </if>
+    </select>
+
+    <select id="selectAllList"
+            parameterType="com.winpow.services.manage.declare.bean.DeclarePJ"
+            resultType="com.winpow.services.manage.declare.bean.DeclarePJ">
+        SELECT
+        id,
+        userid,
+        zcfx,
+        pjorg,
+        pjjg,
+        pjsj,
+        pjfy,
+        sbje,
+        xtjsje,
+        status,pichi, 
+        memo,
+        lurushijian,
+        inputuser,
+        lastchgtime,
+        zlsfwz
+        from  tb_sb_pj t where 1=1
+        <if test="userid != null and userid !=''">
+            and userid = #{userid}
+        </if>
+        <if test="pichi != null  and pichi != ''">
+            and pichi = #{pichi}
+        </if>
+    </select>
+
+    <insert id="insert"
+            parameterType="com.winpow.services.manage.declare.bean.DeclarePJ" useGeneratedKeys="true"
+            keyProperty="id">
+		insert into tb_sb_pj (
+													 	userid,
+													 	zcfx,
+													 	pjorg,
+													 	pjjg,
+													 	pjsj,
+													 	pjfy,
+													 	sbje,
+													 	xtjsje,
+													 	status,pichi, 
+													 	memo,
+													 	lurushijian,
+													 	inputuser,
+													  lastchgtime,
+													  zlsfwz
+			 						) values (
+				 										 	#{userid},
+				 										 	#{zcfx},
+				 										 	#{pjorg},
+				 										 	#{pjjg},
+				 										 	#{pjsj},
+				 										 	#{pjfy},
+				 										 	#{sbje},
+				 										 	#{xtjsje},
+				 										 	#{status},#{pichi},
+				 										 	#{memo},
+				 										 	getdate(),
+				 										 	#{inputuser},
+				 											getdate(),
+				 											#{zlsfwz}
+				 						)
+	</insert>
+
+    <update id="update"
+            parameterType="com.winpow.services.manage.declare.bean.DeclarePJ">
+        update tb_sb_pj set
+
+        <if test=" userid !=null and  userid !=''">
+            userid=#{userid},
+        </if>
+
+        <if test=" zcfx !=null and  zcfx !=''">
+            zcfx=#{zcfx},
+        </if>
+
+        <if test=" pjorg !=null and  pjorg !=''">
+            pjorg=#{pjorg},
+        </if>
+
+        <if test=" pjjg !=null and  pjjg !=''">
+            pjjg=#{pjjg},
+        </if>
+
+        <if test=" pjsj !=null and  pjsj !=''">
+            pjsj=#{pjsj},
+        </if>
+
+        <if test=" pjfy !=null and  pjfy !=''">
+            pjfy=#{pjfy},
+        </if>
+
+        <if test=" sbje !=null and  sbje !=''">
+            sbje=#{sbje},
+        </if>
+
+        <if test=" xtjsje !=null  ">
+            xtjsje=#{xtjsje},
+        </if>
+
+        <if test=" status !=null and  status !=''">
+            status=#{status},
+        </if>
+
+        <if test=" memo !=null and  memo !=''">
+            memo=#{memo},
+        </if>
+
+        <if test=" zlsfwz !=null and  zlsfwz !=''">
+            zlsfwz=#{zlsfwz},
+        </if>
+
+            lastchgtime=getdate()
+
+        where id=#{id}
+    </update>
+    <delete id="delete">
+        delete tb_sb_pj where id=#{id}
+    </delete>
+</mapper>  

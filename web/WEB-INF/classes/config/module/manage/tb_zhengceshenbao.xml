@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE mapper PUBLIC 
+"-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="manage">
+	
+	<select id="manage.zhengceshenbao.selectPageList" parameterType="com.winpow.services.manage.zhengceshenbao.bean.Zhengceshenbao" resultType="hashMap">
+	select * from (
+		SELECT  ROW_NUMBER() over(order by id) as  rownumber ,
+								 	id,
+			 								 	mingcheng,
+			 								 	time,
+			 								 	shifoukaifang,
+			 								 	shiyingqunti,
+			 								 	hexinneirong,
+			 								 	xiangxineirong,
+			 								 	fujian,
+			 								 	shenbaolujing,
+			 								 	lurushijian,
+			 								 	inputuser,
+			 								  lastchangetime
+			 		   from tb_zhengceshenbao where 1=1  
+			 		   <if test="mingcheng!=null and mingcheng!=''">
+			and  mingcheng like  '%'+#{mingcheng}+'%' 
+			</if>
+			<if test="shifoukaifang!=null and shifoukaifang!=''">
+			and  shifoukaifang like  '%'+#{shifoukaifang}+'%' 
+			</if>)t  where 1=1  and   rownumber &gt; = #{offset} and rownumber &lt; = #{pageSize}+#{offset} 
+	</select>
+	<select id="manage.zhengceshenbao.selectPageCount" parameterType="com.winpow.services.manage.zhengceshenbao.bean.Zhengceshenbao" resultType="java.lang.Integer">
+		
+			select count(*) from (
+					SELECT  ROW_NUMBER() over(order by id) as  rownumber ,
+																	 	id,
+						 																	 	mingcheng,
+						 																	 	time,
+						 																	 	shifoukaifang,
+						 																	 	shiyingqunti,
+						 																	 	hexinneirong,
+						 																	 	xiangxineirong,
+						 																	 	fujian,
+						 																	 	shenbaolujing,
+						 																	 	lurushijian,
+						 																	 	inputuser,
+						 																	  lastchangetime
+						 								   from tb_zhengceshenbao )t  
+
+	</select>
+	
+	<select id="manage.zhengceshenbao.selectOne" parameterType="com.winpow.services.manage.zhengceshenbao.bean.Zhengceshenbao" resultType="com.winpow.services.manage.zhengceshenbao.bean.Zhengceshenbao">
+			SELECT  
+											 	id,
+				 											 	mingcheng,
+				 											 	time,
+				 											 	shifoukaifang,
+				 											 	shiyingqunti,
+				 											 	hexinneirong,
+				 											 	xiangxineirong,
+				 											 	fujian,
+				 											 	shenbaolujing,
+				 											 	lurushijian,
+				 											 	inputuser,
+				 											  lastchangetime
+				 						  from tb_zhengceshenbao t  where 1=1  
+			<if test="id!=null and id!=''">
+				and t.id=#{id}
+			</if>
+	</select>
+	
+	<select id="manage.zhengceshenbao.selectCount" parameterType="com.winpow.services.manage.zhengceshenbao.bean.Zhengceshenbao" resultType="int">
+			select count(*)  
+				 FROM tb_zhengceshenbao t  where 1=1  
+				<if test="id!=null and id!=''">
+					and t.id=#{id}
+				</if>
+	</select>
+	
+	<select id="manage.zhengceshenbao.selectOneByCondition" parameterType="com.winpow.services.manage.zhengceshenbao.bean.Zhengceshenbao" resultType="com.winpow.services.manage.zhengceshenbao.bean.Zhengceshenbao">
+			SELECT  
+											 	id,
+				 											 	mingcheng,
+				 											 	time,
+				 											 	shifoukaifang,
+				 											 	shiyingqunti,
+				 											 	hexinneirong,
+				 											 	xiangxineirong,
+				 											 	fujian,
+				 											 	shenbaolujing,
+				 											 	lurushijian,
+				 											 	inputuser,
+				 											  lastchangetime
+				 					 from  tb_zhengceshenbao   t  where 1=1  
+			<if test="id!=null and id!=''">
+				and t.id=#{id}
+			</if>
+	</select>
+	
+	
+	
+		<select id="manage.zhengceshenbao.selectList" parameterType="com.winpow.services.manage.zhengceshenbao.bean.Zhengceshenbao" resultType="com.winpow.services.manage.zhengceshenbao.bean.Zhengceshenbao">
+			SELECT  
+											 	id,
+				 											 	mingcheng,
+				 											 	time,
+				 											 	shifoukaifang,
+				 											 	shiyingqunti,
+				 											 	hexinneirong,
+				 											 	xiangxineirong,
+				 											 	fujian,
+				 											 	shenbaolujing,
+				 											 	lurushijian,
+				 											 	inputuser,
+				 											  lastchangetime
+				 					 from  tb_zhengceshenbao   t  where 1=1  
+			<if test="id!=null and id!=''">
+				and t.id=#{id}
+			</if>
+			order by lurushijian asc
+	</select>
+
+	<select id="manage.zhengceshenbao.selectFrontCount" parameterType="String" resultType="hashMap">
+						
+     select sum(case when status='aaaaaaaaaaaaaaaaaaaaaaaaaaaaa080' then m.tt end) as uncommitted  ,sum(case when status='aaaaaaaaaaaaaaaaaaaaaaaaaaaaa081' then m.tt end) as committed  ,sum(case when status='aaaaaaaaaaaaaaaaaaaaaaaaaaaaa083' then m.tt end) as passed  ,sum(case when status='aaaaaaaaaaaaaaaaaaaaaaaaaaaaa084' then m.tt end) as backed    from (
+   select status ,count(*) as tt from  ( select 'Tb_interest_app' as t ,id,stat as status from Tb_interest_app where USERID = #{userId}  and lurushijian &gt; '2017-1-1' UNION ALL select 'tb_sb_btz' as t ,id,status from tb_sb_btz where STATUS is not null and USERID = #{userId}  UNION ALL select'tb_sb_czbg' as t , id,status from tb_sb_czbg where STATUS is not null and USERID = #{userId}  UNION ALL select'tb_sb_gfzgz' as t , id,status from tb_sb_gfzgz where STATUS is not null and USERID = #{userId}  UNION ALL select'tb_sb_ipo' as t , id,status from tb_sb_ipo where STATUS is not null and USERID = #{userId}  UNION ALL select'tb_sb_jwzb' as t , id,status from tb_sb_jwzb where STATUS is not null and USERID = #{userId}  UNION ALL select'tb_sb_pj' as t , id,status from tb_sb_pj where STATUS is not null and USERID = #{userId}  UNION ALL select 'tb_sb_ssgp' as t ,id,status from tb_sb_ssgp where STATUS is not null and USERID = #{userId}  UNION ALL select 'tb_sb_yggqjl' as t ,id,status from tb_sb_yggqjl where STATUS is not null and USERID = #{userId}  UNION ALL select'tb_sb_zzgb' as t , id,status from tb_sb_zzgb where STATUS is not null and USERID =  #{userId}  UNION ALL select'tb_sb_kjbx' as t , id,status from tb_sb_kjbx where STATUS is not null and USERID =  #{userId}  UNION ALL select'tb_sb_rzzn' as t , id,status from tb_sb_rzzn where STATUS is not null and USERID =  #{userId}  UNION ALL select'tb_sb_zwrz' as t , id,status from tb_sb_zwrz where STATUS is not null and USERID =  #{userId}  ) a   group by status
+   )  m
+   
+   </select>
+
+
+	
+	<insert id="manage.zhengceshenbao.insert" parameterType="com.winpow.services.manage.zhengceshenbao.bean.Zhengceshenbao" useGeneratedKeys="true" 
+		keyProperty="id">
+	 		insert into tb_zhengceshenbao ( 
+	 								 	 
+													 	mingcheng,
+													 	time,
+													 	shifoukaifang,
+													 	shiyingqunti,
+													 	hexinneirong,
+													 	xiangxineirong,
+													 	fujian,
+													 	shenbaolujing,
+													 	lurushijian,
+													 	inputuser,
+													  lastchangetime
+			 						) values ( 
+										 	 
+				 										 	#{mingcheng},
+				 										 	#{time},
+				 										 	#{shifoukaifang},
+				 										 	#{shiyingqunti},
+				 										 	#{hexinneirong},
+				 										 	#{xiangxineirong},
+				 										 	#{fujian},
+				 										 	#{shenbaolujing},
+				 										 	getdate(),
+				 										 	#{inputuser},
+				 											getdate()
+				 						)
+		 
+	</insert>
+	
+	<update id="manage.zhengceshenbao.update" parameterType="com.winpow.services.manage.zhengceshenbao.bean.Zhengceshenbao">
+		update tb_zhengceshenbao set 
+                     
+		
+				 			                <if test=" mingcheng !=null and  mingcheng !=''">
+                        mingcheng=#{mingcheng},
+                        </if>
+		
+				 			                <if test=" time !=null and  time !=''">
+                        time=#{time},
+                        </if>
+		
+				 			                <if test=" shifoukaifang !=null and  shifoukaifang !=''">
+                        shifoukaifang=#{shifoukaifang},
+                        </if>
+		
+				 			                <if test=" shiyingqunti !=null and  shiyingqunti !=''">
+                        shiyingqunti=#{shiyingqunti},
+                        </if>
+		
+				 			                <if test=" hexinneirong !=null and  hexinneirong !=''">
+                        hexinneirong=#{hexinneirong},
+                        </if>
+		
+				 			                <if test=" xiangxineirong !=null and  xiangxineirong !=''">
+                        xiangxineirong=#{xiangxineirong},
+                        </if>
+		
+				 			                <if test=" fujian !=null and  fujian !=''">
+                        fujian=#{fujian},
+                        </if>
+		
+				 			                <if test=" shenbaolujing !=null and  shenbaolujing !=''">
+                        shenbaolujing=#{shenbaolujing},
+                        </if>
+		
+				 			                <if test=" lurushijian !=null and  lurushijian !=''">
+                        lurushijian=#{lurushijian},
+                        </if>
+		
+				 			                <if test=" inputuser !=null and  inputuser !=''">
+                        inputuser=#{inputuser},
+                        </if>
+		
+                        lastchangetime=getdate()
+         						 
+		where id=#{id}
+	</update>
+	
+</mapper>  

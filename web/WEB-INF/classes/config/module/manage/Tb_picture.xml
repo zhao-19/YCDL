@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC 
+"-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="manage">
+
+	<select id="manage.picture.selectPageList" parameterType="com.winpow.services.manage.picture.bean.Picture"
+		resultType="com.winpow.services.manage.picture.bean.Picture">
+		SELECT
+		id,
+		rele_table,
+		rele_id,
+		leixing,
+		picurl,
+		reducepath,
+		lurushijian,
+		inputuser,
+		lastchgtime
+		from Tb_picture t where 1=1
+		<if test="rele_id!=null and rele_id!=''">
+			and t.rele_id=#{rele_id}
+		</if>
+	</select>
+	
+	<select id="manage.picture.selectPageCount" parameterType="com.winpow.services.manage.picture.bean.Picture"
+		resultType="java.lang.Integer">
+		select count(*) from (
+		SELECT ROW_NUMBER() over(order by lastchgtime desc) as rownumber ,
+		id,
+		rele_table,
+		rele_id,
+		leixing,
+		picurl,
+		reducepath,
+		lurushijian,
+		inputuser,
+		lastchgtime
+		from Tb_picture )t
+	</select>
+
+	<select id="manage.picture.selectOne" parameterType="com.winpow.services.manage.picture.bean.Picture"
+		resultType="com.winpow.services.manage.picture.bean.Picture">
+		SELECT
+		id,
+		rele_table,
+		rele_id,
+		leixing,
+		picurl,
+		reducepath,
+		lurushijian,
+		inputuser,
+		lastchgtime
+		from Tb_picture t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+	</select>
+
+	<select id="manage.picture.selectCount" parameterType="com.winpow.services.manage.picture.bean.Picture"
+		resultType="int">
+		select count(*)
+		FROM Tb_picture t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+	</select>
+
+	<select id="manage.picture.selectOneByCondition" parameterType="com.winpow.services.manage.picture.bean.Picture"
+		resultType="com.winpow.services.manage.picture.bean.Picture">
+		SELECT
+		id,
+		rele_table,
+		rele_id,
+		leixing,
+		picurl,
+		reducepath,
+		lurushijian,
+		inputuser,
+		lastchgtime
+		from Tb_picture t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+	</select>
+
+	<select id="manage.picture.selectList" parameterType="com.winpow.services.manage.picture.bean.Picture"
+		resultType="com.winpow.services.manage.picture.bean.Picture">
+		SELECT id,
+		rele_table,
+		rele_id,
+		c.Code_name as Leixing_trans,
+		Leixing,
+		picurl,
+		reducepath,
+		lurushijian,
+		inputuser,
+		lastchgtime
+		from Tb_picture tt left join tb_code c on tt.Leixing=c.pk_codeid where
+		tt.rele_id=#{rele_id} and tt.rele_table=#{rele_table} order by Leixing
+		asc
+	</select>
+
+	<select id="manage.picture.selectPicByLeiXingList"
+		parameterType="map" resultType="com.winpow.services.manage.picture.bean.Picture">
+		<foreach collection="leixing" index="index" item="item"
+			separator="UNION ALL">
+			select * from Tb_picture where Rele_table =
+			#{rele_table} and Rele_id = #{rele_id} and Leixing = #{item}
+		</foreach>
+	</select>
+
+	<insert id="manage.picture.insert" parameterType="com.winpow.services.manage.picture.bean.Picture"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into Tb_picture (
+			rele_table,
+			rele_id,
+			leixing,
+			picurl,
+			reducepath,
+			lurushijian,
+			inputuser,
+			lastchgtime
+			) values (
+			#{rele_table},
+			#{rele_id},
+			#{leixing},
+			#{picurl},
+			#{reducepath},
+			getdate(),
+			#{inputuser},
+			getdate()
+		)
+	</insert>
+
+	<update id="manage.picture.update" parameterType="com.winpow.services.manage.picture.bean.Picture">
+		update Tb_picture set
+		<if test=" rele_table !=null and  rele_table !=''">
+			rele_table=#{rele_table},
+		</if>
+
+		<if test=" rele_id !=null and  rele_id !=''">
+			rele_id=#{rele_id},
+		</if>
+
+		<if test=" leixing !=null and  leixing !=''">
+			leixing=#{leixing},
+		</if>
+
+		<if test="picurl!=null and picurl !=''">
+			picurl=#{picurl},
+		</if>
+		
+		<if test="reducepath!=null and reducepath !=''">
+			reducepath=#{reducepath},
+		</if>
+		lastchgtime=getdate()
+		where id=#{id}
+	</update>
+	
+	<delete id="manage.picture.delete" parameterType="com.winpow.services.manage.picture.bean.Picture">
+		delete from tb_picture where rele_table=#{rele_table} and rele_id = #{rele_id}
+	</delete>
+
+	<delete id="manage.picture.deletebyurlid" parameterType="com.winpow.services.manage.picture.bean.Picture">
+		delete from tb_picture where rele_id=#{rele_id} and id = #{id}
+	</delete>
+
+	<delete id="manage.picture.deleteById" parameterType="com.winpow.services.manage.picture.bean.Picture">
+		delete from tb_picture where id = #{id}
+	</delete>
+	
+	<select id="manage.picture.selectByInputuser" parameterType="string" resultType="com.winpow.services.manage.picture.bean.Picture">
+		select * from tb_picture where inputuser=#{inputuser} order by lurushijian desc
+	</select>
+</mapper>  

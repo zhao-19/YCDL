@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE mapper PUBLIC 
+"-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="manage">
+	
+	<select id="manage.productczdgdqq.selectPageList" parameterType="com.winpow.services.manage.productczdgdqq.bean.Productczdgdqq" resultType="hashMap">
+	select * from (
+		SELECT  ROW_NUMBER() over(order by id) as  rownumber ,
+								 	id,
+			 								 	releid,
+			 								 	gudongmingcheng,
+			 								 	chuzijine,
+			 								 	zhanbi,
+			 								 	lurushijian,
+			 								 	inputuser,
+			 								  lastchgtime
+			 		   from Tb_product_czd_gdqq )t  where rownumber &gt; = #{offset} and rownumber &lt; = #{pageSize}+#{offset} 
+	</select>
+	<select id="manage.productczdgdqq.selectPageCount" parameterType="com.winpow.services.manage.productczdgdqq.bean.Productczdgdqq" resultType="java.lang.Integer">
+		
+			select count(*) from (
+					SELECT  ROW_NUMBER() over(order by id) as  rownumber ,
+																	 	id,
+						 																	 	releid,
+						 																	 	gudongmingcheng,
+						 																	 	chuzijine,
+						 																	 	zhanbi,
+						 																	 	lurushijian,
+						 																	 	inputuser,
+						 																	  lastchgtime
+						 								   from Tb_product_czd_gdqq )t  
+
+	</select>
+	
+	<select id="manage.productczdgdqq.selectOne" parameterType="com.winpow.services.manage.productczdgdqq.bean.Productczdgdqq" resultType="com.winpow.services.manage.productczdgdqq.bean.Productczdgdqq">
+			SELECT  
+											 	id,
+				 											 	releid,
+				 											 	gudongmingcheng,
+				 											 	chuzijine,
+				 											 	zhanbi,
+				 											 	lurushijian,
+				 											 	inputuser,
+				 											  lastchgtime
+				 						  from Tb_product_czd_gdqq t  where 1=1  
+			<if test="id!=null and id!=''">
+				and t.id=#{id}
+			</if>
+	</select>
+	
+	<select id="manage.productczdgdqq.selectCount" parameterType="com.winpow.services.manage.productczdgdqq.bean.Productczdgdqq" resultType="int">
+			select count(*)  
+				 FROM Tb_product_czd_gdqq t  where 1=1  
+				<if test="id!=null and id!=''">
+					and t.id=#{id}
+				</if>
+	</select>
+	
+	<select id="manage.productczdgdqq.selectOneByCondition" parameterType="com.winpow.services.manage.productczdgdqq.bean.Productczdgdqq" resultType="com.winpow.services.manage.productczdgdqq.bean.Productczdgdqq">
+			SELECT  
+											 	id,
+				 											 	releid,
+				 											 	gudongmingcheng,
+				 											 	chuzijine,
+				 											 	zhanbi,
+				 											 	lurushijian,
+				 											 	inputuser,
+				 											  lastchgtime
+				 					 from  Tb_product_czd_gdqq   t  where 1=1  
+			<if test="id!=null and id!=''">
+				and t.id=#{id}
+			</if>
+	</select>
+	
+	
+	
+		<select id="manage.productczdgdqq.selectList" parameterType="com.winpow.services.manage.productczdgdqq.bean.Productczdgdqq" resultType="com.winpow.services.manage.productczdgdqq.bean.Productczdgdqq">
+			SELECT  
+											 	id,
+				 											 	releid,
+				 											 	gudongmingcheng,
+				 											 	chuzijine,
+				 											 	zhanbi,
+				 											 	lurushijian,
+				 											 	inputuser,
+				 											  lastchgtime
+				 					 from  Tb_product_czd_gdqq   t  where 1=1  
+			and t.releid=#{releid}
+	</select>
+	
+	
+	
+	
+	<insert id="manage.productczdgdqq.insert" parameterType="com.winpow.services.manage.productczdgdqq.bean.Productczdgdqq" useGeneratedKeys="true" 
+		keyProperty="id">
+	 		insert into Tb_product_czd_gdqq ( 
+	 								  
+													 	releid,
+													 	gudongmingcheng,
+													 	chuzijine,
+													 	zhanbi,
+													 	lurushijian,
+													 	inputuser,
+													  lastchgtime
+			 						) values ( 
+										  
+				 										 	#{releid},
+				 										 	#{gudongmingcheng},
+				 										 	#{chuzijine},
+				 										 	#{zhanbi},
+				 										 	getdate(),
+				 										 	#{inputuser},
+				 											getdate()
+				 						)
+		 
+	</insert>
+	
+	<update id="manage.productczdgdqq.update" parameterType="com.winpow.services.manage.productczdgdqq.bean.Productczdgdqq">
+		update Tb_product_czd_gdqq set 
+                        
+				 			 
+				 			                <if test=" gudongmingcheng !=null and  gudongmingcheng !=''">
+                        gudongmingcheng=#{gudongmingcheng},
+                        </if>
+		
+				 			                <if test=" chuzijine !=null and  chuzijine !=''">
+                        chuzijine=#{chuzijine},
+                        </if>
+		
+				 			                <if test=" zhanbi !=null and  zhanbi !=''">
+                        zhanbi=#{zhanbi},
+                        </if>
+		
+				 			                <if test=" lurushijian !=null and  lurushijian !=''">
+                        lurushijian=#{lurushijian},
+                        </if>
+		
+				 			                <if test=" inputuser !=null and  inputuser !=''">
+                        inputuser=#{inputuser},
+                        </if>
+		 				 lastchgtime=getdate()
+		where id=#{id} and releid=#{releid}
+	</update>
+	<delete id="manage.productczdgdqq.delete" parameterType="com.winpow.services.manage.productczdgdqq.bean.Productczdgdqq" >
+		 delete  from Tb_product_czd_gdqq  where 1=1  
+			<if test="id!=null and id!=''">
+				and id=#{id}
+			</if>
+			<if test="releid!=null and releid!=''">
+				and releid=#{releid}
+			</if>
+			<if test="inputuser!=null and inputuser!=''">
+				and inputuser=#{inputuser}
+			</if>
+			
+	</delete>
+</mapper>  

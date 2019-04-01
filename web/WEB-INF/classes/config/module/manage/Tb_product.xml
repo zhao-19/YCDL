@@ -1,0 +1,703 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+"-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="manage.product">
+
+	<select id="manage.product.selectPageList" parameterType="com.winpow.services.manage.product.bean.Product"
+		resultType="hashMap">
+		select * from (
+		SELECT
+        ROW_NUMBER() over(order by lastchgtime desc) as rownumber ,* from (
+        select 
+        tp.id as id,
+        tp.prodid as prodid,
+        tp.prodname as prodname,
+        Replace(tp.loangur,' ','')  loangur,
+        tp.loanterm as loanterm,
+        tp.loanamt as loanamt,
+        tp.loanbonus as loanbonus,
+        tp.bonusper as bonusper,
+        tp.retutype as retutype,
+        tp.loanrate as loanrate,
+        tp.loanarea as loanarea,
+        tp.loancondition as loancondition,
+        tp.productdetail as productdetail,
+        tp.biaoqian as biaoqian,
+        tp.openstat as openstat,
+        tp.lurushijian as lurushijian,
+        tp.inputuser as inputuser,
+        tp.loantermmax as loantermmax,
+        tp.loanamtmax as loanamtmax,
+        Replace(tp.banks,' ','')  as banks,
+        tp.shifoutuijian as shifoutuijian,
+        tp.tuijianpic as tuijianpic,
+        tp.lastchgtime as lastchgtime,
+        tp.product_type as product_type,
+        tp.rele_type as rele_type,
+        tp.rele_bankid as rele_bankid,
+        tp.rele_userid as rele_userid,
+        tp.datasource as datasource,
+        tp.appid as appid,
+        tp.guaranteefee as guaranteefee,
+        tp.servicecharge as servicecharge,
+        tp.totalcost as totalcost,
+        tp.banliliuc as banliliuc,
+        tp.description as description,
+        tp.sort as sort,
+        case when tq.qiyemingcheng is not null then tq.qiyemingcheng when tj.JIGOUMINGCHENG IS not null then tj.JIGOUMINGCHENG   when too.org_name IS not null then too.org_name else '' end as agencyname
+        from Tb_product tp left join tb_Qiye tq on tp.rele_bankid = tq.PK_QIYEID left join Tb_jigou tj on tp.rele_bankid = tj.id left join tb_other_org too on tp.rele_bankid = too.id
+         ) t1 where 1=1
+         <if test="openstat !=null and openstat !=''">
+            and openstat = #{openstat}
+        </if>
+         <if test="description !=null and description !=''">
+            and description like '%'+#{description}+'%'
+        </if>
+        <if test="agencyname !=null and agencyname !=''">
+            and agencyname like '%'+#{agencyname}+'%'
+        </if>
+        <if test="product_type !=null and product_type!=''">
+            and product_type = #{product_type}
+        </if>
+		<if test="prodname !=null and prodname!=''">
+			and prodname like '%'+#{prodname}+'%'
+		</if>
+
+		<if test="loanamtmax!=null and loanamtmax!=''">
+			and loanamtmax &gt; = #{loanamtmax}
+		</if>
+		<if test="loantermmax!=null and loantermmax!=''">
+			and loantermmax &gt; = #{loantermmax}
+		</if>
+		<if test="loangur !=null and loangur!=''">
+			and loangur like '%'+#{loangur}+'%'
+		</if>
+		)t where rownumber &gt; = #{offset} and rownumber &lt; =
+		#{pageSize}+#{offset}
+	</select>
+	
+	<select id="manage.product.selectPageList2" parameterType="com.winpow.services.manage.product.bean.Product"
+		resultType="hashMap">
+		select top ${pageSize} * from (
+			select row_number() over(order by ${lurushijian}) as rownumber ,* 
+			from tb_product where 1=1
+			<if test="prodname != null and prodname != ''">
+				and prodname like '%'+#{prodname}+'%'
+			</if>
+			<if test="description != null and description != ''">
+				and description like '%'+#{description}+'%'
+			</if>
+			<if test="product_type != null and product_type != ''">
+				and product_type =#{product_type}
+			</if>
+			<if test="shifoutuijian != null and shifoutuijian != ''">
+				and shifoutuijian =#{shifoutuijian}
+			</if>
+			<if test="substation != null and substation != ''">
+				and substation=#{substation}
+			</if>
+	    ) a where rownumber > ${pageSize}*(${offset} - 1)
+	</select>
+
+	<select id="manage.product.select4index" parameterType="com.winpow.services.manage.product.bean.Product"
+		resultType="com.winpow.services.manage.product.bean.Product">
+		select * from (
+		SELECT ROW_NUMBER() over(order by id) as
+		rownumber ,
+		id,
+		prodid,
+		prodname,
+		Replace(loangur,' ','') loangur,
+		loanterm,
+		loanamt,
+		loanbonus,
+		bonusper,
+		retutype,
+		loanrate,
+		loanarea,
+		loancondition,productdetail,
+		biaoqian,
+		openstat,
+		lurushijian,
+		inputuser,
+		loantermmax,
+		loanamtmax,Replace(banks,' ','') banks,
+		shifoutuijian,
+		tuijianpic,
+		lastchgtime,
+		product_type,
+		rele_type,
+		rele_bankid,
+		rele_userid,
+		datasource,
+		appid,
+        guaranteefee,
+        servicecharge,
+        totalcost,banliliuc,
+        description,sort
+		from Tb_product where openstat='10001')t
+	</select>
+
+	<select id="manage.product.selectrecommend" parameterType="com.winpow.services.manage.product.bean.Product"
+		resultType="com.winpow.services.manage.product.bean.Product">
+		select top (1) * from tb_product where shifoutuijian='10001' order by lastchgtime desc
+	</select>
+
+	<select id="manage.product.selectPageCount" parameterType="com.winpow.services.manage.product.bean.Product"
+		resultType="java.lang.Integer">
+		select count(*) from Tb_product where 1=1
+        <if test="prodname != null and prodname != ''">
+			and prodname like '%'+#{prodname}+'%'
+		</if>
+		<if test="description != null and description != ''">
+			and description like '%'+#{description}+'%'
+		</if>
+		<if test="product_type != null and product_type != ''">
+			and product_type =#{product_type}
+		</if>
+		<if test="shifoutuijian != null and shifoutuijian != ''">
+			and shifoutuijian =#{shifoutuijian}
+		</if>
+		<if test="substation != null and substation != ''">
+			and substation=#{substation}
+		</if>
+	</select>
+
+	<select id="manage.product.selectOne" parameterType="com.winpow.services.manage.product.bean.Product"
+		resultType="com.winpow.services.manage.product.bean.Product">
+		select * from tb_product t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+	</select>
+	
+	<select id="manage.product.selectProOne" parameterType="com.winpow.services.manage.product.bean.Product"
+		resultType="com.winpow.services.manage.product.bean.Product">
+		select top(1) * from tb_product where 1=1
+		<if test="id!=null and id!=''">
+			and id=#{id}
+		</if>
+		<if test="prodname!=null and prodname!=''">
+			and prodname=#{prodname}
+		</if>
+	</select>
+
+	<select id="manage.product.selectCount" parameterType="com.winpow.services.manage.product.bean.Product"
+		resultType="int">
+		select count(*) from tb_product where 1=1
+		<if test="id!=null and id!=''">
+			and id=#{id}
+		</if>
+	</select>
+
+	<select id="manage.product.selectList" parameterType="com.winpow.services.manage.product.bean.Product"
+		resultType="com.winpow.services.manage.product.bean.Product">
+		select * from tb_product t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+		<if test="substation != null and substation != ''">
+			and t.substation = #{substation}
+		</if>
+		<if test="openstat != null and openstat != ''">
+			and t.openstat = #{openstat}
+		</if>
+		order by product_type,sort desc
+	</select>
+	
+	<select id="manage.product.selectOneByCondition" parameterType="com.winpow.services.manage.product.bean.Product"
+		resultType="com.winpow.services.manage.product.bean.Product">
+		select * from tb_product t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+	</select>
+
+	<insert id="manage.product.insert" parameterType="com.winpow.services.manage.product.bean.Product"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into Tb_product (
+
+		prodid,
+		prodname,
+		loangur,
+		loanterm,
+		loanamt,
+		loanbonus,
+		bonusper,
+		retutype,
+		loanrate,
+		loanarea,
+		loancondition,productdetail,
+		biaoqian,
+		openstat,
+		lurushijian,
+		inputuser,
+		loantermmax,
+		loanamtmax,
+		banks,
+		shifoutuijian,
+		tuijianpic,
+		lastchgtime,
+		product_type,
+		rele_type,
+		rele_bankid,
+		rele_userid,
+		datasource,
+		appid,
+        guaranteefee,
+        servicecharge,
+        totalcost,
+        description,
+        banliliuc,sort,applytimes,flowno,substation,longitude,latitude,usedistrict,loanusage
+		) values (
+
+		#{prodid},
+		#{prodname},
+		#{loangur},
+		#{loanterm},
+		#{loanamt},
+		#{loanbonus},
+		#{bonusper},
+		#{retutype},
+		#{loanrate},
+		#{loanarea},
+		#{loancondition},
+		#{productdetail},
+		#{biaoqian},
+		#{openstat},
+		getdate(),
+		#{inputuser},
+		#{loantermmax},
+		#{loanamtmax},
+		#{banks},
+		#{shifoutuijian},
+		#{tuijianpic},
+		getdate(),
+		#{product_type},
+		#{rele_type},
+		#{rele_bankid},
+		#{rele_userid},
+		#{datasource},
+		#{appid},
+        #{guaranteefee},
+        #{servicecharge},
+        #{totalcost},
+        #{description},
+        #{banliliuc},#{sort},#{applytimes},#{flowno}
+        <choose><when test="substation=='all'">,null</when><otherwise>,#{substation}</otherwise></choose>
+        ,#{longitude},#{latitude},#{usedistrict},#{loanusage}
+		)
+
+	</insert>
+
+	<update id="manage.product.update" parameterType="com.winpow.services.manage.product.bean.Product">
+		update tb_product set
+
+
+		<if test="prodid!=null and prodid!=''">
+			prodid=#{prodid},
+		</if>
+
+		<if test="prodname!=null and prodname!=''">
+			prodname=#{prodname},
+		</if>
+
+		<if test="loangur!=null and loangur!=''">
+			loangur=#{loangur},
+		</if>
+
+		<if test="loanterm!=null and loanterm!=''">
+			loanterm=#{loanterm},
+		</if>
+
+		<if test="loanamt!=null">
+			loanamt=#{loanamt},
+		</if>
+
+		<if test="loanbonus!=null and loanbonus!=''">
+			loanbonus=#{loanbonus},
+		</if>
+
+		<if test="bonusper!=null and bonusper!=''">
+			bonusper=#{bonusper},
+		</if>
+
+		<if test="retutype!=null and retutype!=''">
+			retutype=#{retutype},
+		</if>
+
+		<if test="loanrate!=null and loanrate!=''">
+			loanrate=#{loanrate},
+		</if>
+
+		<if test="loanarea!=null and loanarea!=''">
+			loanarea=#{loanarea},
+		</if>
+
+		<if test="loancondition!=null and loancondition!=''">
+			loancondition=#{loancondition},
+		</if>
+		<if test="productdetail!=null and productdetail!=''">
+			productdetail=#{productdetail},
+		</if>
+
+		<if test="biaoqian!=null and biaoqian!=''">
+			biaoqian=#{biaoqian},
+		</if>
+
+		<if test="openstat!=null and openstat!=''">
+			openstat=#{openstat},
+		</if>
+		<if test="inputuser!=null and inputuser!=''">
+			inputuser=#{inputuser},
+		</if>
+
+		<if test=" loantermmax !=null and  loantermmax !=''">
+			loantermmax=#{loantermmax},
+		</if>
+
+		<if test=" loanamtmax !=null and  loanamtmax !=''">
+			loanamtmax=#{loanamtmax},
+		</if>
+
+		<if test=" banks !=null and  banks !=''">
+			banks=#{banks},
+		</if>
+		
+		<if test=" banliliuc !=null and  banliliuc !=''">
+            banliliuc=#{banliliuc},
+        </if>
+
+		<if test=" shifoutuijian !=null and  shifoutuijian !=''">
+			shifoutuijian=#{shifoutuijian},
+		</if>
+
+		<if test="tuijianpic!=null and tuijianpic !=''">
+			tuijianpic=#{tuijianpic},
+		</if>
+		<if test="product_type!=null and product_type !=''">
+			product_type=#{product_type},
+		</if>
+		<if test="rele_type!=null and rele_type !=''">
+			rele_type=#{rele_type},
+		</if>
+		<if test="rele_bankid!=null and rele_bankid !=''">
+			rele_bankid=#{rele_bankid},
+		</if>
+		<if test="rele_userid!=null and rele_userid !=''">
+			rele_userid=#{rele_userid},
+		</if>
+		<if test="datasource!=null and datasource !=''">
+			datasource=#{datasource},
+		</if>
+		<if test="appid!=null and appid !=''">
+			appid=#{appid},
+		</if>
+		<if test="guaranteefee !=null and guaranteefee !=''">
+            guaranteefee=#{guaranteefee},
+        </if>
+        <if test="servicecharge !=null and servicecharge !=''">
+            servicecharge=#{servicecharge},
+        </if>
+        <if test="totalcost !=null and totalcost !=''">
+            totalcost=#{totalcost},
+        </if>
+        <if test="description !=null and description !=''">
+            description=#{description},
+        </if>
+        <if test="sort !=null">
+            sort=#{sort},
+        </if>
+        <if test="applytimes !=null">
+            applytimes=#{applytimes},
+        </if>
+        
+        <if test="flowno !=null and flowno !=''">
+            flowno=#{flowno},
+        </if>
+        
+        <if test="substation !=null and substation !=''">
+            substation=#{substation},
+        </if>
+        
+        <if test="longitude !=null and longitude !=''">
+            longitude=#{longitude},
+        </if>
+        
+        <if test="latitude !=null and latitude !=''">
+            latitude=#{latitude},
+        </if>
+        <if test="usedistrict !=null and usedistrict !=''">
+            usedistrict=#{usedistrict},
+        </if>
+        <if test="loanusage !=null and loanusage !=''">
+            loanusage=#{loanusage},
+        </if>
+		lastchgtime=getdate()
+
+		where id=#{id}
+	</update>
+	<update id="manage.product.releUpdate" parameterType="com.winpow.services.manage.product.bean.Product">
+        update tb_product set
+
+
+        <if test="prodid!=null and prodid!=''">
+            prodid=#{prodid},
+        </if>
+
+        <if test="prodname!=null and prodname!=''">
+            prodname=#{prodname},
+        </if>
+
+        <if test="loangur!=null and loangur!=''">
+            loangur=#{loangur},
+        </if>
+
+        <if test="loanterm!=null and loanterm!=''">
+            loanterm=#{loanterm},
+        </if>
+
+        <if test="loanamt!=null">
+            loanamt=#{loanamt},
+        </if>
+
+        <if test="loanbonus!=null and loanbonus!=''">
+            loanbonus=#{loanbonus},
+        </if>
+
+        <if test="bonusper!=null and bonusper!=''">
+            bonusper=#{bonusper},
+        </if>
+
+        <if test="retutype!=null and retutype!=''">
+            retutype=#{retutype},
+        </if>
+
+        <if test="loanrate!=null and loanrate!=''">
+            loanrate=#{loanrate},
+        </if>
+
+        <if test="loanarea!=null and loanarea!=''">
+            loanarea=#{loanarea},
+        </if>
+
+        <if test="loancondition!=null and loancondition!=''">
+            loancondition=#{loancondition},
+        </if>
+        <if test="productdetail!=null and productdetail!=''">
+            productdetail=#{productdetail},
+        </if>
+
+        <if test="biaoqian!=null and biaoqian!=''">
+            biaoqian=#{biaoqian},
+        </if>
+
+        <if test="openstat!=null and openstat!=''">
+            openstat=#{openstat},
+        </if>
+        <if test="inputuser!=null and inputuser!=''">
+            inputuser=#{inputuser},
+        </if>
+
+        <if test=" loantermmax !=null and  loantermmax !=''">
+            loantermmax=#{loantermmax},
+        </if>
+
+        <if test=" loanamtmax !=null and  loanamtmax !=''">
+            loanamtmax=#{loanamtmax},
+        </if>
+
+        <if test=" banks !=null and  banks !=''">
+            banks=#{banks},
+        </if>
+        
+        <if test=" banliliuc !=null and  banliliuc !=''">
+            banliliuc=#{banliliuc},
+        </if>
+
+        <if test=" shifoutuijian !=null and  shifoutuijian !=''">
+            shifoutuijian=#{shifoutuijian},
+        </if>
+
+        <if test="tuijianpic!=null and tuijianpic !=''">
+            tuijianpic=#{tuijianpic},
+        </if>
+        <if test="product_type!=null and product_type !=''">
+            product_type=#{product_type},
+        </if>
+        <if test="rele_type!=null and rele_type !=''">
+            rele_type=#{rele_type},
+        </if>
+        <if test="rele_bankid!=null and rele_bankid !=''">
+            rele_bankid=#{rele_bankid},
+        </if>
+        <if test="rele_bankid ==''">
+            rele_bankid=null,
+        </if>
+        <if test="rele_userid!=null and rele_userid !=''">
+            rele_userid=#{rele_userid},
+        </if>
+        <if test="rele_userid ==''">
+            rele_userid= null,
+        </if>
+        <if test="datasource!=null and datasource !=''">
+            datasource=#{datasource},
+        </if>
+        <if test="appid!=null and appid !=''">
+            appid=#{appid},
+        </if>
+        <if test=" appid ==''">
+            appid = null,
+        </if>
+        <if test="guaranteefee !=null and guaranteefee !=''">
+            guaranteefee=#{guaranteefee},
+        </if>
+        <if test="servicecharge !=null and servicecharge !=''">
+            servicecharge=#{servicecharge},
+        </if>
+        <if test="totalcost !=null and totalcost !=''">
+            totalcost=#{totalcost},
+        </if>
+        <if test="description !=null and description !=''">
+            description=#{description},
+        </if>
+        <if test="sort !=null and sort !=''">
+            sort=#{sort},
+        </if>
+        <if test="applytimes !=null">
+            applytimes=#{applytimes},
+        </if>
+        
+        <if test=" substation !=null and  substation !='' and substation != 'all'">
+            substation=#{substation},
+        </if>
+        
+        <if test=" substation !=null and  substation !='' and substation == 'all'">
+            substation = null,
+        </if>
+        
+        <if test="longitude !=null and longitude !=''">
+            longitude=#{longitude},
+        </if>
+        
+        <if test="latitude !=null and latitude !=''">
+            latitude=#{latitude},
+        </if>
+        
+        <if test="usedistrict !=null and usedistrict !=''">
+            usedistrict=#{usedistrict},
+        </if>
+        <if test="loanusage !=null and loanusage !=''">
+            loanusage=#{loanusage},
+        </if>
+        lastchgtime=getdate()
+
+        where id=#{id}
+    </update>
+	<select id="manage.product.selectPageLists" parameterType="com.winpow.services.manage.product.bean.Product"
+		resultType="com.winpow.services.manage.product.bean.Product">
+		select top ${pageSize} * from (
+			select row_number() over (order by ${lurushijian}) as rownumber,*,(select top(1) Logo_app from Tb_product_bank where ID = tp.banks) as imgurl 
+			from tb_product tp where openstat='10001'
+			<if test="product_type!=null and product_type !=''">
+	            and product_type in (${product_type})
+	        </if>
+	        <if test="prodname!=null and prodname !=''">
+	            and prodname like '%'+#{prodname}+'%'
+	        </if>
+	        
+	        <if test="loanarea!=null and loanarea !=''">
+	            and loanarea like '%'+#{loanarea}+'%'
+	        </if>
+	        <if test="loanamt !=null and loanamt !=''">
+	            and loanamt <![CDATA[<=]]> #{loanamt}
+	        </if>
+	        <if test="loantermmax !=null and loantermmax !=''">
+	            and loantermmax >= #{loantermmax}
+	        </if>
+	        <if test="loanrate !=null and loanrate !='' and loanrate=='10001'">
+	            and cast(loanrate as decimal(18, 5)) <![CDATA[<=]]> 4.35 * 1.2
+	        </if>
+	        <if test="loanrate !=null and loanrate !='' and loanrate=='10002'">
+	            and cast(loanrate as decimal(18, 5)) > 4.35 * 1.2
+	        </if>
+	        <if test="loangurs != null">
+	           	<foreach collection="loangurs" index="index" item="item" open="and (" separator="or" close=")">
+	            	loangur like '%'+#{item}+'%'
+	        	</foreach>
+	        </if>
+	        <if test="guaranteefee !=null and guaranteefee !='' and guaranteefee=='10001'">
+	            and guaranteefee != 0
+	        </if>
+	        <if test="guaranteefee !=null and guaranteefee !='' and guaranteefee=='10002'">
+	            and guaranteefee = 0
+	        </if>
+	        
+	        <if test="loanusage !=null and loanusage !=''">
+	            and loanusage = #{loanusage}
+	        </if>
+	        <if test="substation !=null and substation !=''">
+	            and substation = #{substation}
+	        </if>
+		) a where rownumber > ${pageSize}*(${offset} - 1)
+	</select>
+
+	<select id="manage.product.selectOneById" parameterType="com.winpow.services.manage.product.bean.Product"
+		resultType="hashMap">
+		SELECT
+		id,
+		prodid,
+		prodname,
+		Replace(loangur,' ','') loangur,
+		loanterm,
+		loanamt,
+		loanbonus,
+		bonusper,
+		retutype,
+		loanrate,
+		loanarea,
+		loancondition,productdetail,
+		biaoqian,
+		openstat,
+		lurushijian,
+		inputuser,
+		loantermmax,loanamtmax,
+		Replace(banks,' ','') banks,
+		shifoutuijian,
+		tuijianpic,banliliuc,
+		lastchgtime,
+		product_type,
+		rele_type,
+		rele_bankid,
+		rele_userid,
+		datasource,
+		appid,
+        guaranteefee,
+        servicecharge,
+        totalcost,
+        description,
+        sort,substation,longitude,latitude,
+		isnull(applytimes,0)+(select count(pkid) from tb_app_loan_app as la where la.proid = tp.id) + (select count(id) from tb_product_app where prodname=tp.prodname) as applyno,
+		(select logo_app from tb_product_bank where id = tp.banks) as imgurl,
+		(select bankname from tb_product_bank where id=tp.banks) as bankname
+		from tb_product as tp where 1=1
+		<if test="id!=null and id!=''">
+			and tp.id=#{id}
+		</if>
+	</select>
+	
+	<select id="manage.product.selectAllList" parameterType="com.winpow.services.manage.product.bean.Product"
+        resultType="com.winpow.services.manage.product.bean.Product">
+        select top 50 t1.* from tb_Product t1 left join tb_app_banner t2 on t2.appid = CONVERT(varchar(32),t1.ID) where t2.pkid is null order by LASTCHGTIME desc
+    </select>
+    
+    <select id="manage.product.selectLists" parameterType="com.winpow.services.manage.product.bean.Product"
+		resultType="com.winpow.services.manage.product.bean.Product">
+		select top(50) * from tb_product t where 1=1
+		<if test="prodname !=null and prodname!=''">
+			and prodname like '%'+#{prodname}+'%'
+		</if>
+		order by lurushijian desc
+	</select>
+</mapper>  

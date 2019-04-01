@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC 
+"-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="manage">
+
+	<select id="manage.tbemaillog.selectPageList"
+		parameterType="com.winpow.services.manage.tbemaillog.bean.Tbemaillog"
+		resultType="hashMap">
+		select * from (
+		SELECT ROW_NUMBER() over(order by id desc) as rownumber ,
+		id,
+		email_type,
+		rele_id,
+		rele_name,
+		company_name,
+		dest_email,
+		dest_name,
+		email_size,
+		status,
+		inputuser,
+		inputtime
+		from tb_email_log 
+		where 1=1 
+		<if test="rele_name!=null and rele_name!=''">
+			and  rele_name like  '%'+#{rele_name}+'%' 
+		</if>
+		<if test="dest_email!=null and dest_email!=''">
+			and  dest_email like  '%'+#{dest_email}+'%' 
+		</if>
+		)t where rownumber &gt; = #{offset} and rownumber &lt; =
+		#{pageSize}+#{offset}
+	</select>
+	<select id="manage.tbemaillog.selectPageCount"
+		parameterType="com.winpow.services.manage.tbemaillog.bean.Tbemaillog"
+		resultType="java.lang.Integer">
+
+		select count(*) from (
+		SELECT ROW_NUMBER() over(order by id) as rownumber ,
+		id,
+		email_type,
+		rele_id,
+		rele_name,
+		company_name,
+		dest_email,
+		dest_name,
+		email_size,
+		status,
+		inputuser,
+		inputtime
+		from tb_email_log 
+		where 1=1 
+		<if test="rele_name!=null and rele_name!=''">
+			and  rele_name like  '%'+#{rele_name}+'%' 
+		</if>
+		<if test="dest_email!=null and dest_email!=''">
+			and  dest_email like  '%'+#{dest_email}+'%' 
+		</if>
+		)t
+	</select>
+
+	<select id="manage.tbemaillog.selectOne"
+		parameterType="com.winpow.services.manage.tbemaillog.bean.Tbemaillog"
+		resultType="com.winpow.services.manage.tbemaillog.bean.Tbemaillog">
+		SELECT
+		id,
+		email_type,
+		rele_id,
+		rele_name,
+		company_name,
+		dest_email,
+		dest_name,
+		email_size,
+		status,
+		inputuser,
+		inputtime
+		from tb_email_log t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+	</select>
+
+	<select id="manage.tbemaillog.selectCount"
+		parameterType="com.winpow.services.manage.tbemaillog.bean.Tbemaillog"
+		resultType="int">
+		select count(*)
+		FROM tb_email_log t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+	</select>
+
+	<select id="manage.tbemaillog.selectOneByCondition"
+		parameterType="com.winpow.services.manage.tbemaillog.bean.Tbemaillog"
+		resultType="com.winpow.services.manage.tbemaillog.bean.Tbemaillog">
+		SELECT
+		id,
+		email_type,
+		rele_id,
+		rele_name,
+		company_name,
+		dest_email,
+		dest_name,
+		email_size,
+		status,
+		inputuser,
+		inputtime
+		from tb_email_log t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+	</select>
+
+
+
+	<select id="manage.tbemaillog.selectList"
+		parameterType="com.winpow.services.manage.tbemaillog.bean.Tbemaillog"
+		resultType="com.winpow.services.manage.tbemaillog.bean.Tbemaillog">
+		SELECT
+		id,
+		email_type,
+		rele_id,
+		rele_name,
+		company_name,
+		dest_email,
+		dest_name,
+		email_size,
+		status,
+		inputuser,
+		inputtime
+		from tb_email_log t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+	</select>
+
+
+
+
+	<insert id="manage.tbemaillog.insert"
+		parameterType="com.winpow.services.manage.tbemaillog.bean.Tbemaillog"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into tb_email_log (
+		email_type,
+		rele_id,
+		rele_name,
+		company_name,
+		dest_email,
+		dest_name,
+		email_size,
+		status,
+		inputuser,
+		inputtime
+		) values (
+		#{email_type},
+		#{rele_id},
+		#{rele_name},
+		#{company_name},
+		#{dest_email},
+		#{dest_name},
+		#{email_size},
+		#{status},
+		#{inputuser},
+		getdate()
+		)
+
+	</insert>
+
+	<update id="manage.tbemaillog.update"
+		parameterType="com.winpow.services.manage.tbemaillog.bean.Tbemaillog">
+		update tb_email_log set
+		<if test=" id !=null and  id !=''">
+			id=#{id},
+		</if>
+
+		<if test=" email_type !=null and  email_type !=''">
+			email_type=#{email_type},
+		</if>
+
+		<if test=" rele_id !=null and  rele_id !=''">
+			rele_id=#{rele_id},
+		</if>
+
+		<if test=" rele_name !=null and  rele_name !=''">
+			rele_name=#{rele_name},
+		</if>
+
+		<if test=" company_name !=null and  company_name !=''">
+			company_name=#{company_name},
+		</if>
+
+		<if test=" dest_email !=null and  dest_email !=''">
+			dest_email=#{dest_email},
+		</if>
+
+		<if test=" dest_name !=null and  dest_name !=''">
+			dest_name=#{dest_name},
+		</if>
+
+		<if test=" email_size !=null and  email_size !=''">
+			email_size=#{email_size},
+		</if>
+
+		<if test=" status !=null and  status !=''">
+			status=#{status},
+		</if>
+
+		<if test=" inputuser !=null and  inputuser !=''">
+			inputuser=#{inputuser},
+		</if>
+
+		<if test="inputtime!=null and inputtime !=''">
+			inputtime=#{inputtime}
+		</if>
+
+		where id=#{id}
+	</update>
+	<select id="manage.tbemaillog.getByReleId" parameterType="com.winpow.services.manage.tbemaillog.bean.Tbemaillog" resultType="com.winpow.services.manage.tbemaillog.bean.Tbemaillog">
+		select t.dest_name from tb_email_log t
+		where 1=1
+		<if test="rele_id!=null and rele_id!=''">
+			and t.rele_id=#{rele_id}
+		</if>
+		group by t.dest_name
+	</select>
+	
+	<select id="manage.tbemaillog.getEmail" parameterType="com.winpow.services.manage.tbemaillog.bean.Tbemaillog" resultType="com.winpow.services.manage.tbemaillog.bean.Tbemaillog">
+		select distinct dest_email,dest_name from tb_email_log where email_type=1
+	</select>
+	
+	<insert id="manage.tbemaillog.insertAll" parameterType="java.util.HashMap" 
+		useGeneratedKeys="true" keyProperty="id">
+		insert into tb_email_log (
+		email_type,
+		rele_id,
+		rele_name,
+		company_name,
+		dest_email,
+		dest_name,
+		email_size,
+		status,
+		inputuser,
+		inputtime
+		) values 
+		<foreach collection="logList" item="item" index="index" separator="," >  
+			(#{item.email_type},#{item.rele_id},#{item.rele_name},#{item.company_name},#{item.dest_email},
+			#{item.dest_name},#{item.email_size},#{item.status},#{item.inputuser},getdate())
+		</foreach>
+	</insert>
+</mapper>  

@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC 
+"-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="app">
+
+	<select id="app.appparkserve.selectPageList"
+		parameterType="com.winpow.services.app.appparkserve.bean.Appparkserve"
+		resultType="hashMap">
+		select top ${pageSize} * from (
+			select row_number() over(order by c.lastchgtime desc) as rownumber ,c.* 
+			from tb_app_parkserve c where 1=1
+			<if test=" title !=null and  title !=''">
+				and c.title like '%'+#{title}+'%'
+			</if>
+			<if test=" substation !=null and  substation !=''">
+				and c.substation = #{substation}
+			</if>
+	    ) a where rownumber > ${pageSize}*(${offset} - 1)
+	</select>
+	
+	<select id="app.appparkserve.selectPageCount"
+		parameterType="com.winpow.services.app.appparkserve.bean.Appparkserve"
+		resultType="java.lang.Integer">
+		select count(*) from tb_app_parkserve c where 1=1
+		<if test=" title !=null and  title !=''">
+			and c.title like '%'+#{title}+'%'
+		</if>
+		<if test=" substation !=null and  substation !=''">
+			and c.substation = #{substation}
+		</if>
+	</select>
+
+	<select id="app.appparkserve.selectOne"
+		parameterType="com.winpow.services.app.appparkserve.bean.Appparkserve"
+		resultType="com.winpow.services.app.appparkserve.bean.Appparkserve">
+		select * from tb_app_parkserve t where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+
+	<select id="app.appparkserve.selectCount"
+		parameterType="com.winpow.services.app.appparkserve.bean.Appparkserve"
+		resultType="int">
+		select count(*) from tb_app_parkserve t where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+
+	<select id="app.appparkserve.selectOneByCondition"
+		parameterType="com.winpow.services.app.appparkserve.bean.Appparkserve"
+		resultType="com.winpow.services.app.appparkserve.bean.Appparkserve">
+		select * from tb_app_parkserve t where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+
+	<select id="app.appparkserve.selectList"
+		parameterType="com.winpow.services.app.appparkserve.bean.Appparkserve"
+		resultType="com.winpow.services.app.appparkserve.bean.Appparkserve">
+		select * from tb_app_parkserve t where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+
+	<insert id="app.appparkserve.insert"
+		parameterType="com.winpow.services.app.appparkserve.bean.Appparkserve"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into tb_app_parkserve (
+		pkid,
+		userid,
+		title,
+		imgurl,
+		label,
+		price,
+		acreage,
+		buildtime,
+		area,
+		address,
+		bewrite,
+		content,
+		linkman,
+		detailpic,
+		faqs,
+		enable,
+		sort,
+		longitude,
+		latitude,
+		lurushijian,
+		inputuser,
+		lastchgtime,mappic,substation,priceunit
+		) values (
+		#{pkid},
+		#{userid},
+		#{title},
+		#{imgurl},
+		#{label},
+		#{price},
+		#{acreage},
+		#{buildtime},
+		#{area},
+		#{address},
+		#{bewrite},
+		#{content},
+		#{linkman},
+		#{detailpic},
+		#{faqs},
+		#{enable},
+		#{sort},
+		#{longitude},
+		#{latitude},
+		getdate(),
+		#{inputuser},
+		getdate(),#{mappic},#{substation},#{priceunit}
+		)
+	</insert>
+
+	<update id="app.appparkserve.update"
+		parameterType="com.winpow.services.app.appparkserve.bean.Appparkserve">
+		update tb_app_parkserve set
+		<if test=" userid !=null and  userid !=''">
+			userid=#{userid},
+		</if>
+
+		<if test=" title !=null and  title !=''">
+			title=#{title},
+		</if>
+
+		<if test=" imgurl !=null and  imgurl !=''">
+			imgurl=#{imgurl},
+		</if>
+
+		<if test=" label !=null and  label !=''">
+			label=#{label},
+		</if>
+
+		<if test=" price !=null and  price !=''">
+			price=#{price},
+		</if>
+
+		<if test=" acreage !=null and  acreage !=''">
+			acreage=#{acreage},
+		</if>
+
+		<if test=" buildtime !=null and  buildtime !=''">
+			buildtime=#{buildtime},
+		</if>
+
+		<if test=" area !=null and  area !=''">
+			area=#{area},
+		</if>
+
+		<if test=" address !=null and  address !=''">
+			address=#{address},
+		</if>
+
+		<if test=" bewrite !=null and  bewrite !=''">
+			bewrite=#{bewrite},
+		</if>
+
+		<if test=" content !=null and  content !=''">
+			content=#{content},
+		</if>
+
+		<if test=" linkman !=null and  linkman !=''">
+			linkman=#{linkman},
+		</if>
+
+		<if test=" detailpic !=null and  detailpic !=''">
+			detailpic=#{detailpic},
+		</if>
+
+		<if test=" faqs !=null and  faqs !=''">
+			faqs=#{faqs},
+		</if>
+
+		<if test=" enable !=null and  enable !=''">
+			enable=#{enable},
+		</if>
+
+		<if test=" sort !=null and  sort !=''">
+			sort=#{sort},
+		</if>
+
+		<if test=" longitude !=null and  longitude !=''">
+			longitude=#{longitude},
+		</if>
+		
+		<if test=" latitude !=null and  latitude !=''">
+			latitude=#{latitude},
+		</if>
+		
+		<if test=" mappic !=null and  mappic !=''">
+			mappic=#{mappic},
+		</if>
+		
+		<if test=" substation !=null and  substation !='' and substation != 'all'">
+            substation=#{substation},
+        </if>
+        
+        <if test=" substation !=null and  substation !='' and substation == 'all'">
+            substation = null,
+        </if>
+        
+        <if test=" priceunit !=null and  priceunit !=''">
+			priceunit=#{priceunit},
+		</if>
+		
+		lastchgtime=getdate()
+		where pkid=#{pkid}
+	</update>
+	
+	<select id="app.appparkserve.selectPageLists" parameterType="com.winpow.services.app.appparkserve.bean.Appparkserve"
+		resultType="com.winpow.services.app.appparkserve.bean.Appparkserve">
+		select top ${pageSize} * from (
+			select row_number() over (order by ${lurushijian}) as rownumber,*
+			from (
+				select *
+				<choose>
+			        <when test=" longitude !=null and  longitude !=''">
+			            ,(6378137.0 * acos(sin(k.latitude / 180 * pi()) * sin(${latitude} / 180 * pi()) + cos(k.latitude / 180 * pi()) * cos(${latitude} / 180 * pi()) * cos((k.longitude - ${longitude}) / 180 * pi()))) as distance
+			        </when>
+			        <otherwise>
+			            ,'' distance
+			        </otherwise>
+			    </choose>
+				 from tb_app_parkserve k
+			) p where p.enable='10001'
+			<if test=" substation !=null and  substation !=''">
+            	and substation=#{substation}
+        	</if>
+		) a where rownumber > ${pageSize}*(${offset} - 1)
+	</select>
+	
+	<select id="app.appparkserve.selectCacheList"
+		parameterType="com.winpow.services.app.appparkserve.bean.Appparkserve"
+		resultType="com.winpow.services.app.appparkserve.bean.Appparkserve">
+		select top(50) * from tb_app_parkserve t where 1=1 and enable='10001'
+		order by lastchgtime desc
+	</select>
+
+</mapper>  

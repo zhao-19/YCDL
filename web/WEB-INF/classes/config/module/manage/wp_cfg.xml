@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE mapper PUBLIC 
+"-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="manage">
+	
+	<select id="manage.wpcfg.selectPageList" parameterType="com.winpow.services.manage.loan.bean.WpCfg" resultType="com.winpow.services.manage.loan.bean.WpCfg">
+	select * from (
+		SELECT  ROW_NUMBER() over(order by id) as  rownumber ,
+								 	id,
+			 								 	eff_day,
+			 								 	work_day,
+			 								 	rate_m_6,
+			 								 	rate_y_1,
+			 								 	rate_y_3,
+			 								 	rate_y_5,
+			 								  rate_y_99
+			 		   from wp_cfg )t  where rownumber &gt; = #{offset} and rownumber &lt; = #{pageSize}+#{offset} order by eff_day asc
+	</select>
+	<select id="manage.wpcfg.selectPageCount" parameterType="com.winpow.services.manage.loan.bean.WpCfg" resultType="java.lang.Integer">
+		
+			select count(*) from (
+					SELECT  ROW_NUMBER() over(order by id) as  rownumber ,
+																	 	id,
+						 																	 	eff_day,
+						 																	 	work_day,
+						 																	 	rate_m_6,
+						 																	 	rate_y_1,
+						 																	 	rate_y_3,
+						 																	 	rate_y_5,
+						 																	  rate_y_99
+						 								   from wp_cfg )t  
+
+	</select>
+	
+	<select id="manage.wpcfg.selectOne" parameterType="com.winpow.services.manage.loan.bean.WpCfg" resultType="com.winpow.services.manage.loan.bean.WpCfg">
+			SELECT  
+											 	id,
+				 											 	eff_day,
+				 											 	work_day,
+				 											 	rate_m_6,
+				 											 	rate_y_1,
+				 											 	rate_y_3,
+				 											 	rate_y_5,
+				 											  rate_y_99
+				 						  from wp_cfg t  where 1=1  
+			<if test="id!=null and id!=''">
+				and t.id=#{id}
+			</if>
+			 
+	</select>
+	
+		<select id="manage.wpcfg.selectList" parameterType="com.winpow.services.manage.loan.bean.WpCfg" resultType="com.winpow.services.manage.loan.bean.WpCfg">
+			SELECT  
+											 	id,
+				 											 	eff_day,
+				 											 	work_day,
+				 											 	rate_m_6,
+				 											 	rate_y_1,
+				 											 	rate_y_3,
+				 											 	rate_y_5,
+				 											  rate_y_99
+				 						  from wp_cfg t  where 1=1    order by eff_day asc
+	</select>
+	
+	
+	
+	<select id="manage.wpcfg.selectCount" parameterType="com.winpow.services.manage.loan.bean.WpCfg" resultType="int">
+			select count(*)  
+				 FROM wp_cfg t  where 1=1  
+				<if test="id!=null and id!=''">
+					and t.id=#{id}
+				</if>
+	</select>
+	
+	<select id="manage.wpcfg.selectOneByCondition" parameterType="com.winpow.services.manage.loan.bean.WpCfg" resultType="com.winpow.services.manage.loan.bean.WpCfg">
+			SELECT  
+											 	id,
+				 											 	eff_day,
+				 											 	work_day,
+				 											 	rate_m_6,
+				 											 	rate_y_1,
+				 											 	rate_y_3,
+				 											 	rate_y_5,
+				 											  rate_y_99
+				 					 from  wp_cfg   t  where 1=1  
+			<if test="id!=null and id!=''">
+				and t.id=#{id}
+			</if>
+			order by eff_day asc
+	</select>
+	
+	<insert id="manage.wpcfg.insert" parameterType="com.winpow.services.manage.loan.bean.WpCfg" useGeneratedKeys="true" 
+		keyProperty="id">
+	 		insert into wp_cfg ( 
+	 								 	 
+													 	eff_day,
+													 	work_day,
+													 	rate_m_6,
+													 	rate_y_1,
+													 	rate_y_3,
+													 	rate_y_5,
+													  rate_y_99
+			 						) values ( 
+										 	 
+				 										 	#{eff_day},
+				 										 	#{work_day},
+				 										 	#{rate_m_6},
+				 										 	#{rate_y_1},
+				 										 	#{rate_y_3},
+				 										 	#{rate_y_5},
+				 											#{rate_y_99}
+				 						)
+		 
+	</insert>
+	
+	<update id="manage.wpcfg.update" parameterType="com.winpow.services.manage.loan.bean.WpCfg">
+		update wp_cfg set 
+                      
+				 			                <if test="#{eff_day}!=null and #{eff_day}!=''">
+                        eff_day=#{eff_day},
+                        </if>
+		
+				 			                <if test="#{work_day}!=null and #{work_day}!=''">
+                        work_day=#{work_day},
+                        </if>
+		
+				 			                <if test="#{rate_m_6}!=null and #{rate_m_6}!=''">
+                        rate_m_6=#{rate_m_6},
+                        </if>
+		
+				 			                <if test="#{rate_y_1}!=null and #{rate_y_1}!=''">
+                        rate_y_1=#{rate_y_1},
+                        </if>
+		
+				 			                <if test="#{rate_y_3}!=null and #{rate_y_3}!=''">
+                        rate_y_3=#{rate_y_3},
+                        </if>
+		
+				 			                <if test="#{rate_y_5}!=null and #{rate_y_5}!=''">
+                        rate_y_5=#{rate_y_5},
+                        </if>
+		
+				 			                <if test="#{rate_y_99}!=null and #{rate_y_99}!=''">
+                        rate_y_99=#{rate_y_99}
+                        </if>
+         						 
+		where id=#{id}
+	</update>
+	
+</mapper>  

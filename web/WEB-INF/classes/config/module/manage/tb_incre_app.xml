@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="manage">
+
+    <select id="manage.increapp.selectPageList" parameterType="com.winpow.services.manage.increapp.bean.Increapp" resultType="hashMap">
+        select * from (
+        SELECT
+        ROW_NUMBER() over(order by id desc) as  rownumber , 	id,
+        increid,incename,
+        userid,
+        status,
+        checkuser,
+        lurushijian,
+        inputuser,
+        lastchgtime,memo
+        from tb_incre_app where 1=1
+        <if test="userid != null and userid != ''">
+            and userid like '%' + #{userid} + '%'
+        </if>
+        <if test="status != null and status != ''">
+            and status = #{status}
+        </if>
+        <if test="checkuser != null and checkuser != ''">
+            and checkuser like '%' + #{checkuser} + '%'
+        </if>
+        )t  where rownumber &gt; = #{offset} and rownumber &lt; = #{pageSize}+#{offset}
+    </select>
+
+
+    <select id="manage.increapp.selectPageCount" parameterType="com.winpow.services.manage.increapp.bean.Increapp" resultType="java.lang.Integer">
+
+        select count(*) from (
+        SELECT  ROW_NUMBER() over(order by id) as  rownumber ,
+        id,incename,
+        increid,
+        userid,
+        status,
+        checkuser,
+        lurushijian,
+        inputuser,
+        lastchgtime
+        from tb_incre_app where 1=1
+        <if test="userid != null and userid != ''">
+            and userid like '%' + #{userid} + '%'
+        </if>
+        <if test="status != null and status != ''">
+            and status = #{status}
+        </if>
+        <if test="checkuser != null and checkuser != ''">
+            and checkuser like '%' + #{checkuser} + '%'
+        </if>
+        )t
+
+    </select>
+
+    <select id="manage.increapp.selectOne" parameterType="com.winpow.services.manage.increapp.bean.Increapp" resultType="com.winpow.services.manage.increapp.bean.Increapp">
+        SELECT
+        id,
+        increid,incename,
+        userid,
+        status,
+        checkuser,
+        lurushijian,
+        inputuser,
+        lastchgtime,memo
+        from tb_incre_app t  where 1=1
+        <if test="id!=null and id!=''">
+            and t.id=#{id}
+        </if>
+    </select>
+
+    <select id="manage.increapp.selectCount" parameterType="com.winpow.services.manage.increapp.bean.Increapp" resultType="int">
+        select count(*)
+        FROM tb_incre_app t  where 1=1
+        <if test="id!=null and id!=''">
+            and t.id=#{id}
+        </if>
+    </select>
+
+    <select id="manage.increapp.selectOneByCondition" parameterType="com.winpow.services.manage.increapp.bean.Increapp" resultType="com.winpow.services.manage.increapp.bean.Increapp">
+        SELECT
+        id,
+        increid,incename,
+        userid,
+        status,
+        checkuser,
+        lurushijian,
+        inputuser,
+        lastchgtime
+        from  tb_incre_app   t  where 1=1
+        <if test="id!=null and id!=''">
+            and t.id=#{id}
+        </if>
+    </select>
+
+    <insert id="manage.increapp.insert" parameterType="com.winpow.services.manage.increapp.bean.Increapp" useGeneratedKeys="true"
+            keyProperty="id">
+        insert into tb_incre_app (
+
+        increid,
+        userid,
+        status,
+        checkuser,
+        lurushijian,
+        inputuser,incename,
+        lastchgtime
+        ) values (
+        #{increid},
+        #{userid},
+        'aaaaaaaaaaaaaaaaaaaaaaaaaaaaa070',
+        #{checkuser},
+        getdate(),
+        #{inputuser},#{incename},
+        getdate()
+        )
+
+    </insert>
+
+    <update id="manage.increapp.update" parameterType="com.winpow.services.manage.increapp.bean.Increapp">
+        update tb_incre_app set
+
+
+
+
+        <if test="status!=null and status!=''">
+            status=#{status},
+        </if>
+
+        <if test="checkuser!=null and checkuser!=''">
+            checkuser=#{checkuser},
+        </if>
+
+        <if test="memo!=null and memo!=''">
+            memo=#{memo},
+        </if>
+        lastchgtime=getdate()
+
+
+        where id=#{id}
+    </update>
+
+</mapper>  

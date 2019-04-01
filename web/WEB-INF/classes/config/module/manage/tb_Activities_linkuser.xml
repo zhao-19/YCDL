@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE mapper PUBLIC 
+"-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="manage">
+
+	<select id="manage.activitieslinkuser.selectPageList"
+		parameterType="com.winpow.services.manage.activitieslinkuser.bean.Activitieslinkuser"
+		resultType="hashMap">
+		select * from (
+		SELECT
+		ROW_NUMBER() over(order by id) as rownumber , id,
+		userid,
+		username,
+		attendname,
+		attendcell,
+		attendduty,
+		lurushijian,
+		lastchgtime
+		from tb_Activities_linkuser )t where rownumber &gt; = #{offset} and
+		rownumber &lt; = #{pageSize}+#{offset}
+	</select>
+	<select id="manage.activitieslinkuser.selectPageCount"
+		parameterType="com.winpow.services.manage.activitieslinkuser.bean.Activitieslinkuser"
+		resultType="java.lang.Integer">
+
+		select count(*) from (
+		SELECT ROW_NUMBER() over(order by id) as rownumber ,
+		id,
+		userid,
+		username,
+		attendname,
+		attendcell,
+		attendduty,
+		lurushijian,
+		lastchgtime
+		from tb_Activities_linkuser )t
+
+	</select>
+
+	<select id="manage.activitieslinkuser.selectOne"
+		parameterType="com.winpow.services.manage.activitieslinkuser.bean.Activitieslinkuser"
+		resultType="com.winpow.services.manage.activitieslinkuser.bean.Activitieslinkuser">
+		SELECT
+		id,
+		userid,
+		username,
+		attendname,
+		attendcell,
+		attendduty,
+		lurushijian,
+		lastchgtime
+		from tb_Activities_linkuser t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+		<if test="attendcell !=null and attendcell !=''">
+            and t.attendcell=#{attendcell}
+        </if>
+        <if test="userid !=null and userid !=''">
+            and t.userid=#{userid}
+        </if>
+	</select>
+
+	<select id="manage.activitieslinkuser.selectCount"
+		parameterType="com.winpow.services.manage.activitieslinkuser.bean.Activitieslinkuser"
+		resultType="int">
+		select count(*)
+		FROM tb_Activities_linkuser t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+	</select>
+
+	<select id="manage.activitieslinkuser.selectOneByCondition"
+		parameterType="com.winpow.services.manage.activitieslinkuser.bean.Activitieslinkuser"
+		resultType="com.winpow.services.manage.activitieslinkuser.bean.Activitieslinkuser">
+		SELECT
+		id,
+		userid,
+		username,
+		attendname,
+		attendcell,
+		attendduty,
+		lurushijian,
+		lastchgtime
+		from tb_Activities_linkuser t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+		<if test="attendcell !=null and attendcell !=''">
+            and t.attendcell=#{attendcell}
+        </if>
+        <if test="userid !=null and userid !=''">
+            and t.userid=#{userid}
+        </if>
+	</select>
+
+
+
+	<select id="manage.activitieslinkuser.selectList"
+		parameterType="com.winpow.services.manage.activitieslinkuser.bean.Activitieslinkuser"
+		resultType="com.winpow.services.manage.activitieslinkuser.bean.Activitieslinkuser">
+		  SELECT t.*,
+        case when t1.ID IS NULL then '10002' else '10001' end as isgo
+        from tb_Activities_linkuser t left join (select * from tb_Activities_app where ACTIVITIID = #{id} )t1 on t.attendcell = t1.ATTENDCELL
+         where 1=1
+		<if test="userid!=null and userid!=''">
+			and t.userid=#{userid}
+		</if>
+		order by isgo desc
+	</select>
+
+
+	<insert id="manage.activitieslinkuser.insert"
+		parameterType="com.winpow.services.manage.activitieslinkuser.bean.Activitieslinkuser"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into tb_Activities_linkuser (
+
+		userid,
+		username,
+		attendname,
+		attendcell,
+		attendduty,
+		lurushijian,
+		lastchgtime
+		) values (
+
+		#{userid},
+		#{username},
+		#{attendname},
+		#{attendcell},
+		#{attendduty},
+		getdate(),
+		getdate()
+		)
+
+	</insert>
+
+	<update id="manage.activitieslinkuser.update"
+		parameterType="com.winpow.services.manage.activitieslinkuser.bean.Activitieslinkuser">
+		update tb_Activities_linkuser set
+
+
+
+
+		<if test=" username !=null and  username !=''">
+			username=#{username},
+		</if>
+
+		<if test=" attendname !=null and  attendname !=''">
+			attendname=#{attendname},
+		</if>
+
+		<if test=" attendcell !=null and  attendcell !=''">
+			attendcell=#{attendcell},
+		</if>
+
+		<if test=" attendduty !=null and  attendduty !=''">
+			attendduty=#{attendduty},
+		</if>
+
+
+		lastchgtime=getdate()
+
+		where id=#{id} and userid=#{userid}
+	</update>
+
+</mapper>  

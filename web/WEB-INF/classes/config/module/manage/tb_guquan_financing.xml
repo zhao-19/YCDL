@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="manage">
+
+    <select id="manage.guquanFinancing.selectPageList"
+            parameterType="com.winpow.services.manage.guquanfinancing.bean.GuquanFinancing" resultType="hashMap">
+        select * from tb_touzijijin t where 1 = 1
+        <if test="id!=null and id!=''">
+            and t.id=#{id}
+        </if>
+        <if test="name!=null and name!=''">
+            and t.mingcheng=#{name}
+        </if>
+    </select>
+    <select id="manage.guquanFinancing.selectPageCount"
+            parameterType="com.winpow.services.manage.guquanfinancing.bean.GuquanFinancing"
+            resultType="java.lang.Integer">
+        select count(id) from tb_touzijijin t where 1 = 1
+        <if test="id!=null and id!=''">
+            and t.id=#{id}
+        </if>
+        <if test="name!=null and name!=''">
+            and t.mingcheng=#{name}
+        </if>
+    </select>
+
+    <select id="manage.guquanFinancing.selectOne"
+            parameterType="com.winpow.services.manage.guquanfinancing.bean.GuquanFinancing"
+            resultType="com.winpow.services.manage.guquanfinancing.bean.GuquanFinancing">
+        SELECT id, mingcheng as name, neirong as content, dianjiliang as clickVolume, lurushijian as startDate,
+        inputuser, lastchangetime as endDate FROM tb_touzijijin t where 1=1
+        <if test="id!=null and id!=''">
+            and t.id=#{id}
+        </if>
+    </select>
+
+    <select id="manage.guquanFinancing.selectList"
+            parameterType="com.winpow.services.manage.guquanfinancing.bean.GuquanFinancing"
+            resultType="com.winpow.services.manage.guquanfinancing.bean.GuquanFinancing">
+        SELECT id, mingcheng as name, neirong as content, dianjiliang as clickVolume, lurushijian as startDate,
+        inputuser, lastchangetime as endDate FROM tb_touzijijin t
+    </select>
+
+    <insert id="manage.guquanFinancing.insert"
+            parameterType="com.winpow.services.manage.guquanfinancing.bean.GuquanFinancing" useGeneratedKeys="true"
+            keyProperty="id">
+		insert into tb_touzijijin (mingcheng, neirong, dianjiliang, lurushijian, inputuser, lastchangetime)
+		 values (#{name}, #{content}, #{clickVolume}, getdate(), #{inputUser}, getdate())
+	</insert>
+
+    <update id="manage.guquanFinancing.update"
+            parameterType="com.winpow.services.manage.guquanfinancing.bean.GuquanFinancing">
+        update tb_touzijijin set lastchangetime=getdate()
+        <if test="name!=null and name!=''">
+            ,mingcheng=#{name}
+        </if>
+        <if test="content!=null and content!=''">
+            ,neirong=#{content}
+        </if>
+        <if test="clickVolume!=null">
+            ,dianjiliang=#{clickVolume}
+        </if>
+        <if test="inputUser!=null and inputUser!=''">
+            ,inputuser=#{inputUser}
+        </if>
+        where id=#{id}
+    </update>
+    <delete id="manage.guquanFinancing.delete">
+        delete tb_touzijijin where id=#{id}
+    </delete>
+</mapper>  

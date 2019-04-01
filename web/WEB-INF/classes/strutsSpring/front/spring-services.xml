@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+           http://www.springframework.org/schema/context  
+           http://www.springframework.org/schema/context/spring-context-3.0.xsd
+           http://www.springframework.org/schema/aop 
+           http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+           http://www.springframework.org/schema/tx 
+           http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
+
+	<!-- 会员管理 -->
+	<bean id="accountDaoFront" class="com.winpow.services.front.account.dao.impl.AccountDaoImpl">
+		<property name="dao" ref="baseDao"></property>
+	</bean>
+	<bean id="accountServiceFront" class="com.winpow.services.front.account.impl.AccountServiceImpl">
+		<property name="dao" ref="accountDaoFront"></property>
+		<property name="accountDao" ref="accountDaoFront"></property>
+	<!-- 	<property name="emailService" ref="emailServiceFront"></property>-->
+	</bean>
+	
+	
+	
+	<!-- 文章目录管理
+	<bean id="catalogDaoFront" class="com.winpow.services.front.catalog.dao.impl.CatalogDaoImpl">
+		<property name="dao" ref="baseDao"></property>
+	</bean>
+	<bean id="catalogServiceFront" class="com.winpow.services.front.catalog.impl.CatalogServiceImpl">
+		<property name="dao" ref="catalogDaoFront"></property>
+		<property name="catalogDao" ref="catalogDaoFront"></property>
+	</bean> -->
+	<!-- 购物车管理 
+	<bean id="cartinfoDaoFront" class="com.winpow.services.front.cartinfo.dao.impl.CartinfoDaoImpl">
+		<property name="dao" ref="baseDao"></property>
+	</bean>
+	<bean id="cartinfoServiceFront" class="com.winpow.services.front.cartinfo.impl.CartinfoServiceImpl">
+		<property name="dao" ref="cartinfoDaoFront"></property>
+		<property name="cartinfoDao" ref="cartinfoDaoFront"></property>
+	</bean>
+-->
+
+	<!-- 门户新闻管理
+	<bean id="newsDaoFront" class="com.winpow.services.front.news.dao.impl.NewsDaoImpl">
+		<property name="dao" ref="baseDao"></property>
+	</bean>
+	<bean id="newsServiceFront" class="com.winpow.services.front.news.impl.NewsServiceImpl">
+		<property name="dao" ref="newsDaoFront"></property>
+		<property name="newsDao" ref="newsDaoFront"></property>
+	</bean>
+	 -->
+	<!-- 滚动图片管理 
+	<bean id="indexImgDaoFront" class="com.winpow.services.front.indexImg.dao.impl.IndexImgDaoImpl">
+		<property name="dao" ref="baseDao"></property>
+	</bean>
+	<bean id="indexImgServiceFront" class="com.winpow.services.front.indexImg.impl.IndexImgServiceImpl">
+		<property name="dao" ref="indexImgDaoFront"></property>
+		<property name="indexImgDao" ref="indexImgDaoFront"></property>
+	</bean>
+	-->
+	<!-- 产品管理
+	<bean id="productDaoFront" class="com.winpow.services.front.product.dao.impl.ProductDaoImpl">
+		<property name="dao" ref="baseDao"></property>
+	</bean>
+	<bean id="productServiceFront" class="com.winpow.services.front.product.impl.ProductServiceImpl">
+		<property name="dao" ref="productDaoFront"></property>
+		<property name="productDao" ref="productDaoFront"></property>
+	</bean>
+	
+	 -->
+	
+	<!-- 字典项树形数据
+	<bean id="codeDaoManage" class="com.winpow.services.manage.code.dao.impl.CodeDaoImpl">
+		<property name="dao" ref="baseDao"></property>
+	</bean>
+	<bean id="codeServiceManage" class="com.winpow.services.manage.code.impl.CodeServiceImpl">
+		<property name="dao" ref="codeDaoManage"></property>
+		<property name="codeDao" ref="codeDaoManage"></property>
+	</bean>
+	
+	 -->
+	 
+
+		<!-- 存量历史数据 -->
+	<bean id="histdataDaoManage" class="com.winpow.services.manage.histdata.dao.impl.HistdataDaoImpl">
+		<property name="dao" ref="baseDao"></property>
+	</bean>
+	<bean id="histdataServiceManage" class="com.winpow.services.manage.histdata.impl.HistdataServiceImpl">
+		<property name="dao" ref="histdataDaoManage"></property>
+		<property name="histdataDao" ref="histdataDaoManage"></property>
+	</bean>
+ 
+	<!-- 机构信息 -->
+	<bean id="jigouDaoManage" class="com.winpow.services.manage.jigou.dao.impl.JigouDaoImpl">
+		<property name="dao" ref="baseDao"></property>
+	</bean>
+	<bean id="jigouServiceManage" class="com.winpow.services.manage.jigou.impl.JigouServiceImpl">
+		<property name="dao" ref="jigouDaoManage"></property>
+		<property name="jigouDao" ref="jigouDaoManage"></property>
+	</bean>
+ 
+	<!-- 新闻资讯 -->
+	<bean id="newsDaoManage" class="com.winpow.services.manage.news.dao.impl.NewsDaoImpl">
+		<property name="dao" ref="baseDao"></property>
+	</bean>
+	<bean id="newsServiceManage" class="com.winpow.services.manage.news.impl.NewsServiceImpl">
+		<property name="dao" ref="newsDaoManage"></property>
+		<property name="newsDao" ref="newsDaoManage"></property>
+	</bean>
+ 
+	<!-- 盈创学院 -->
+	<bean id="activitiesDaoManage" class="com.winpow.services.manage.activities.dao.impl.ActivitiesDaoImpl">
+		<property name="dao" ref="baseDao"></property>
+	</bean>
+	<bean id="activitiesServiceManage" class="com.winpow.services.manage.activities.impl.ActivitiesServiceImpl">
+		<property name="dao" ref="activitiesDaoManage"></property>
+		<property name="activitiesDao" ref="activitiesDaoManage"></property>
+	</bean>
+	 
+		<!-- 增值业务产品 -->
+	<bean id="increDaoManage" class="com.winpow.services.manage.incre.dao.impl.IncreDaoImpl">
+		<property name="dao" ref="baseDao"></property>
+	</bean>
+	<bean id="increServiceManage" class="com.winpow.services.manage.incre.impl.IncreServiceImpl">
+		<property name="dao" ref="increDaoManage"></property>
+		<property name="increDao" ref="increDaoManage"></property>
+	</bean>
+ 
+ 
+	<!-- 股权-->
+	<bean id="guquanDaoManage" class="com.winpow.services.manage.guquan.dao.impl.GuquanDaoImpl">
+		<property name="dao" ref="baseDao"></property>
+	</bean>
+	<bean id="guquanServiceManage" class="com.winpow.services.manage.guquan.impl.GuquanServiceImpl">
+		<property name="dao" ref="guquanDaoManage"></property>
+		<property name="guquanDao" ref="guquanDaoManage"></property>
+	</bean>
+	<!-- 贷款产品 -->
+	<bean id="productDaoManage" class="com.winpow.services.manage.product.dao.impl.ProductDaoImpl">
+		<property name="dao" ref="baseDao"></property>
+	</bean>
+	<bean id="productServiceManage" class="com.winpow.services.manage.product.impl.ProductServiceImpl">
+		<property name="dao" ref="productDaoManage"></property>
+		<property name="productDao" ref="productDaoManage"></property>
+	</bean>
+	
+	<!-- 贷款产品申请表 -->
+	<bean id="productappDaoManage" class="com.winpow.services.manage.productapp.dao.impl.ProductappDaoImpl">
+		<property name="dao" ref="baseDao"></property>
+	</bean>
+	<bean id="productappServiceManage" class="com.winpow.services.manage.productapp.impl.ProductappServiceImpl">
+		<property name="dao" ref="productappDaoManage"></property>
+		<property name="productappDao" ref="productappDaoManage"></property>
+	</bean>
+	
+	
+	<!-- 用户中心 -->
+	<bean id="usercenterDaoManage" class="com.winpow.services.front.usercenter.dao.impl.UsercenterDaoImpl">
+		<property name="dao" ref="baseDao"></property>
+	</bean>
+	<bean id="usercenterServiceManage" class="com.winpow.services.front.usercenter.impl.UsercenterServiceImpl">
+		<property name="dao" ref="usercenterDaoManage"></property>
+		<property name="usercenterDao" ref="usercenterDaoManage"></property>
+	</bean>
+	
+	
+	
+	<!-- 日志管理 -->
+	<bean id="systemlogDaoFront" class="com.winpow.services.front.systemlog.dao.impl.SystemlogDaoImpl">
+		<property name="dao" ref="baseDao"></property>
+	</bean>
+	<bean id="systemlogServiceFront" class="com.winpow.services.front.systemlog.impl.SystemlogServiceImpl">
+		<property name="dao" ref="systemlogDaoFront"></property>
+		<property name="systemlogDao" ref="systemlogDaoFront"></property>
+	</bean>
+	
+	<!-- 区域管理
+	<bean id="areaDaoFront" class="com.winpow.services.front.area.dao.impl.AreaDaoImpl">
+		<property name="dao" ref="baseDao"></property>
+	</bean>
+	<bean id="areaServiceFront" class="com.winpow.services.front.area.impl.AreaServiceImpl">
+		<property name="dao" ref="areaDaoFront"></property>
+		<property name="areaDao" ref="areaDaoFront"></property>
+	</bean>
+	 -->
+	<!-- 系统设置 -->
+	<bean id="systemSettingDaoFront" class="com.winpow.services.front.systemSetting.dao.impl.SystemSettingDaoImpl">
+		<property name="dao" ref="baseDao"></property>
+	</bean>
+	<bean id="systemSettingServiceFront" class="com.winpow.services.front.systemSetting.impl.SystemSettingServiceImpl">
+		<property name="dao" ref="systemSettingDaoFront"></property>
+		<property name="systemSettingDao" ref="systemSettingDaoFront"></property>
+	</bean>
+	
+	<!-- 评论管理 
+	<bean id="commentDaoFront" class="com.winpow.services.front.comment.dao.impl.CommentDaoImpl">
+		<property name="dao" ref="baseDao"></property>
+	</bean>
+	<bean id="commentServiceFront" class="com.winpow.services.front.comment.impl.CommentServiceImpl">
+		<property name="dao" ref="commentDaoFront"></property>
+		<property name="commentDao" ref="commentDaoFront"></property>
+		<property name="orderdetailDao" ref="orderdetailDaoFront"></property>
+		<property name="orderDao" ref="orderDaoFront"></property>
+		<property name="accountService" ref="accountServiceFront"></property>
+	</bean>
+	-->
+	<!-- 键值对管理 -->
+	<bean id="keyvalueDaoFront" class="com.winpow.services.front.keyvalue.dao.impl.KeyvalueDaoImpl">
+		<property name="dao" ref="baseDao"></property>
+	</bean>
+	<bean id="keyvalueServiceFront" class="com.winpow.services.front.keyvalue.impl.KeyvalueServiceImpl">
+		<property name="dao" ref="keyvalueDaoFront"></property>
+		<property name="keyvalueDao" ref="keyvalueDaoFront"></property>
+	</bean>
+	
+	<!-- 产品属性管理 -->
+	<bean id="attributeDaoFront" class="com.winpow.services.front.attribute.dao.impl.AttributeDaoImpl">
+		<property name="dao" ref="baseDao"></property>
+	</bean>
+	<bean id="attributeServiceFront" class="com.winpow.services.front.attribute.impl.AttributeServiceImpl">
+		<property name="dao" ref="attributeDaoFront"></property>
+		<property name="attributeDao" ref="attributeDaoFront"></property>
+	</bean>
+
+	<!-- 属性，参数中间表 -->
+	<bean id="attribute_linkDaoFront" class="com.winpow.services.front.attribute_link.dao.impl.Attribute_linkDaoImpl">
+		<property name="dao" ref="baseDao"></property>
+	</bean>
+	<bean id="attribute_linkServiceFront" class="com.winpow.services.front.attribute_link.impl.Attribute_linkServiceImpl">
+		<property name="dao" ref="attribute_linkDaoFront"></property>
+		<property name="attribute_linkDao" ref="attribute_linkDaoFront"></property>
+	</bean>
+
+	<bean id="guquanfinancingDaoManage" class="com.winpow.services.manage.guquanfinancing.dao.impl.GuquanFinancingDaoImpl">
+		<property name="dao" ref="baseDao"></property>
+	</bean>
+	<bean id="guquanFinancingServiceManage" class="com.winpow.services.manage.guquanfinancing.service.impl.GuquanFinancingServiceImpl">
+		<property name="dao" ref="guquanfinancingDaoManage"></property>
+		<property name="guquanFinancingDao" ref="guquanfinancingDaoManage"></property>
+	</bean>
+ 
+	<!-- 缓存管理器 -->
+	<bean id="frontCache" class="com.winpow.core.oscache.FrontCache">
+		<property name="systemSettingService" ref="systemSettingServiceFront"></property>
+		
+		<property name="codeService" ref="codeServiceManage"></property>
+		<property name="histdataService" ref="histdataServiceManage"></property>
+		<property name="guquanService" ref="guquanServiceManage"></property>
+		<property name="productService" ref="productServiceManage"></property>
+		<property name="increService" ref="increServiceManage"></property>
+		<property name="jigouService" ref="jigouServiceManage"></property>
+		<property name="activitiesService" ref="activitiesServiceManage"></property>
+		<property name="newsService" ref="newsServiceManage"></property>
+		<property name="productappService" ref="productappServiceManage"></property>
+		<property name="guquanFinancingService" ref="guquanFinancingServiceManage"></property>
+		<property name="userService" ref="userServiceManage"></property>
+		<property name="zhengceshenbaoService" ref="zhengceshenbaoServiceManage"></property>
+		
+	</bean>
+		<!-- spring-service -->
+		
+	<bean id="activitiesDaoFront" class="com.winpow.services.front.activities.dao.impl.ActivitiesDaoImpl">
+		<property name="dao" ref="baseDao"></property>
+	</bean>
+	<bean id="activitiesServiceFront" class="com.winpow.services.front.activities.impl.ActivitiesServiceImpl">
+		<property name="dao" ref="activitiesDaoFront"></property>
+		<property name="activitiesDao" ref="activitiesDaoFront"></property>
+	</bean>
+	
+	<!-- 贴息申报 -->
+	<bean id="interestappDaoFront" class="com.winpow.services.front.interestapp.dao.impl.InterestappDaoImpl">
+		<property name="dao" ref="baseDao"></property>
+	</bean>
+	<bean id="interestappServiceFront" class="com.winpow.services.front.interestapp.impl.InterestappServiceImpl">
+		<property name="dao" ref="interestappDaoFront"></property>
+		<property name="interestappDao" ref="interestappDaoFront"></property>
+	</bean>
+
+	
+	<!-- 贴息图片处理 -->
+	<bean id="pictureDaoManage" class="com.winpow.services.manage.picture.dao.impl.PictureDaoImpl">
+		<property name="dao" ref="baseDao"></property>
+	</bean>
+	<bean id="pictureServiceManage" class="com.winpow.services.manage.picture.impl.PictureServiceImpl">
+		<property name="dao" ref="pictureDaoManage"></property>
+		<property name="pictureDao" ref="pictureDaoManage"></property>
+	</bean>	
+		
+	<!-- 成长贷主表 -->
+	<bean id="productczdbaseDaoFront" class="com.winpow.services.manage.productczdbase.dao.impl.ProductczdbaseDaoImpl">
+		<property name="dao" ref="baseDao"></property>
+	</bean>
+	<bean id="productczdbaseServiceFront" class="com.winpow.services.manage.productczdbase.impl.ProductczdbaseServiceImpl">
+		<property name="dao" ref="productczdbaseDaoManage"></property>
+		<property name="productczdbaseDao" ref="productczdbaseDaoManage"></property>
+	</bean>
+
+	<!--股权融资项目-->
+	<bean id="guquanfinancingDaoFront" class="com.winpow.services.manage.guquanfinancing.dao.impl.GuquanFinancingDaoImpl">
+		<property name="dao" ref="baseDao"></property>
+	</bean>
+	<bean id="guquanfinancingServiceFront" class="com.winpow.services.manage.guquanfinancing.service.impl.GuquanFinancingServiceImpl">
+		<property name="dao" ref="guquanfinancingDaoFront"></property>
+		<property name="guquanFinancingDao" ref="guquanfinancingDaoFront"></property>
+	</bean>
+</beans>

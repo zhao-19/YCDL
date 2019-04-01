@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
+	"http://struts.apache.org/dtds/struts-2.5.dtd">
+    
+<struts>
+    <package name="user" namespace="/manage" extends="struts-winpow-manage">
+        <global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="user" class="userActionManage">
+            <result name="input" type="redirect">/manage/admin.jsp</result>
+            <result name="success" type="redirect">/manage/main.jsp</result>
+            <result name="toList">/manage/system/user/userList.jsp</result>
+            <result name="toAdd">/manage/system/user/editUser.jsp</result>
+            <result name="toEdit">/manage/system/user/editUser.jsp</result>
+            <result name="toChangePwd">/manage/system/user/toChangePwd.jsp</result>
+            <result name="changePwd">/manage/system/user/changePwd.jsp</result>
+            <result name="show">/manage/system/user/show.jsp</result>
+            <!-- <result name="initManageIndex">/manage/system/right.jsp</result> -->
+            <result name="initManageIndex">/manage/system/wfList.jsp</result>
+            <result name="statistics">/manage/statistics/index.jsp</result>
+            <result name="statTV">/manage/statistics/indexTV.jsp</result>
+            <result name="taskList1">/manage/system/taskList1.jsp</result>
+            <result name="taskList2">/manage/system/taskList2.jsp</result>
+            <result name="taskList3">/manage/system/taskList3.jsp</result>
+            <result name="allDetail">/manage/system/allDetail.jsp</result>
+        </action>
+    </package>
+    
+    <package name="role" namespace="/manage" extends="struts-winpow-manage">
+        <global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="role" class="roleActionManage">
+            <result name="toList">/manage/system/role/roleList.jsp</result>
+            <result name="toEdit">/manage/system/role/editRole.jsp</result>
+            <result name="toAdd">/manage/system/role/editRole.jsp</result>
+        </action>
+    </package>
+    
+    <package name="menu" namespace="/manage" extends="struts-winpow-manage">
+        <global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="menu" class="menuActionManage">
+            <result name="toList">/manage/system/menu/menuList.jsp</result>
+            <result name="toEdit">/manage/system/menu/editMenu.jsp</result>
+            <result name="addOrUpdate">/manage/system/menu/addOrUpdate.jsp</result>
+        </action>
+    </package>
+    
+</struts>

@@ -1,0 +1,530 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC 
+"-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="front">
+
+	<select id="front.qiye.selectPageList" parameterType="com.winpow.services.manage.qiye.bean.Qiye"
+		resultType="hashMap">
+		select * from (
+		select row_number() over(order by lurushijian desc) as
+		rownumber ,
+		pk_qiyeid,
+		userid,
+		qiyemingcheng,
+		chengliriqi,
+		dizhi,
+		zhuceziben,
+		faren,
+		gszcd,
+		zzjgdm,
+		qiyexingzhiid,
+		hangyeid,
+		suchujieduanid,
+		jingyingfanwei,
+		qiyejieshao,
+		zhuyingyewu,
+		jianyingyewu,
+		qiyerenzheng,
+		yuangongshu,
+		dazhuanrenshu,
+		yanfarenshu,
+		bkzglbl,
+		shangshijihua,
+		logo,
+		wangzhi,
+		xingming,
+		bumenzhiwu,
+		yidongdianhua,
+		gudingdianhua,
+		email,
+		inputuser,
+		lurushijian,
+		gszcd_province ,
+		gszcd_city ,
+		gszcd_county ,
+
+		lastchgtime,
+		custmanagesource,
+		custmanage
+		from tb_qiye )t where rownumber &gt; = #{offset} and rownumber &lt; =
+		#{pageSize}+#{offset}
+	</select>
+	<select id="front.qiye.selectPageCount" parameterType="com.winpow.services.manage.qiye.bean.Qiye"
+		resultType="java.lang.Integer">
+		select count(*) from Tb_qiye t where 1=1
+		<if test="pk_qiyeid!=null and pk_qiyeid!=''">
+			and t.pk_qiyeid=#{pk_qiyeid}
+		</if>
+	</select>
+
+	<select id="front.qiye.selectOne" parameterType="com.winpow.services.manage.qiye.bean.Qiye"
+		resultType="com.winpow.services.manage.qiye.bean.Qiye">
+		select
+		pk_qiyeid,
+		userid,
+		qiyemingcheng,
+		chengliriqi,
+		dizhi,
+		zhuceziben,
+		faren,
+		gszcd,
+		zzjgdm,
+		qiyexingzhiid,
+		hangyeid,
+		suchujieduanid,
+		jingyingfanwei,
+		qiyejieshao,
+		zhuyingyewu,
+		jianyingyewu,
+		qiyerenzheng,
+		yuangongshu,
+		dazhuanrenshu,
+		yanfarenshu,
+		bkzglbl,
+		shangshijihua,
+		logo,
+		wangzhi,
+		xingming,
+		bumenzhiwu,
+		yidongdianhua,
+		gudingdianhua,
+		email,
+		inputuser,
+		lurushijian,
+		gszcd_province ,
+		gszcd_city ,
+		gszcd_county ,
+		lastchgtime,
+		custmanagesource,
+		custmanage
+		from tb_qiye t where 1=1
+		and t.pk_qiyeid=#{pk_qiyeid}
+	</select>
+
+	<select id="front.qiye.selectCount" parameterType="com.winpow.services.manage.qiye.bean.Qiye"
+		resultType="int">
+		select count(*)
+		FROM Tb_qiye t where 1=1
+		<if test="pk_qiyeid!=null and pk_qiyeid!=''">
+			and t.pk_qiyeid=#{pk_qiyeid}
+		</if>
+	</select>
+
+	<select id="front.qiye.selectOneByCondition" parameterType="com.winpow.services.manage.qiye.bean.Qiye"
+		resultType="com.winpow.services.manage.qiye.bean.Qiye">
+		select
+		pk_qiyeid,
+		userid,
+		qiyemingcheng,
+		chengliriqi,
+		dizhi,
+		zhuceziben,
+		faren,
+		gszcd,
+		zzjgdm,
+		qiyexingzhiid,
+		hangyeid,
+		suchujieduanid,
+		jingyingfanwei,
+		qiyejieshao,
+		zhuyingyewu,
+		jianyingyewu,
+		qiyerenzheng,
+		yuangongshu,
+		dazhuanrenshu,
+		yanfarenshu,
+		bkzglbl,
+		shangshijihua,
+		logo,
+		wangzhi,
+		xingming,
+		bumenzhiwu,
+		yidongdianhua,
+		gudingdianhua,
+		email,
+		inputuser,
+		lurushijian,
+		gszcd_province ,
+		gszcd_city ,
+		gszcd_county ,
+		lastchgtime,
+		custmanagesource,
+		custmanage
+		from tb_qiye t where 1=1
+		<if test="pk_qiyeid!=null and pk_qiyeid!=''">
+			and pk_qiyeid=#{pk_qiyeid}
+		</if>
+	</select>
+	<select id="front.qiye.selectByUserId" parameterType="com.winpow.services.manage.qiye.bean.Qiye"
+		resultType="com.winpow.services.manage.qiye.bean.Qiye">
+		select
+		pk_qiyeid,
+		userid,
+		qiyemingcheng,
+		chengliriqi,
+		dizhi,
+		zhuceziben,
+		faren,
+		gszcd,
+		zzjgdm,
+		qiyexingzhiid,
+		hangyeid,
+		suchujieduanid,
+		jingyingfanwei,
+		qiyejieshao,
+		zhuyingyewu,
+		jianyingyewu,
+		qiyerenzheng,
+		yuangongshu,
+		dazhuanrenshu,
+		yanfarenshu,
+		bkzglbl,
+		shangshijihua,
+		logo,
+		wangzhi,
+		xingming,
+		bumenzhiwu,
+		yidongdianhua,
+		gudingdianhua,
+		email,
+		inputuser,
+		lurushijian,
+		gszcd_province ,
+		gszcd_city ,
+		gszcd_county ,
+		lastchgtime,
+		custmanagesource,
+		custmanage
+		from tb_qiye t where 1=1
+		and userid=#{userid}
+	</select>
+
+
+
+
+	<insert id="front.qiye.insert" parameterType="com.winpow.services.manage.qiye.bean.Qiye"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into Tb_qiye (
+		pk_qiyeid,
+		userid,
+		qiyemingcheng,
+		chengliriqi,
+		dizhi,
+		zhuceziben,
+		faren,
+		gszcd,
+		zzjgdm,
+		qiyexingzhiid,
+		hangyeid,
+		suchujieduanid,
+		jingyingfanwei,
+		qiyejieshao,
+		zhuyingyewu,
+		jianyingyewu,
+		qiyerenzheng,
+		yuangongshu,
+		dazhuanrenshu,
+		yanfarenshu,
+		bkzglbl,
+		shangshijihua,
+		logo,
+		wangzhi,
+		xingming,
+		bumenzhiwu,
+		yidongdianhua,
+		gudingdianhua,
+		email,
+		inputuser,
+		lurushijian,
+		lastchgtime,
+		gszcd_city,
+		gszcd_county,
+		gszcd_province,
+		custmanagesource,
+		custmanage
+		) values (
+		#{pk_qiyeid},
+		#{userid},
+		#{qiyemingcheng},
+		#{chengliriqi},
+		#{dizhi},
+		#{zhuceziben},
+		#{faren},
+		#{gszcd},
+		#{zzjgdm},
+		#{qiyexingzhiid},
+		#{hangyeid},
+		#{suchujieduanid},
+		#{jingyingfanwei},
+		#{qiyejieshao},
+		#{zhuyingyewu},
+		#{jianyingyewu},
+		#{qiyerenzheng},
+		#{yuangongshu},
+		#{dazhuanrenshu},
+		#{yanfarenshu},
+		#{bkzglbl},
+		#{shangshijihua},
+		#{logo},
+		#{wangzhi},
+		#{xingming},
+		#{bumenzhiwu},
+		#{yidongdianhua},
+		#{gudingdianhua},
+		#{email},
+		#{inputuser},
+		getdate(),
+		getdate(),
+		#{gszcd_city},
+		#{gszcd_county},
+		#{gszcd_province},
+		#{custmanagesource},
+		#{custmanage}
+		)
+
+	</insert>
+
+	<update id="front.qiye.update" parameterType="com.winpow.services.manage.qiye.bean.Qiye">
+		update tb_qiye set
+		<if test="userid!=null and userid!=''">
+			userid=#{userid},
+		</if>
+
+		<if test="qiyemingcheng!=null and qiyemingcheng!=''">
+			qiyemingcheng=#{qiyemingcheng},
+		</if>
+
+		<if test="chengliriqi!=null and chengliriqi!=''">
+			chengliriqi=#{chengliriqi},
+		</if>
+
+		<if test="dizhi!=null and dizhi!=''">
+			dizhi=#{dizhi},
+		</if>
+
+		<if test="zhuceziben!=null and zhuceziben!=''">
+			zhuceziben=#{zhuceziben},
+		</if>
+
+		<if test="faren!=null and faren!=''">
+			faren=#{faren},
+		</if>
+
+		<if test="gszcd!=null and gszcd!=''">
+			gszcd=#{gszcd},
+		</if>
+
+		<if test="zzjgdm!=null and zzjgdm!=''">
+			zzjgdm=#{zzjgdm},
+		</if>
+
+		<if test="qiyexingzhiid!=null and qiyexingzhiid!=''">
+			qiyexingzhiid=#{qiyexingzhiid},
+		</if>
+
+		<if test="hangyeid!=null and hangyeid!=''">
+			hangyeid=#{hangyeid},
+		</if>
+
+		<if test="suchujieduanid!=null and suchujieduanid!=''">
+			suchujieduanid=#{suchujieduanid},
+		</if>
+
+		<if test="jingyingfanwei!=null and jingyingfanwei!=''">
+			jingyingfanwei=#{jingyingfanwei},
+		</if>
+
+		<if test="qiyejieshao!=null and qiyejieshao!=''">
+			qiyejieshao=#{qiyejieshao},
+		</if>
+
+		<if test="zhuyingyewu!=null and zhuyingyewu!=''">
+			zhuyingyewu=#{zhuyingyewu},
+		</if>
+
+		<if test="jianyingyewu!=null and jianyingyewu!=''">
+			jianyingyewu=#{jianyingyewu},
+		</if>
+
+		<if test="qiyerenzheng!=null and qiyerenzheng!=''">
+			qiyerenzheng=#{qiyerenzheng},
+		</if>
+
+		<if test="yuangongshu!=null and yuangongshu!=''">
+			yuangongshu=#{yuangongshu},
+		</if>
+
+		<if test="dazhuanrenshu!=null and dazhuanrenshu!=''">
+			dazhuanrenshu=#{dazhuanrenshu},
+		</if>
+
+		<if test="yanfarenshu!=null and yanfarenshu!=''">
+			yanfarenshu=#{yanfarenshu},
+		</if>
+
+		<if test="bkzglbl!=null and bkzglbl!=''">
+			bkzglbl=#{bkzglbl},
+		</if>
+
+		<if test="shangshijihua!=null and shangshijihua!=''">
+			shangshijihua=#{shangshijihua},
+		</if>
+
+		<if test="logo!=null and logo!=''">
+			logo=#{logo},
+		</if>
+
+		<if test="wangzhi!=null and wangzhi!=''">
+			wangzhi=#{wangzhi},
+		</if>
+
+		<if test="xingming!=null and xingming!=''">
+			xingming=#{xingming},
+		</if>
+
+		<if test="bumenzhiwu!=null and bumenzhiwu!=''">
+			bumenzhiwu=#{bumenzhiwu},
+		</if>
+
+		<if test="yidongdianhua!=null and yidongdianhua!=''">
+			yidongdianhua=#{yidongdianhua},
+		</if>
+
+		<if test="gudingdianhua!=null and gudingdianhua!=''">
+			gudingdianhua=#{gudingdianhua},
+		</if>
+
+		<if test="email!=null and email!=''">
+			email=#{email},
+		</if>
+
+		<if test="inputuser!=null and inputuser!=''">
+			inputuser=#{inputuser},
+		</if>
+
+
+		<if test="gszcd_city!=null and gszcd_city!=''">
+			gszcd_city=#{gszcd_city},
+		</if>
+
+		<if test="gszcd_county!=null and gszcd_county!=''">
+			gszcd_county=#{gszcd_county},
+		</if>
+
+		<if test="gszcd_province!=null and gszcd_province!=''">
+			gszcd_province=#{gszcd_province},
+		</if>
+		<if test="custmanagesource!=null and custmanagesource!=''">
+			custmanagesource=#{custmanagesource},
+		</if>
+		<if test="custmanage!=null and custmanage!=''">
+			custmanage=#{custmanage},
+		</if>
+		lastchgtime=getdate()
+		where pk_qiyeid=#{pk_qiyeid}
+	</update>
+	<update id="front.usercenter.updatepersoninfo" parameterType="com.winpow.services.manage.person.bean.Person">
+		update tb_person set
+
+		<if test="userid!=null and userid!=''">
+			userid=#{userid},
+		</if>
+
+		<if test="username!=null and username!=''">
+			username=#{username},
+		</if>
+
+		<if test="orgid!=null and orgid!=''">
+			orgid=#{orgid},
+		</if>
+
+		<if test="sex!=null and sex!=''">
+			sex=#{sex},
+		</if>
+
+		<if test="birthday!=null and birthday!=''">
+			birthday=#{birthday},
+		</if>
+
+		<if test="address!=null and address!=''">
+			address=#{address},
+		</if>
+
+		<if test="education!=null and education!=''">
+			education=#{education},
+		</if>
+
+		<if test="graduate!=null and graduate!=''">
+			graduate=#{graduate},
+		</if>
+
+		<if test="subject!=null and subject!=''">
+			subject=#{subject},
+		</if>
+
+		<if test="introduce!=null and introduce!=''">
+			introduce=#{introduce},
+		</if>
+
+		<if test="studio!=null and studio!=''">
+			studio=#{studio},
+		</if>
+		<if test="person_province!=null and person_province!=''">
+			person_province=#{person_province},
+		</if>
+		<if test="person_city!=null and person_city!=''">
+			person_city=#{person_city},
+		</if>
+		<if test="person_county!=null and person_county!=''">
+			person_county=#{person_county},
+		</if>
+		<if test="custmanagesource!=null and custmanagesource!=''">
+			custmanagesource=#{custmanagesource},
+		</if>
+		<if test="custmanage!=null and custmanage!=''">
+			custmanage=#{custmanage},
+		</if>
+		
+		<if test="iscomplete != null and iscomplete != ''">
+			iscomplete=#{iscomplete},
+		</if>
+		
+		<if test="idcardpositive != null and idcardpositive != ''">
+			idcardpositive=#{idcardpositive},
+		</if>
+		
+		<if test="idcardnegative != null and idcardnegative != ''">
+			idcardnegative=#{idcardnegative},
+		</if>
+		
+		<if test="persontype != null and persontype != ''">
+			persontype=#{persontype},
+		</if>
+		<if test="profession != null and profession != ''">
+			profession=#{profession},
+		</if>
+		<if test="org != null and org != ''">
+			org=#{org},
+		</if>
+		<if test="label != null and label != ''">
+			label=#{label},
+		</if>
+		<if test="investment != null and investment != ''">
+			investment=#{investment},
+		</if>
+		<if test="headimg != null and headimg != ''">
+			headimg=#{headimg},
+		</if>
+		<if test="approve != null and approve != ''">
+			approve=#{approve},
+		</if>
+		<if test="priority != null and priority != ''">
+			priority=#{priority},
+		</if>
+		lastchgtime = getdate()
+		where id=#{id}
+	</update>
+
+
+</mapper>  

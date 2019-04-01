@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+"-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="manage">
+
+	<select id="manage.tbsbreviewlog.selectPageList"
+		parameterType="com.winpow.services.manage.tbsbreviewlog.bean.Tbsbreviewlog"
+		resultType="hashMap">
+		select * from (
+		SELECT ROW_NUMBER() over(order by inputtime desc) as rownumber ,
+		pkid,
+		policyid,
+		applyuser,
+		apply_company_name,
+		releid,
+		review_opinion,
+		result,
+		inputuser,
+		inputtime,
+		lastchgtime
+		from tb_sb_review_log )t where rownumber &gt; = #{offset} and rownumber
+		&lt; = #{pageSize}+#{offset}
+	</select>
+	<select id="manage.tbsbreviewlog.selectPageCount"
+		parameterType="com.winpow.services.manage.tbsbreviewlog.bean.Tbsbreviewlog"
+		resultType="java.lang.Integer">
+
+		select count(*) from (
+		SELECT ROW_NUMBER() over(order by id) as rownumber ,
+		pkid,
+		policyid,
+		applyuser,
+		apply_company_name,
+		releid,
+		review_opinion,
+		result,
+		inputuser,
+		inputtime,
+		lastchgtime
+		from tb_sb_review_log )t
+
+	</select>
+
+	<select id="manage.tbsbreviewlog.selectOne"
+		parameterType="com.winpow.services.manage.tbsbreviewlog.bean.Tbsbreviewlog"
+		resultType="com.winpow.services.manage.tbsbreviewlog.bean.Tbsbreviewlog">
+		SELECT
+		pkid,
+		policyid,
+		applyuser,
+		apply_company_name,
+		releid,
+		review_opinion,
+		result,
+		inputuser,
+		inputtime,
+		lastchgtime
+		from tb_sb_review_log t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+		<if test="releid!=null and releid!=''">
+            and t.releid=#{releid}
+        </if>
+	</select>
+
+	<select id="manage.tbsbreviewlog.selectCount"
+		parameterType="com.winpow.services.manage.tbsbreviewlog.bean.Tbsbreviewlog"
+		resultType="int">
+		select count(*)
+		FROM tb_sb_review_log t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+	</select>
+
+	<select id="manage.tbsbreviewlog.selectOneByCondition"
+		parameterType="com.winpow.services.manage.tbsbreviewlog.bean.Tbsbreviewlog"
+		resultType="com.winpow.services.manage.tbsbreviewlog.bean.Tbsbreviewlog">
+		SELECT
+		pkid,
+		policyid,
+		applyuser,
+		apply_company_name,
+		releid,
+		review_opinion,
+		result,
+		inputuser,
+		inputtime,
+		lastchgtime
+		from tb_sb_review_log t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+	</select>
+
+	<select id="manage.tbsbreviewlog.selectList"
+		parameterType="com.winpow.services.manage.tbsbreviewlog.bean.Tbsbreviewlog"
+		resultType="com.winpow.services.manage.tbsbreviewlog.bean.Tbsbreviewlog">
+		SELECT
+		pkid,
+		policyid,
+		applyuser,
+		apply_company_name,
+		releid,
+		review_opinion,
+		result,
+		inputuser,
+		inputtime,
+		lastchgtime
+		from tb_sb_review_log t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+		<if test="releid !=null and releid !=''">
+            and t.releid=#{releid}
+        </if>
+        <if test="policyid !=null and policyid !=''">
+            and t.policyid=#{policyid}
+        </if> order by inputtime desc
+	</select>
+
+	<insert id="manage.tbsbreviewlog.insert"
+		parameterType="com.winpow.services.manage.tbsbreviewlog.bean.Tbsbreviewlog"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into tb_sb_review_log (
+		pkid,
+		policyid,
+		applyuser,
+		apply_company_name,
+		releid,
+		review_opinion,
+		result,
+		inputuser,
+		inputtime,
+		lastchgtime
+		) values (
+		#{pkid},
+		#{policyid},
+		#{applyuser},
+		#{apply_company_name},
+		#{releid},
+		#{review_opinion},
+		#{result},
+		#{inputuser},
+		getdate(),
+		getdate()
+		)
+
+	</insert>
+
+	<update id="manage.tbsbreviewlog.update"
+		parameterType="com.winpow.services.manage.tbsbreviewlog.bean.Tbsbreviewlog">
+		update tb_sb_review_log set
+		<if test=" pkid !=null and  pkid !=''">
+			pkid=#{pkid},
+		</if>
+
+		<if test=" policyid !=null and  policyid !=''">
+			policyid=#{policyid},
+		</if>
+
+		<if test=" applyuser !=null and  applyuser !=''">
+			applyuser=#{applyuser},
+		</if>
+
+		<if test=" apply_company_name !=null and  apply_company_name !=''">
+			apply_company_name=#{apply_company_name},
+		</if>
+
+		<if test=" releid !=null and  releid !=''">
+			releid=#{releid},
+		</if>
+
+		<if test=" review_opinion !=null and  review_opinion !=''">
+			review_opinion=#{review_opinion},
+		</if>
+
+		<if test=" result !=null and  result !=''">
+			result=#{result},
+		</if>
+
+		<if test=" inputuser !=null and  inputuser !=''">
+			inputuser=#{inputuser},
+		</if>
+
+		<if test=" inputtime !=null and  inputtime !=''">
+			inputtime=#{inputtime},
+		</if>
+
+		<if test="lastchgtime!=null and lastchgtime !=''">
+			lastchgtime=#{lastchgtime}
+		</if>
+
+		where id=#{id}
+	</update>
+
+</mapper>  

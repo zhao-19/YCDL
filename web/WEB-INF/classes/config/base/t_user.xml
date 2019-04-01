@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+"-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="user">
+	
+	<select id="user.selectPageList" parameterType="com.winpow.core.system.bean.User" resultType="hashMap">
+		select top ${pageSize} * from (
+			select row_number() over(order by id desc) as rownumber ,* 
+			from t_user t where 1=1
+			<if test="username!=null and username!=''">
+				and t.username=#{username} 
+			</if>
+			<if test="nickname!=null and nickname!=''">
+				and t.nickname=#{nickname} 
+			</if>
+			<if test="substation != null and substation != ''">
+				and t.substation=#{substation} 
+			</if>
+	    ) a where rownumber > ${pageSize}*(${offset} - 1)
+	</select>
+	
+	<select id="user.selectPageCount" parameterType="com.winpow.core.system.bean.User" resultType="java.lang.Integer">
+		select count(*) from t_user t where 1=1
+		<if test="username!=null and username!=''">
+			and t.username=#{username} 
+		</if>
+		<if test="nickname!=null and nickname!=''">
+			and t.nickname=#{nickname} 
+		</if>
+		<if test="substation != null and substation != ''">
+			and t.substation=#{substation} 
+		</if>
+	</select>
+
+	<select id="user.selectList" parameterType="com.winpow.core.system.bean.User" resultType="com.winpow.core.system.bean.User">
+		select * from t_user where 1 = 1
+		 <if test="allocation != null">
+			 and allocation = #{allocation}
+		 </if>
+		 <if test="substation != null and substation != ''">
+			and substation=#{substation} 
+		</if>
+	</select>
+	
+	<select id="user.selectListByRid" parameterType="com.winpow.core.system.bean.User" resultType="com.winpow.core.system.bean.User">
+        select * from t_user where 1 = 1
+         <if test="rid!=null and rid!=''">
+                    and rid=#{rid}
+         </if>
+    </select>
+
+
+	<select id="user.selectOne" parameterType="com.winpow.core.system.bean.User" resultType="com.winpow.core.system.bean.User">
+		select * from t_user t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+		<if test="username!=null and username!=''">
+			and t.username=#{username} 
+		</if>
+		<if test="nickname!=null and nickname!=''">
+			and t.nickname=#{nickname} 
+		</if>
+		<if test="password!=null and password!=''">
+			and t.password=#{password} 
+		</if>
+		<if test="status!=null and status!=''">
+			and t.status= #{status}
+		</if>
+		<if test="rid!=null and rid!=''">
+			and t.rid=#{rid}
+		</if>    
+	</select>
+	
+	<select id="user.selectCount" parameterType="com.winpow.core.system.bean.User" resultType="int">
+		SELECT count(*) from t_user where 1=1 
+		<if test="username!=null and username!=''">
+			and username=#{username} 
+		</if>
+		<if test="nickname!=null and nickname!=''">
+			and nickname=#{nickname} 
+		</if>
+	</select>
+	
+	<select id="user.selectOneByCondition" parameterType="com.winpow.core.system.bean.User" resultType="com.winpow.core.system.bean.User">
+		SELECT * from t_user where 1=1 
+		<if test="nickname!=null and nickname!=''">
+			and nickname=#{nickname} 
+		</if>
+		<if test="username!=null and username!=''">
+			and username=#{username} 
+		</if>
+	</select>
+	
+	<insert id="user.insert" parameterType="com.winpow.core.system.bean.User" useGeneratedKeys="true" 
+		keyProperty="id">
+		insert into t_user (username,password,createtime,createAccount,status,rid,nickname,email,allocation,cellPhoneNum,telephone,substation)
+		 values (#{username},#{password},GETDATE(),#{createAccount},#{status},#{rid},#{nickname},#{email},#{allocation},#{cellPhoneNum},#{telephone}
+		 <choose><when test="substation=='all'">,null</when><otherwise>,#{substation}</otherwise></choose>
+		 )
+	</insert>
+	
+	<update id="user.update" parameterType="com.winpow.core.system.bean.User">
+		update t_user set updatetime=GETDATE(),updateAccount=#{updateAccount}
+		<if test="password!=null">
+			,password=#{password}
+		</if>
+		<if test="status!=null">
+			,status=#{status}
+		</if>
+		<if test="rid!=null">
+			,rid=#{rid}
+		</if>
+		<if test="nickname!=null and nickname!=''">
+			,nickname=#{nickname}
+		</if>
+		<if test="email!=null and email!=''">
+			,email=#{email}
+		</if>
+		<if test="allocation != null">
+			,allocation=#{allocation}
+		</if>
+		<if test="cellPhoneNum != null and cellPhoneNum != ''">
+			,cellPhoneNum=#{cellPhoneNum}
+		</if>
+		<if test="jpushid != null and jpushid != ''">
+			,jpushid=#{jpushid}
+		</if>
+		<if test="telephone != null and telephone != ''">
+            ,telephone=#{telephone}
+        </if>
+        <if test=" substation !=null and  substation !='' and substation != 'all'">
+            ,substation=#{substation}
+        </if>
+        <if test=" substation !=null and  substation !='' and substation == 'all'">
+            ,substation = null
+        </if>
+		where id=#{id}
+	</update>
+	<select id="user.selectCustManagerByCustId" parameterType="com.winpow.core.system.bean.User" resultType="com.winpow.core.system.bean.User">
+        SELECT top 1 t2.* from tb_cust t1 left join t_user t2 on t1.CUSTMANAGE = t2.username 
+        where 1=1 
+        <if test="id != null and id != ''">
+            and t1.userid=#{id}
+        </if>
+    </select>
+     <select id="user.selectAllUser" resultType="com.winpow.core.system.bean.User"  >
+        select * from t_user
+    </select>
+<!-- 	<delete id="user.delete" parameterType="com.winpow.core.system.bean.User"> -->
+<!-- 		delete from t_user where id=#{id} -->
+<!-- 	</delete> -->
+</mapper>  

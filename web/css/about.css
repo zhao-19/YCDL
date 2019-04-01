@@ -1,0 +1,311 @@
+@charset "utf-8";
+*{margin: 0px;padding: 0px; }
+ul{list-style:none; padding:0px; margin:0px; }
+ul li,ol li{list-style:none; padding:0px; margin:0px;}
+a {text-decoration: none;}
+/*基本信息*/
+body{font-family:"微软雅黑";margin:0px;padding: 0px; background:#fff;font-size:12px;min-width: 1200px;}
+
+.cj_container{
+    width: 1200px;
+    margin: 0 auto;
+}
+
+
+
+/*关于我们样式*/
+
+.about_cj_banner{
+    width: 100%;
+}
+.about_cj_banner img{
+    width: 100%;
+}
+/*top start*/
+.about_cj_main{
+    margin-top: 48px;
+    overflow: hidden;
+}
+.image_phone{
+    width:1902px;height: 281px;
+    background:url("../image/ab/image.png")left center no-repeat;
+    margin:auto;
+    margin-top: -7px;
+    margin-bottom: 50px;
+}
+
+.phone_number{color: #ea5504;font-size:30px;position: relative;top: 194px;left:894px;font-weight: 600;}
+.about_type{height: 50px;border:0px solid #000;margin-top: 30px;}
+.about_type li{float:left;width: 228px;height: 50px;background-color: #B9B9B9;text-align: center;line-height: 50px;margin-right: 15px;font-size: 20px;}
+.about_type li:hover{background-color:#ea5504;}
+.about_type .type_bgc{background-color:#ea5504;}
+.about_type .type_lxwm{margin-right:-15px;}
+.about_type li a{color: #fff;}
+
+
+/*赢创介绍start*/
+.about_cj_intro_box{
+    margin-top: 60px;
+}
+.about_cj_title_intro h3{
+    font-size: 30px;
+    line-height: 47px;
+    color:#ea5504;
+    text-align: center;
+    margin: 35px 0;
+    font-weight: normal;
+}
+.about_cj_title_img p{
+    margin-top: 40px;
+    font-size: 18px;
+    color:#333333;
+    line-height: 32px;
+    margin-bottom: 70px;
+}
+
+.about_cj_server_box{
+    text-align: center;
+}
+
+.about_cj_server_box .p1{
+    font-size: 22px;
+    line-height: 35px;
+    color:#666666;
+}
+.about_cj_server_box .p2{
+    text-align: left;
+    font-size: 18px;
+    line-height: 32px;
+    color:#333333;
+}
+/*组织机构架构*/
+.about_cj_fra_title h3{
+    text-align: center;
+    font-size: 30px;
+    line-height: 47px;
+    color:#ea5504;
+    font-weight: normal;
+}
+.about_cj_fra_img{
+    margin-top: 70px;
+    text-align: center;
+}
+.about_cj_fra_img .p1{
+    font-size: 22px;
+    line-height: 35px;
+    color:#666666;
+    padding: 35px 0px 50px 0px;
+}
+.about_cj_fra_img .p2{
+    text-align: left;
+    font-size: 18px;
+    line-height: 32px;
+    color:#333333;
+}
+
+/*物理平台*/
+.about_cj_phy_box{
+    margin-top: 108px;
+}
+.about_cj_phy_p{
+    margin-top: 67px;
+    font-size: 18px;
+    line-height: 32px;
+    color:#333333;
+}
+.about_cj_phy_img{
+    text-align: center;
+    margin-top: 55px;
+    margin-bottom: 47px;
+}
+
+/*资源聚集*/
+.about_res_content{
+    margin-top: 70px;
+    overflow: hidden;
+}
+.about_res_content ul li{
+    width: 572px;
+    float: left;
+    margin-right: 55px;
+    padding-bottom: 57px;
+}
+.about_res_content ul li img{
+    width: 110px;
+    float: left;
+}
+.about_res_p{
+    margin-left: 120px;
+    color:#333333;
+    font-size: 18px;
+    line-height: 32px;
+}
+.about_res_content ul li:nth-child(2n){
+    margin-right: 0px;
+}
+/*股权融资服务*/
+.about_equ_server_box{
+    margin-top: 74px;
+}
+.about_equ_server_p{
+    font-size: 18px;
+    line-height: 32px;
+    color:#333333;
+    margin-top: 64px;
+}
+.about_equ_server_img{
+    text-align: center;
+    margin-top: 74px;
+
+}
+.about_equ_server_img .p1{
+    margin-top: 50px;
+    font-size: 22px;
+    line-height: 35px;
+    color:#666666;
+}
+/*天使投资*/
+.about_inv_box{
+    margin-top: 105px;
+}
+.about_cj_fra_title p{
+    margin-top: 15px;
+    font-size: 22px;
+    line-height: 32px;
+    color:#666666;
+    text-align: center;
+}
+
+.about_inv_box_content{
+    font-size: 18px;
+    line-height: 32px;
+    color:#333333;
+    margin-top: 67px;
+}
+
+.about_inv_box_content_1{
+    text-align: center;
+}
+
+/*债权融资服务*/
+
+.about_cj_rights_box{
+    margin-top: 70px;
+}
+.about_rights_box_content1{
+    text-align: center;
+    margin-top: 77px;
+}
+.about_cj_rights_box p{
+    font-size: 22px;
+    color:#666666;
+    line-height: 32px;
+}
+
+/*增值服务*/
+.about_added_box{
+    margin-top: 103px;
+}
+
+.about_added_content1{
+    text-align: center;
+    margin-top: 73px;
+    margin-bottom: 60px;
+}
+
+/*发展目标*/
+.about_goals_box{
+    margin-bottom: 55px;
+}
+.about_goals_content{
+    font-size: 18px;
+    color:#333333;
+    line-height: 32px;
+    margin-top: 32px;
+}
+
+/*人才招聘*/
+.ycjs_count{overflow:hidden;margin-top: 60px;font-size: 16px;margin-bottom: 30px;}
+.ycjs_xuanze{width: 100%;height:50px;background-color: #FAFAFA;border:1px solid #E8E8E8;margin-bottom: 30px;}
+.ycjs_xuanze ul li{height:30px;float: left;margin-left:30px;padding:0px 20px;cursor: pointer;background-color: #FAFAFA;margin-top:10px;line-height: 30px;}
+.ycjs_xuanze .zhiwei_bgc{background-color: #3699DC;}
+.ycjs_xuanze ul li:hover{background-color: #3699DC;}
+.ycjs_xuanze .zhiwei,.ycjs_xuanze .zhiwei:hover{background-color: #fff;cursor:default;}
+
+.data_list{border:0px solid red;box-shadow: #D8D8D8 0px 0px 20px;padding: 50px 0 10px 0;}
+.data_list .info{width:1154px;height: 83px;border:1px solid #E8E8E8;border-left: 4px solid #3699DC;margin-left: 20px;margin-bottom: 20px;}
+.data_list .info img{width:92px;height: 68px;margin-left:22px;margin-top: 6px;}
+.data_list .info li{line-height: 83px;margin-left: 50px;font-size: 16px;margin-right: 50px}
+.data_list .info li span{color: #EA5504;}
+.data_list .info .icon_time{line-height:83px;font-size: 16px;color:#999999;background:url("../image/ab/grzp_icon.png")left center no-repeat;text-indent:20px;}
+
+/*法律声明*/
+.about_cj_title{margin-top: 50px;}
+.fl_bgcimg{width:100%;height: 150px;background:url("../image/ab/fl_ground.png") center center no-repeat;margin-top: 60px;}
+.fl_info{margin-top: 50px;margin-bottom: 50px;}
+
+/*联系我们*/
+.lx_info{box-shadow: 0px 0px 10px #D8D8D8;border:0px solid red;margin-bottom: 50px;margin-top: 50px;}
+.lx_bgc img{width: 1161px;height: 157px;margin-top: 50px;margin-left: 15px;}
+.lx_hezuo{width:260px;height: 73px;background-color: #EB9D74;position: relative;top: -130px;left:15px;padding-top: 20px;}
+.lx_hezuo li{text-align: center;}
+.lx_hezuo_text{font-size: 20px;color: #fff;}
+.lx_hezuo_email{font-size: 15px;color: #fff;}
+.lx_text{margin-top: -60px;margin-left: 17px;}
+.lx_text li{margin-top: 10px;color: #333333;}
+.lx_map{width: 1160px;height: 295px;margin-top: 30px;margin-bottom: 50px;margin-left: 17px;}
+
+/*意见反馈*/
+.yj_info{box-shadow: 0px 0px 10px #D8D8D8;border:0px solid red;margin-bottom: 50px;margin-top: 50px;padding-bottom: 42px;}
+.yj_info img{}
+.yj_form{width:832px;border:0px solid red;margin:0 auto;margin-top: 50px;}
+.yj_form .textarea{clear:both;}
+.yj_form .fkleixing{font-size: 16px;}
+.yj_form .radio{height: 50px;border: 0px solid red;margin-top:10px;line-height: 50px;}
+.yj_form .radio .danxuan{margin-left: 20px;text-indent: 5px;}
+.yj_form .radio span{position: relative;top: -2px;left:5px;}
+.yj_form .textarea textarea{border:1px solid #E3E3E3;width: 830px;height: 166px;padding: 10px;font-size: 15px;color: #595959;}
+.areatitle{color: 15px;color: #333; margin-bottom: 10px;margin-top: 10px;}
+
+.yj_form .text{color: #333;margin-top:30px;margin-right: 60px;margin-bottom: 30px;}
+.yj_form .text .wenben{width:340px;}
+.yj_form .text .wb_text{color: #333;margin-bottom: 15px;}
+.yj_form .wenben input{border: 1px solid #e3e3e3;width: 340px;color:#595959;padding: 11px;font-size: 15px;}
+
+.yj_form .yj_codes img{}
+.yj_form .yj_bot{overflow: hidden;clear: both;font-size: 16px;color: #fff;}
+.yj_form .yj_bot input{overflow: hidden;border: 0px solid #000;width:217px;height:39px;cursor: pointer;border-radius: 5px;text-align: center;line-height: 39px;font-size: 16px;color: #fff;background-color: #FF9002;}
+.yj_form .yj_bot input{cursor: pointer;font-size: 16px;color: #fff;background-color: #FF9002;font-family: "微软雅黑";display: inline-block;}
+.yj_form .yj_bot input:hover{background-color:#FEB251;}
+
+
+#menu{position:fixed;left:89%;top:230px;background-color:#EECFA1;border:1px solid #EEC591;}
+#menu ul li a{
+    display:block;
+    font-size:14px;
+    color:#000;
+    width:150px;
+    height:30px;
+    line-height:30px;
+    text-decoration:none;
+    text-align:center;
+}
+#menu ul li:last-child a{
+    display:block;
+    font-size:14px;
+    color:#000;
+    width:150px;
+    height:40px;
+    line-height:40px;
+    text-decoration:none;
+    text-align:center;
+    border:0px solid red;
+    background:#fff;
+    
+}
+#menu ul li a:hover,#menu ul li a.current{color:#fff;background:#EE7942;}
+#menu ul li:last-child  a:hover,#menu ul li:last-child  a.current{color:#000;background:#FFEBCD;}	
+
+
+
+ 

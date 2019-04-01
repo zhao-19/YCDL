@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC 
+"-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="manage">
+
+	<select id="manage.person.selectPageList" parameterType="com.winpow.services.manage.person.bean.Person"
+		resultType="com.winpow.services.manage.person.bean.Person">
+		select * from (
+			select row_number() over(order by lurushijian desc) as rownumber ,*
+			from tb_person where 1=1
+			<if test="userid != null and userid != ''">
+				and userid=#{userid}
+			</if>
+			<if test="username!=null and username!=''">
+				and username like '%'+#{username}+'%'
+			</if>
+			<if test="approve != null and approve != ''">
+				and approve=#{approve}
+			</if>
+		)t where 1=1
+		and rownumber &gt; = #{offset} and rownumber &lt; = #{pageSize}+#{offset}
+	</select>
+	
+	<select id="manage.person.selectPageCount" parameterType="com.winpow.services.manage.person.bean.Person"
+		resultType="java.lang.Integer">
+		select count(*) from tb_person t where 1=1
+		<if test="userid != null and userid != ''">
+			and userid=#{userid}
+		</if>
+		<if test="username!=null and username!=''">
+			and username like '%'+#{username}+'%'
+		</if>
+		<if test="approve != null and approve != ''">
+			and approve=#{approve}
+		</if>
+	</select>
+
+	<select id="manage.person.selectOne" parameterType="com.winpow.services.manage.person.bean.Person"
+		resultType="com.winpow.services.manage.person.bean.Person">
+		select top(1) * from tb_person t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+		
+		<if test="userid!=null and userid!=''">
+			and t.userid=#{userid}
+		</if>
+	</select>
+
+	<select id="manage.person.selectCount" parameterType="com.winpow.services.manage.person.bean.Person"
+		resultType="int">
+		select count(*) from tb_person t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+	</select>
+
+	<select id="manage.person.selectOneByCondition" parameterType="com.winpow.services.manage.person.bean.Person"
+		resultType="com.winpow.services.manage.person.bean.Person">
+		select * from tb_person t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+	</select>
+
+
+	<select id="manage.person.selectByUserId" parameterType="com.winpow.services.manage.person.bean.Person"
+		resultType="com.winpow.services.manage.person.bean.Person">
+		select * from tb_person t where 1=1 and t.userid=#{userid}
+	</select>
+	<select id="manage.person.selectById" parameterType="com.winpow.services.manage.person.bean.Person"
+		resultType="com.winpow.services.manage.person.bean.Person">
+		select * from tb_person t where 1=1 and t.id=#{id}
+	</select>
+
+	<insert id="manage.person.insert" parameterType="com.winpow.services.manage.person.bean.Person"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into tb_person (
+
+		userid,
+		username,
+		orgid,
+		sex,
+		birthday,
+		address,
+		education,
+		graduate,
+		subject,
+		introduce,
+		iscomplete,idcardpositive,idcardnegative,persontype,
+		studio,person_province,person_city,person_county,
+		lurushijian,custmanagesource,custmanage,lastchgtime,approve,priority
+		,profession,org,label,investment,headimg,position,likenum
+		) values (
+		#{userid},
+		#{username},
+		#{orgid},
+		#{sex},
+		#{birthday},
+		#{address},
+		#{education},
+		#{graduate},
+		#{subject},
+		#{introduce},
+		#{iscomplete},#{idcardpositive},#{idcardnegative},#{persontype},
+		#{studio},#{person_province},#{person_city},#{person_county},
+		getdate(),#{custmanagesource},#{custmanage},getdate(),#{approve},#{priority}
+		,#{profession},#{org},#{label},#{investment},#{headimg},#{position},0
+		)
+
+	</insert>
+
+	<update id="manage.person.update" parameterType="com.winpow.services.manage.person.bean.Person">
+		update tb_person set
+
+		<if test="userid!=null and userid!=''">
+			userid=#{userid},
+		</if>
+
+		<if test="username!=null and username!=''">
+			username=#{username},
+		</if>
+
+		<if test="orgid!=null and orgid!=''">
+			orgid=#{orgid},
+		</if>
+
+		<if test="sex!=null and sex!=''">
+			sex=#{sex},
+		</if>
+
+		<if test="birthday!=null and birthday!=''">
+			birthday=#{birthday},
+		</if>
+
+		<if test="address!=null and address!=''">
+			address=#{address},
+		</if>
+
+		<if test="education!=null and education!=''">
+			education=#{education},
+		</if>
+
+		<if test="graduate!=null and graduate!=''">
+			graduate=#{graduate},
+		</if>
+
+		<if test="subject!=null and subject!=''">
+			subject=#{subject},
+		</if>
+
+		<if test="introduce!=null and introduce!=''">
+			introduce=#{introduce},
+		</if>
+
+		<if test="studio!=null and studio!=''">
+			studio=#{studio},
+		</if>
+		<if test="person_province!=null and person_province!=''">
+			person_province=#{person_province},
+		</if>
+		<if test="person_city!=null and person_city!=''">
+			person_city=#{person_city},
+		</if>
+		<if test="person_county!=null and person_county!=''">
+			person_county=#{person_county},
+		</if>
+		<if test="custmanagesource!=null and custmanagesource!=''">
+			custmanagesource=#{custmanagesource},
+		</if>
+		<if test="custmanage!=null and custmanage!=''">
+			custmanage=#{custmanage},
+		</if>
+		
+		<if test="iscomplete != null and iscomplete!=''">
+			iscomplete=#{iscomplete},
+		</if>
+		
+		<if test="idcardpositive != null and idcardpositive != ''">
+			idcardpositive=#{idcardpositive},
+		</if>
+		
+		<if test="idcardnegative != null and idcardnegative != ''">
+			idcardnegative=#{idcardnegative},
+		</if>
+		
+		<if test="persontype != null and persontype != ''">
+			persontype=#{persontype},
+		</if>
+		
+		<if test="approve != null and approve != ''">
+			approve=#{approve},
+		</if>
+		
+		<if test="priority != null ">
+			priority=#{priority},
+		</if>
+		
+		<if test="profession != null and profession != ''">
+			profession=#{profession},
+		</if>
+		<if test="org != null and org != ''">
+			org=#{org},
+		</if>
+		<if test="label != null and label != ''">
+			label=#{label},
+		</if>
+		<if test="investment != null and investment != ''">
+			investment=#{investment},
+		</if>
+		<if test="headimg != null and headimg != ''">
+			headimg=#{headimg},
+		</if>
+		<if test="position != null and position != ''">
+			position=#{position},
+		</if>
+		
+		<if test="likenum != null ">
+			likenum=#{likenum},
+		</if>
+		
+		lastchgtime = getdate()
+		where id=#{id}
+	</update>
+	
+    <select id="manage.person.selectListByType" parameterType="com.winpow.services.manage.person.bean.Person"
+        resultType="com.winpow.services.manage.person.bean.Person">
+        select top ${pageSize} * from (
+	        select row_number() over (order by ${lurushijian} desc) as rownumber,* 
+	        from tb_person 
+	        where persontype in ('11706','11707') and approve='10001'
+         ) a where rownumber > ${pageSize}*(${offset} - 1)
+    </select>
+    
+    <update id="manage.person.updatelikenum" parameterType="string">
+		update tb_person set likenum = likenum + 1 where id=#{id}
+	</update>
+	
+	<update id="manage.person.updatereadtimes" parameterType="string">
+		update tb_person set readtimes = readtimes + 1 where id=#{id}
+	</update>
+	
+	<delete id="manage.person.deletebyIds" parameterType="list">
+		delete from tb_person where id in
+		<foreach item="item" index="index" collection="array" open="(" separator="," close=")">  
+            #{item}  
+        </foreach>
+	</delete>
+    
+    <select id="manage.person.selectReledUser" parameterType="list"
+        resultType="map">
+		select * from (
+			select c.userid,c.cellphone,
+			case when q.license is not null and q.license!='' then q.license
+			when j.license is not null and j.license!='' then j.license
+			when o.license is not null and o.license!='' then o.license else '' end as licenses
+			from tb_cust c
+			left join tb_person p on c.userid = p.userid
+			left join tb_qiye q on c.f_id = q.pk_qiyeid
+			left join tb_jigou j on c.f_id = j.id
+			left join tb_other_org o on c.f_id = o.id
+			where 1=1
+			and p.username is not null and p.username != ''
+			and p.persontype is not null and p.persontype != ''
+			and (c.status is null or c.status='aaaaaaaaaaaaaaaaaaaaaaaaaaaaa006' or c.status='')
+			and c.userid in
+	        <foreach collection="list" separator="," item="key" open="(" close=")">  
+	        #{key}
+	    	</foreach>
+		) a
+		where licenses is not null and licenses!=''
+    </select>
+    
+</mapper>  

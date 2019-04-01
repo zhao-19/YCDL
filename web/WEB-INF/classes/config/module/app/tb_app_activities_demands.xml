@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+"-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="app">
+
+	<select id="app.appactivitiesdemands.selectPageList"
+		parameterType="com.winpow.services.app.appactivitiesdemands.bean.Appactivitiesdemands"
+		resultType="hashMap">
+		select * from (
+		SELECT ROW_NUMBER() over(order by updatedate
+		desc) as rownumber ,
+		pkid,
+		chno,
+		userid,
+		title,
+		agenciesname,
+		activitiesguests,
+		begintime,
+		endtime,
+		chstatus,
+		remark,
+		createdate,
+		updateby,
+		updatedate,
+        reviwer_id,
+        reviwer_date,
+        reviwer_remark
+		from tb_app_activities_demands )t where rownumber
+		&gt; = #{offset} and
+		rownumber &lt; = #{pageSize}+#{offset}
+	</select>
+	<select id="app.appactivitiesdemands.selectPageCount"
+		parameterType="com.winpow.services.app.appactivitiesdemands.bean.Appactivitiesdemands"
+		resultType="java.lang.Integer">
+
+		select count(*) from (
+		SELECT ROW_NUMBER() over(order by
+		updatedate desc) as rownumber ,
+		pkid,
+		chno,
+		userid,
+		title,
+		agenciesname,
+		activitiesguests,
+		begintime,
+		endtime,
+		chstatus,
+		remark,
+		createdate,
+		updateby,
+		updatedate,
+        reviwer_id,
+        reviwer_date,
+        reviwer_remark
+		from tb_app_activities_demands )t
+
+	</select>
+
+	<select id="app.appactivitiesdemands.selectOne"
+		parameterType="com.winpow.services.app.appactivitiesdemands.bean.Appactivitiesdemands"
+		resultType="com.winpow.services.app.appactivitiesdemands.bean.Appactivitiesdemands">
+		SELECT
+		pkid,
+		chno,
+		userid,
+		title,
+		agenciesname,
+		activitiesguests,
+		begintime,
+		endtime,
+		chstatus,
+		remark,
+		createdate,
+		updateby,
+		updatedate,
+        reviwer_id,
+        reviwer_date,
+        reviwer_remark
+		from
+		tb_app_activities_demands t where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+
+	<select id="app.appactivitiesdemands.selectCount"
+		parameterType="com.winpow.services.app.appactivitiesdemands.bean.Appactivitiesdemands"
+		resultType="int">
+		select count(*)
+		FROM tb_app_activities_demands t where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+
+	<select id="app.appactivitiesdemands.selectOneByCondition"
+		parameterType="com.winpow.services.app.appactivitiesdemands.bean.Appactivitiesdemands"
+		resultType="com.winpow.services.app.appactivitiesdemands.bean.Appactivitiesdemands">
+		SELECT
+		pkid,
+		chno,
+		userid,
+		title,
+		agenciesname,
+		activitiesguests,
+		begintime,
+		endtime,
+		chstatus,
+		remark,
+		createdate,
+		updateby,
+		updatedate,
+        reviwer_id,
+        reviwer_date,
+        reviwer_remark
+		from
+		tb_app_activities_demands t where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+
+	<select id="app.appactivitiesdemands.selectList"
+		parameterType="com.winpow.services.app.appactivitiesdemands.bean.Appactivitiesdemands"
+		resultType="com.winpow.services.app.appactivitiesdemands.bean.Appactivitiesdemands">
+		SELECT
+		pkid,
+		chno,
+		userid,
+		title,
+		agenciesname,
+		activitiesguests,
+		begintime,
+		endtime,
+		chstatus,
+		remark,
+		createdate,
+		updateby,
+		updatedate,
+        reviwer_id,
+        reviwer_date,
+        reviwer_remark
+		from
+		tb_app_activities_demands t where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+	
+	<select id="app.appactivitiesdemands.selectLists"
+        parameterType="com.winpow.services.app.appactivitiesdemands.bean.Appactivitiesdemands"
+        resultType="com.winpow.services.app.appactivitiesdemands.bean.Appactivitiesdemands">
+         SELECT
+        t.* from
+        tb_app_activities_demands t left join tb_activities t1 on t.pkid = t1.appid where t1.id is null
+        <if test="pkid!=null and pkid!=''">
+            and t.pkid=#{pkid}
+        </if>
+    </select>
+
+	<insert id="app.appactivitiesdemands.insert"
+		parameterType="com.winpow.services.app.appactivitiesdemands.bean.Appactivitiesdemands"
+		useGeneratedKeys="true" keyProperty="id">
+		declare @cnno int
+		exec @cnno = getchnoseq
+		insert into tb_app_activities_demands (
+		pkid,
+		chno,
+		userid,
+		title,
+		agenciesname,
+		activitiesguests,
+		begintime,
+		endtime,
+		chstatus,
+		remark,
+		createdate,
+		updateby,
+		updatedate,
+        reviwer_id,
+        reviwer_date,
+        reviwer_remark
+		) values (
+		#{pkid},
+		(select 'pxfb' + right('0000000000' + cast(@cnno as varchar(10)), 10)),
+		#{userid},
+		#{title},
+		#{agenciesname},
+		#{activitiesguests},
+		#{begintime},
+		#{endtime},
+		#{chstatus},
+		#{remark},
+		getdate(),
+		#{updateby},
+		getdate(),
+        #{reviwer_id},
+        #{reviwer_date},
+        #{reviwer_remark}
+		)
+
+	</insert>
+
+	<update id="app.appactivitiesdemands.update"
+		parameterType="com.winpow.services.app.appactivitiesdemands.bean.Appactivitiesdemands">
+		update tb_app_activities_demands set
+
+		<if test=" userid !=null and  userid !=''">
+			userid=#{userid},
+		</if>
+
+		<if test=" title !=null and  title !=''">
+			title=#{title},
+		</if>
+
+		<if test=" agenciesname !=null and  agenciesname !=''">
+			agenciesname=#{agenciesname},
+		</if>
+
+		<if test=" activitiesguests !=null and  activitiesguests !=''">
+			activitiesguests=#{activitiesguests},
+		</if>
+
+		<if test=" begintime !=null and  begintime !=''">
+			begintime=#{begintime},
+		</if>
+
+		<if test=" endtime !=null and  endtime !=''">
+			endtime=#{endtime},
+		</if>
+
+		<if test=" chstatus !=null and  chstatus !=''">
+			chstatus=#{chstatus},
+		</if>
+
+		<if test=" remark !=null and  remark !=''">
+			remark=#{remark},
+		</if>
+
+		<if test=" updateby !=null and  updateby !=''">
+			updateby=#{updateby},
+		</if>
+        <if test=" reviwer_id !=null and  reviwer_id !=''">
+            reviwer_id=#{reviwer_id},
+        </if>
+        <if test=" reviwer_date !=null and  reviwer_date !=''">
+            reviwer_date=getdate(),
+        </if>
+        <if test=" reviwer_remark !=null and  reviwer_remark !=''">
+            reviwer_remark=#{reviwer_remark},
+        </if>
+        updatedate=getdate()
+		where pkid=#{pkid}
+	</update>
+	
+	<!-- 作为发布人 ，只在app上发布了活动，还没在pc上发布 activititype：0 -->
+	<!-- 作为发布人 ， app上发布了活动 ，且pc上发布的活动,activititype：1 -->
+	<!-- 作为参加人 ，参加了pc上发布的活动activititype：3 -->
+	<select id="app.appactivitiesdemands.selectPageByUserid" parameterType="com.winpow.services.app.appactivitiesdemands.bean.Appactivitiesdemands" 
+		resultType="com.winpow.services.app.appactivitiesdemands.bean.Appactivitiesdemands">
+		select top ${pageSize} * from (
+	        select row_number() over (order by createdate desc) as rownumber,* from(
+				select * from (
+					select '0' as  activititype , case when  chstatus='10302' then '您发的活动已经审核通过，请联系您的客户经理在pc端发布' else '' end as  remark ,
+					'' acid,pkid,userid,title,'' activities_detail,chstatus,createdate,chno,begintime,endtime,agenciesname,activitiesguests,reviwer_id
+					from tb_app_activities_demands tad where tad.pkid not in (select appid from tb_activities where appid is not null) 
+					<choose>
+				        <when test=" userid !=null and  userid !=''">
+				            and userid=#{userid}
+				        </when>
+				        <when test=" pkid !=null and  pkid !=''">
+				            and userid in (select userid from tb_cust where f_id=#{pkid})
+				        </when>
+				        <when test=" reviwer_id !=null and  reviwer_id !=''">
+			            	and reviwer_id=#{reviwer_id}
+			        	</when>
+		       		</choose>
+					union all
+					select  '1' as  activititype ,  ''  remark ,
+					convert(varchar,ta.id) acid,tad.pkid,tad.userid,ta.activities_name title,activities_detail activities_detail,tad.chstatus,ta.lurushijian createdate,
+					'' chno,ta.begintime,ta.endtime,ta.agenciesname,ta.activities_guests activitiesguests,'' reviwer_id
+					from tb_activities ta inner join tb_app_activities_demands tad on ta.appid =tad.pkid  where 1=1
+					<choose>
+				        <when test=" userid !=null and  userid !=''">
+				            and userid=#{userid}
+				        </when>
+				        <when test=" pkid !=null and  pkid !=''">
+				            and userid in (select userid from tb_cust where f_id=#{pkid})
+				        </when>
+				        <when test=" reviwer_id !=null and  reviwer_id !=''">
+			            	and reviwer_id=#{reviwer_id}
+			        	</when>
+		       		</choose>
+					<if test="reviwer_id==null or reviwer_id==''">
+						union all
+						select  '3' as  activititype , ''  remark ,
+						convert(varchar,ta.id) acid,'' pkid,a.userid userid,ta.activities_name title,ta.activities_detail activities_detail,
+						'已报名' chstatus,a.lurushijian createdate,'' chno,ta.begintime,ta.endtime,ta.agenciesname,ta.activities_guests activitiesguests,'' reviwer_id
+						from tb_activities ta 
+						right join (
+							select activitiid,userid, min(lurushijian) lurushijian from tb_activities_app where 1=1
+							<choose>
+						        <when test=" userid !=null and  userid !=''">
+						            and userid=#{userid}
+						        </when>
+						        <when test=" pkid !=null and  pkid !=''">
+						            and userid in (select userid from tb_cust where f_id=#{pkid})
+						        </when>
+				       		</choose>
+				       		 group by activitiid,userid
+						) a on ta.id=a.activitiid
+					</if>
+				) t 
+			) b  
+	    ) a   where rownumber > ${pageSize}*(${offset} - 1)
+	</select>
+	
+	<select id="app.appactivitiesdemands.selectActivitiesApp" parameterType="list" 
+		resultType="com.winpow.services.manage.activitiesapp.bean.Activitiesapp">
+		select activitiid,userid,attendname,attendcell,stat from tb_activities_app
+		where 1=1 
+		and activitiid in 
+		<foreach item="item" index="index" collection="list" open="(" separator="," close=")">  
+  			#{item.activitiid}  
+ 		</foreach>
+		and userid in
+        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">  
+  			#{item.userid}  
+ 		</foreach>
+	</select>
+
+</mapper>  

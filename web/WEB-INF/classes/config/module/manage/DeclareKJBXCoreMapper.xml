@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.winpow.services.manage.declare.mapper.DeclareKJBXCoreMapper">
+
+    <select id="selectPageList"
+            parameterType="com.winpow.services.manage.declare.bean.DeclareKJBXCore" resultType="hashMap">
+        select * from (
+        SELECT  ROW_NUMBER() over(order by id) as  rownumber ,
+        id,
+        userid,
+        rele_id,
+        baoxiangongsi,
+        toubaopinzhogn,
+        baofei,
+        butiejine,
+        lurushijian,
+        inputuser,
+        lastchgtime
+        from tb_sb_kjbx_core where 1=1
+         )t  where rownumber &gt; = #{offset} and rownumber &lt; = #{pageSize}+#{offset}
+    </select>
+    <select id="selectPageCount"
+            parameterType="com.winpow.services.manage.declare.bean.DeclareKJBXCore"
+            resultType="java.lang.Integer">
+        select count(id) from (
+        SELECT  ROW_NUMBER() over(order by id) as  rownumber ,
+        id,
+        userid,
+        rele_id,
+        baoxiangongsi,
+        toubaopinzhogn,
+        baofei,
+        butiejine,
+        lurushijian,
+        inputuser,
+        lastchgtime
+        from tb_sb_kjbx_core where 1=1
+         )t
+    </select>
+
+    <select id="selectOne"
+            parameterType="com.winpow.services.manage.declare.bean.DeclareKJBXCore"
+            resultType="com.winpow.services.manage.declare.bean.DeclareKJBXCore">
+        SELECT TOP 1
+        id,
+        userid,
+        rele_id,
+        baoxiangongsi,
+        toubaopinzhogn,
+        baofei,
+        butiejine,
+        lurushijian,
+        inputuser,
+        lastchgtime
+        from tb_sb_kjbx_core t  where t.id=#{id}
+    </select>
+
+    <select id="selectAllList"
+            parameterType="com.winpow.services.manage.declare.bean.DeclareKJBXCore"
+            resultType="com.winpow.services.manage.declare.bean.DeclareKJBXCore">
+        SELECT
+        id,
+        userid,
+        rele_id,
+        baoxiangongsi,
+        toubaopinzhogn,
+        baofei,
+        butiejine,
+        lurushijian,
+        inputuser,
+        lastchgtime
+        from  tb_sb_kjbx_core t
+    </select>
+
+    <insert id="insert"
+            parameterType="com.winpow.services.manage.declare.bean.DeclareKJBXCore" useGeneratedKeys="true"
+            keyProperty="id">
+		insert into tb_sb_kjbx_core (
+													 	userid,
+													 	rele_id,
+													 	baoxiangongsi,
+                                                        toubaopinzhogn,
+                                                        baofei,
+                                                        butiejine,
+													 	lurushijian,
+													 	inputuser,
+													  lastchgtime
+			 						) values (
+				 										 	#{userid},
+				 										 	#{rele_id},
+				 										 	#{baoxiangongsi},
+                                                            #{toubaopinzhogn},
+                                                            #{baofei},
+                                                            #{butiejine},
+				 										 	getdate(),
+				 										 	#{inputuser},
+				 											getdate()
+				 						)
+	</insert>
+
+    <update id="update"
+            parameterType="com.winpow.services.manage.declare.bean.DeclareKJBXCore">
+        update tb_sb_kjbx_core set
+
+        <if test=" userid !=null and  userid !=''">
+            userid=#{userid},
+        </if>
+
+        <if test=" rele_id !=null and  rele_id !=''">
+            rele_id=#{rele_id},
+        </if>
+
+        <if test=" baoxiangongsi !=null and  baoxiangongsi !=''">
+            baoxiangongsi=#{baoxiangongsi},
+        </if>
+
+        <if test=" toubaopinzhogn !=null and  toubaopinzhogn !=''">
+            toubaopinzhogn=#{toubaopinzhogn},
+        </if>
+
+        <if test=" baofei !=null  ">
+            baofei=#{baofei},
+        </if>
+
+        <if test=" butiejine !=null  ">
+            butiejine=#{butiejine},
+        </if>
+            lastchgtime=getdate()
+
+        where id=#{id}
+    </update>
+    <delete id="delete">
+        delete tb_sb_kjbx_core where id=#{id}
+    </delete>
+</mapper>  

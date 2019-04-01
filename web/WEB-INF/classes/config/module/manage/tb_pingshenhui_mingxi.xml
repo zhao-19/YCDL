@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC 
+"-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="manage">
+
+	<select id="manage.pingshenhuimingxi.selectPageList"
+		parameterType="com.winpow.services.manage.pingshenhuimingxi.bean.Pingshenhuimingxi"
+		resultType="hashMap">
+		select * from (
+		SELECT ROW_NUMBER() over(order by id) as rownumber ,
+		id,
+		rele_pingshenhui,
+		rele_product_base,
+		xuhao,
+		qiyemingcheng,
+		hangye,
+		shenqingjine,
+		pingshenshijian,
+		chanpingmingcheng,
+		lurushijian,
+		inputuser,
+		lastchgtime
+		from tb_pingshenhui_mingxi )t where rownumber &gt; = #{offset} and
+		rownumber &lt; = #{pageSize}+#{offset}
+	</select>
+	<select id="manage.pingshenhuimingxi.selectPageCount"
+		parameterType="com.winpow.services.manage.pingshenhuimingxi.bean.Pingshenhuimingxi"
+		resultType="java.lang.Integer">
+		select count(*) from (
+		SELECT ROW_NUMBER() over(order by id) as rownumber ,
+		id,
+		rele_pingshenhui,
+		rele_product_base,
+		xuhao,
+		qiyemingcheng,
+		hangye,
+		shenqingjine,
+		pingshenshijian,
+		chanpingmingcheng,
+		lurushijian,
+		inputuser,
+		lastchgtime
+		from tb_pingshenhui_mingxi )t
+	</select>
+
+	<select id="manage.pingshenhuimingxi.selectOne"
+		parameterType="com.winpow.services.manage.pingshenhuimingxi.bean.Pingshenhuimingxi"
+		resultType="com.winpow.services.manage.pingshenhuimingxi.bean.Pingshenhuimingxi">
+		SELECT
+		id,
+		rele_pingshenhui,
+		rele_product_base,
+		xuhao,
+		qiyemingcheng,
+		hangye,
+		shenqingjine,
+		pingshenshijian,
+		chanpingmingcheng,
+		lurushijian,
+		inputuser,
+		lastchgtime
+		from tb_pingshenhui_mingxi t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+		<if test="rele_pingshenhui!=null and rele_pingshenhui!=''">
+			and t.rele_pingshenhui=#{rele_pingshenhui} and t.xuhao=#{xuhao}
+		</if>
+	</select>
+
+	<select id="manage.pingshenhuimingxi.selectCount"
+		parameterType="com.winpow.services.manage.pingshenhuimingxi.bean.Pingshenhuimingxi"
+		resultType="int">
+		select count(*)
+		FROM tb_pingshenhui_mingxi t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+	</select>
+
+	<select id="manage.pingshenhuimingxi.selectOneByCondition"
+		parameterType="com.winpow.services.manage.pingshenhuimingxi.bean.Pingshenhuimingxi"
+		resultType="com.winpow.services.manage.pingshenhuimingxi.bean.Pingshenhuimingxi">
+		SELECT
+		id,
+		rele_pingshenhui,
+		rele_product_base,
+		xuhao,
+		qiyemingcheng,
+		hangye,
+		shenqingjine,
+		pingshenshijian,
+		chanpingmingcheng,
+		lurushijian,
+		inputuser,
+		lastchgtime
+		from tb_pingshenhui_mingxi t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+	</select>
+
+	<select id="manage.pingshenhuimingxi.selectList"
+		parameterType="com.winpow.services.manage.pingshenhuimingxi.bean.Pingshenhuimingxi"
+		resultType="com.winpow.services.manage.pingshenhuimingxi.bean.Pingshenhuimingxi">
+		SELECT
+		id,
+		rele_pingshenhui,
+		rele_product_base,
+		xuhao,
+		qiyemingcheng,
+		hangye,
+		shenqingjine,
+		pingshenshijian,
+		chanpingmingcheng,
+		lurushijian,
+		inputuser,
+		lastchgtime
+		from tb_pingshenhui_mingxi t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+		<if test="rele_pingshenhui!=null and rele_pingshenhui!=''">
+			and t.rele_pingshenhui=#{rele_pingshenhui}
+		</if>
+		<if test="rele_product_base!=null and rele_product_base!=''">
+			and t.rele_product_base=#{rele_product_base}
+		</if>
+
+	</select>
+
+
+
+
+	<insert id="manage.pingshenhuimingxi.insert"
+		parameterType="com.winpow.services.manage.pingshenhuimingxi.bean.Pingshenhuimingxi"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into tb_pingshenhui_mingxi (
+		rele_pingshenhui,
+		rele_product_base,
+		xuhao,
+		qiyemingcheng,
+		hangye,
+		shenqingjine,
+		pingshenshijian,
+		chanpingmingcheng,
+		lurushijian,
+		inputuser,
+		lastchgtime
+		) values (
+		#{rele_pingshenhui},
+		#{rele_product_base},
+		#{xuhao},
+		#{qiyemingcheng},
+		#{hangye},
+		#{shenqingjine},
+		#{pingshenshijian},
+		#{chanpingmingcheng},
+		getdate(),
+		#{inputuser},
+		getdate()
+		)
+
+	</insert>
+
+	<update id="manage.pingshenhuimingxi.update"
+		parameterType="com.winpow.services.manage.pingshenhuimingxi.bean.Pingshenhuimingxi">
+		update tb_pingshenhui_mingxi
+		<set>
+			<if test=" rele_pingshenhui !=null and  rele_pingshenhui !=''">
+				rele_pingshenhui=#{rele_pingshenhui},
+			</if>
+
+			<if test=" rele_product_base !=null and  rele_product_base !=''">
+				rele_product_base=#{rele_product_base},
+			</if>
+
+			<if test=" xuhao !=null and xuhao != -1">
+				xuhao=#{xuhao},
+			</if>
+
+			<if test=" qiyemingcheng !=null and  qiyemingcheng !=''">
+				qiyemingcheng=#{qiyemingcheng},
+			</if>
+
+			<if test=" hangye !=null and  hangye !=''">
+				hangye=#{hangye},
+			</if>
+
+			<if test=" shenqingjine !=null and  shenqingjine !=''">
+				shenqingjine=#{shenqingjine},
+			</if>
+
+			<if test=" pingshenshijian !=null and  pingshenshijian !=''">
+				pingshenshijian=#{pingshenshijian},
+			</if>
+
+			<if test=" chanpingmingcheng !=null and  chanpingmingcheng !=''">
+				chanpingmingcheng=#{chanpingmingcheng},
+			</if>
+
+			<if test=" lurushijian !=null and  lurushijian !=''">
+				lurushijian=#{lurushijian},
+			</if>
+
+			<if test=" inputuser !=null and  inputuser !=''">
+				inputuser=#{inputuser},
+			</if>
+
+			<if test="lastchgtime!=null and lastchgtime !=''">
+				lastchgtime=#{lastchgtime}
+			</if>
+		</set>
+		where id=#{id}
+	</update>
+	<!-- 主从查询getPingshenhuimingxiDetail -->
+
+	<select id="manage.pingshenhuimingxi.selectList2"
+		parameterType="com.winpow.services.manage.pingshenhui.bean.Pingshenhui"
+		resultType="com.winpow.services.manage.pingshenhuimingxi.bean.Pingshenhuimingxi">
+		SELECT
+		t.id,t2.userid,t2.dianhua,t2.checkuser,
+		t.rele_pingshenhui,
+		t.rele_product_base,
+		t.xuhao,
+		t.qiyemingcheng,
+		t.hangye,
+		t.shenqingjine,
+		t.pingshenshijian,
+		t.chanpingmingcheng,
+		t.lurushijian,
+		t.inputuser,
+		t.lastchgtime
+		from tb_pingshenhui_mingxi t left join tb_product_czd_base t2 on
+		t.rele_product_base = t2.id where 1=1
+		<if test="id!=null and id!=''">
+			and t.rele_pingshenhui=#{id}
+		</if>
+		order by xuhao
+	</select>
+	
+	<!-- 查询评审会明显户数和金额 -->
+	<select id="manage.pingshenhuimingxi.selectCalc"
+		parameterType="com.winpow.services.manage.pingshenhui.bean.Pingshenhui"
+		resultType="hashMap">
+		select count(*) as hushu,sum(shenqingjine) as amt
+		from Tb_pingshenhui_mingxi t where 1=1
+		<if test="id!=null and id!=''">
+			and t.rele_pingshenhui=#{id}
+		</if>
+	</select>
+	<select id="manage.pingshenhuimingxi.getCount"
+		parameterType="com.winpow.services.manage.pingshenhuimingxi.bean.Pingshenhuimingxi"
+		resultType="int">
+		select count(*)
+		from Tb_pingshenhui_mingxi t
+		<where>
+			<if test="rele_pingshenhui!=null and rele_pingshenhui!=''">
+				and t.rele_pingshenhui=#{rele_pingshenhui}
+			</if>
+		</where>
+	</select>
+	<select
+		resultType="com.winpow.services.manage.pingshenhuimingxi.bean.Pingshenhuimingxi"
+		id="manage.pingshenhuimingxi.getLtXhList"
+		parameterType="com.winpow.services.manage.pingshenhuimingxi.bean.Pingshenhuimingxi">
+		<![CDATA[select * from Tb_pingshenhui_mingxi where rele_pingshenhui = #{rele_pingshenhui} and xuhao >=#{xuhao}]]>
+		order by xuhao
+	</select>
+
+	<delete id="manage.pingshenhuimingxi.delete"
+		parameterType="com.winpow.services.manage.pingshenhuimingxi.bean.Pingshenhuimingxi">
+		delete from Tb_pingshenhui_mingxi where 1=1 and id=#{id}
+	</delete>
+</mapper>  	

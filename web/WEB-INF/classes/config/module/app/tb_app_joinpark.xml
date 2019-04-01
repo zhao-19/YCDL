@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC 
+"-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="app">
+
+	<select id="app.appjoinpark.selectPageList"
+		parameterType="com.winpow.services.app.appjoinpark.bean.Appjoinpark"
+		resultType="hashMap">
+		select * from (
+		SELECT ROW_NUMBER() over(order by id) as rownumber ,*
+		from tb_app_joinpark )t where rownumber &gt; = #{offset} and rownumber
+		&lt; = #{pageSize}+#{offset}
+	</select>
+	
+	<select id="app.appjoinpark.selectPageCount"
+		parameterType="com.winpow.services.app.appjoinpark.bean.Appjoinpark"
+		resultType="java.lang.Integer">
+		select count(*) from tb_app_joinpark t
+	</select>
+
+	<select id="app.appjoinpark.selectOne"
+		parameterType="com.winpow.services.app.appjoinpark.bean.Appjoinpark"
+		resultType="com.winpow.services.app.appjoinpark.bean.Appjoinpark">
+		select top(1) * from tb_app_joinpark t where 1=1
+		<if test="pkid != null and pkid != ''">
+			and t.pkid=#{pkid}
+		</if>
+		<if test="userid != null and userid != ''">
+			and t.userid=#{userid}
+		</if>
+	</select>
+
+	<select id="app.appjoinpark.selectCount"
+		parameterType="com.winpow.services.app.appjoinpark.bean.Appjoinpark"
+		resultType="int">
+		select count(*) from tb_app_joinpark t where 1=1
+		<if test="pkid != null and pkid != ''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+
+	<select id="app.appjoinpark.selectOneByCondition"
+		parameterType="com.winpow.services.app.appjoinpark.bean.Appjoinpark"
+		resultType="com.winpow.services.app.appjoinpark.bean.Appjoinpark">
+		select * from tb_app_joinpark t where 1=1
+		<if test="pkid != null and pkid != ''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+
+	<select id="app.appjoinpark.selectList"
+		parameterType="com.winpow.services.app.appjoinpark.bean.Appjoinpark"
+		resultType="com.winpow.services.app.appjoinpark.bean.Appjoinpark">
+		select * from tb_app_joinpark t where 1=1
+		<if test="pkid != null and pkid != ''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+
+	<insert id="app.appjoinpark.insert"
+		parameterType="com.winpow.services.app.appjoinpark.bean.Appjoinpark"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into tb_app_joinpark (
+		pkid,
+		userid,
+		cellphone,
+		qiyename,
+		chstatus,
+		lurushijian,
+		inputuser,
+		lastchgtime
+		) values (
+		#{pkid},
+		#{userid},
+		#{cellphone},
+		#{qiyename},
+		#{chstatus},
+		getdate(),
+		#{inputuser},
+		getdate()
+		)
+	</insert>
+
+	<update id="app.appjoinpark.update"
+		parameterType="com.winpow.services.app.appjoinpark.bean.Appjoinpark">
+		update tb_app_joinpark set
+		<if test=" userid !=null and  userid !=''">
+			userid=#{userid},
+		</if>
+
+		<if test=" cellphone !=null and  cellphone !=''">
+			cellphone=#{cellphone},
+		</if>
+
+		<if test=" qiyename !=null and  qiyename !=''">
+			qiyename=#{qiyename},
+		</if>
+
+		<if test=" chstatus !=null and  chstatus !=''">
+			chstatus=#{chstatus},
+		</if>
+		lastchgtime=getdate()
+		where pkid=#{pkid}
+	</update>
+
+</mapper>  

@@ -1,0 +1,1038 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC 
+"-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="manage">
+
+	<select id="manage.cust.selectPageList" parameterType="com.winpow.services.manage.cust.bean.Cust"
+		resultType="hashMap">
+		select top ${pageSize} * from (
+			select row_number() over(order by adddate desc) as rownumber , b.*,w3.wtime
+			from (
+				select c.*, isnull(q.qiyemingcheng,'') + isnull(j.jigoumingcheng,'') + isnull(o.org_name,'') qiyename,
+				isnull(q.substation,'') + isnull(j.substation,'') + isnull(o.substation,'') substation,
+				isnull(q.zzjgdm,'') + isnull(j.zzjgdm,'') + isnull(o.org_credit_id,'') zzjgdm ,
+				pin.shijian ,m3.marketetime,m3.commtype,m3.commphoto
+				from tb_cust c
+				left join tb_qiye q on c.f_id=q.pk_qiyeid
+				left join tb_jigou j on c.f_id=j.id
+				left join tb_other_org o on c.f_id=o.id 
+				left join (select userid, ( select max (p.shijian) from tb_pingshenhui p left join tb_pingshenhui_mingxi m on p.id = m.rele_pingshenhui left join tb_product_czd_base b on m.rele_product_base = b.id where b.userid = a.userid ) shijian from ( select b.userid from tb_pingshenhui p left join tb_pingshenhui_mingxi m on p.id = m.rele_pingshenhui left join tb_product_czd_base b on m.rele_product_base = b.id where b.userid is not null group by userid ) a) pin on pin.userid=c.userid
+				left join (select qiyeid, inputtime marketetime, commtype, commphoto from ( select * from tb_app_markete where pkid in ( select max (pkid) from ( select * from tb_app_markete where pkid in ( select pkid from tb_app_markete b inner join ( select qiyeid, max (inputtime) as inputtime from tb_app_markete group by qiyeid ) a on a.qiyeid = b.qiyeid and a.inputtime = b.inputtime )) c group by qiyeid )) f) m3 on m3.qiyeid=c.f_id
+				where 1=1
+				<if test="userid!=null and userid!=''">
+					and c.userid=#{userid}
+				</if>
+				<if test="custmanage!=null and custmanage!=''">
+					and c.custmanage=#{custmanage}
+				</if>
+				<if test="status!=null and status!=''">
+					and c.status=#{status}
+				</if>
+				<if test="usertype!=null and usertype!=''">
+					and c.usertype=#{usertype}
+				</if>
+				<if test="cellphone!=null and cellphone!=''">
+					and c.cellphone=#{cellphone}
+				</if>
+				<if test="status2!=null and status2!=''">
+					and c.status2=#{status2}
+				</if>
+				
+				<if test="needcheck!=null and needcheck!=''">
+					and c.userid in (select userid from tb_person where approve=#{needcheck})
+				</if>
+				
+				<if test="qq_openid == '10000'">
+					and ((c.qq_openid is not null and c.qq_openid!='') or (c.wx_openid is not null and c.wx_openid!=''))
+				</if>
+				
+				<if test="qq_openid == '10001'">
+					and ((c.qq_openid is not null and c.qq_openid!='') or (c.wx_openid is not null and c.wx_openid!=''))
+					and (c.userid is null or c.userid='')
+				</if>
+				
+				<if test="qq_openid == '10002'">
+					and ((c.qq_openid is not null and qq_openid!='') or (c.wx_openid is not null and c.wx_openid!=''))
+					and c.userid is not null 
+					and c.userid!=''
+				</if>
+			) b
+			left join (select paperid,max (lastchgtime) wtime from wp_loan w1 where w1.paperid is not null and w1.paperid !='' group by paperid) w3 on w3.paperid =b.zzjgdm
+			where 1=1
+			<if test="qiyename!=null and qiyename!=''">
+				and b.qiyename like '%' + #{qiyename} + '%'
+			</if>
+			<if test="substation != null and substation != ''">
+				and b.substation = #{substation}
+			</if>
+		) a where rownumber > ${pageSize}*(${offset} - 1)
+	</select>
+	<select id="manage.cust.selectPageCount" parameterType="com.winpow.services.manage.cust.bean.Cust"
+		resultType="java.lang.Integer">
+		select count(*) from (
+			select c.*, isnull(q.qiyemingcheng,'') + isnull(j.jigoumingcheng,'') + isnull(o.org_name,'') qiyename,
+				isnull(q.substation,'') + isnull(j.substation,'') + isnull(o.substation,'') substation    
+			from tb_cust c
+			left join tb_qiye q on c.f_id=q.pk_qiyeid
+			left join tb_jigou j on c.f_id=j.id
+			left join tb_other_org o on c.f_id=o.id 
+			where 1=1
+			<if test="userid!=null and userid!=''">
+				and c.userid=#{userid}
+			</if>
+			<if test="custmanage!=null and custmanage!=''">
+				and c.custmanage=#{custmanage}
+			</if>
+			<if test="status!=null and status!=''">
+				and c.status=#{status}
+			</if>
+			<if test="usertype!=null and usertype!=''">
+				and c.usertype=#{usertype}
+			</if>
+			<if test="cellphone!=null and cellphone!=''">
+				and c.cellphone=#{cellphone}
+			</if>
+			<if test="status2!=null and status2!=''">
+				and c.status2=#{status2}
+			</if>
+			
+			<if test="needcheck!=null and needcheck!=''">
+				and c.userid in (select userid from tb_person where approve=#{needcheck})
+			</if>
+			
+			<if test="qq_openid == '10000'">
+				and ((c.qq_openid is not null and c.qq_openid!='') or (c.wx_openid is not null and c.wx_openid!=''))
+			</if>
+			
+			<if test="qq_openid == '10001'">
+				and ((c.qq_openid is not null and c.qq_openid!='') or (c.wx_openid is not null and c.wx_openid!=''))
+				and (c.userid is null or c.userid='')
+			</if>
+			
+			<if test="qq_openid == '10002'">
+				and ((c.qq_openid is not null and qq_openid!='') or (c.wx_openid is not null and c.wx_openid!=''))
+				and c.userid is not null 
+				and c.userid!=''
+			</if>
+		) b where 1=1
+		<if test="qiyename!=null and qiyename!=''">
+			and b.qiyename like '%' + #{qiyename} + '%'
+		</if>
+		<if test="substation != null and substation != ''">
+			and b.substation = #{substation}
+		</if>
+	</select>
+
+	<select id="manage.cust.selectOne" parameterType="com.winpow.services.manage.cust.bean.Cust"
+		resultType="com.winpow.services.manage.cust.bean.Cust">
+		select top(1) * from tb_cust t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+		<if test="cellphone!=null and cellphone!=''">
+			and t.cellphone=#{cellphone}
+		</if>
+		<if test="userid!=null and userid!=''">
+			and t.userid=#{userid}
+		</if>
+		<if test="password!=null and password!=''">
+			and t.password=#{password}
+		</if>
+		<if test="f_id!=null and f_id!=''">
+			and t.f_id=#{f_id}
+		</if>
+		<if test="usertype!=null and usertype!=''">
+			and t.usertype=#{usertype}
+		</if>
+		<if test="main_user_stat!=null">
+			and t.main_user_stat=#{main_user_stat}
+		</if>
+		<if test="status!=null and status!=''">
+			and t.status=#{status}
+		</if>
+		<if test="qq_openid != null and qq_openid != ''">
+			and t.qq_openid=#{qq_openid}
+		</if>
+		<if test="wx_openid != null and wx_openid != ''">
+			and t.wx_openid=#{wx_openid}
+		</if>
+		<if test="xcx_wx_openid != null and xcx_wx_openid != ''">
+			and t.xcx_wx_openid=#{xcx_wx_openid}
+		</if>
+		order by t.main_user_stat desc
+	</select>
+
+	<select id="manage.cust.selectByUserid" parameterType="com.winpow.services.manage.cust.bean.Cust"
+		resultType="com.winpow.services.manage.cust.bean.Cust">
+		select top(1) * from tb_cust t where 1=1
+		<if test="userid!=null and userid!=''">
+			and t.userid=#{userid}
+		</if>
+	</select>
+
+	<select id="manage.cust.selectCount" parameterType="com.winpow.services.manage.cust.bean.Cust"
+		resultType="int">
+		select count(*) from tb_cust t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+	</select>
+
+	<select id="manage.cust.selectOneByCondition" parameterType="com.winpow.services.manage.cust.bean.Cust"
+		resultType="com.winpow.services.manage.cust.bean.Cust">
+		SELECT * from tb_cust t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+	</select>
+	
+	<select id="manage.cust.usercheck"
+		parameterType="com.winpow.services.manage.cust.bean.Cust" resultType="com.winpow.services.manage.cust.bean.Cust">
+		select top 1 * from tb_cust 
+		where 1=1
+		<if test="userid!=null and userid!=''">
+			and (userid=#{userid} or cellphone=#{cellphone})
+		</if>
+		
+		<if test="qq_openid!=null and qq_openid!=''">
+			and qq_openid=#{qq_openid}
+		</if>
+
+		<if test="wx_openid!=null and wx_openid!=''">
+			and wx_openid=#{wx_openid}
+		</if>
+		
+		<if test="xcx_wx_openid!=null and xcx_wx_openid!=''">
+			and xcx_wx_openid=#{xcx_wx_openid}
+		</if>
+		
+		
+	</select>
+	
+	<select id="manage.cust.selectList" parameterType="com.winpow.services.manage.cust.bean.Cust"
+		resultType="com.winpow.services.manage.cust.bean.Cust">
+		select * from tb_cust t where 1=1
+		<if test="main_user_stat!=null">
+			and t.main_user_stat=#{main_user_stat}
+		</if>
+		<if test="f_id!=null and f_id!=''">
+			and t.f_id=#{f_id}
+		</if>
+		<if test="usertype!=null and usertype!=''">
+			and t.usertype=#{usertype}
+		</if>
+		<if test ="jpushid !=null and jpushid !=''">
+		    and jpushid is not null
+		</if>
+		order by main_user_stat desc
+	</select>
+
+	<insert id="manage.cust.insert" parameterType="com.winpow.services.manage.cust.bean.Cust"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into tb_cust (
+		id,
+		userid,
+		password,
+		errorcount,
+		usertype,
+		cellphone,
+		email,
+		status,
+		custmanage,
+		status2,
+		adddate,
+		lastlogintime,
+		custmanagesource,
+		f_id,
+		main_user_stat,
+		qq_openid,
+		wx_openid,
+		nikename,
+		headimg,disable,
+		forbidend,jpushid,xcx_wx_openid,attention
+		) values (
+		#{id},
+		#{userid},
+		#{password},
+		#{errorcount},
+		#{usertype},
+		#{cellphone},
+		#{email},
+		#{status},
+		#{custmanage},
+		#{status2},
+		getdate(),
+		getdate(),
+		#{custmanagesource},
+		#{f_id},
+		#{main_user_stat},
+		#{qq_openid},
+		#{wx_openid},
+		#{nikename},
+		#{headimg},#{disable},
+		#{forbidend},#{jpushid},#{xcx_wx_openid},#{attention}
+		)
+	</insert>
+
+	<update id="manage.cust.update" parameterType="com.winpow.services.manage.cust.bean.Cust">
+		update tb_cust set
+		<if test="userid!=null and userid!=''">
+			userid=#{userid},
+		</if>
+		<if test="password!=null and password!=''">
+			password=#{password},
+		</if>
+		<if test="errorcount!=null">
+			errorcount=#{errorcount},
+		</if>
+		<if test="usertype!=null and usertype!=''">
+			usertype=#{usertype},
+		</if>
+		<if test="cellphone!=null and cellphone!=''">
+			cellphone=#{cellphone},
+		</if>
+		<if test="email!=null and email!=''">
+			email=#{email},
+		</if>
+		<if test="status!=null and status!=''">
+			status=#{status},
+		</if>
+		<if test="custmanage!=null and custmanage!=''">
+			custmanage=#{custmanage},
+		</if>
+		<if test="status2!=null and status2!=''">
+			status2=#{status2} ,
+		</if>
+		<if test="custmanagesource!=null and custmanagesource!=''">
+			custmanagesource=#{custmanagesource} ,
+		</if>
+		<if test="f_id!=null and f_id!=''">
+			f_id=#{f_id},
+		</if>
+		<if test="main_user_stat!=null">
+			main_user_stat=#{main_user_stat},
+		</if>
+		<if test="qq_openid != null and qq_openid !=''">
+			qq_openid=#{qq_openid},
+		</if>
+		<if test="wx_openid != null and wx_openid !=''">
+			wx_openid=#{wx_openid},
+		</if>
+		<if test="nikename != null and nikename !=''">
+			nikename=#{nikename},
+		</if>
+		<if test="headimg != null and headimg !=''">
+			headimg=#{headimg},
+		</if>
+		<if test="forbidend != null and forbidend !=''">
+			forbidend=#{forbidend},
+		</if>
+		<if test="disable != null and disable !=''">
+			disable=#{disable},
+		</if>
+		<if test="jpushid != null and jpushid !=''">
+			jpushid=#{jpushid},
+		</if>
+		<if test="xcx_wx_openid != null and xcx_wx_openid !=''">
+			xcx_wx_openid=#{xcx_wx_openid},
+		</if>
+		<if test="attention != null and attention !=''">
+			attention=#{attention},
+		</if>
+		<if test="reletime != null and reletime =='date'">
+			reletime=getdate(),
+		</if>
+		lastlogintime = getdate()
+		where id=#{id}
+	</update>
+	
+	<update id="manage.cust.updatetime" parameterType="com.winpow.services.manage.cust.bean.Cust">
+		update tb_cust set errorcount=0,lastlogintime=getdate() where id=#{id}
+	</update>
+	
+	<update id="manage.cust.deleteRela" parameterType="com.winpow.services.manage.cust.bean.Cust">
+		update tb_cust set usertype='aaaaaaaaaaaaaaaaaaaaaaaaaaaaa002',status=null,f_id=null,main_user_stat=null where id=#{id}
+	</update>
+	
+	<update id="manage.cust.passRela" parameterType="com.winpow.services.manage.cust.bean.Cust">
+        update tb_cust set status='aaaaaaaaaaaaaaaaaaaaaaaaaaaaa006' where id=#{id} and status='aaaaaaaaaaaaaaaaaaaaaaaaaaaaa007'
+    </update>
+
+	<select id="manage.cust.findCompanys" resultType="map" parameterType="list">
+	SELECT DISTINCT
+	 c.userid,(
+		CASE c.USERTYPE
+		WHEN 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaa001' THEN
+		q.QIYEMINGCHENG
+		WHEN 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaa002' THEN
+		p.USERNAME
+		WHEN 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaa003' THEN
+		j.JIGOUMINGCHENG
+		WHEN 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaa008' THEN
+		o.org_name
+		ELSE
+		''
+		END
+		) AS companyName
+		FROM
+		tb_cust c
+		LEFT JOIN tb_person p ON c.USERID = p.USERID
+		LEFT JOIN tb_Qiye q ON (c.USERID = q.USERID or c.f_id = q.PK_QIYEID)
+		LEFT JOIN Tb_jigou J ON (C.USERID = J.USERID or C.f_id = J.id)
+		LEFT JOIN tb_other_org o ON C.f_id = o.id
+		WHERE 1=1
+		and c.userid in
+        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">  
+  			#{item}  
+ 		</foreach>
+	</select>
+	
+	<select id="manage.cust.getmemberindex" parameterType="com.winpow.services.manage.cust.bean.Cust"
+		resultType="map">
+		select 'likeproject' name,cast(count(*) as varchar) val from tb_app_cust_favorites where userid=#{userid} and genre='11501'
+		union all
+		select 'likeproduct' name,cast(count(*) as varchar) val from tb_app_cust_favorites where userid=#{userid} and genre!='11501'
+		union all
+		select 'iscomplete' name,iscomplete val from tb_person where userid=#{userid}
+		union all 
+		select 'qiyecomplete' name,case when (q.iscomplete='10001' or j.iscomplete='10001' or o.iscomplete='10001') then '已完善'
+		when (c.f_id!='' and c.f_id is not null) then '未完善' else '未关联' end val from tb_cust c 
+		left join tb_qiye q on c.f_id=q.pk_qiyeid left join tb_jigou j on c.f_id=j.id left join tb_other_org o on c.f_id=o.id 
+		where c.userid=#{userid}
+		union all
+		select 'qiyename' name,case when q.qiyemingcheng is not null and q.qiyemingcheng!='' then q.qiyemingcheng
+		when j.jigoumingcheng is not null and j.jigoumingcheng!='' then j.jigoumingcheng
+		when o.org_name is not null and o.org_name!='' then o.org_name else '' end val
+		from tb_cust c left join tb_qiye q on c.f_id=q.pk_qiyeid left join tb_jigou j on c.f_id=j.id left join tb_other_org o on c.f_id=o.id
+		where c.userid=#{userid}
+		union all 
+		select 'orgtype' name, o.org_type val from tb_cust c left join tb_other_org o on c.f_id=o.id where c.userid=#{userid}
+		union all
+		select 'qiyecount' name, cast(count(*) as varchar) val from (
+			select userid from tb_cust where userid = #{userid}
+			union 
+			select userid from tb_cust 
+			where f_id in ( select f_id from tb_cust where userid = #{userid} )
+		) cu
+	</select>
+	
+	<select id="manage.cust.getsimpleindex" parameterType="com.winpow.services.manage.cust.bean.Cust"
+		resultType="map">
+		select 'likeproject' name,cast(count(*) as varchar) val from tb_app_cust_favorites where userid=#{userid} and genre='11501'
+		union all
+		select 'likeproduct' name,cast(count(*) as varchar) val from tb_app_cust_favorites where userid=#{userid} and genre!='11501'
+	</select>
+	
+	<select id="manage.cust.getiscomplete" parameterType="com.winpow.services.manage.cust.bean.Cust"
+		resultType="string">
+		select iscomplete from tb_qiye where pk_qiyeid=#{f_id}
+		union all
+		select iscomplete from tb_jigou where id=#{f_id}
+		union all
+		select iscomplete from tb_other_org where id=#{f_id}
+	</select>
+	
+	<!-- 查询银行客户经理 -->
+	<select id="manage.cust.getAgency" parameterType="com.winpow.services.manage.cust.bean.Cust"
+		resultType="com.winpow.services.manage.cust.bean.Cust">
+		select t.*,p.id pid,p.username,p.position from tb_cust t 
+		left join tb_person p on t.userid=p.userid
+		where t.f_id in (select id from tb_other_org where org_type='aaaaaaaaaaaaaaaaaaotherorgtype02' or org_type='aaaaaaaaaaaaaaaaaaotherorgtype06')
+	</select>
+	
+	<!-- 查询推荐机构 -->
+	<select id="manage.cust.getjigous" resultType="map">
+		select t.userid,t.cellphone,p.username,j.id,j.jigoumingcheng,j.jigoulogo from tb_cust t 
+		left join tb_person p on t.userid=p.userid
+		left join tb_jigou j on t.f_id=j.id
+		where len(j.jigoumingcheng)>3 and t.main_user_stat!=0
+	</select>
+	
+	<update id="manage.cust.relaChild" parameterType="com.winpow.services.manage.cust.bean.Cust">
+        update tb_cust set status='aaaaaaaaaaaaaaaaaaaaaaaaaaaaa006',main_user_stat=1 where id=#{id} and f_id=#{f_id};
+        update tb_cust set status='aaaaaaaaaaaaaaaaaaaaaaaaaaaaa006',main_user_stat=0 where id!=#{id} and f_id=#{f_id};
+    </update>
+    
+    <select id="manage.cust.selectAllById" parameterType="com.winpow.services.manage.qiye.bean.Qiye"
+		resultType="com.winpow.services.manage.qiye.bean.Qiye">
+		select top(1) * from (
+			select 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaa001' hangyeid,pk_qiyeid,qiyemingcheng,userid,zzjgdm 
+			from tb_qiye
+			union all
+			select 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaa003' hangyeid,id pk_qiyeid,jigoumingcheng qiyemingcheng,userid,zzjgdm 
+			from tb_jigou
+			union all
+			select 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaa008' hangyeid,id pk_qiyeid,org_name qiyemingcheng,'' userid,org_credit_id zzjgdm
+			from tb_other_org
+		) a where 1=1
+		<if test="pk_qiyeid != null and pk_qiyeid !=''">
+			and pk_qiyeid=#{pk_qiyeid}
+		</if>
+		<if test="zzjgdm != null and zzjgdm !=''">
+			and zzjgdm=#{zzjgdm}
+		</if>
+		<if test="hangyeid != null and hangyeid !=''">
+			and hangyeid=#{hangyeid}
+		</if>
+	</select>
+	
+	<update id="manage.cust.DelQiyeUser" parameterType="com.winpow.services.manage.cust.bean.Cust">
+        update tb_qiye set userid=null where userid=#{userid};
+        update tb_jigou set userid=null where userid=#{userid};
+    </update>
+	
+	<select id="manage.cust.selectLists" parameterType="com.winpow.services.manage.cust.bean.Cust"
+        resultType="com.winpow.services.manage.cust.bean.Cust">
+        select top 3 * from tb_cust t where 1=1
+        <if test="userid !=null and userid !=''">
+            and t.userid like #{userid}+'%'
+        </if>
+        order by main_user_stat desc
+    </select>
+    
+    
+    <select id="manage.cust.selectWithPerson" parameterType="list"
+		resultType="com.winpow.services.manage.cust.bean.Cust">
+		select t.*,p.id pid,p.username,p.position from tb_cust t left join tb_person p on t.userid=p.userid
+		where t.userid in 
+		<foreach item="item" index="index" collection="list" open="(" separator="," close=")">  
+  			#{item}  
+ 		</foreach>
+	</select>
+	
+	<select id="manage.cust.selectListWithPerson" parameterType="com.winpow.services.manage.cust.bean.Cust"
+		resultType="com.winpow.services.manage.cust.bean.Cust">
+		select t.*,p.id pid,p.username,p.position from tb_cust t left join tb_person p on t.userid=p.userid
+		where 1=1
+		<if test="f_id!=null and f_id!=''">
+			and t.f_id=#{f_id}
+		</if>
+	</select>
+	
+	<select id="manage.cust.selectWithOtherorg" parameterType="string" resultType="com.winpow.services.manage.cust.bean.Cust">
+		select c.usertype,o.org_type from tb_cust c
+		left join tb_other_org o on c.f_id=o.id
+		where c.id=#{id}
+	</select>
+    
+    <update id="manage.cust.delete" parameterType="string">
+		delete tb_cust where id=#{id}
+	</update>
+	
+	<select id="manage.cust.getUserCount" parameterType="map" resultType="map">
+		<!-- select 'zqcount' name,sum(nums) val from ( 1.债权融资
+		    select count(*) nums from (
+				select userid,reviwer_id from tb_app_loan_product where chstatus = '10301'
+				union all
+			  	select userid,checkid reviwer_id from tb_app_loan_app a where chstatus in('10401','10402')
+				union all
+		  		select userid,'' reviwer_id from tb_app_allotbank a where chstatus in ('10501','10502','10505')
+		  	) a where 1=1
+		  	<choose>
+		        <when test=" userid !=null and  userid !=''">
+		            and userid=#{userid}
+		        </when>
+		        <when test=" pkid !=null and  pkid !=''">
+		            and userid in (select userid from tb_cust where f_id=#{pkid})
+		        </when>
+		        <when test=" checkid !=null and  checkid !=''">
+		        	and reviwer_id=#{checkid}
+		        </when>
+	       </choose>
+		) zq
+		union all
+		select 'gqcount' name,sum(nums) val from ( 2.股权融资
+			select count(*) nums from tb_app_postequityprojects where chstatus = '10301'
+			<if test=" checkid == null">
+				and pkid not in (select appid from tb_guquan where appid is not null)
+			</if>
+			<choose>
+		        <when test=" userid !=null and  userid !=''">
+		            and userid=#{userid}
+		        </when>
+		        <when test=" pkid !=null and  pkid !=''">
+		            and userid in (select userid from tb_cust where f_id=#{pkid})
+		        </when>
+		        <when test=" checkid !=null and  checkid !=''">
+	            	and reviwer_id=#{checkid}
+	        	</when>
+       		</choose>
+       		<if test=" checkid ==null">
+					union all
+					select count(*) nums
+					from (	
+						 <if test=" pkid !=null and  pkid !=''">
+				            select id from tb_guquan where (qiyeid=#{pkid} or qiyeid in (select userid from tb_cust where f_id=#{pkid}))
+				            and shenhezhuangtai in ('aaaaaaaaaaaaaaaaaaaaaaaaaaaaa080', 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaa081')
+				            union
+				         </if>
+						 select id from tb_guquan where 1=1
+						<choose>
+					        <when test=" userid !=null and  userid !=''">
+					            and releuserid=#{userid}
+					        </when>
+					        <when test=" pkid !=null and  pkid !=''">
+					            and releuserid in (select userid from tb_cust where f_id=#{pkid})
+					        </when>
+			       		</choose>
+			       		and shenhezhuangtai in ('aaaaaaaaaaaaaaaaaaaaaaaaaaaaa080', 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaa081')
+						union
+						select gu.id from tb_guquan gu left join tb_guquan_app ap on gu.id=ap.increid
+						where ap.status in ('aaaaaaaaaaaaaaaaaaaaaaaaaaaaa070', 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaa071')
+						<choose>
+					        <when test=" userid !=null and  userid !=''">
+					            and ap.userid=#{userid}
+					        </when>
+					        <when test=" pkid !=null and  pkid !=''">
+					            and ap.userid in (select userid from tb_cust where f_id=#{pkid})
+					        </when>
+		       			</choose>
+					) c
+				</if>	
+				<if test=" checkid !=null">
+					union all
+					select count(*) nums from tb_guquan_app ap where ap.status in ('aaaaaaaaaaaaaaaaaaaaaaaaaaaaa070', 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaa071')
+				</if>
+		) gq
+		union all
+		select 'zjcount' name,sum(nums) val from ( 3.中介服务
+		    select count(*) nums from (
+		    		select * from(
+						select userid,reviwer_id,genre from tb_app_added_product where chstatus = '10301'
+						union all
+						select userid,reviwer_id,genre from tb_app_order where chstatus in ('10801','10802')
+					) a where 1=1
+					<choose>
+				        <when test=" userid !=null and  userid !=''">
+				            and userid=#{userid}
+				        </when>
+				        <when test=" pkid !=null and  pkid !=''">
+				            and userid in (select userid from tb_cust where f_id=#{pkid})
+				        </when>
+				        <when test=" checkid !=null and  checkid !=''">
+							and (userid in (select userid from tb_cust where custmanage=#{checkid}) or reviwer_id=#{checkid})
+						</when>
+			    	</choose>
+					<if test=" pkid !=null and  pkid !=''">
+						union all
+						select userid,reviwer_id,genre from tb_app_order where provider_id = #{pkid} and chstatus in ('10801','10802')
+				    </if>
+			) c where (c.genre = '11221' or c.genre = '11201')
+		) zj
+		union all -->
+		select 'atcount' name,sum(nums) val from ( <!-- 4.培训活动 -->
+			select count(*) nums from tb_app_activities_demands where pkid not in (select appid from tb_activities where appid is not null) 
+			<choose>
+		        <when test=" userid !=null and  userid !=''">
+		            and userid=#{userid}
+		        </when>
+		        <when test=" pkid !=null and  pkid !=''">
+		            and userid in (select userid from tb_cust where f_id=#{pkid})
+		        </when>
+		        <when test=" checkid !=null and  checkid !=''">
+	            	and reviwer_id=#{checkid}
+	        	</when>
+       		</choose>
+		) at
+		union all
+		select 'qycount' name,sum(nums) val from ( <!-- 5.企业帮 -->
+		    select count(*) nums from (
+		    		select * from(
+						select userid,reviwer_id,genre from tb_app_added_product where chstatus = '10301'
+						union all
+						select userid,reviwer_id,genre from tb_app_order where chstatus in ('10801','10802')
+					) a where 1=1
+					<choose>
+				        <when test=" userid !=null and  userid !=''">
+				            and userid=#{userid}
+				        </when>
+				        <when test=" pkid !=null and  pkid !=''">
+				            and userid in (select userid from tb_cust where f_id=#{pkid})
+				        </when>
+				        <when test=" checkid !=null and  checkid !=''">
+							and (userid in (select userid from tb_cust where custmanage=#{checkid}) or reviwer_id=#{checkid})
+						</when>
+			    	</choose>
+					<if test=" pkid !=null and  pkid !=''">
+						union all
+						select userid,reviwer_id,genre from tb_app_order where provider_id = #{pkid} and chstatus in ('10801','10802')
+				    </if>
+			) c where c.genre != '11221' and c.genre != '11201'
+		) qy
+		<!-- union all
+		select 'tzcount' name,sum(nums) val from ( 6.融资导师
+			select count(*) nums from tb_app_topic where chstatus='10301'
+			<choose>
+		        <when test=" userid !=null and  userid !=''">
+		            and userid=#{userid}
+		        </when>
+		        <when test=" pkid !=null and  pkid !=''">
+		            and userid in (select userid from tb_cust where f_id=#{pkid})
+		        </when>
+		        <when test=" checkid !=null and  checkid !=''">
+					and reviwer_id=#{checkid}
+				</when>
+       		</choose>
+		) tz
+		<if test=" checkid == null">
+			union all
+			select 'sbcount' name,sum(nums) val from ( 7.政策申报
+				select count(*) nums from (
+					select userid,pichi,status from tb_sb_btz
+					union all select userid,pichi,status from tb_sb_czbg 
+					union all select userid,pichi,status from tb_sb_gfzgz 
+					union all select userid,pichi,status from tb_sb_ipo 
+					union all select userid,pichi,status from tb_sb_jwzb
+					union all select userid,pichi,status from tb_sb_kjbx
+					union all select userid,pichi,status from tb_sb_rzzn
+					union all select userid,pichi,status from tb_sb_yggqjl
+					union all select userid,pichi,status from tb_sb_zwrz
+					union all select userid,pichi,status from tb_sb_zzgb
+					union all select userid,pichi,stat status from tb_interest_app
+					union all select userid,pichi,status from tb_sb_ssgp
+					union all select userid,pichi,status from tb_sb_pj
+					union all select userid,pichi,status from tb_sb_gp
+					union all select userid,pichi,status from tb_sb_border
+					union all select userid,pichi,status from tb_sb_common
+					union all select userid,pichi,chstatus status from tb_app_policyapply
+				) a where 1=1
+				and status in ('10301','aaaaaaaaaaaaaaaaaaaaaaaaaaaaa080','aaaaaaaaaaaaaaaaaaaaaaaaaaaaa081')
+				<if test=" pichi !=null and  pichi !=''">
+		            and a.pichi=#{pichi}
+		        </if>
+				<choose>
+			        <when test=" userid !=null and  userid !=''">
+			            and userid=#{userid}
+			        </when>
+			        <when test=" pkid !=null and  pkid !=''">
+			            and userid in (select userid from tb_cust where f_id=#{pkid})
+			        </when>
+	       		</choose>
+			) sb
+		</if>
+		union all
+		select 'otcount' name,sum(nums) val from ( 8.其它发布
+			select count(*) nums from (
+				select userid,reviwer_id from tb_app_postdemand where chstatus='10301'
+				union all 
+				select userid,reviwer_id from tb_app_activities_apply where chstatus='10301'
+			) a where 1=1
+			<choose>
+		        <when test=" userid !=null and  userid !=''">
+		            and userid=#{userid}
+		        </when>
+		        <when test=" pkid !=null and  pkid !=''">
+		            and userid in (select userid from tb_cust where f_id=#{pkid})
+		        </when>
+		         <when test=" checkid !=null and  checkid !=''">
+		            and reviwer_id=#{checkid}
+		        </when>
+	       </choose>
+		) ot -->
+	</select>
+	
+	<update id="manage.cust.updatecustmanage" parameterType="com.winpow.services.manage.cust.bean.Cust">
+		update tb_cust set 
+		custmanage=(select custmanage from tb_cust where f_id=#{f_id} and main_user_stat=1),
+		custmanagesource=(select custmanagesource from tb_cust where f_id=#{f_id} and main_user_stat=1)
+		where f_id=#{f_id} and main_user_stat=0 
+	</update>
+	
+	<select id="manage.cust.getinfobyuserid" resultType="map" parameterType="string">
+		select * from(
+			select t.id,t.userid,t.usertype,t.cellphone,t.custmanage,p.username,q.pk_qiyeid qiyeid,q.qiyemingcheng qiyename,q.zzjgdm
+			from tb_cust t left join tb_qiye q on t.f_id=q.pk_qiyeid left join tb_person p on t.userid=p.userid 
+			where t.usertype='aaaaaaaaaaaaaaaaaaaaaaaaaaaaa001'
+			union all
+			select t.id,t.userid,t.usertype,t.cellphone,t.custmanage,p.username,q.id qiyeid,q.jigoumingcheng qiyename,q.zzjgdm
+			from tb_cust t left join tb_jigou q on t.f_id=q.id left join tb_person p on t.userid=p.userid 
+			where t.usertype='aaaaaaaaaaaaaaaaaaaaaaaaaaaaa003'
+			union all
+			select t.id,t.userid,t.usertype,t.cellphone,t.custmanage,p.username,q.id qiyeid,q.org_name qiyename,q.org_credit_id zzjgdm
+			from tb_cust t left join tb_other_org  q on t.f_id=q.id left join tb_person p on t.userid=p.userid 
+			where t.usertype='aaaaaaaaaaaaaaaaaaaaaaaaaaaaa008'
+			union all
+			select t.id,t.userid,t.usertype,t.cellphone,t.custmanage,p.username,'' qiyeid,'' qiyename,'' zzjgdm
+			from tb_cust t left join tb_person p on t.userid=p.userid 
+			where t.usertype='aaaaaaaaaaaaaaaaaaaaaaaaaaaaa002'
+		) a where a.userid=#{userid}
+	</select>
+	
+	<select id="manage.cust.getinfobyqiyeid" resultType="map" parameterType="string">
+		select * from(
+			select t.id,t.userid,t.usertype,t.cellphone,t.custmanage,p.username,q.pk_qiyeid qiyeid,q.qiyemingcheng qiyename,q.zzjgdm
+			from tb_cust t left join tb_qiye q on t.f_id=q.pk_qiyeid left join tb_person p on t.userid=p.userid 
+			where t.usertype='aaaaaaaaaaaaaaaaaaaaaaaaaaaaa001'
+			union all
+			select t.id,t.userid,t.usertype,t.cellphone,t.custmanage,p.username,q.id qiyeid,q.jigoumingcheng qiyename,q.zzjgdm
+			from tb_cust t left join tb_jigou q on t.f_id=q.id left join tb_person p on t.userid=p.userid 
+			where t.usertype='aaaaaaaaaaaaaaaaaaaaaaaaaaaaa003'
+			union all
+			select t.id,t.userid,t.usertype,t.cellphone,t.custmanage,p.username,q.id qiyeid,q.org_name qiyename,q.org_credit_id zzjgdm
+			from tb_cust t left join tb_other_org  q on t.f_id=q.id left join tb_person p on t.userid=p.userid 
+			where t.usertype='aaaaaaaaaaaaaaaaaaaaaaaaaaaaa008'
+			union all
+			select t.id,t.userid,t.usertype,t.cellphone,t.custmanage,p.username,'' qiyeid,'' qiyename,'' zzjgdm
+			from tb_cust t left join tb_person p on t.userid=p.userid 
+			where t.usertype='aaaaaaaaaaaaaaaaaaaaaaaaaaaaa002'
+		) a where 1=1 
+		<if test="_parameter != null and _parameter !=''">
+			and a.qiyeid=#{qiyeid}
+		</if>
+	</select>
+	<select id="manage.custselectAllCust" resultType="com.winpow.services.manage.cust.bean.Cust">
+	select tc.id,tc.f_id,'C_'+tc.USERID userid,tc.CUSTMANAGE,tp.username
+	username,case tc.USERTYPE when 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaa002' then
+	''
+	when 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaa001' then
+	(select QIYEMINGCHENG from tb_Qiye tq where tq.PK_QIYEID = tc.f_id) when
+	'aaaaaaaaaaaaaaaaaaaaaaaaaaaaa003'
+	then (select JIGOUMINGCHENG from Tb_jigou tj where tj.ID = tc.f_id)
+	when 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaa008' then (select org_name from
+	tb_other_org too where too.id = tc.f_id) else ''
+	end companyname
+	from tb_cust tc left JOIN tb_person tp on tc.userid = tp.userid
+</select>
+<select id="manage.cust.selectAllCust" resultType="com.winpow.services.manage.cust.bean.Cust">
+    select tc.id,tc.f_id,tc.USERID,tc.CUSTMANAGE,tc.cellphone,tp.username
+    username,case tc.USERTYPE when 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaa002' then
+    ''
+    when 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaa001' then
+    (select QIYEMINGCHENG from tb_Qiye tq where tq.PK_QIYEID = tc.f_id) when
+    'aaaaaaaaaaaaaaaaaaaaaaaaaaaaa003'
+    then (select JIGOUMINGCHENG from Tb_jigou tj where tj.ID = tc.f_id)
+    when 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaa008' then (select org_name from
+    tb_other_org too where too.id = tc.f_id) else ''
+    end qiyemingcheng
+    from tb_cust tc left JOIN tb_person tp on tc.userid = tp.userid
+</select>
+	<select id="manage.cust.getUserComplete" resultType="int" parameterType="string">
+		select (
+			case when p.username is null or ltrim(rtrim(p.username))='' then 0 else 1 end  
+			+ case when p.education is null or ltrim(rtrim(p.education))='' then 0 else 1 end 
+			+ case when p.persontype is null or ltrim(rtrim(p.persontype))='' then 0 else 1 end 
+			+ case when p.headimg is null or ltrim(rtrim(p.headimg))='' then 0 else 1 end 
+			+ case when p.address is null or ltrim(rtrim(p.address))='' then 0 else 1 end 
+			+ case when c.email is null or ltrim(rtrim(c.email))='' then 0 else 1 end 
+		) * 100 / 6 from tb_cust c left join tb_person p on c.userid=p.userid 
+		where 1=1 and c.userid=#{userid}
+	</select>
+	
+	<select id="manage.cust.getQiyeComplete" resultType="int" parameterType="string">
+		select (
+			case when qiyemingcheng is null or ltrim(rtrim(qiyemingcheng))='' then 0 else 1 end  
+			+ case when zzjgdm is null or ltrim(rtrim(zzjgdm))='' then 0 else 1 end 
+			+ case when chengliriqi is null or ltrim(rtrim(chengliriqi))='' then 0 else 1 end 
+			+ case when dizhi is null or ltrim(rtrim(dizhi))='' then 0 else 1 end 
+			+ case when faren is null or ltrim(rtrim(faren))='' then 0 else 1 end 
+			+ case when zhuceziben is null or ltrim(rtrim(zhuceziben))='' then 0 else 1 end 
+			+ case when zczjbz is null or ltrim(rtrim(zczjbz))='' then 0 else 1 end 
+			+ case when qiyexingzhiid is null or ltrim(rtrim(qiyexingzhiid))='' then 0 else 1 end 
+			
+			+ case when gszcd_province is null or ltrim(rtrim(gszcd_province))='' then 0 else 1 end 
+			+ case when gszcd_city is null or ltrim(rtrim(gszcd_city))='' then 0 else 1 end 
+			+ case when gszcd_county is null or ltrim(rtrim(gszcd_county))='' then 0 else 1 end 
+			+ case when hangyeid is null or ltrim(rtrim(hangyeid))='' then 0 else 1 end 
+			+ case when suchujieduanid is null or ltrim(rtrim(suchujieduanid))='' then 0 else 1 end 
+			+ case when zhuyingyewu is null or ltrim(rtrim(zhuyingyewu))='' then 0 else 1 end 
+			+ case when jingyingfanwei is null or ltrim(rtrim(jingyingfanwei))='' then 0 else 1 end 
+			+ case when qiyejieshao is null or ltrim(rtrim(qiyejieshao))='' then 0 else 1 end 
+			
+			+ case when dazhuanrenshu is null or ltrim(rtrim(dazhuanrenshu))='' then 0 else 1 end 
+			+ case when yanfarenshu is null or ltrim(rtrim(yanfarenshu))='' then 0 else 1 end 
+			+ case when bkzglbl is null or ltrim(rtrim(bkzglbl))='' then 0 else 1 end 
+			+ case when shangshijihua is null or ltrim(rtrim(shangshijihua))='' then 0 else 1 end 
+			+ case when xingming is null or ltrim(rtrim(xingming))='' then 0 else 1 end 
+			+ case when bumenzhiwu is null or ltrim(rtrim(bumenzhiwu))='' then 0 else 1 end 
+			+ case when yidongdianhua is null or ltrim(rtrim(yidongdianhua))='' then 0 else 1 end 
+			+ case when email is null or ltrim(rtrim(email))='' then 0 else 1 end 
+			
+			+ case when license is null or ltrim(rtrim(license))='' then 0 else 1 end 
+			+ case when yuangongshu is null or ltrim(rtrim(yuangongshu))='' then 0 else 1 end 
+			+ case when party_num is null or ltrim(rtrim(party_num))='' then 0 else 1 end 
+			+ case when is_party is null or ltrim(rtrim(is_party))='' then 0 else 1 end 
+			+ case when lead_num is null or ltrim(rtrim(lead_num))='' then 0 else 1 end 
+			+ case when lead_party_num is null or ltrim(rtrim(lead_party_num))='' then 0 else 1 end 
+			+ case when is_party_branch is null or ltrim(rtrim(is_party_branch))='' then 0 else 1 end 
+			+ case when last_party_cost is null or ltrim(rtrim(last_party_cost))='' then 0 else 1 end
+			+ case when will_set_party is null or ltrim(rtrim(will_set_party))='' then 0 else 1 end
+		) * 100 / 33 from tb_qiye where 1=1 and pk_qiyeid=(select f_id from tb_cust where userid=#{userid})
+	</select>
+	
+	<select id="manage.cust.getJigouComplete" resultType="int" parameterType="string">
+		select (
+			case when jigoumingcheng is null or ltrim(rtrim(jigoumingcheng))='' then 0 else 1 end  
+			+ case when zzjgdm is null or ltrim(rtrim(zzjgdm))='' then 0 else 1 end 
+			+ case when zhuceshijian is null or ltrim(rtrim(zhuceshijian))='' then 0 else 1 end 
+			+ case when zhuceziben is null or ltrim(rtrim(zhuceziben))='' then 0 else 1 end 
+			+ case when gszcd_province is null or ltrim(rtrim(gszcd_province))='' then 0 else 1 end 
+			+ case when gszcd_city is null or ltrim(rtrim(gszcd_city))='' then 0 else 1 end 
+			+ case when gszcd_county is null or ltrim(rtrim(gszcd_county))='' then 0 else 1 end 
+			+ case when jigoujianjie is null or ltrim(rtrim(jigoujianjie))='' then 0 else 1 end 
+			+ case when bangongdizhi is null or ltrim(rtrim(bangongdizhi))='' then 0 else 1 end 
+			+ case when tz_glzbj is null or ltrim(rtrim(tz_glzbj))='' then 0 else 1 end 
+			
+			+ case when tz_touzihangye is null or ltrim(rtrim(tz_touzihangye))='' then 0 else 1 end 
+			+ case when tz_touzijieduanid is null or ltrim(rtrim(tz_touzijieduanid))='' then 0 else 1 end 
+			+ case when xingming is null or ltrim(rtrim(xingming))='' then 0 else 1 end 
+			+ case when bumenzhiwu is null or ltrim(rtrim(bumenzhiwu))='' then 0 else 1 end 
+			+ case when yidongdianhua is null or ltrim(rtrim(yidongdianhua))='' then 0 else 1 end 
+			+ case when email is null or ltrim(rtrim(email))='' then 0 else 1 end 
+			+ case when jigoulogo is null or ltrim(rtrim(jigoulogo))='' then 0 else 1 end 
+			+ case when bcard is null or ltrim(rtrim(bcard))='' then 0 else 1 end 
+			
+			+ case when yuangongshu is null or ltrim(rtrim(yuangongshu))='' then 0 else 1 end 
+			+ case when party_num is null or ltrim(rtrim(party_num))='' then 0 else 1 end 
+			+ case when is_party is null or ltrim(rtrim(is_party))='' then 0 else 1 end 
+			+ case when lead_num is null or ltrim(rtrim(lead_num))='' then 0 else 1 end 
+			+ case when lead_party_num is null or ltrim(rtrim(lead_party_num))='' then 0 else 1 end 
+			+ case when is_party_branch is null or ltrim(rtrim(is_party_branch))='' then 0 else 1 end 
+			+ case when last_party_cost is null or ltrim(rtrim(last_party_cost))='' then 0 else 1 end
+			+ case when will_set_party is null or ltrim(rtrim(will_set_party))='' then 0 else 1 end
+		) * 100/26 from Tb_jigou where 1=1 and id=(select f_id from tb_cust where userid=#{userid})
+	</select>
+	
+	<select id="manage.cust.getOtherOrgComplete" resultType="int" parameterType="string">
+		select (
+			case when org_name is null or ltrim(rtrim(org_name))='' then 0 else 1 end  
+			+ case when org_credit_id is null or ltrim(rtrim(org_credit_id))='' then 0 else 1 end 
+			+ case when regist_amt is null or ltrim(rtrim(regist_amt))='' then 0 else 1 end 
+			+ case when org_type is null or ltrim(rtrim(org_type))='' then 0 else 1 end 
+			+ case when gszcd_province is null or ltrim(rtrim(gszcd_province))='' then 0 else 1 end 
+			+ case when gszcd_city is null or ltrim(rtrim(gszcd_city))='' then 0 else 1 end 
+			+ case when gszcd_county is null or ltrim(rtrim(gszcd_county))='' then 0 else 1 end 
+			+ case when license is null or ltrim(rtrim(license))='' then 0 else 1 end 
+			+ case when org_address is null or ltrim(rtrim(org_address))='' then 0 else 1 end 
+			+ case when org_info is null or ltrim(rtrim(org_info))='' then 0 else 1 end 
+			+ case when org_linkman is null or ltrim(rtrim(org_linkman))='' then 0 else 1 end 
+			+ case when org_linkduty is null or ltrim(rtrim(org_linkduty))='' then 0 else 1 end 
+			+ case when org_linkcellphone is null or ltrim(rtrim(org_linkcellphone))='' then 0 else 1 end 
+			+ case when org_linkemail is null or ltrim(rtrim(org_linkemail))='' then 0 else 1 end 
+			
+			+ case when yuangongshu is null or ltrim(rtrim(yuangongshu))='' then 0 else 1 end 
+			+ case when party_num is null or ltrim(rtrim(party_num))='' then 0 else 1 end 
+			+ case when is_party is null or ltrim(rtrim(is_party))='' then 0 else 1 end 
+			+ case when lead_num is null or ltrim(rtrim(lead_num))='' then 0 else 1 end 
+			+ case when lead_party_num is null or ltrim(rtrim(lead_party_num))='' then 0 else 1 end 
+			+ case when is_party_branch is null or ltrim(rtrim(is_party_branch))='' then 0 else 1 end 
+			+ case when last_party_cost is null or ltrim(rtrim(last_party_cost))='' then 0 else 1 end
+			+ case when will_set_party is null or ltrim(rtrim(will_set_party))='' then 0 else 1 end
+		) * 100/22 from tb_other_org where 1=1 and id=(select f_id from tb_cust where userid=#{userid})
+	</select>
+	
+	<select id="manage.cust.getBannerByLocation" resultType="com.winpow.services.app.appbanner.bean.Appbanner"
+		 parameterType="com.winpow.services.app.appbanner.bean.Appbanner">
+		select * from tb_app_banner where iseffective='10001' and location=#{location} order by sort desc,createdate desc
+	</select>
+	
+	<select id="manage.cust.getCustInfo" parameterType="com.winpow.services.manage.cust.bean.Cust"
+		resultType="com.winpow.services.manage.cust.bean.Cust">
+		select top(1) c.id,c.userid,p.username,p.org org,c.nikename,c.cellphone,c.usertype,
+		
+		case when q.qiyemingcheng is not null and q.qiyemingcheng!='' then q.qiyemingcheng
+		when j.jigoumingcheng is not null and j.jigoumingcheng!='' then j.jigoumingcheng
+		when o.org_name is not null and o.org_name!='' then o.org_name else '' end qiyename
+		from tb_cust c
+		left join tb_person p on c.userid=p.userid
+		left join tb_qiye q on c.f_id=q.pk_qiyeid
+		left join tb_jigou j on c.f_id=j.id
+		left join tb_other_org o on c.f_id=o.id
+		where 1=1
+		<if test="userid!=null and userid!=''">
+			and c.userid=#{userid}
+		</if>
+		<if test="f_id!=null and f_id!=''">
+			and c.f_id=#{f_id}
+		</if>
+		order by main_user_stat desc
+	</select>
+	
+	<select id="manage.cust.getAllCustInfo" parameterType="com.winpow.services.manage.cust.bean.Cust"
+		resultType="com.winpow.services.manage.cust.bean.Cust">
+		select c.*,isnull(q.qiyemingcheng,'') + isnull(j.jigoumingcheng,'') + isnull(o.org_name,'') qiyename
+		from tb_cust c
+		left join tb_qiye q on c.f_id=q.pk_qiyeid
+		left join tb_jigou j on c.f_id=j.id
+		left join tb_other_org o on c.f_id=o.id
+		where c.userid in 
+		<foreach item="item" index="index" collection="list" open="(" separator="," close=")">  
+  			#{item}  
+ 		</foreach>
+		order by c.main_user_stat desc
+	</select>
+	
+	<select id="manage.cust.selectReleUser" parameterType="com.winpow.services.manage.cust.bean.Cust"
+		resultType="com.winpow.services.manage.cust.bean.Cust">
+		select c.*,isnull(q.qiyemingcheng,'') + isnull(j.jigoumingcheng,'') + isnull(o.org_name,'') qiyename,p.username,p.persontype
+ 		from ( 
+			select * from tb_cust where userid = #{userid}
+			union 
+			select * from tb_cust 
+			where f_id in ( select f_id from tb_cust where userid = #{userid} )
+		) c
+		left join tb_person p on c.userid=p.userid
+		left join tb_qiye q on c.f_id=q.pk_qiyeid
+		left join tb_jigou j on c.f_id=j.id
+		left join tb_other_org o on c.f_id=o.id 
+		order by main_user_stat desc
+	</select>
+	
+	<update id="manage.cust.deleteQiye" parameterType="com.winpow.services.manage.cust.bean.Cust">
+		update tb_qiye set userid=null where userid in (select userid from tb_cust where id=#{id});
+        update tb_jigou set userid=null where userid in (select userid from tb_cust where id=#{id});
+		update tb_cust set usertype='aaaaaaaaaaaaaaaaaaaaaaaaaaaaa002',status=null,f_id=null,main_user_stat=null where id=#{id};
+	</update>
+	
+	<update id="manage.cust.deletedAllReleQiye" parameterType="com.winpow.services.manage.cust.bean.Cust">
+		update tb_qiye set deleted='10001' where pk_qiyeid=#{id};
+        update tb_jigou set deleted='10001' where id=#{id};
+        update tb_other_org set deleted='10001' where id=#{id};
+	</update>
+	
+	<update id="manage.cust.resetUser" parameterType="com.winpow.services.manage.cust.bean.Cust">
+		update tb_cust set main_user_stat=1,status='aaaaaaaaaaaaaaaaaaaaaaaaaaaaa006' where userid
+		=(select top(1) userid from tb_cust where f_id=#{f_id} order by lastlogintime desc)
+	</update>
+	
+	<select id="manage.cust.getMainUser" parameterType="com.winpow.services.manage.cust.bean.Cust"
+		resultType="com.winpow.services.manage.cust.bean.Cust">
+		select top(1) c.cellphone, isnull(q.qiyemingcheng,'') + isnull(j.jigoumingcheng,'') + isnull(o.org_name,'') qiyename  from tb_cust c
+		left join tb_qiye q on c.f_id=q.pk_qiyeid
+		left join tb_jigou j on c.f_id=j.id
+		left join tb_other_org o on c.f_id=o.id 
+		where c.main_user_stat=#{main_user_stat} and c.f_id=#{f_id}
+	</select>
+	
+	<select id="manage.cust.getWithPerson" parameterType="com.winpow.services.manage.cust.bean.Cust"
+		resultType="com.winpow.services.manage.cust.bean.Cust">
+		select top(1) c.*,p.username,p.persontype
+		from tb_cust c left join tb_person p on c.userid=p.userid
+		where 1=1
+		<if test="f_id!=null and f_id!=''">
+			and c.f_id=#{f_id}
+		</if>
+		<if test="main_user_stat!=null">
+			and c.main_user_stat=#{main_user_stat}
+		</if>
+	</select>
+	
+	<select id="manage.cust.getAllReleUser" parameterType="string" resultType="map">
+		select c.id,c.userid,c.cellphone,c.status,c.main_user_stat,
+		p.username,p.persontype,
+		case when q.pk_qiyeid is not null and q.pk_qiyeid!='' then q.pk_qiyeid
+		when j.id is not null and j.id!='' then j.id
+		when o.id is not null and o.id!='' then o.id else '' end as qiyeid,
+		case when q.license is not null and q.license!='' then q.license
+		when j.license is not null and j.license!='' then j.license
+		when o.license is not null and o.license!='' then o.license else '' end as licenses
+		from tb_cust c
+		left join tb_person p on c.userid=p.userid
+		left join tb_qiye q on c.f_id=q.pk_qiyeid
+		left join tb_jigou j on c.f_id=j.id
+		left join tb_other_org o on c.f_id=o.id
+		where 1=1
+		and (c.userid in (select registerphone from tb_app_ticketshare where shareuserid=#{userid}) or c.userid=#{userid})
+	</select>
+	
+</mapper>  

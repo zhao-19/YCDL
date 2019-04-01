@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE mapper PUBLIC 
+"-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="front">
+	
+	<select id="front.incre.selectPageList" parameterType="com.winpow.services.manage.incre.bean.Incre" resultType="hashMap">
+	select * from (
+		SELECT  ROW_NUMBER() over(order by id) as  rownumber ,
+								 	id,
+			 								 	increid,
+			 								 	increname,
+			 								 	browsecount,
+			 								 	markcount,
+			 								 	incretype,
+			 								 	incredescrip,
+			 								 	increprice,
+			 								 	increcomtent,
+			 								 	openstat,
+			 								 	lurushijian,
+			 								 	inputuser,picture,
+			 								  lastchgtime ,SHIFOUTUIJIAN,TUIJIANPIC
+			 		   from tb_incre )t   
+			 		      where 1=1   
+			 			   <if test="increname!=null and increname!=''">
+						and  increname like  '%'+#{increname}+'%' 
+						</if>
+					 
+						and rownumber &gt; = #{offset} and rownumber &lt; = #{pageSize}+#{offset} 
+	</select>
+	<select id="front.incre.selectPageCount" parameterType="com.winpow.services.manage.incre.bean.Incre" resultType="java.lang.Integer">
+		
+			select count(*) from (
+					SELECT  ROW_NUMBER() over(order by id) as  rownumber ,
+																	 	id,
+						 																	 	increid,
+						 																	 	increname,
+						 																	 	browsecount,
+						 																	 	markcount,
+						 																	 	incretype,
+						 																	 	incredescrip,
+						 																	 	increprice,
+						 																	 	increcomtent,
+						 																	 	openstat,
+						 																	 	lurushijian,
+						 																	 	inputuser,picture,
+						 																	  lastchgtime ,SHIFOUTUIJIAN,TUIJIANPIC
+						 								   from tb_incre )t    where 1=1   
+			 			   <if test="increname!=null and increname!=''">
+						and  increname like  '%'+#{increname}+'%' 
+						</if>
+
+	</select>
+	
+	<select id="front.incre.selectOne" parameterType="com.winpow.services.manage.incre.bean.Incre" resultType="com.winpow.services.manage.incre.bean.Incre">
+			SELECT  
+											 	id,
+				 											 	increid,
+				 											 	increname,
+				 											 	browsecount,
+				 											 	markcount,
+				 											 	incretype,
+				 											 	incredescrip,
+				 											 	increprice,
+				 											 	increcomtent,
+				 											 	openstat,
+				 											 	lurushijian,
+				 											 	inputuser,picture,
+				 											  lastchgtime ,SHIFOUTUIJIAN,TUIJIANPIC
+				 						  from tb_incre t  where 1=1  
+			<if test="id!=null and id!=''">
+				and t.id=#{id}
+			</if>
+	</select>
+	
+		<select id="front.incre.selectrecommend" parameterType="com.winpow.services.manage.incre.bean.Incre" resultType="com.winpow.services.manage.incre.bean.Incre">
+			SELECT  
+							  TOP 1	 	id,
+				 											 	increid,
+				 											 	increname,
+				 											 	browsecount,
+				 											 	markcount,
+				 											 	incretype,
+				 											 	incredescrip,
+				 											 	increprice,
+				 											 	increcomtent,
+				 											 	openstat,
+				 											 	lurushijian,
+				 											 	inputuser,picture,
+				 											  lastchgtime ,SHIFOUTUIJIAN,TUIJIANPIC
+				 						  from tb_incre t where  SHIFOUTUIJIAN='aaaaaaaaaaaaaaaaaaaaaaaaaaaaa004' and  LASTCHGTIME = (select max(LASTCHGTIME) as LURUSHIJIAN from tb_incre where SHIFOUTUIJIAN='aaaaaaaaaaaaaaaaaaaaaaaaaaaaa004')
+			 
+	</select>
+	
+	
+	<select id="front.incre.selectCount" parameterType="com.winpow.services.manage.incre.bean.Incre" resultType="int">
+			select count(*)  
+				 FROM tb_incre t  where 1=1  
+				<if test="id!=null and id!=''">
+					and t.id=#{id}
+				</if>
+	</select>
+	
+	<select id="front.incre.selectOneByCondition" parameterType="com.winpow.services.manage.incre.bean.Incre" resultType="com.winpow.services.manage.incre.bean.Incre">
+			SELECT  
+											 	id,
+				 											 	increid,
+				 											 	increname,
+				 											 	browsecount,
+				 											 	markcount,
+				 											 	incretype,
+				 											 	incredescrip,
+				 											 	increprice,
+				 											 	increcomtent,
+				 											 	openstat,
+				 											 	lurushijian,
+				 											 	inputuser,picture,
+				 											  lastchgtime ,SHIFOUTUIJIAN,TUIJIANPIC
+				 					 from  tb_incre   t  where 1=1  
+			<if test="id!=null and id!=''">
+				and t.id=#{id}
+			</if>
+	</select>
+	
+		<select id="front.incre.select4index" parameterType="com.winpow.services.manage.incre.bean.Incre" resultType="com.winpow.services.manage.incre.bean.Incre">
+	select * from (
+		SELECT  ROW_NUMBER() over(order by lastchgtime desc) as  rownumber ,
+					id,
+								 		increid,
+													 	increname,
+													 	browsecount,
+													 	markcount,
+													 	incretype,
+													 	incredescrip,
+													 	increprice,
+													 	increcomtent,
+													 	openstat,
+													 	lurushijian,
+													 	inputuser,picture ,SHIFOUTUIJIAN,TUIJIANPIC,
+													  lastchgtime
+			 		   from tb_incre )t  where    SHIFOUTUIJIAN='aaaaaaaaaaaaaaaaaaaaaaaaaaaaa004' and rownumber &lt; = 6 order by lastchgtime desc
+	</select>
+	
+	
+	<insert id="front.incre.insert" parameterType="com.winpow.services.manage.incre.bean.Incre" useGeneratedKeys="true" 
+		keyProperty="id">
+	 		insert into tb_incre ( 
+	 								 	 
+													 	increid,
+													 	increname,
+													 	browsecount,
+													 	markcount,
+													 	incretype,
+													 	incredescrip,
+													 	increprice,
+													 	increcomtent,
+													 	openstat,
+													 	lurushijian,
+													 	inputuser,picture ,SHIFOUTUIJIAN,TUIJIANPIC,
+													  lastchgtime
+			 						) values ( 
+										  
+				 										 	#{increid},
+				 										 	#{increname},
+				 										 	#{browsecount},
+				 										 	#{markcount},
+				 										 	#{incretype},
+				 										 	#{incredescrip},
+				 										 	#{increprice},
+				 										 	#{increcomtent},
+				 										 	#{openstat},
+				 										 	getdate(),
+				 										 	#{inputuser},#{picture} ,#{shifoutuijian},#{tuijianpic},
+				 										getdate()
+				 						)
+		 
+	</insert>
+	
+	<update id="front.incre.update" parameterType="com.winpow.services.manage.incre.bean.Incre">
+		update tb_incre set 
+                       
+		
+				 			                <if test="increid!=null and increid!=''">
+                        increid=#{increid},
+                        </if>
+		
+				 			                <if test="increname!=null and increname!=''">
+                        increname=#{increname},
+                        </if>
+		
+				 			                <if test="browsecount!=null and browsecount!=''">
+                        browsecount=#{browsecount},
+                        </if>
+		
+				 			                <if test="markcount!=null and markcount!=''">
+                        markcount=#{markcount},
+                        </if>
+		
+				 			                <if test="incretype!=null and incretype!=''">
+                        incretype=#{incretype},
+                        </if>
+		
+				 			                <if test="incredescrip!=null and incredescrip!=''">
+                        incredescrip=#{incredescrip},
+                        </if>
+		
+				 			                <if test="increprice!=null and increprice!=''">
+                        increprice=#{increprice},
+                        </if>
+		
+				 			                <if test="increcomtent!=null and increcomtent!=''">
+                        increcomtent=#{increcomtent},
+                        </if>
+		
+				 			                <if test="openstat!=null and openstat!=''">
+                        openstat=#{openstat},
+                        </if>
+		 
+				 			                <if test="inputuser!=null and inputuser!=''">
+                        inputuser=#{inputuser},
+                        </if>
+                                        <if test="picture!=null and picture!=''">
+                        picture=#{picture},
+                        </if>
+	 
+                                        <if test="shifoutuijian!=null and shifoutuijian!=''">
+                        shifoutuijian=#{shifoutuijian},
+                        </if>
+                                        <if test="tuijianpic!=null and tuijianpic!=''">
+                        tuijianpic=#{tuijianpic},
+                        </if>
+                        lastchgtime=getdate()
+                       
+         						 
+		where id=#{id}
+	</update>
+	
+</mapper>  

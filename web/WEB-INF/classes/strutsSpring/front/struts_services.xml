@@ -1,0 +1,532 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
+	"http://struts.apache.org/dtds/struts-2.5.dtd">
+
+<struts>
+
+	<!-- 会员  -->
+	<package name="accountFront" namespace="/" extends="struts-winpow-front">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="account" class="accountActionFront">
+			<result name="toIndex" type="redirect">/usercenter/userindex.html</result>
+			<result name="toLogin">/user/login.jsp</result>
+			<result name="toLoginAjax">/user/loginAjax.jsp</result>
+			<result name="toLoginRedirect" type="redirect">/user/login.html?from=logout</result>
+			<result name="register">/user/register.jsp</result>
+			<result name="toForget">/user/forget.jsp</result>
+			<result name="doForget">/user/doforget.jsp</result>
+			<result name="toCreditLogin">/user/loginCredit.jsp</result>
+		</action>
+	</package>
+
+	<!-- 盈创学院 -->
+	<package name="activitiesFront" namespace="" extends="struts-winpow-front">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="activities" class="activitiesActionFront">
+			<result name="toList">/activities/yccollege.jsp</result>
+			<result name="toDetail">/activities/college.jsp</result>
+		</action>
+	</package>
+
+
+	<!-- 资讯  -->
+	<package name="newsFront" namespace="" extends="struts-winpow-front">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="news" class="newsActionFront">
+			<result name="toList">/news/rmation.jsp</result>
+			<result name="toDetail">/news/rmations.jsp</result>
+		</action>
+	</package>
+
+	<!-- 资料  -->
+	<package name="filesFront" namespace="" extends="struts-winpow-front">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="files" class="filesActionFront">
+			<result name="toList">/files/download.jsp</result>
+		</action>
+	</package>
+	<!-- 债权  -->
+	<package name="productFront" namespace="" extends="struts-winpow-front">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="product" class="productActionFront">
+			<result name="toList">/product/creditor.jsp</result>
+			<result name="toDetail">/product/creditors.jsp</result>
+		</action>
+	</package>
+	<!-- 股权  -->
+	<package name="stockFront" namespace="" extends="struts-winpow-front">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="stock" class="stockActionFront">
+			<result name="toList">/stock/equity.jsp</result>
+			<result name="toDetail">/stock/equitys.jsp</result>
+		</action>
+	</package>
+
+	<!-- 增值  -->
+	<package name="increFront" namespace="" extends="struts-winpow-front">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="incre" class="increActionFront">
+			<result name="toList">/incre/increase.jsp</result>
+			<result name="toDetail">/incre/increases.jsp</result>
+			<result name="tocre">/incre/tocre.jsp</result>
+			<result name="toacList">/incre/acincre.jsp</result>
+		</action>
+	</package>
+	<!-- 盈创数据  -->
+	<package name="dataFront" namespace="" extends="struts-winpow-front">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="data" class="dataActionFront">
+			<result name="toGuquan">/data/guquan.jsp</result>
+			<result name="toJigou">/data/jigou.jsp</result>
+			<result name="toPerson">/data/person.jsp</result>
+			<result name="toQiye">/data/qiye.jsp</result>
+			<result name="toDetail">/data/jigoudetail.jsp</result>
+			<result name="rzjy">/data/rzjy.jsp</result>
+			<result name="biaozhun1">/data/biaozhun1.jsp</result>
+			<result name="biaozhun2">/data/biaozhun2.jsp</result>
+			<result name="biaozhun3">/data/biaozhun3.jsp</result>
+			<result name="biaozhun4">/data/biaozhun4.jsp</result>
+		</action>
+	</package>
+
+	<!-- 关于我们  -->
+	<package name="aboutusFront" namespace="" extends="struts-winpow-front">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="aboutus" class="aboutusActionFront">
+			<result name="flsm">/aboutus/about_flsm.jsp</result>
+			<result name="lxwm">/aboutus/about_lxwm.jsp</result>
+			<result name="rczp">/aboutus/about_rczp.jsp</result>
+			<result name="yjfk">/aboutus/about_yjfk.jsp</result>
+			<result name="about">/aboutus/about.jsp</result>
+		</action>
+	</package>
+
+	<!-- 资料下载 -->
+	<package name="downloadFront" extends="struts-default">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="download" class="downloadActionFront">
+			<result name="success" type="stream">
+				<param name="contentType">text/plain</param>
+				<param name="contentDisposition">attachment;fileName="${fileName}"</param>
+				<param name="inputName">downloadFile</param>
+				<param name="bufferSize">1024</param>
+			</result>
+			<result name="noresult">/files/noresult.jsp</result>
+		</action>
+	</package>
+	<!-- 用户中心 -->
+	<package name="usercenterFront" namespace="" extends="struts-winpow-front">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="usercenter" class="usercenterActionFront">
+			<result name="sucess">/usercenter/establishment.jsp</result>
+			<result name="fail">/user/login.jsp</result>
+			<result name="activitieslist">/usercenter/activitieslist.jsp</result>
+			<result name="activitieslinkuserlist">/usercenter/activitieslinkuserlist.jsp</result>
+			<result name="productapplist">/usercenter/productapplist.jsp</result>
+			<result name="productapplist2">/usercenter/productapplist2.jsp</result>
+			<result name="productapplist3">/usercenter/productapplist3.jsp</result>
+			<result name="updateproductappinfo">/usercenter/updateproductappinfo.jsp</result>
+			<result name="addproductappinfo">/usercenter/updateproductappinfo.jsp</result>
+			<result name="qiyeappinfo">/usercenter/qiyeappinfo.jsp</result>
+			<result name="jigouinfo">/usercenter/jigouinfo.jsp</result>
+			<result name="personinfo">/usercenter/personinfo.jsp</result>
+			<result name="publishguquanapplist">/usercenter/publishguquanapplist.jsp</result>
+			<result name="publishguquanappinfo">/usercenter/publishguquanappedit.jsp</result>
+			<result name="appointmentguquanapplist">/usercenter/appointmentguquanapplist.jsp</result>
+			<result name="pwchange">/usercenter/pwchange.jsp</result>
+			<result name="increapplist">/usercenter/getincreapplist.jsp</result>
+			<result name="tbotherorginfo">/usercenter/tbotherorginfo.jsp</result>
+			<result name="childaccount">/usercenter/childaccount.jsp</result>
+			<result name="finareportinfo">/usercenter/finareportinfo.jsp</result>
+			<result name="finareportinfoedit">/usercenter/finareportinfoedit.jsp</result>
+			<result name="tbnewecoinfo">/usercenter/tbnewecoinfo.jsp</result>
+			<result name="relaqiyeinfo">/usercenter/relaqiyeinfo.jsp</result>
+			<result name="userindex">/usercenter/userindex.jsp</result>
+		</action>
+	</package>
+	<!-- 用户中心扩展 -->
+	<package name="userextendFront" namespace="" extends="struts-winpow-front">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="userextend" class="userextendActionFront">
+			<result name="sucess">/usercenter/establishment.jsp</result>
+			<result name="fail">/user/login.jsp</result>
+			<result name="jrindex">/usercenter/jr/jrindex.jsp</result>
+			<result name="bxinfo">/usercenter/jr/bxinfo.jsp</result>
+			<result name="yhinfo">/usercenter/jr/yhinfo.jsp</result>
+			<result name="qsqhinfo">/usercenter/jr/qsqhinfo.jsp</result>
+			<result name="rzzninfo">/usercenter/jr/rzzninfo.jsp</result>
+			<result name="ysscinfo">/usercenter/jr/ysscinfo.jsp</result>
+			<result name="gqtzinfo">/usercenter/jr/gqtzinfo.jsp</result>
+			<result name="xdinfo">/usercenter/jr/xdinfo.jsp</result>
+			<result name="dbinfo">/usercenter/jr/dbinfo.jsp</result>
+			<result name="qyinfo">/usercenter/jr/qyinfo.jsp</result>
+			<result name="bxlist">/usercenter/jr/bxlist.jsp</result>
+			<result name="yhlist">/usercenter/jr/yhlist.jsp</result>
+			<result name="qsqhlist">/usercenter/jr/qsqhlist.jsp</result>
+			<result name="rzznlist">/usercenter/jr/rzznlist.jsp</result>
+			<result name="yssclist">/usercenter/jr/yssclist.jsp</result>
+			<result name="gqtzlist">/usercenter/jr/gqtzlist.jsp</result>
+			<result name="xdlist">/usercenter/jr/xdlist.jsp</result>
+			<result name="dblist">/usercenter/jr/dblist.jsp</result>
+			<result name="qylist">/usercenter/jr/qylist.jsp</result>
+			<result name="sbcommon">/interestapp/sbcommon.jsp</result>
+			<result name="sbborder">/interestapp/sbborder.jsp</result>
+			<result name="sbgp">/interestapp/sbgp.jsp</result>
+			<result name="sbbasejg">/interestapp/sbbasejg.jsp</result>
+			<result name="fundmanagerlist">/usercenter/fundmanagerlist.jsp</result>
+			<result name="fundmanageredit">/usercenter/fundmanageredit.jsp</result>
+		</action>
+	</package>
+	
+	<!-- 用户中心扩展2 -->
+	<package name="userinfoFront" namespace="" extends="struts-winpow-front">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="userinfo" class="userinfoActionFront">
+			<result name="sucess">/usercenter/establishment.jsp</result>
+			<result name="fail">/user/login.jsp</result>
+		</action>
+	</package>
+	
+	<!-- 用户中心分站管理 -->
+	<package name="usermanageFront" namespace="" extends="struts-winpow-front">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="usermanage" class="usermanageActionFront">
+			<result name="index">/common/usermanage/system/index.jsp</result>
+			<result name="main">/common/usermanage/system/main.jsp</result>
+			<result name="wfList">/common/usermanage/system/wfList.jsp</result>
+			<result name="taskList1">/common/usermanage/system/taskList1.jsp</result>
+			<result name="taskList3">/common/usermanage/system/taskList3.jsp</result>
+			<result name="custAdd">/common/usermanage/submanege/custAdd.jsp</result>
+			<result name="custChild">/common/usermanage/submanege/custChild.jsp</result>
+			<result name="custEdit">/common/usermanage/submanege/custEdit.jsp</result>
+			<result name="custList">/common/usermanage/submanege/custList.jsp</result>
+			<result name="userList">/common/usermanage/submanege/userList.jsp</result>
+			<result name="productList">/common/usermanage/submanege/productList.jsp</result>
+			<result name="productEdit">/common/usermanage/submanege/productEdit.jsp</result>
+			<result name="actiList">/common/usermanage/submanege/activitiesList.jsp</result>
+			<result name="actiEdit">/common/usermanage/submanege/activitiesEdit.jsp</result>
+			<result name="actiAppList">/common/usermanage/submanege/activitiesappList.jsp</result>
+			<result name="actiAppEdit">/common/usermanage/submanege/activitiesappEdit.jsp</result>
+			<result name="newsList">/common/usermanage/submanege/newsList.jsp</result>
+			<result name="newsEdit">/common/usermanage/submanege/newsEdit.jsp</result>
+			<result name="aboutusEdit">/common/usermanage/submanege/pcaboutusEdit.jsp</result>
+			<result name="changePwd">/common/usermanage/submanege/changePwd.jsp</result>
+			<result name="bannerList">/common/usermanage/submanege/bannerList.jsp</result>
+			<result name="bannerEdit">/common/usermanage/submanege/bannerEdit.jsp</result>
+			<result name="increList">/common/usermanage/submanege/increList.jsp</result>
+			<result name="guquanList">/common/usermanage/submanege/guquanList.jsp</result>
+			<result name="guquanEdit">/common/usermanage/submanege/guquanEdit.jsp</result>
+			<result name="smsEdit">/common/usermanage/submanege/smsEdit.jsp</result>
+			<result name="messageList">/common/usermanage/submanege/messageList.jsp</result>
+			<result name="messageEdit">/common/usermanage/submanege/messageEdit.jsp</result>
+			<result name="parkList">/common/usermanage/submanege/parkserveList.jsp</result>
+			<result name="parkEdit">/common/usermanage/submanege/parkserveEdit.jsp</result>
+		</action>
+	</package>
+	
+	<!-- 贴息申报 -->
+	<package name="interestappFront" namespace=""
+		extends="struts-winpow-front">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="interestapp" class="interestappActionFront">
+			<result name="toindex">/usercenter/interestapplist.jsp</result>
+			<result name="toList">/usercenter/interestapplist.jsp</result>
+			<result name="tostepone">/sbapp/sb_dktx.jsp</result>
+			<result name="tosteptwo">/usercenter/interestappstep2.jsp</result>
+			<result name="tostepthree">/usercenter/cpinterestappstep3.jsp</result>
+			<result name="interestlist">/interestapp/interestlist.jsp</result>
+			<result name="fail">/user/login.jsp</result>
+			
+			<result name="interestlist0">/interestapp/interestlist0.jsp</result>
+			<result name="interestgxsearch">/interestapp/interestgxsearch.jsp</result>
+			<result name="interestlist">/interestapp/interestlist.jsp</result>
+			<result name="interestlist2">/interestapp/interestlist2.jsp</result>
+	<!-- 		<result name="interestlist0">/interestapp/interestlist0.jsp</result> -->
+			<result name="fuchizhichengdetail">/interestapp/rmations.jsp</result>
+			<result name="zaixianshenbaodetail">/interestapp/zaixianshenbaodetail.jsp</result>			
+			<result name="interestlistsearch">/interestapp/interestlistsearch.jsp</result>
+			<result name="toBaseAdd">/sbapp/sb_base.jsp</result>
+			<result name="sjbs">/interestapp/sjbs.jsp</result>
+			<result name="pdf" type="stream">
+				<param name="contentType">application/pdf; charset=gb2312</param>
+				<param name="contentDisposition">attachment;filename="${fileName}"</param>
+				<param name="inputName">excelStream</param>
+			</result>
+		</action>
+	</package>
+
+	<!-- 成长贷 -->
+	<package name="productczdbaseFront" namespace=""
+		extends="struts-winpow-front">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="productczdbase" class="productczdbaseActionFront">
+			<result name="toList">/productczdbase/recheckproductapplist.jsp
+			</result>
+			<result name="productapplist2">/usercenter/productapplist2.jsp</result>
+			<result name="tostepone">/productczdbase/productczdbase.jsp</result>
+			<result name="tosteptwo">/productczdbase/productczdgdandbzqk.jsp</result>
+			<result name="tostepthree">/productczdbase/productczdcwxx.jsp</result>
+			<result name="tostepfour">/productczdbase/productczdjyxx.jsp</result>
+			<result name="tostepfive">/productczdbase/productczdqtdkqk.jsp</result>
+			<result name="tostepsix">/productczdbase/productczddwdbqk.jsp</result>
+			<result name="tostepseven">/productczdbase/productczdqtxx.jsp</result>
+			<result name="fail">/user/login.jsp</result>
+		</action>
+	</package>
+
+		<!-- 首页的融资发布 -->
+	<package name="indexappFront" namespace=""	extends="struts-winpow-front">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="indexapp" class="indexappActionFront">
+		</action>
+	</package>
+
+	<!--首页融资项目-->
+	<package name="guquanFinancingFront" namespace="" extends="struts-winpow-front">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="guquan_financing" class="guquanFinancingActionFront">
+			<result name="guquanrongzi">/news/guquanrongzidetail.jsp</result>
+		</action>
+	</package>
+	<!--政策申报企业信息主表-->
+	<package name="declareBaseFront" namespace="" extends="struts-winpow-front">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="declare_base" class="declareBaseAction">
+			<result name="toList">/sbapp/hlwbtlist.jsp</result>
+			<result name="toAdd">/sbapp/sb_base.jsp</result>
+			<result name="toEdit">/sbapp/sb_base.jsp</result>
+			<result name="fail">/user/login.jsp</result>
+			<result name="toEditBTZ">/sbapp/sb_btz.jsp</result>
+			<result name="toEditCZBG">/sbapp/sb_czbg.jsp</result>
+			<result name="toEditGFZGZ">/sbapp/sb_gfzgz.jsp</result>
+			<result name="toEditIPO">/sbapp/sb_ipo.jsp</result>
+			<result name="toEditJWZB">/sbapp/sb_jwzb.jsp</result>
+			<result name="toEditPJ">/sbapp/sb_pj.jsp</result>
+			<result name="toEditSSGP">/sbapp/sb_ssgp.jsp</result>
+			<result name="toEditYGGQJL">/sbapp/sb_yggqjl.jsp</result>
+			<result name="toEditZZGB">/sbapp/sb_zzgb.jsp</result>
+			<result name="toEditRZZN">/sbapp/sb_rzzn.jsp</result>
+			<result name="toEditKJBX">/sbapp/sb_kjbx.jsp</result>
+			<result name="toEditInterestapp2">/sbapp/sb_dktx.jsp</result>
+			<result name="toEditZWRZ">/sbapp/sb_zwrz.jsp</result>
+			<result name="toAllList">/sbapp/allbtlist.jsp</result>
+			<result name="toQiye" type="redirect">/usercenter/getQiyeinfo.html?qiye.t=v</result>
+			<result name="word" type="stream">
+				<param name="contentType">application/msword</param>
+				<param name="contentDisposition">filename="${fileName}.doc"</param>
+				<param name="inputName">excelStream</param>
+			</result>
+		</action>
+	</package>
+	<!--企业被投资补贴申请-->
+	<package name="declarebtzfront" namespace="" extends="struts-winpow-front">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="declare_btz" class="declareBTZAction">
+			<result name="toList">/sbapp/hlwbtlist.jsp</result>
+			<result name="toList2">/sbapp/kjcxbtlist.jsp</result>
+			<result name="toAdd">/sbapp/sb_base.jsp</result>
+			<result name="toEdit">/sbapp/sb_btz.jsp</result>
+			<result name="fail">/user/login.jsp</result>
+			<result name="toRedirect" type="redirect">/declare_btz/selectAllList.html?leibie=1&amp;type=hlwbt</result>
+			<result name="toRedirect1" type="redirect">/declare_btz/selectAllList.html?leibie=2&amp;type=kjcxbt</result>
+			<result name="pdf" type="stream">
+				<param name="contentType">application/pdf; charset=gb2312</param>
+				<param name="contentDisposition">attachment;filename="${fileName}"</param>
+				<param name="inputName">excelStream</param>
+			</result>
+		</action>
+	</package>
+	<!--重组并购申请补贴-->
+	<package name="declareczbgfront" namespace="" extends="struts-winpow-front">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="declare_czbg" class="declareCZBGAction">
+			<result name="toList">/sbapp/czbgbtlist.jsp</result>
+			<result name="toAdd">/sbapp/sb_base.jsp</result>
+			<result name="toEdit">/sbapp/sb_czbg.jsp</result>
+			<result name="fail">/user/login.jsp</result>
+			<result name="toRedirect" type="redirect">/declare_czbg/selectAllList.html?type=czbgbt</result>
+			<result name="pdf" type="stream">
+				<param name="contentType">application/pdf; charset=gb2312</param>
+				<param name="contentDisposition">attachment;filename="${fileName}"</param>
+				<param name="inputName">excelStream</param>
+			</result>
+		</action>
+	</package>
+	<!--股份制改造补贴申请-->
+	<package name="declaregfzgzfront" namespace="" extends="struts-winpow-front">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="declare_gfzgz" class="declareGFZGZAction">
+			<result name="toList">/sbapp/qygzbtlist.jsp</result>
+			<result name="toAdd">/sbapp/sb_base.jsp</result>
+			<result name="toEdit">/sbapp/sb_gfzgz.jsp</result>
+			<result name="fail">/user/login.jsp</result>
+			<result name="toRedirect" type="redirect">/declare_gfzgz/selectAllList.html?type=qygzbt</result>
+			<result name="pdf" type="stream">
+				<param name="contentType">application/pdf; charset=gb2312</param>
+				<param name="contentDisposition">attachment;filename="${fileName}"</param>
+				<param name="inputName">excelStream</param>
+			</result>
+		</action>
+	</package>
+	<!--IPO获得证监会受理申请补贴-->
+	<package name="declareipofront" namespace="" extends="struts-winpow-front">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="declare_ipo" class="declareIPOAction">
+			<result name="toList">/sbapp/ipohjbtlist.jsp</result>
+			<result name="toAdd">/sbapp/sb_base.jsp</result>
+			<result name="toEdit">/sbapp/sb_ipo.jsp</result>
+			<result name="fail">/user/login.jsp</result>
+			<result name="toRedirect" type="redirect">/declare_ipo/selectAllList.html?type=ipohjbt</result>
+			<result name="pdf" type="stream">
+				<param name="contentType">application/pdf; charset=gb2312</param>
+				<param name="contentDisposition">attachment;filename="${fileName}"</param>
+				<param name="inputName">excelStream</param>
+			</result>
+		</action>
+	</package>
+	<!--境外资本上市成功补贴-->
+	<package name="declarejwzbfront" namespace="" extends="struts-winpow-front">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="declare_jwzb" class="declareJWZBAction">
+			<result name="toList">/sbapp/jwsscgbtlist.jsp</result>
+			<result name="toAdd">/sbapp/sb_base.jsp</result>
+			<result name="toEdit">/sbapp/sb_jwzb.jsp</result>
+			<result name="fail">/user/login.jsp</result>
+			<result name="toRedirect" type="redirect">/declare_jwzb/selectAllList.html?type=jwsscgbt</result>
+			<result name="pdf" type="stream">
+				<param name="contentType">application/pdf; charset=gb2312</param>
+				<param name="contentDisposition">attachment;filename="${fileName}"</param>
+				<param name="inputName">excelStream</param>
+			</result>
+		</action>
+	</package>
+	<!--信用评级补贴申请-->
+	<package name="declarepjfront" namespace="" extends="struts-winpow-front">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="declare_pj" class="declarePJAction">
+			<result name="toList">/sbapp/xypjbtlist.jsp</result>
+			<result name="toAdd">/sbapp/sb_base.jsp</result>
+			<result name="toEdit">/sbapp/sb_pj.jsp</result>
+			<result name="fail">/user/login.jsp</result>
+			<result name="toRedirect" type="redirect">/declare_pj/selectAllList.html?type=xypjbt</result>
+			<result name="pdf" type="stream">
+				<param name="contentType">application/pdf; charset=gb2312</param>
+				<param name="contentDisposition">attachment;filename="${fileName}"</param>
+				<param name="inputName">excelStream</param>
+			</result>
+		</action>
+	</package>
+	<!--上市挂牌成功补贴-->
+	<package name="declaressgpfront" namespace="" extends="struts-winpow-front">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="declare_ssgp" class="declareSSGPAction">
+			<result name="toList">/sbapp/sscgbtlist.jsp</result>
+			<result name="toAdd">/sbapp/sb_base.jsp</result>
+			<result name="toEdit">/sbapp/sb_ssgp.jsp</result>
+			<result name="fail">/user/login.jsp</result>
+			<result name="toRedirect" type="redirect">/declare_ssgp/selectAllList.html?type=sscgbt</result>
+			<result name="pdf" type="stream">
+				<param name="contentType">application/pdf; charset=gb2312</param>
+				<param name="contentDisposition">attachment;filename="${fileName}"</param>
+				<param name="inputName">excelStream</param>
+			</result>
+		</action>
+	</package>
+	<!--员工股权激励补贴-->
+	<package name="declareyggqjlfront" namespace="" extends="struts-winpow-front">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="declare_yggqjl" class="declareYGGQJLAction">
+			<result name="toList">/sbapp/yggqbtlist.jsp</result>
+			<result name="toAdd">/sbapp/sb_base.jsp</result>
+			<result name="toEdit">/sbapp/sb_yggqjl.jsp</result>
+			<result name="fail">/user/login.jsp</result>
+			<result name="toRedirect" type="redirect">/declare_yggqjl/selectAllList.html?type=yggqbt</result>
+			<result name="pdf" type="stream">
+				<param name="contentType">application/pdf; charset=gb2312</param>
+				<param name="contentDisposition">attachment;filename="${fileName}"</param>
+				<param name="inputName">excelStream</param>
+			</result>
+		</action>
+	</package>
+	<!--转增股本补贴-->
+	<package name="declarezzgbfront" namespace="" extends="struts-winpow-front">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="declare_zzgb" class="declareZZGBAction">
+			<result name="toList">/sbapp/zzgbbtlist.jsp</result>
+			<result name="toAdd">/sbapp/sb_base.jsp</result>
+			<result name="toEdit">/sbapp/sb_zzgb.jsp</result>
+			<result name="fail">/user/login.jsp</result>
+			<result name="toRedirect" type="redirect">/declare_zzgb/selectAllList.html?type=zzgbbt</result>
+			<result name="pdf" type="stream">
+				<param name="contentType">application/pdf; charset=gb2312</param>
+				<param name="contentDisposition">attachment;filename="${fileName}"</param>
+				<param name="inputName">excelStream</param>
+			</result>
+		</action>
+	</package>
+	<!--融资租赁政策-->
+	<package name="declarerzznfront" namespace="" extends="struts-winpow-front">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="declare_rzzn" class="declareRZZNAction">
+			<result name="toList">/sbapp/rzznbtlist.jsp</result>
+			<result name="toAdd">/sbapp/sb_base.jsp</result>
+			<result name="toEdit">/sbapp/sb_rzzn.jsp</result>
+			<result name="fail">/user/login.jsp</result>
+			<result name="toRedirect" type="redirect">/declare_rzzn/selectAllList.html?type=rzznbt</result>
+			<result name="pdf" type="stream">
+				<param name="contentType">application/pdf; charset=gb2312</param>
+				<param name="contentDisposition">attachment;filename="${fileName}"</param>
+				<param name="inputName">excelStream</param>
+			</result>
+		</action>
+	</package>
+	<!--科技保险政策-->
+	<package name="declarekjbxfront" namespace="" extends="struts-winpow-front">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="declare_kjbx" class="declareKJBXAction">
+			<result name="toList">/sbapp/kjbxbtlist.jsp</result>
+			<result name="toAdd">/sbapp/sb_base.jsp</result>
+			<result name="toEdit">/sbapp/sb_kjbx.jsp</result>
+			<result name="fail">/user/login.jsp</result>
+			<result name="toRedirect" type="redirect">/declare_kjbx/selectAllList.html?type=kjbxbt</result>
+			<result name="pdf" type="stream">
+				<param name="contentType">application/pdf; charset=gb2312</param>
+				<param name="contentDisposition">attachment;filename="${fileName}"</param>
+				<param name="inputName">excelStream</param>
+			</result>
+		</action>
+	</package>
+	<!--债务类工具直接融资补贴-->
+	<package name="declarezwrzfront" namespace="" extends="struts-winpow-front">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="declare_zwrz" class="declareZWRZAction">
+			<result name="toList">/sbapp/zwrzbtlist.jsp</result>
+			<result name="toAdd">/sbapp/sb_base.jsp</result>
+			<result name="toEdit">/sbapp/sb_zwrz.jsp</result>
+			<result name="fail">/user/login.jsp</result>
+			<result name="toRedirect" type="redirect">/declare_zwrz/selectAllList.html?type=zwrzbt</result>
+		</action>
+	</package>
+	<!--生成文件的下载-->
+	<package name="uploaderfront" namespace="" extends="struts-winpow-front">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="declare_uploader" class="uploaderAction">
+			<result name="toList">/sbapp/downloadbtlist.jsp</result>
+		</action>
+	</package>
+	<!-- 分站通用 -->
+	<package name="substation" namespace="" extends="struts-winpow-front">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="substation" class="substationActionManage">
+			<result name="toIndex">/common/substation/index.jsp</result>
+			<result name="toNews">/common/substation/news.jsp</result>
+			<result name="toProduct">/common/substation/product.jsp</result>
+			<result name="toGuquan">/common/substation/guquan.jsp</result>
+			<result name="toIncre">/common/substation/incre.jsp</result>
+			<result name="toActivity">/common/substation/activity.jsp</result>
+			<result name="toFiles">/common/substation/files.jsp</result>
+			<result name="toAboutus">/common/substation/aboutus.jsp</result>
+		</action>
+	</package>
+</struts>

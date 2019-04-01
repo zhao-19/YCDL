@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC 
+"-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="app">
+
+	<select id="app.appnews.selectPageList" parameterType="com.winpow.services.app.appnews.bean.Appnews"
+		resultType="hashMap">
+		select top ${pageSize} * from (
+			select row_number() over(order by newstime desc,lastchgtime desc) as rownumber ,* 
+			from tb_app_news where 1=1
+			<if test=" author !=null and  author !=''">
+				and author=#{author}
+			</if>
+	    ) a where rownumber > ${pageSize}*(${offset} - 1)
+	</select>
+	
+	<select id="app.appnews.selectPageCount" parameterType="com.winpow.services.app.appnews.bean.Appnews"
+		resultType="java.lang.Integer">
+		select count(*) from tb_app_news where 1=1
+		<if test=" author !=null and  author !=''">
+			and author=#{author}
+		</if>
+	</select>
+
+	<select id="app.appnews.selectOne" parameterType="com.winpow.services.app.appnews.bean.Appnews"
+		resultType="com.winpow.services.app.appnews.bean.Appnews">
+		select * from tb_app_news t where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+
+	<select id="app.appnews.selectCount" parameterType="com.winpow.services.app.appnews.bean.Appnews"
+		resultType="int">
+		select count(*) from tb_app_news t where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+
+	<select id="app.appnews.selectOneByCondition" parameterType="com.winpow.services.app.appnews.bean.Appnews"
+		resultType="com.winpow.services.app.appnews.bean.Appnews">
+		select * from tb_app_news t where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+
+	<select id="app.appnews.selectList" parameterType="com.winpow.services.app.appnews.bean.Appnews"
+		resultType="com.winpow.services.app.appnews.bean.Appnews">
+		select * from tb_app_news t where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+
+	<insert id="app.appnews.insert" parameterType="com.winpow.services.app.appnews.bean.Appnews"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into tb_app_news (
+		pkid,
+		newstime,
+		author,
+		label,
+		enable,
+		times,
+		detail,
+		lurushijian,
+		inputuser,
+		lastchgtime
+		) values (
+		#{pkid},
+		#{newstime},
+		#{author},
+		#{label},
+		#{enable},
+		0,
+		#{detail},
+		getdate(),
+		#{inputuser},
+		getdate()
+		)
+	</insert>
+
+	<update id="app.appnews.update" parameterType="com.winpow.services.app.appnews.bean.Appnews">
+		update tb_app_news set
+		<if test=" newstime !=null and  newstime !=''">
+			newstime=#{newstime},
+		</if>
+		<if test=" author !=null and  author !=''">
+			author=#{author},
+		</if>
+		<if test=" label !=null and  label !=''">
+			label=#{label},
+		</if>
+		<if test=" enable !=null and  enable !=''">
+			enable=#{enable},
+		</if>
+		<if test=" times !=null">
+			times=#{times},
+		</if>
+		<if test=" detail !=null and  detail !=''">
+			detail=#{detail},
+		</if>
+		lastchgtime=getdate()
+		where pkid=#{pkid}
+	</update>
+	
+	<update id="app.appnews.updatetimes" parameterType="string">
+		update tb_app_news set times = times + 1 where pkid=#{pkid}
+	</update>
+	
+	<delete id="app.appnews.deleteAppnews" parameterType="string">
+		delete tb_app_news where pkid in
+		<foreach  collection="array" item="id" open="(" close=")" separator=",">   
+            #{id}  
+        </foreach>  
+	</delete>
+
+</mapper>  

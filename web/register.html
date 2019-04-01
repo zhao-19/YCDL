@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+	<link rel="stylesheet" href="css/lr.css">
+	<script type="text/javascript" src="js/jquery.js"></script>
+	<script src="js/jquery-1.10.0.js"></script>
+	<script src="js/jquery.validate-1.13.1.js"></script>
+</head>
+<body>
+
+<div class="register">
+	<div class="logo"></div>
+	<div class="progress">
+		<div class="img"></div>
+		<li>1&nbsp;基本信息</li>
+		<li>2&nbsp;详细信息</li>
+		<li>3&nbsp;注册完成</li>
+	</div>
+	<div class="input">
+
+
+		<form action="#" method="post" id="demoForm">
+			<div class="inputtext">账号：<input class="inputbor" name="username" type="text"></div> 
+
+			<div class="inputtext">密码：<input class="inputbor" name="password" type="text"></div> 
+
+			<div class="inputtext">类型：
+				<select name=""> 
+					<option value="0"></option> 
+					<option value="1">赢创资讯</option> 
+					<option value="1">股权融资</option> 
+					<option value="1">增值服务</option> 
+					<option value="1">赢创学院</option> 
+					<option value="1">赢创数据</option> 
+				</select>
+			</div> 
+
+			<div class="inputtext">手机号码：<input class="inputbor" name="phone" type="text"></div>
+
+			<div class="code">短信验证码：<br/>
+
+				<input class="inputcode" name="code" type="text">
+
+				<div class="get fr"><input id="btnSendCode" type="button" value="发送验证码" onclick="sendMessage()" /></div>
+
+			
+			</div>
+
+			<div class="error_box">
+				 <label id="register-error" class="error" for="register"></label>
+			</div>
+
+			<input type="submit" class="submit" values="提&nbsp;交">
+
+		</form>
+
+	</div>
+
+
+</div>
+
+
+	<div class="footer">
+		<li>版权所有 : 成都高投盈创动力投资发展有限公司</li>
+		<li>蜀ICP备18022655号-1  免责声明  电话：028-83159999</li>
+	</div>
+
+
+<script>
+    $(document).ready(function () {
+		$("#demoForm").validate({
+           
+            debug: true,
+            rules: {
+                username: {
+                    required: true,
+                    minlength: 2,
+                    maxlength: 6
+                },
+                password: {
+                    required: true,
+                    minlength: 6,
+                    maxlength: 16
+                },
+                phone : {
+		            required : true,
+		            minlength : 11,
+		            maxlength: 11,
+		            isMobile : true
+	       		 },
+		        code : {
+		            digits : true,
+		            required : true
+		        }
+
+
+            },
+            messages: {
+                username:{
+                    required: '请输入用户名',
+                    minlength: '用户名不能小于2个字符',
+                    maxlength: '用户名不能超过6个字符',
+                },
+                password:{
+                    required: '请输入密码',
+                    minlength: '密码不能小于6个字符',
+                    maxlength: '密码不能超过16个字符'
+                },
+                phone:{
+		            required : "请输入手机号",
+		            minlength : "确认手机不能小于11个字符",
+		            maxlength: '确认手机不能大于11个字符',
+		            isMobile : "请正确填写您的手机号码"
+       	 		},
+		        code:{
+		            required : "请输入验证码",
+		            digits : "验证码应该输入数字"
+		        }
+
+            },
+
+            groups:{
+                register:"username password phone code"
+            },
+        });
+    });
+</script>
+
+<script>
+var InterValObj; //timer变量，控制时间
+var count = 60; //间隔函数，1秒执行
+var curCount;//当前剩余秒数
+
+function sendMessage() {
+  　curCount = count;
+　　//设置button效果，开始计时
+     $("#btnSendCode").attr("disabled", "true");
+     $("#btnSendCode").val("请在" + curCount + "秒内输入验证码");
+     InterValObj = window.setInterval(SetRemainTime, 1000); //启动计时器，1秒执行一次
+　　  //向后台发送处理数据
+     $.ajax({
+     　　type: "POST", //用POST方式传输
+     　　dataType: "text", //数据格式:JSON
+     　　url: 'Login.ashx', //目标地址
+    　　 data: "dealType=" + dealType +"&uid=" + uid + "&code=" + code,
+    　　 error: function (XMLHttpRequest, textStatus, errorThrown) { },
+     　　success: function (msg){ }
+     });
+}
+
+//timer处理函数
+function SetRemainTime() {
+            if (curCount == 0) {                
+                window.clearInterval(InterValObj);//停止计时器
+                $("#btnSendCode").removeAttr("disabled");//启用按钮
+                $("#btnSendCode").val("重新发送验证码");
+            }
+            else {
+                curCount--;
+                $("#btnSendCode").val("请在" + curCount + "秒内输入验证码");
+            }
+        }
+</script>
+
+
+
+
+
+</body>
+</html>

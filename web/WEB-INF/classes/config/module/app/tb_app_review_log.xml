@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+"-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="app">
+
+	<select id="app.appreviewlog.selectPageList"
+		parameterType="com.winpow.services.app.appreviewlog.bean.Appreviewlog"
+		resultType="hashMap">
+		select * from (
+		SELECT ROW_NUMBER() over(order by
+		review_date desc) as rownumber ,
+		pkid,
+		genre,
+		chno,
+		releid,
+		createby,
+		create_time,
+		updatedate,
+		reviewer_id,
+		review_date,
+		review_opinion,
+		result
+		from tb_app_review_log )t where
+		rownumber &gt; = #{offset} and
+		rownumber
+		&lt; = #{pageSize}+#{offset}
+	</select>
+	<select id="app.appreviewlog.selectPageCount"
+		parameterType="com.winpow.services.app.appreviewlog.bean.Appreviewlog"
+		resultType="java.lang.Integer">
+
+		select count(*) from (
+		SELECT ROW_NUMBER() over(order by
+		review_date desc) as rownumber ,
+		pkid,
+		genre,
+		chno,
+		releid,
+		createby,
+		create_time,
+		updatedate,
+		reviewer_id,
+		review_date,
+		review_opinion,
+		result
+		from tb_app_review_log )t
+
+	</select>
+
+	<select id="app.appreviewlog.selectOne"
+		parameterType="com.winpow.services.app.appreviewlog.bean.Appreviewlog"
+		resultType="com.winpow.services.app.appreviewlog.bean.Appreviewlog">
+		SELECT
+		pkid,
+		genre,
+		chno,
+		releid,
+		createby,
+		create_time,
+		updatedate,
+		reviewer_id,
+		review_date,
+		review_opinion,
+		result
+		from tb_app_review_log t
+		where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+
+	<select id="app.appreviewlog.selectCount"
+		parameterType="com.winpow.services.app.appreviewlog.bean.Appreviewlog"
+		resultType="int">
+		select count(*)
+		FROM tb_app_review_log t where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+
+	<select id="app.appreviewlog.selectOneByCondition"
+		parameterType="com.winpow.services.app.appreviewlog.bean.Appreviewlog"
+		resultType="com.winpow.services.app.appreviewlog.bean.Appreviewlog">
+		SELECT
+		pkid,
+		genre,
+		chno,
+		releid,
+		createby,
+		create_time,
+		updatedate,
+		reviewer_id,
+		review_date,
+		review_opinion,
+		result
+		from tb_app_review_log t
+		where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+
+	<select id="app.appreviewlog.selectList"
+		parameterType="com.winpow.services.app.appreviewlog.bean.Appreviewlog"
+		resultType="com.winpow.services.app.appreviewlog.bean.Appreviewlog">
+		SELECT
+		t.pkid,
+		t.genre,
+		t.chno,
+		t.releid,
+		t.createby,
+		t.create_time,
+		t.updatedate,
+		t.reviewer_id,
+		t.review_date,
+		t.review_opinion,
+		c.code_name
+		+ '(' + t.review_opinion + ')' remark,
+		t.result
+		from tb_app_review_log t
+		left join tb_code c on t.result=c.pk_codeid
+		where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+		<if test="genre!=null and genre!=''">
+			and t.genre=#{genre}
+		</if>
+		<if test="releid!=null and releid!=''">
+			and t.releid=#{releid}
+		</if>
+		order by create_time desc
+	</select>
+
+	<insert id="app.appreviewlog.insertLists"
+		parameterType="com.winpow.services.app.appreviewlog.bean.Appreviewlog"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into tb_app_review_log (
+		pkid,
+		genre,
+		chno,
+		releid,
+		createby,
+		create_time,
+		updatedate,
+		reviewer_id,
+		review_date,
+		review_opinion,
+		result
+		)
+		values 
+		<foreach collection="list" item="item" index="index" separator="," >  
+        (#{item.pkid},#{item.genre},(select top 1 chno from ${item.chno} where pkid = #{item.releid}),#{item.releid},#{item.createby},
+        getdate(),getdate(),#{item.reviewer_id},getdate(),#{item.review_opinion},#{item.result})  
+    </foreach>
+
+	</insert>
+	
+	<insert id="app.appreviewlog.insert"
+        parameterType="java.util.Map"
+        useGeneratedKeys="true" keyProperty="id">
+        insert into tb_app_review_log (
+        pkid,
+        genre,
+        chno,
+        releid,
+        createby,
+        create_time,
+        updatedate,
+        reviewer_id,
+        review_date,
+        review_opinion,
+        result
+        )
+        values (
+        #{pkid},
+        #{genre},
+        #{chno},
+        #{releid},
+        #{createby},
+        getdate(),
+        getdate(),
+        #{reviewer_id},
+        getdate(),
+        #{review_opinion},
+        #{result}
+        )
+
+    </insert>
+
+	<update id="app.appreviewlog.update"
+		parameterType="com.winpow.services.app.appreviewlog.bean.Appreviewlog">
+		update tb_app_review_log set
+
+		<if test=" genre !=null and  genre !=''">
+			genre=#{genre},
+		</if>
+
+		<if test=" releid !=null and  releid !=''">
+			releid=#{releid},
+		</if>
+
+		<if test=" review_date !=null and  review_date !=''">
+			review_date=#{review_date},
+		</if>
+		<if test=" reviewer_id !=null and  reviewer_id !=''">
+			reviewer_id=#{reviewer_id},
+		</if>
+
+		<if test=" review_opinion !=null and  review_opinion !=''">
+			review_opinion=#{review_opinion},
+		</if>
+
+		<if test="result!=null and result !=''">
+			result=#{result},
+		</if>
+
+		updatedate=getdate()
+
+		where pkid=#{pkid}
+	</update>
+	
+	<select id="app.appreviewlog.selecthotList"
+		parameterType="com.winpow.services.app.appreviewlog.bean.Appreviewlog"
+		resultType="com.winpow.services.app.appreviewlog.bean.Appreviewlog">
+		select top ${pageSize} * from (
+			select row_number() over (order by create_time desc) as rownumber,* from(
+				select case when genre in ('11201','11202','11203','11204','11205','11206','11207') then '供应' else '需求' end as tag, 
+				chno,create_time,
+				(case when len(createby)=11 then (left(createby,3) + '****' + right(createby,4)) else createby end) + 
+				(case genre 
+					when '11201' then '发布中介服务产品' 
+					when '11202' then '发布贷款产品' 
+					when '11203' then '申请股权融资' 
+					when '11204' then '发布企业服务' 
+					when '11205' then '供应企业产品' 
+					when '11206' then '供应技术服务' 
+					when '11207' then '发布培训活动' 
+					when '11221' then '需要中介服务' 
+					when '11222' then '需要贷款'
+					when '11223' then '有意股权融资' 
+					when '11224' then '需要企业服务' 
+					when '11205' then '需要企业产品' 
+					when '11226' then '需要技术服务' 
+					when '11227' then '需要进行培训' 
+					when '11228' then '需要融资辅导' 
+					else '有其他需求' end
+				) as content, createby,result from tb_app_review_log where createby not in(select username from t_user)
+				and result not in ('10304', '10404', '10804', '10904') and genre not in ('11222','11202','11241','11203','11223')
+				union all
+				select case when genre in ('11201','11202','11203','11204','11205','11206','11207') then '供应' else '需求' end as tag, 
+				chno,create_time, '管理员' + c2.code_name + c1.code_name as content, createby,result from tb_app_review_log l
+				left join tb_code c1 on l.genre=c1.pk_codeid
+				left join tb_code c2 on l.result=c2.pk_codeid
+				where l.createby in(select username from t_user) and genre not in ('11222','11202','11241','11203','11223')
+	        	)b
+	        ) t where rownumber > ${pageSize}*(${offset} - 1)
+	</select>
+	
+	<select id="app.appreviewlog.selectListByAppids" parameterType="list"
+		resultType="com.winpow.services.app.appreviewlog.bean.Appreviewlog">
+		select t.*,c.code_name + '(' + t.review_opinion + ')' remark 
+		from tb_app_review_log t left join tb_code c on t.result=c.pk_codeid
+		where releid in 
+		<foreach item="item" index="index" collection="list" open="(" separator="," close=")">  
+  			#{item}  
+ 		</foreach>
+ 		order by create_time desc
+	</select>
+	
+</mapper>  

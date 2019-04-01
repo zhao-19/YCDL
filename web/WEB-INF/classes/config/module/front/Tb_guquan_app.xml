@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE mapper PUBLIC 
+"-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="front">
+	
+	<select id="front.guquanapp.selectPageList" parameterType="com.winpow.services.manage.guquanapp.bean.Guquanapp" resultType="hashMap">
+	select * from (
+		SELECT  ROW_NUMBER() over(order by id) as  rownumber ,
+								 	id,
+			 								 	increid,
+			 								 	userid,
+			 								 	status,
+			 								 	checkuser,
+			 								 	result,
+			 								 	lurushijian,
+			 								  lastchgtime
+			 		   from Tb_guquan_app )t  where rownumber &gt; = #{offset} and rownumber &lt; = #{pageSize}+#{offset} 
+	</select>
+	<select id="front.guquanapp.selectPageCount" parameterType="com.winpow.services.manage.guquanapp.bean.Guquanapp" resultType="java.lang.Integer">
+		
+			select count(*) from (
+					SELECT  ROW_NUMBER() over(order by id) as  rownumber ,
+																	 	id,
+						 																	 	increid,
+						 																	 	userid,
+						 																	 	status,
+						 																	 	checkuser,
+						 																	 	result,
+						 																	 	lurushijian,
+						 																	  lastchgtime
+						 								   from Tb_guquan_app )t  
+
+	</select>
+	
+	<select id="front.guquanapp.selectOne" parameterType="com.winpow.services.manage.guquanapp.bean.Guquanapp" resultType="com.winpow.services.manage.guquanapp.bean.Guquanapp">
+			SELECT  
+											 	id,
+				 											 	increid,
+				 											 	userid,
+				 											 	status,
+				 											 	checkuser,
+				 											 	result,
+				 											 	lurushijian,
+				 											  lastchgtime
+				 						  from Tb_guquan_app t  where 1=1  
+			<if test="id!=null and id!=''">
+				and t.id=#{id}
+			</if>
+	</select>
+	
+	<select id="front.guquanapp.selectCount" parameterType="com.winpow.services.manage.guquanapp.bean.Guquanapp" resultType="int">
+			select count(*)  
+				 FROM Tb_guquan_app t  where 1=1  
+				<if test="id!=null and id!=''">
+					and t.id=#{id}
+				</if>
+	</select>
+	
+	<select id="front.guquanapp.selectOneByCondition" parameterType="com.winpow.services.manage.guquanapp.bean.Guquanapp" resultType="com.winpow.services.manage.guquanapp.bean.Guquanapp">
+			SELECT  
+											 	id,
+				 											 	increid,
+				 											 	userid,
+				 											 	status,
+				 											 	checkuser,
+				 											 	result,
+				 											 	lurushijian,
+				 											  lastchgtime
+				 					 from  Tb_guquan_app   t  where 1=1  
+			<if test="id!=null and id!=''">
+				and t.id=#{id}
+			</if>
+	</select>
+	
+	<insert id="front.guquanapp.insert" parameterType="com.winpow.services.manage.guquanapp.bean.Guquanapp" useGeneratedKeys="true" 
+		keyProperty="id">
+	 		insert into Tb_guquan_app ( 
+	 								  
+													 	increid,
+													 	userid,
+													 	status,
+													 	checkuser,
+													 	result,
+													 	lurushijian,
+													  lastchgtime
+			 						) values ( 
+										 
+				 										 	#{increid},
+				 										 	#{userid},
+				 										 	#{status},
+				 										 	#{checkuser},
+				 										 	#{result},
+				 										 	#{lurushijian},
+				 											#{lastchgtime}
+				 						)
+		 
+	</insert>
+	
+	<update id="front.guquanapp.update" parameterType="com.winpow.services.manage.guquanapp.bean.Guquanapp">
+		update tb_guquanapp set 
+                       
+		
+				 			                <if test="increid!=null and increid!=''">
+                        increid=#{increid},
+                        </if>
+		
+				 			                <if test="userid!=null and userid!=''">
+                        userid=#{userid},
+                        </if>
+		
+				 			                <if test="status!=null and status!=''">
+                        status=#{status},
+                        </if>
+		
+				 			                <if test="checkuser!=null and checkuser!=''">
+                        checkuser=#{checkuser},
+                        </if>
+		
+				 			                <if test="result!=null and result!=''">
+                        result=#{result},
+                        </if>
+		
+				 			                <if test="lurushijian!=null and lurushijian!=''">
+                        lurushijian=#{lurushijian},
+                        </if>
+		
+				 			                <if test="lastchgtime!=null and lastchgtime!=''">
+                        lastchgtime=#{lastchgtime}
+                        </if>
+         						 
+		where id=#{id}
+	</update>
+		<select id="front.guquanapp.select4index" parameterType="com.winpow.services.manage.guquanapp.bean.Guquanapp" resultType="com.winpow.services.manage.guquanapp.bean.Guquanapp">
+	select * from (
+		SELECT  ROW_NUMBER() over(order by id desc) as  rownumber ,
+								 	id,
+			 								 	increid,
+			 								 	userid,
+			 								 	status,
+			 								 	checkuser,
+			 								 	result,
+			 								 	lurushijian,
+			 								  lastchgtime
+			 		   from Tb_guquan_app )t  where rownumber  &lt; = 4
+	</select>
+</mapper>  

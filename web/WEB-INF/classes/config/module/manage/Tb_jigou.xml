@@ -1,0 +1,451 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC 
+"-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="manage">
+
+	<select id="manage.jigou.selectPageList" parameterType="com.winpow.services.manage.jigou.bean.Jigou"
+		resultType="hashMap">
+		select * from (
+		select row_number() over(order by lurushijian desc) as rownumber ,* from
+		tb_jigou where 1=1
+		<if test="jigoumingcheng!=null and jigoumingcheng!=''">
+			and jigoumingcheng like '%'+#{jigoumingcheng}+'%'
+		</if>
+		<if test="custmanage!=null and custmanage!=''">
+			and custmanage like '%'+#{custmanage}+'%'
+		</if>
+		)t where 1=1
+		and rownumber &gt; = #{offset} and rownumber &lt; =
+		#{pageSize}+#{offset}
+	</select>
+
+	<select id="manage.jigou.select4index" parameterType="com.winpow.services.manage.jigou.bean.Jigou"
+		resultType="com.winpow.services.manage.jigou.bean.Jigou">
+		select * from (
+		select row_number() over(order by id) as rownumber,* from tb_jigou
+		where shifoutuijian='aaaaaaaaaaaaaaaaaaaaaaaaaaaaa004'
+		)t where rownumber
+		&lt; =4
+	</select>
+	<select id="manage.jigou.selectPageCount" parameterType="com.winpow.services.manage.jigou.bean.Jigou"
+		resultType="java.lang.Integer">
+		select count(*) from Tb_jigou t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+		<if test="jigoumingcheng!=null and jigoumingcheng!=''">
+			and jigoumingcheng like '%'+#{jigoumingcheng}+'%'
+		</if>
+		<if test="custmanage!=null and custmanage!=''">
+			and custmanage like '%'+#{custmanage}+'%'
+		</if>
+	</select>
+
+	<select id="manage.jigou.selectOne" parameterType="com.winpow.services.manage.jigou.bean.Jigou"
+		resultType="com.winpow.services.manage.jigou.bean.Jigou">
+		select top(1) * from tb_jigou t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+		<if test="userid!=null and userid!=''">
+			and t.userid=#{userid}
+		</if>
+		<if test="zzjgdm !=null and zzjgdm !=''">
+			and zzjgdm=#{zzjgdm}
+		</if>
+		<if test="deleted != null and deleted != ''">
+			and deleted is null or deleted=#{deleted}
+		</if>
+	</select>
+
+	<select id="manage.jigou.selectrecommend" parameterType="com.winpow.services.manage.jigou.bean.Jigou"
+		resultType="com.winpow.services.manage.jigou.bean.Jigou">
+		select top 1 * from tb_jigou t where
+		shifoutuijian='aaaaaaaaaaaaaaaaaaaaaaaaaaaaa004' order by lastchgtime
+		desc
+	</select>
+
+	<select id="manage.jigou.selectCount" parameterType="com.winpow.services.manage.jigou.bean.Jigou"
+		resultType="int">
+		select count(*) from tb_jigou t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+	</select>
+
+	<select id="manage.jigou.selectOneByCondition" parameterType="com.winpow.services.manage.jigou.bean.Jigou"
+		resultType="com.winpow.services.manage.jigou.bean.Jigou">
+		select * from tb_jigou t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+		<if test="zzjgdm!=null and zzjgdm!=''">
+			and t.zzjgdm=#{zzjgdm}
+		</if>
+	</select>
+
+	<select id="manage.jigou.selectByUserId" parameterType="com.winpow.services.manage.jigou.bean.Jigou"
+		resultType="com.winpow.services.manage.jigou.bean.Jigou">
+		select * from tb_jigou t where 1=1 and t.userid=#{userid} and t.deleted is null or t.deleted='10002'
+	</select>
+
+	<insert id="manage.jigou.insert" parameterType="com.winpow.services.manage.jigou.bean.Jigou"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into tb_jigou (
+		id,
+		userid,
+		jigoumingcheng,
+		jigouleixingid,
+		zzjgdm,
+		zhuceshijian,
+		zhuceziben,
+		zhucediid,
+		fuwuneirong,
+		fuwuanli,
+		bangongdizhi,
+		jigoujianjie,
+		jigoulogo,
+		jgzt,
+		wangzhi,
+		tz_jijinxingzhi,
+		tz_glzbj,
+		tz_touzihangye,
+		tz_touzijieduanid,
+		tz_touziedu,
+		xingming,
+		bumenzhiwu,
+		yidongdianhua,
+		gudingdianhua,
+		email,
+		lurushijian,
+		inputuser,
+		lastchgtime,
+		gszcd_province,
+		gszcd_city,
+		gszcd_county,
+		shifoutuijian,
+		tuijianpic,
+		weixin,
+		bcard,
+		custmanagesource,
+		custmanage,
+		receipt_bank,
+		receipt_account,
+		receipt_payee,
+		receipt_phone,
+		iscomplete,
+		businessscope,
+		license,
+		approve,
+		priority,
+		yuangongshu,
+		party_num,
+		is_party,
+		lead_num,
+		lead_party_num,
+		is_party_branch,
+		party_branch_time,
+		last_party_cost,
+		will_set_party,
+		party_score,substation
+		) values (
+		#{id},
+		#{userid},
+		#{jigoumingcheng},
+		#{jigouleixingid},
+		#{zzjgdm},
+		#{zhuceshijian},
+		#{zhuceziben},
+		#{zhucediid},
+		#{fuwuneirong},
+		#{fuwuanli},
+		#{bangongdizhi},
+		#{jigoujianjie},
+		#{jigoulogo},
+		#{jgzt},
+		#{wangzhi},
+		#{tz_jijinxingzhi},
+		#{tz_glzbj},
+		#{tz_touzihangye},
+		#{tz_touzijieduanid},
+		#{tz_touziedu},
+		#{xingming},
+		#{bumenzhiwu},
+		#{yidongdianhua},
+		#{gudingdianhua},
+		#{email},
+		getdate(),
+		#{inputuser},
+		getdate(),
+		#{gszcd_province},
+		#{gszcd_city},
+		#{gszcd_county},
+		#{shifoutuijian},
+		#{tuijianpic},
+		#{weixin},
+		#{bcard},
+		#{custmanagesource},
+		#{custmanage},
+		#{receipt_bank},
+		#{receipt_account},
+		#{receipt_payee},
+		#{receipt_phone},
+		#{iscomplete},
+		#{businessscope},
+		#{license},
+		#{approve},
+		#{priority},
+		#{yuangongshu},
+		#{party_num},
+		#{is_party},
+		#{lead_num},
+		#{lead_party_num},
+		#{is_party_branch},
+		#{party_branch_time},
+		#{last_party_cost},
+		#{will_set_party},
+		#{party_score},#{substation}
+		)
+	</insert>
+	<update id="manage.jigou.update" parameterType="com.winpow.services.manage.jigou.bean.Jigou">
+		update tb_jigou set
+
+
+		<if test=" jigoumingcheng !=null and  jigoumingcheng !=''">
+			jigoumingcheng=#{jigoumingcheng},
+		</if>
+
+		<if test=" jigouleixingid !=null and  jigouleixingid !=''">
+			jigouleixingid=#{jigouleixingid},
+		</if>
+
+		<if test=" zzjgdm !=null and  zzjgdm !=''">
+			zzjgdm=#{zzjgdm},
+		</if>
+
+		<if test=" zhuceshijian !=null and  zhuceshijian !=''">
+			zhuceshijian=#{zhuceshijian},
+		</if>
+
+		<if test=" zhuceziben !=null and  zhuceziben !=''">
+			zhuceziben=#{zhuceziben},
+		</if>
+
+		<if test=" zhucediid !=null and  zhucediid !=''">
+			zhucediid=#{zhucediid},
+		</if>
+
+		<if test=" fuwuneirong !=null and  fuwuneirong !=''">
+			fuwuneirong=#{fuwuneirong},
+		</if>
+
+		<if test=" fuwuanli !=null and  fuwuanli !=''">
+			fuwuanli=#{fuwuanli},
+		</if>
+
+		<if test=" bangongdizhi !=null and  bangongdizhi !=''">
+			bangongdizhi=#{bangongdizhi},
+		</if>
+
+		<if test=" jigoujianjie !=null and  jigoujianjie !=''">
+			jigoujianjie=#{jigoujianjie},
+		</if>
+
+		<if test=" jigoulogo !=null and  jigoulogo !=''">
+			jigoulogo=#{jigoulogo},
+		</if>
+
+		<if test=" jgzt !=null and  jgzt !=''">
+			jgzt=#{jgzt},
+		</if>
+
+		<if test=" wangzhi !=null and  wangzhi !=''">
+			wangzhi=#{wangzhi},
+		</if>
+
+		<if test=" tz_jijinxingzhi !=null and  tz_jijinxingzhi !=''">
+			tz_jijinxingzhi=#{tz_jijinxingzhi},
+		</if>
+
+		<if test=" tz_glzbj !=null and  tz_glzbj !=''">
+			tz_glzbj=#{tz_glzbj},
+		</if>
+
+		<if test=" tz_touzihangye !=null and  tz_touzihangye !=''">
+			tz_touzihangye=#{tz_touzihangye},
+		</if>
+
+		<if test=" tz_touzijieduanid !=null and  tz_touzijieduanid !=''">
+			tz_touzijieduanid=#{tz_touzijieduanid},
+		</if>
+
+		<if test=" tz_touziedu !=null and  tz_touziedu !=''">
+			tz_touziedu=#{tz_touziedu},
+		</if>
+
+		<if test=" xingming !=null and  xingming !=''">
+			xingming=#{xingming},
+		</if>
+
+		<if test=" bumenzhiwu !=null and  bumenzhiwu !=''">
+			bumenzhiwu=#{bumenzhiwu},
+		</if>
+
+		<if test=" yidongdianhua !=null and  yidongdianhua !=''">
+			yidongdianhua=#{yidongdianhua},
+		</if>
+
+		<if test=" gudingdianhua !=null and  gudingdianhua !=''">
+			gudingdianhua=#{gudingdianhua},
+		</if>
+
+		<if test=" email !=null and  email !=''">
+			email=#{email},
+		</if>
+
+		<if test=" gszcd_province !=null and  gszcd_province !=''">
+			gszcd_province=#{gszcd_province},
+		</if>
+
+		<if test=" gszcd_city !=null and  gszcd_city !=''">
+			gszcd_city=#{gszcd_city},
+		</if>
+
+		<if test=" gszcd_county !=null and  gszcd_county !=''">
+			gszcd_county=#{gszcd_county},
+		</if>
+
+		<if test=" shifoutuijian !=null and  shifoutuijian !=''">
+			shifoutuijian=#{shifoutuijian},
+		</if>
+
+		<if test="tuijianpic!=null and tuijianpic !=''">
+			tuijianpic=#{tuijianpic},
+		</if>
+
+		<if test="bcard != null and bcard !=''">
+			bcard = #{bcard},
+		</if>
+		<if test="custmanagesource!=null and custmanagesource!=''">
+			custmanagesource=#{custmanagesource},
+		</if>
+		<if test="custmanage!=null and custmanage!=''">
+			custmanage=#{custmanage},
+		</if>
+
+		<if test=" receipt_bank !=null and  receipt_bank !=''">
+			receipt_bank=#{receipt_bank},
+		</if>
+		<if test=" receipt_account !=null and  receipt_account !=''">
+			receipt_account=#{receipt_account},
+		</if>
+		<if test=" receipt_payee !=null and  receipt_payee !=''">
+			receipt_payee=#{receipt_payee},
+		</if>
+		<if test=" receipt_phone !=null and  receipt_phone !=''">
+			receipt_phone=#{receipt_phone},
+		</if>
+		<if test=" iscomplete !=null and iscomplete != ''">
+			iscomplete=#{iscomplete},
+		</if>
+		<if test=" businessscope !=null and  businessscope !=''">
+			businessscope=#{businessscope},
+		</if>
+		<if test=" license !=null and  license !=''">
+			license=#{license},
+		</if>
+		<if test="approve != null and approve != ''">
+			approve=#{approve},
+		</if>
+
+		<if test="priority != null ">
+			priority=#{priority},
+		</if>
+
+		<if test=" yuangongshu !=null">
+			yuangongshu=#{yuangongshu},
+		</if>
+		<if test=" party_num !=null">
+			party_num=#{party_num},
+		</if>
+		<if test=" is_party !=null and  is_party !=''">
+			is_party=#{is_party},
+		</if>
+		<if test=" lead_num !=null">
+			lead_num=#{lead_num},
+		</if>
+		<if test=" lead_party_num !=null">
+			lead_party_num=#{lead_party_num},
+		</if>
+		<if test=" is_party_branch !=null and  is_party_branch !=''">
+			is_party_branch=#{is_party_branch},
+		</if>
+		<if test=" party_branch_time !=null and  party_branch_time !=''">
+			party_branch_time=#{party_branch_time},
+		</if>
+		<if test=" last_party_cost !=null">
+			last_party_cost=#{last_party_cost},
+		</if>
+		<if test=" will_set_party !=null and  will_set_party !=''">
+			will_set_party=#{will_set_party},
+		</if>
+		<if test=" party_score !=null and  party_score !=''">
+			party_score=#{party_score},
+		</if>
+		<if test=" deleted !=null and  deleted !=''">
+			deleted=#{deleted},
+		</if>
+		<if test=" substation !=null and  substation !=''">
+			substation=#{substation},
+		</if>
+		lastchgtime=getdate()
+		where id=#{id}
+	</update>
+
+	<select id="manage.jigou.selectRelaQiye" parameterType="string"
+		resultType="com.winpow.services.manage.jigou.bean.Jigou">
+		<!-- select top 1 j.* from tb_cust c left join tb_jigou j on (c.userid=j.userid 
+			or c.f_id=j.id ) where c.userid=#{userid} -->
+		select top 1 * from (
+		select 1 num,j.* from tb_cust c left join
+		tb_jigou j on c.f_id=j.id where
+		c.userid=#{userid} and j.id is not null
+		union all
+		select top 1 2 num,* from tb_jigou where userid=#{userid}
+		) a
+		where a.deleted is null or a.deleted='10002'
+		order by num
+	</select>
+
+	<select id="manage.jigou.selectList" parameterType="com.winpow.services.manage.jigou.bean.Jigou"
+		resultType="com.winpow.services.manage.jigou.bean.Jigou">
+		select * from tb_jigou where 1=1
+		<if test="zzjgdm !=null and zzjgdm !=''">
+			and zzjgdm=#{zzjgdm}
+		</if>
+		<if test="jigoumingcheng !=null and jigoumingcheng !=''">
+			and jigoumingcheng=#{jigoumingcheng}
+		</if>
+		<if test="deleted != null and deleted != ''">
+			and deleted is null or deleted=#{deleted}
+		</if>
+	</select>
+
+	<select id="manage.jigou.selectPageAll" parameterType="com.winpow.services.manage.jigou.bean.Jigou"
+		resultType="com.winpow.services.manage.jigou.bean.Jigou">
+		select top ${pageSize} * from (
+		select row_number() over (order by ${lurushijian} desc) as rownumber,* from
+		tb_jigou where approve = '10001'
+		<if test="tz_touzihangye!=null and tz_touzihangye!=''">
+			and tz_touzihangye like '%'+#{tz_touzihangye}+'%'
+		</if>
+		) a where rownumber > #{pageSize}*(#{offset} - 1)
+	</select>
+
+	<update id="manage.jigou.updatetimes" parameterType="string">
+		update
+		tb_jigou set readtimes = readtimes + 1 where id=#{id}
+	</update>
+
+</mapper>  

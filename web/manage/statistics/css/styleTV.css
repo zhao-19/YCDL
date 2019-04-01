@@ -1,0 +1,78 @@
+@charset "utf-8";
+*{margin:0;padding:0;border:0;box-sizing: border-box;}
+@font-face { font-family:fangzheng ; src: url(fangzheng.ttf); }
+body{font-family:fangzheng ,"Microsoft Yahei";color: #fff;}
+.section { text-align: center;  }
+.container{margin:0 auto;position: relative;}
+.tl{text-align: left;}
+.tc{text-align: center;}
+.tr{text-align: right;}
+li{list-style: none;}
+#kLine,#onlineArea,#industry,#scale,#area,#onlineChina{height:85%;width:100%;margin:0 auto;z-index: 10000;}
+#onlineChina{height:100%;}
+.container>h1{width:70%;margin:0 auto;}
+.container>h1>img{width: 100%;}
+#starBg{width: 100%;height:100%;position: fixed; top:0;left:0;background:linear-gradient(to top,#071225,#11243f);}
+.border{width:100%;position: relative;}
+.border>h2{font-size:1rem;padding:0.5rem 1rem;background:linear-gradient(to right,#0065b3,#0f1e34);
+    /*position: absolute;*/
+    width: 100%;}
+
+ #hishory{position: absolute;right:0%;bottom:5%;text-align: left;width:24%;font-size: 0.9rem;}
+#hishory>p{margin-bottom:3%;}
+#hishory>#maxOnlineNum{margin-bottom:5%;}
+#hishory>p>span{font-weight: bold;    padding: 0 0.1rem;}
+#peoplenum>span{font-size:1.8rem;color:#2ccf77;}
+
+/*sec2*/
+.totalCompany{ font-size:1rem;font-weight:bold;width:30%;height:5%;text-align:left;position: absolute;top:18%;left:2%;z-index: 100; }
+
+
+.section .border .boxbg{z-index:100;position: absolute;width:100%;height:100%;background: url("../img/bg.png") no-repeat 0 0;background-size:100% 100%;}
+.section .border2{background: url("../img/gridbg.png") no-repeat 0 0;background-size:100% 100%;}
+.progress{width:23%;height:50%;position: absolute;top:25%;left:2%;z-index: 100;
+    background:url("../img/progressbox.png") no-repeat 0 0;background-size:100% 100%;}
+.progress>h2{height:20%;border-bottom:1px solid #0390ec;font-size:1rem;padding:0.8rem}
+.progress>ul{height:80%;}
+.progress>ul>li{height:20%;vertical-align:middle;font-size:0.7rem;padding:0.1rem 0.8rem}
+.progress>ul>li>div{width:100%;height:50%;}
+.progress>ul>li>div>span{width: 23%;display: inline-block;}
+.progress>ul>li>div>.progress-line{margin:2% 5% 0;position:relative;display:inline-block;width:45%;height:100%;vertical-align:bottom;}
+.progress-line img{width:100%;}
+.div{width:100%;height:100%;)}
+/*.div{width:100%;height:30%;position: absolute;top:55%;left:55%;transform:translate(-50%,-50%)}*/
+#china{position: absolute;right:2%;bottom:2%;width:20%;height:35%;background:url("../img/chinabox.png") no-repeat 0 0;background-size:100% 100%;}
+
+.line{width:100%;height:64%;border:0.2rem solid #34a7e8;border-radius: 5%;
+    position: absolute;top:50%;left:0rem;transform: translateY(-50%);
+}
+/*sec6*/
+.district{font-size:0.7rem;width:45%;height:15%;position: absolute;left:2%;bottom:2%;}
+.district ul{position: absolute;height:100%;width:100%;}
+.district li{float: left;height:100%;margin-right:2%;background-repeat: no-repeat;background-size:100% 100%; }
+
+.district li div{height:60%;position: relative;}
+.district li img{height:100%;}
+.district li span{position: absolute;top:55%;left:10%;transform: translateY(-50%);}
+
+
+
+
+/*********/
+.tabBox{padding: 1rem 1.5rem;box-sizing: border-box;height:100%;}
+
+
+.ulTab>li{background: rgba(255,255,255,0.1);padding:0 0.5rem;}
+.ulTab.ulTit>li>ol>li{color: #fff;    font-size: 0.9rem;line-height: 2rem;}
+.ulTab.ulTit>li>ol>li>i{font-size: 0.6rem;font-style: normal;}
+.ulTab ol{overflow: hidden;border-bottom: 1px solid rgba(2,103,167,0.5);}
+.ulTxt>li:last-child ol{border-bottom: 0;}
+.ulTab ol>li{float:left;
+    /*height:2rem;line-height:2rem;*/
+    color:#38dcff; }
+.ulTab ol>li:first-child{color:#e9e72d;}
+/*.ulTxt{ height: 86%;overflow: hidden;}*/
+.ulPerson ol>li,.ulTit ol>li{width: 20%;}
+.ulZhan ol>li,.ulTit2 ol>li{width: 16.66%;}
+
+#countDown{position: fixed;top:3%;right:2%;font-size: 0.7rem;z-index: 100;}

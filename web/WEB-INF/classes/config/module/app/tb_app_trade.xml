@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC 
+"-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="app">
+
+	<select id="app.apptrade.selectPageList" parameterType="com.winpow.services.app.apptrade.bean.Apptrade"
+		resultType="hashMap">
+		select * from (
+		SELECT ROW_NUMBER() over(order by id) as
+		rownumber ,*
+		from tb_app_trade )t where rownumber &gt; = #{offset} and
+		rownumber &lt; =
+		#{pageSize}+#{offset}
+	</select>
+
+	<select id="app.apptrade.selectPageCount" parameterType="com.winpow.services.app.apptrade.bean.Apptrade"
+		resultType="java.lang.Integer">
+		select count(*) from tb_app_trade
+	</select>
+
+	<select id="app.apptrade.selectOne" parameterType="com.winpow.services.app.apptrade.bean.Apptrade"
+		resultType="com.winpow.services.app.apptrade.bean.Apptrade">
+		select * from tb_app_trade t where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+
+	<select id="app.apptrade.selectCount" parameterType="com.winpow.services.app.apptrade.bean.Apptrade"
+		resultType="int">
+		select count(*) from tb_app_trade t where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+
+	<select id="app.apptrade.selectOneByCondition" parameterType="com.winpow.services.app.apptrade.bean.Apptrade"
+		resultType="com.winpow.services.app.apptrade.bean.Apptrade">
+		select * from tb_app_trade t where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+
+	<select id="app.apptrade.selectList" parameterType="com.winpow.services.app.apptrade.bean.Apptrade"
+		resultType="com.winpow.services.app.apptrade.bean.Apptrade">
+		select * from tb_app_trade t where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+
+	<insert id="app.apptrade.insert" parameterType="com.winpow.services.app.apptrade.bean.Apptrade"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into tb_app_trade (
+		pkid,
+		qiyename,
+		creditid,
+		regdate,
+		regfunds,
+		corp,
+		linkman,
+		linktel,
+		address,
+		mainbusiness,
+		goodstrade,
+		servetrade,
+		accessis,
+		chstatus,
+		checkid,
+		checkdate,
+		checkremark,
+		lurushijian,
+		inputuser,
+		lastchgtime,loanname,industry,istechqiye,patents,utilitymodel,copyright,stickticket,appamount,apptime
+		) values (
+		#{pkid},
+		#{qiyename},
+		#{creditid},
+		#{regdate},
+		#{regfunds},
+		#{corp},
+		#{linkman},
+		#{linktel},
+		#{address},
+		#{mainbusiness},
+		#{goodstrade},
+		#{servetrade},
+		#{accessis},
+		#{chstatus},
+		#{checkid},
+		#{checkdate},
+		#{checkremark},
+		getdate(),
+		#{inputuser},
+		getdate(),#{loanname},#{industry},#{istechqiye},#{patents},#{utilitymodel},#{copyright},#{stickticket},#{appamount},#{apptime}
+		)
+	</insert>
+
+	<update id="app.apptrade.update" parameterType="com.winpow.services.app.apptrade.bean.Apptrade">
+		update tb_app_trade set
+		<if test=" qiyename !=null and  qiyename !=''">
+			qiyename=#{qiyename},
+		</if>
+
+		<if test=" creditid !=null and  creditid !=''">
+			creditid=#{creditid},
+		</if>
+
+		<if test=" regdate !=null and  regdate !=''">
+			regdate=#{regdate},
+		</if>
+
+		<if test=" regfunds !=null and  regfunds !=''">
+			regfunds=#{regfunds},
+		</if>
+
+		<if test=" corp !=null and  corp !=''">
+			corp=#{corp},
+		</if>
+
+		<if test=" linkman !=null and  linkman !=''">
+			linkman=#{linkman},
+		</if>
+
+		<if test=" linktel !=null and  linktel !=''">
+			linktel=#{linktel},
+		</if>
+
+		<if test=" address !=null and  address !=''">
+			address=#{address},
+		</if>
+
+		<if test=" mainbusiness !=null and  mainbusiness !=''">
+			mainbusiness=#{mainbusiness},
+		</if>
+
+		<if test=" goodstrade !=null and  goodstrade !=''">
+			goodstrade=#{goodstrade},
+		</if>
+
+		<if test=" servetrade !=null and  servetrade !=''">
+			servetrade=#{servetrade},
+		</if>
+
+		<if test=" accessis !=null and  accessis !=''">
+			accessis=#{accessis},
+		</if>
+
+		<if test=" chstatus !=null and  chstatus !=''">
+			chstatus=#{chstatus},
+		</if>
+
+		<if test=" checkid !=null and  checkid !=''">
+			checkid=#{checkid},
+		</if>
+
+		<if test=" checkdate !=null and  checkdate =='date'">
+			checkdate=getdate(),
+		</if>
+
+		<if test=" checkremark !=null and  checkremark !=''">
+			checkremark=#{checkremark},
+		</if>
+		
+		<if test=" loanname !=null and  loanname !=''">
+			loanname=#{loanname},
+		</if>
+		
+		<if test=" industry !=null and  industry !=''">
+			industry=#{industry},
+		</if>
+		
+		<if test=" istechqiye !=null and  istechqiye !=''">
+			istechqiye=#{istechqiye},
+		</if>
+		
+		<if test=" patents !=null">
+			patents=#{patents},
+		</if>
+		
+		<if test=" utilitymodel !=null">
+			utilitymodel=#{utilitymodel},
+		</if>
+		
+		<if test=" copyright !=null">
+			copyright=#{copyright},
+		</if>
+		
+		<if test=" stickticket !=null and  stickticket !=''">
+			stickticket=#{stickticket},
+		</if>
+		
+		<if test=" appamount !=null">
+			appamount=#{appamount},
+		</if>
+		
+		<if test=" apptime !=null and  apptime !=''">
+			apptime=#{apptime},
+		</if>
+		lastchgtime=getdate()
+		where pkid=#{pkid}
+	</update>
+
+</mapper>  

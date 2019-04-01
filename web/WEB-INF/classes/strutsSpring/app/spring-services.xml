@@ -1,0 +1,386 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+           http://www.springframework.org/schema/context  
+           http://www.springframework.org/schema/context/spring-context-3.0.xsd
+           http://www.springframework.org/schema/aop 
+           http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+           http://www.springframework.org/schema/tx 
+           http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
+
+
+	<!-- app版本信息发布表 -->
+	<bean id="appversionDaoManage" class="com.winpow.services.app.appversion.dao.impl.AppversionDaoImpl">
+		<property name="dao" ref="baseDao"></property>
+	</bean>
+	<bean id="appversionServiceManage" class="com.winpow.services.app.appversion.impl.AppversionServiceImpl">
+		<property name="dao" ref="appversionDaoManage"></property>
+		<property name="appversionDao" ref="appversionDaoManage"></property>
+	</bean>
+	
+	<!-- 审核记录表 -->
+	<bean id="appreviewlogDaoManage" class="com.winpow.services.app.appreviewlog.dao.impl.AppreviewlogDaoImpl">
+		<property name="dao" ref="baseDao"></property>
+	</bean>
+	<bean id="appreviewlogServiceManage" class="com.winpow.services.app.appreviewlog.impl.AppreviewlogServiceImpl">
+		<property name="dao" ref="appreviewlogDaoManage"></property>
+		<property name="appreviewlogDao" ref="appreviewlogDaoManage"></property>
+	</bean>
+	
+	<!-- 用户收藏表 -->
+	<bean id="appcustfavoritesDaoManage" class="com.winpow.services.app.appcustfavorites.dao.impl.AppcustfavoritesDaoImpl">
+		<property name="dao" ref="baseDao"></property>
+	</bean>
+	<bean id="appcustfavoritesServiceManage" class="com.winpow.services.app.appcustfavorites.impl.AppcustfavoritesServiceImpl">
+		<property name="dao" ref="appcustfavoritesDaoManage"></property>
+		<property name="appcustfavoritesDao" ref="appcustfavoritesDaoManage"></property>
+	</bean>
+	
+	<!-- 订单收件人表 -->
+	<bean id="appordercontactDaoManage" class="com.winpow.services.app.appordercontact.dao.impl.AppordercontactDaoImpl">
+		<property name="dao" ref="baseDao"></property>
+	</bean>
+	<bean id="appordercontactServiceManage" class="com.winpow.services.app.appordercontact.impl.AppordercontactServiceImpl">
+		<property name="dao" ref="appordercontactDaoManage"></property>
+		<property name="appordercontactDao" ref="appordercontactDaoManage"></property>
+	</bean>
+	
+	<!-- 贷款产品发布表 -->
+	<bean id="apploanproductDaoManage" class="com.winpow.services.app.apploanproduct.dao.impl.ApploanproductDaoImpl">
+		<property name="dao" ref="baseDao"></property>
+	</bean>
+	<bean id="apploanproductServiceManage" class="com.winpow.services.app.apploanproduct.impl.ApploanproductServiceImpl">
+		<property name="dao" ref="apploanproductDaoManage"></property>
+		<property name="apploanproductDao" ref="apploanproductDaoManage"></property>
+	</bean>
+	
+	<!-- 贷款申请表 -->
+	<bean id="apploanappDaoManage" class="com.winpow.services.app.apploanapp.dao.impl.ApploanappDaoImpl">
+		<property name="dao" ref="baseDao"></property>
+	</bean>
+	<bean id="apploanappServiceManage" class="com.winpow.services.app.apploanapp.impl.ApploanappServiceImpl">
+		<property name="dao" ref="apploanappDaoManage"></property>
+		<property name="apploanappDao" ref="apploanappDaoManage"></property>
+	</bean>
+	
+	<!-- 贷款申请分配表 -->
+	<bean id="appallotbankDaoManage" class="com.winpow.services.app.appallotbank.dao.impl.AppallotbankDaoImpl">
+		<property name="dao" ref="baseDao"></property>
+	</bean>
+	<bean id="appallotbankServiceManage" class="com.winpow.services.app.appallotbank.impl.AppallotbankServiceImpl">
+		<property name="dao" ref="appallotbankDaoManage"></property>
+		<property name="appallotbankDao" ref="appallotbankDaoManage"></property>
+	</bean>
+	
+	<!-- 服务|产品发布申请表 -->
+	<bean id="appaddedproductDaoManage" class="com.winpow.services.app.appaddedproduct.dao.impl.AppaddedproductDaoImpl">
+		<property name="dao" ref="baseDao"></property>
+	</bean>
+	<bean id="appaddedproductServiceManage" class="com.winpow.services.app.appaddedproduct.impl.AppaddedproductServiceImpl">
+		<property name="dao" ref="appaddedproductDaoManage"></property>
+		<property name="appaddedproductDao" ref="appaddedproductDaoManage"></property>
+	</bean>
+	
+	<!-- 订单表 -->
+	<bean id="apporderDaoManage" class="com.winpow.services.app.apporder.dao.impl.ApporderDaoImpl">
+		<property name="dao" ref="baseDao"></property>
+	</bean>
+	<bean id="apporderServiceManage" class="com.winpow.services.app.apporder.impl.ApporderServiceImpl">
+		<property name="dao" ref="apporderDaoManage"></property>
+		<property name="apporderDao" ref="apporderDaoManage"></property>
+	</bean>
+	
+	<!-- 股权融资项目发布表 -->
+	<bean id="apppostequityprojectsDaoManage" class="com.winpow.services.app.apppostequityprojects.dao.impl.ApppostequityprojectsDaoImpl">
+		<property name="dao" ref="baseDao"></property>
+	</bean>
+	<bean id="apppostequityprojectsServiceManage" class="com.winpow.services.app.apppostequityprojects.impl.ApppostequityprojectsServiceImpl">
+		<property name="dao" ref="apppostequityprojectsDaoManage"></property>
+		<property name="apppostequityprojectsDao" ref="apppostequityprojectsDaoManage"></property>
+	</bean>
+	
+	<!-- 股权融资约谈表 -->
+	<bean id="appapplyequityprojectsDaoManage" class="com.winpow.services.app.appapplyequityprojects.dao.impl.AppapplyequityprojectsDaoImpl">
+		<property name="dao" ref="baseDao"></property>
+	</bean>
+	<bean id="appapplyequityprojectsServiceManage" class="com.winpow.services.app.appapplyequityprojects.impl.AppapplyequityprojectsServiceImpl">
+		<property name="dao" ref="appapplyequityprojectsDaoManage"></property>
+		<property name="appapplyequityprojectsDao" ref="appapplyequityprojectsDaoManage"></property>
+	</bean>
+	
+	<!-- 需求表 -->
+	<bean id="apppostdemandDaoManage" class="com.winpow.services.app.apppostdemand.dao.impl.ApppostdemandDaoImpl">
+		<property name="dao" ref="baseDao"></property>
+	</bean>
+	<bean id="apppostdemandServiceManage" class="com.winpow.services.app.apppostdemand.impl.ApppostdemandServiceImpl">
+		<property name="dao" ref="apppostdemandDaoManage"></property>
+		<property name="apppostdemandDao" ref="apppostdemandDaoManage"></property>
+	</bean>
+	
+	<!-- 培训活动发布表 -->
+	<bean id="appactivitiesdemandsDaoManage" class="com.winpow.services.app.appactivitiesdemands.dao.impl.AppactivitiesdemandsDaoImpl">
+		<property name="dao" ref="baseDao"></property>
+	</bean>
+	<bean id="appactivitiesdemandsServiceManage" class="com.winpow.services.app.appactivitiesdemands.impl.AppactivitiesdemandsServiceImpl">
+		<property name="dao" ref="appactivitiesdemandsDaoManage"></property>
+		<property name="appactivitiesdemandsDao" ref="appactivitiesdemandsDaoManage"></property>
+	</bean>
+	
+	<!-- 培训活动需求表 -->
+	<bean id="appactivitiesapplyDaoManage" class="com.winpow.services.app.appactivitiesapply.dao.impl.AppactivitiesapplyDaoImpl">
+		<property name="dao" ref="baseDao"></property>
+	</bean>
+	<bean id="appactivitiesapplyServiceManage" class="com.winpow.services.app.appactivitiesapply.impl.AppactivitiesapplyServiceImpl">
+		<property name="dao" ref="appactivitiesapplyDaoManage"></property>
+		<property name="appactivitiesapplyDao" ref="appactivitiesapplyDaoManage"></property>
+	</bean>
+	
+	<!-- 政策申报申请表 -->
+	<bean id="apppolicyapplyDaoManage" class="com.winpow.services.app.apppolicyapply.dao.impl.ApppolicyapplyDaoImpl">
+		<property name="dao" ref="baseDao"></property>
+	</bean>
+	<bean id="apppolicyapplyServiceManage" class="com.winpow.services.app.apppolicyapply.impl.ApppolicyapplyServiceImpl">
+		<property name="dao" ref="apppolicyapplyDaoManage"></property>
+		<property name="apppolicyapplyDao" ref="apppolicyapplyDaoManage"></property>
+	</bean>
+	
+	<!-- 话题(融资辅导)表 -->
+	<bean id="apptopicDaoManage" class="com.winpow.services.app.apptopic.dao.impl.ApptopicDaoImpl">
+		<property name="dao" ref="baseDao"></property>
+	</bean>
+	<bean id="apptopicServiceManage" class="com.winpow.services.app.apptopic.impl.ApptopicServiceImpl">
+		<property name="dao" ref="apptopicDaoManage"></property>
+		<property name="apptopicDao" ref="apptopicDaoManage"></property>
+	</bean>
+	
+	<!-- 用户评论表 -->
+	<bean id="appcommentsDaoManage" class="com.winpow.services.app.appcomments.dao.impl.AppcommentsDaoImpl">
+		<property name="dao" ref="baseDao"></property>
+	</bean>
+	<bean id="appcommentsServiceManage" class="com.winpow.services.app.appcomments.impl.AppcommentsServiceImpl">
+		<property name="dao" ref="appcommentsDaoManage"></property>
+		<property name="appcommentsDao" ref="appcommentsDaoManage"></property>
+	</bean>
+	
+	<!-- 入驻园区表 -->
+	<bean id="appenterparkDaoManage" class="com.winpow.services.app.appenterpark.dao.impl.AppenterparkDaoImpl">
+		<property name="dao" ref="baseDao"></property>
+	</bean>
+	<bean id="appenterparkServiceManage" class="com.winpow.services.app.appenterpark.impl.AppenterparkServiceImpl">
+		<property name="dao" ref="appenterparkDaoManage"></property>
+		<property name="appenterparkDao" ref="appenterparkDaoManage"></property>
+	</bean>
+	
+	<!-- 我的足迹表 -->
+	<bean id="appcusthistoryDaoManage" class="com.winpow.services.app.appcusthistory.dao.impl.AppcusthistoryDaoImpl">
+		<property name="dao" ref="baseDao"></property>
+	</bean>
+	<bean id="appcusthistoryServiceManage" class="com.winpow.services.app.appcusthistory.impl.AppcusthistoryServiceImpl">
+		<property name="dao" ref="appcusthistoryDaoManage"></property>
+		<property name="appcusthistoryDao" ref="appcusthistoryDaoManage"></property>
+	</bean>
+	
+	<!-- 消息表 -->
+	<bean id="apppushmsgDaoManage" class="com.winpow.services.app.apppushmsg.dao.impl.ApppushmsgDaoImpl">
+		<property name="dao" ref="baseDao"></property>
+	</bean>
+	<bean id="apppushmsgServiceManage" class="com.winpow.services.app.apppushmsg.impl.ApppushmsgServiceImpl">
+		<property name="dao" ref="apppushmsgDaoManage"></property>
+		<property name="apppushmsgDao" ref="apppushmsgDaoManage"></property>
+	</bean>
+	
+	<!-- 产品服务表 -->
+	<bean id="pcgoodsDaoManage" class="com.winpow.services.app.pcgoods.dao.impl.PcgoodsDaoImpl">
+		<property name="dao" ref="baseDao"></property>
+	</bean>
+	<bean id="pcgoodsServiceManage" class="com.winpow.services.app.pcgoods.impl.PcgoodsServiceImpl">
+		<property name="dao" ref="pcgoodsDaoManage"></property>
+		<property name="pcgoodsDao" ref="pcgoodsDaoManage"></property>
+	</bean>
+	
+	<!-- 话题(融资辅导)表 -->
+	<bean id="pctopicDaoManage" class="com.winpow.services.app.pctopic.dao.impl.PctopicDaoImpl">
+		<property name="dao" ref="baseDao"></property>
+	</bean>
+	<bean id="pctopicServiceManage" class="com.winpow.services.app.pctopic.impl.PctopicServiceImpl">
+		<property name="dao" ref="pctopicDaoManage"></property>
+		<property name="pctopicDao" ref="pctopicDaoManage"></property>
+	</bean>
+	
+	<!-- 政策申报区域表 -->
+	<bean id="pcsbregionDaoManage" class="com.winpow.services.app.pcsbregion.dao.impl.PcsbregionDaoImpl">
+		<property name="dao" ref="baseDao"></property>
+	</bean>
+	<bean id="pcsbregionServiceManage" class="com.winpow.services.app.pcsbregion.impl.PcsbregionServiceImpl">
+		<property name="dao" ref="pcsbregionDaoManage"></property>
+		<property name="pcsbregionDao" ref="pcsbregionDaoManage"></property>
+	</bean>
+	
+	<!-- 活动合作申请表 -->
+	<bean id="appactcooapplyDaoManage" class="com.winpow.services.app.appactcooapply.dao.impl.AppactcooapplyDaoImpl">
+		<property name="dao" ref="baseDao"></property>
+	</bean>
+	<bean id="appactcooapplyServiceManage" class="com.winpow.services.app.appactcooapply.impl.AppactcooapplyServiceImpl">
+		<property name="dao" ref="appactcooapplyDaoManage"></property>
+		<property name="appactcooapplyDao" ref="appactcooapplyDaoManage"></property>
+	</bean>
+	
+	<!-- banner表 -->
+    <bean id="appbannerDaoManage" class="com.winpow.services.app.appbanner.dao.impl.AppbannerDaoImpl">
+        <property name="dao" ref="baseDao"></property>
+    </bean>
+    <bean id="appbannerServiceManage" class="com.winpow.services.app.appbanner.impl.AppbannerServiceImpl">
+        <property name="dao" ref="appbannerDaoManage"></property>
+        <property name="appbannerDao" ref="appbannerDaoManage"></property>
+    </bean>
+    <!-- 银行管理表 -->
+    <bean id="productbankDaoManage" class="com.winpow.services.app.productbank.dao.impl.ProductbankDaoImpl">
+        <property name="dao" ref="baseDao"></property>
+    </bean>
+    <bean id="productbankServiceManage" class="com.winpow.services.app.productbank.impl.ProductbankServiceImpl">
+        <property name="dao" ref="productbankDaoManage"></property>
+        <property name="productbankDao" ref="productbankDaoManage"></property>
+    </bean>
+	<!-- APP缓存 -->
+	<bean id="appCache" class="com.winpow.core.oscache.AppCache">
+		
+	</bean>
+	
+	<!-- 盈创资讯 -->
+	<bean id="appnewsDaoManage" class="com.winpow.services.app.appnews.dao.impl.AppnewsDaoImpl">
+		<property name="dao" ref="baseDao"></property>
+	</bean>
+	<bean id="appnewsServiceManage" class="com.winpow.services.app.appnews.impl.AppnewsServiceImpl">
+		<property name="dao" ref="appnewsDaoManage"></property>
+		<property name="appnewsDao" ref="appnewsDaoManage"></property>
+	</bean>
+	
+	<!-- APP省市表 -->
+	<bean id="appareaDaoManage" class="com.winpow.services.app.apparea.dao.impl.AppareaDaoImpl">
+		<property name="dao" ref="baseDao"></property>
+	</bean>
+	<bean id="appareaServiceManage" class="com.winpow.services.app.apparea.impl.AppareaServiceImpl">
+		<property name="dao" ref="appareaDaoManage"></property>
+		<property name="appareaDao" ref="appareaDaoManage"></property>
+	</bean>
+	
+	<!-- 子账号取消关联日志 -->
+	<bean id="appuserlogDaoManage" class="com.winpow.services.app.appuserlog.dao.impl.AppuserlogDaoImpl">
+		<property name="dao" ref="baseDao"></property>
+	</bean>
+	<bean id="appuserlogServiceManage" class="com.winpow.services.app.appuserlog.impl.AppuserlogServiceImpl">
+		<property name="dao" ref="appuserlogDaoManage"></property>
+		<property name="appuserlogDao" ref="appuserlogDaoManage"></property>
+	</bean>
+	
+	<!-- 园区服务 -->
+	<bean id="appparkserveDaoManage" class="com.winpow.services.app.appparkserve.dao.impl.AppparkserveDaoImpl">
+		<property name="dao" ref="baseDao"></property>
+	</bean>
+	<bean id="appparkserveServiceManage" class="com.winpow.services.app.appparkserve.impl.AppparkserveServiceImpl">
+		<property name="dao" ref="appparkserveDaoManage"></property>
+		<property name="appparkserveDao" ref="appparkserveDaoManage"></property>
+	</bean>
+	
+	<!-- 盈创学院 -->
+	<bean id="appschoolDaoManage" class="com.winpow.services.app.appschool.dao.impl.AppschoolDaoImpl">
+		<property name="dao" ref="baseDao"></property>
+	</bean>
+	<bean id="appschoolServiceManage" class="com.winpow.services.app.appschool.impl.AppschoolServiceImpl">
+		<property name="dao" ref="appschoolDaoManage"></property>
+		<property name="appschoolDao" ref="appschoolDaoManage"></property>
+	</bean>
+	
+	<!-- 自贸通 -->
+	<bean id="apptradeDaoManage" class="com.winpow.services.app.apptrade.dao.impl.ApptradeDaoImpl">
+		<property name="dao" ref="baseDao"></property>
+	</bean>
+	<bean id="apptradeServiceManage" class="com.winpow.services.app.apptrade.impl.ApptradeServiceImpl">
+		<property name="dao" ref="apptradeDaoManage"></property>
+		<property name="apptradeDao" ref="apptradeDaoManage"></property>
+	</bean>
+	
+	<!-- 基金管理人基本情况表 -->
+	<bean id="appfundmanagerDaoManage" class="com.winpow.services.app.appfundmanager.dao.impl.AppfundmanagerDaoImpl">
+		<property name="dao" ref="baseDao"></property>
+	</bean>
+	<bean id="appfundmanagerServiceManage" class="com.winpow.services.app.appfundmanager.impl.AppfundmanagerServiceImpl">
+		<property name="dao" ref="appfundmanagerDaoManage"></property>
+		<property name="appfundmanagerDao" ref="appfundmanagerDaoManage"></property>
+	</bean>
+	
+	<!-- 基金基本情况表 -->
+	<bean id="appfundbasicDaoManage" class="com.winpow.services.app.appfundbasic.dao.impl.AppfundbasicDaoImpl">
+		<property name="dao" ref="baseDao"></property>
+	</bean>
+	<bean id="appfundbasicServiceManage" class="com.winpow.services.app.appfundbasic.impl.AppfundbasicServiceImpl">
+		<property name="dao" ref="appfundbasicDaoManage"></property>
+		<property name="appfundbasicDao" ref="appfundbasicDaoManage"></property>
+	</bean>
+	
+	<!-- 十周年活动 电影票发放记录表 -->
+	<bean id="appticketmarkDaoManage" class="com.winpow.services.app.appticketmark.dao.impl.AppticketmarkDaoImpl">
+		<property name="dao" ref="baseDao"></property>
+	</bean>
+	<bean id="appticketmarkServiceManage" class="com.winpow.services.app.appticketmark.impl.AppticketmarkServiceImpl">
+		<property name="dao" ref="appticketmarkDaoManage"></property>
+		<property name="appticketmarkDao" ref="appticketmarkDaoManage"></property>
+	</bean>
+	
+	<!-- 十周年活动 电影票分享记录表 -->
+	<bean id="appticketshareDaoManage" class="com.winpow.services.app.appticketshare.dao.impl.AppticketshareDaoImpl">
+		<property name="dao" ref="baseDao"></property>
+	</bean>
+	<bean id="appticketshareServiceManage" class="com.winpow.services.app.appticketshare.impl.AppticketshareServiceImpl">
+		<property name="dao" ref="appticketshareDaoManage"></property>
+		<property name="appticketshareDao" ref="appticketshareDaoManage"></property>
+	</bean>
+	
+	<!-- 外出拜访企业登记表 -->
+	<bean id="appvisitqiyeDaoManage" class="com.winpow.services.app.appvisitqiye.dao.impl.AppvisitqiyeDaoImpl">
+		<property name="dao" ref="baseDao"></property>
+	</bean>
+	<bean id="appvisitqiyeServiceManage" class="com.winpow.services.app.appvisitqiye.impl.AppvisitqiyeServiceImpl">
+		<property name="dao" ref="appvisitqiyeDaoManage"></property>
+		<property name="appvisitqiyeDao" ref="appvisitqiyeDaoManage"></property>
+	</bean>
+	
+	<!-- 园区企业入驻 -->
+	<bean id="appjoinparkDaoManage" class="com.winpow.services.app.appjoinpark.dao.impl.AppjoinparkDaoImpl">
+		<property name="dao" ref="baseDao"></property>
+	</bean>
+	<bean id="appjoinparkServiceManage" class="com.winpow.services.app.appjoinpark.impl.AppjoinparkServiceImpl">
+		<property name="dao" ref="appjoinparkDaoManage"></property>
+		<property name="appjoinparkDao" ref="appjoinparkDaoManage"></property>
+	</bean>
+	
+	<!-- 关于我们 -->
+	<bean id="pcaboutusDaoManage" class="com.winpow.services.app.pcaboutus.dao.impl.PcaboutusDaoImpl">
+		<property name="dao" ref="baseDao"></property>
+	</bean>
+	<bean id="pcaboutusServiceManage" class="com.winpow.services.app.pcaboutus.impl.PcaboutusServiceImpl">
+		<property name="dao" ref="pcaboutusDaoManage"></property>
+		<property name="pcaboutusDao" ref="pcaboutusDaoManage"></property>
+	</bean>
+	
+	<!-- 盈创学院历史记录 -->
+	<bean id="appschoolhisDaoManage" class="com.winpow.services.app.appschoolhis.dao.impl.AppschoolhisDaoImpl">
+		<property name="dao" ref="baseDao"></property>
+	</bean>
+	<bean id="appschoolhisServiceManage" class="com.winpow.services.app.appschoolhis.impl.AppschoolhisServiceImpl">
+		<property name="dao" ref="appschoolhisDaoManage"></property>
+		<property name="appschoolhisDao" ref="appschoolhisDaoManage"></property>
+	</bean>
+	
+	<!-- 营销记录表 -->
+	<bean id="appmarketeDaoManage" class="com.winpow.services.app.appmarkete.dao.impl.AppmarketeDaoImpl">
+		<property name="dao" ref="baseDao"></property>
+	</bean>
+	<bean id="appmarketeServiceManage" class="com.winpow.services.app.appmarkete.impl.AppmarketeServiceImpl">
+		<property name="dao" ref="appmarketeDaoManage"></property>
+		<property name="appmarketeDao" ref="appmarketeDaoManage"></property>
+	</bean>
+</beans>

@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.winpow.services.manage.declare.mapper.DeclareBTZCoreMapper">
+
+    <select id="selectPageList"
+            parameterType="com.winpow.services.manage.declare.bean.DeclareBTZCore" resultType="hashMap">
+        select * from (
+        SELECT  ROW_NUMBER() over(order by id) as  rownumber ,
+        id,
+        userid,
+        rele_id,
+        jgmc,
+        jgzzjgdm,
+        jgzyyw,
+        jgtzje,
+        jgszgf,
+        tzsfdz,
+        dzsj,
+        gsbgsj,
+        jgsfba,
+        jgbasj,
+        lurushijian,
+        inputuser,
+        lastchgtime
+        from tb_sb_btz_core )t  where rownumber &gt; = #{offset} and rownumber &lt; = #{pageSize}+#{offset}
+    </select>
+    <select id="selectPageCount"
+            parameterType="com.winpow.services.manage.declare.bean.DeclareBTZCore"
+            resultType="java.lang.Integer">
+        select count(id) from (
+        SELECT  ROW_NUMBER() over(order by id) as  rownumber ,
+        id,
+        userid,
+        rele_id,
+        jgmc,
+        jgzzjgdm,
+        jgzyyw,
+        jgtzje,
+        jgszgf,
+        tzsfdz,
+        dzsj,
+        gsbgsj,
+        jgsfba,
+        jgbasj,
+        lurushijian,
+        inputuser,
+        lastchgtime
+        from tb_sb_btz_core )t
+    </select>
+
+    <select id="selectOne"
+            parameterType="com.winpow.services.manage.declare.bean.DeclareBTZCore"
+            resultType="com.winpow.services.manage.declare.bean.DeclareBTZCore">
+        SELECT TOP 1
+        id,
+        userid,
+        rele_id,
+        jgmc,
+        jgzzjgdm,
+        jgzyyw,
+        jgtzje,
+        jgszgf,
+        tzsfdz,
+        dzsj,
+        gsbgsj,
+        jgsfba,
+        jgbasj,
+        lurushijian,
+        inputuser,
+        lastchgtime
+        from tb_sb_btz_core t  where t.id=#{id}
+    </select>
+
+    <select id="selectAllList"
+            parameterType="com.winpow.services.manage.declare.bean.DeclareBTZCore"
+            resultType="com.winpow.services.manage.declare.bean.DeclareBTZCore">
+        SELECT
+        id,
+        userid,
+        rele_id,
+        jgmc,
+        jgzzjgdm,
+        jgzyyw,
+        jgtzje,
+        jgszgf,
+        tzsfdz,
+        dzsj,
+        gsbgsj,
+        jgsfba,
+        jgbasj,
+        lurushijian,
+        inputuser,
+        lastchgtime
+        from  tb_sb_btz_core t
+    </select>
+
+    <insert id="insert"
+            parameterType="com.winpow.services.manage.declare.bean.DeclareBTZCore" useGeneratedKeys="true"
+            keyProperty="id">
+		insert into tb_sb_btz_core (
+													 	userid,
+													 	rele_id,
+													 	jgmc,
+													 	jgzzjgdm,
+													 	jgzyyw,
+													 	jgtzje,
+													 	jgszgf,
+													 	tzsfdz,
+													 	dzsj,
+													 	gsbgsj,
+													 	jgsfba,
+													 	jgbasj,
+													 	lurushijian,
+													 	inputuser,
+													  lastchgtime
+			 						) values (
+				 										 	#{userid},
+				 										 	#{rele_id},
+				 										 	#{jgmc},
+				 										 	#{jgzzjgdm},
+				 										 	#{jgzyyw},
+				 										 	#{jgtzje},
+				 										 	#{jgszgf},
+				 										 	#{tzsfdz},
+				 										 	#{dzsj},
+				 										 	#{gsbgsj},
+				 										 	#{jgsfba},
+				 										 	#{jgbasj},
+				 										 	getdate(),
+				 										 	#{inputuser},
+				 											getdate()
+				 						)
+	</insert>
+
+    <update id="update"
+            parameterType="com.winpow.services.manage.declare.bean.DeclareBTZCore">
+        update tb_sb_btz_core set
+
+        <if test=" userid !=null and  userid !=''">
+            userid=#{userid},
+        </if>
+
+        <if test=" rele_id !=null and  rele_id !=''">
+            rele_id=#{rele_id},
+        </if>
+
+        <if test=" jgmc !=null and  jgmc !=''">
+            jgmc=#{jgmc},
+        </if>
+
+        <if test=" jgzzjgdm !=null and  jgzzjgdm !=''">
+            jgzzjgdm=#{jgzzjgdm},
+        </if>
+
+        <if test=" jgzyyw !=null and  jgzyyw !=''">
+            jgzyyw=#{jgzyyw},
+        </if>
+
+        <if test=" jgtzje !=null and  jgtzje !=''">
+            jgtzje=#{jgtzje},
+        </if>
+
+        <if test=" jgszgf !=null and  jgszgf !=''">
+            jgszgf=#{jgszgf},
+        </if>
+
+        <if test=" tzsfdz !=null and  tzsfdz !=''">
+            tzsfdz=#{tzsfdz},
+        </if>
+
+        <if test=" dzsj !=null and  dzsj !=''">
+            dzsj=#{dzsj},
+        </if>
+
+        <if test=" gsbgsj !=null and  gsbgsj !=''">
+            gsbgsj=#{gsbgsj},
+        </if>
+
+        <if test=" jgsfba !=null and  jgsfba !=''">
+            jgsfba=#{jgsfba},
+        </if>
+
+        <if test=" jgbasj !=null and  jgbasj !=''">
+            jgbasj=#{jgbasj},
+        </if>
+        lastchgtime=getdate()
+        where id=#{id}
+    </update>
+    <delete id="delete">
+        delete tb_sb_btz_core where id=#{id}
+    </delete>
+</mapper>  

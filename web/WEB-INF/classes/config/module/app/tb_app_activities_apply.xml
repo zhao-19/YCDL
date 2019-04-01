@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+"-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="app">
+
+	<select id="app.appactivitiesapply.selectPageList"
+		parameterType="com.winpow.services.app.appactivitiesapply.bean.Appactivitiesapply"
+		resultType="hashMap">
+		select * from (
+		SELECT ROW_NUMBER() over(order by updatedate
+		desc) as rownumber ,
+		pkid,
+		chno,
+		userid,
+		genre,
+		bewrite,
+		chstatus,
+		createdate,
+		updateby,
+		updatedate,
+		remark,
+        reviwer_id,
+        reviwer_date,
+        reviwer_remark
+		from tb_app_activities_apply )t
+		where rownumber &gt; = #{offset} and
+		rownumber &lt; =
+		#{pageSize}+#{offset}
+	</select>
+	<select id="app.appactivitiesapply.selectPageCount"
+		parameterType="com.winpow.services.app.appactivitiesapply.bean.Appactivitiesapply"
+		resultType="java.lang.Integer">
+
+		select count(*) from (
+		SELECT ROW_NUMBER() over(order by
+		updatedate desc) as rownumber ,
+		pkid,
+		chno,
+		userid,
+		genre,
+		bewrite,
+		chstatus,
+		createdate,
+		updateby,
+		updatedate,
+		remark,
+        reviwer_id,
+        reviwer_date,
+        reviwer_remark
+		from
+		tb_app_activities_apply )t
+
+	</select>
+
+	<select id="app.appactivitiesapply.selectOne"
+		parameterType="com.winpow.services.app.appactivitiesapply.bean.Appactivitiesapply"
+		resultType="com.winpow.services.app.appactivitiesapply.bean.Appactivitiesapply">
+		SELECT
+		pkid,
+		chno,
+		userid,
+		genre,
+		bewrite,
+		chstatus,
+		createdate,
+		updateby,
+		updatedate,
+		remark,
+        reviwer_id,
+        reviwer_date,
+        reviwer_remark
+		from tb_app_activities_apply t where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+
+	<select id="app.appactivitiesapply.selectCount"
+		parameterType="com.winpow.services.app.appactivitiesapply.bean.Appactivitiesapply"
+		resultType="int">
+		select count(*)
+		FROM tb_app_activities_apply t where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+
+	<select id="app.appactivitiesapply.selectOneByCondition"
+		parameterType="com.winpow.services.app.appactivitiesapply.bean.Appactivitiesapply"
+		resultType="com.winpow.services.app.appactivitiesapply.bean.Appactivitiesapply">
+		SELECT
+		pkid,
+		chno,
+		userid,
+		genre,
+		bewrite,
+		chstatus,
+		createdate,
+		updateby,
+		updatedate,
+		remark,
+        reviwer_id,
+        reviwer_date,
+        reviwer_remark
+		from tb_app_activities_apply t where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+
+	<select id="app.appactivitiesapply.selectList"
+		parameterType="com.winpow.services.app.appactivitiesapply.bean.Appactivitiesapply"
+		resultType="com.winpow.services.app.appactivitiesapply.bean.Appactivitiesapply">
+		SELECT
+		pkid,
+		chno,
+		userid,
+		genre,
+		bewrite,
+		chstatus,
+		createdate,
+		updateby,
+		updatedate,
+		remark,
+        reviwer_id,
+        reviwer_date,
+        reviwer_remark
+		from tb_app_activities_apply t where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+
+	<insert id="app.appactivitiesapply.insert"
+		parameterType="com.winpow.services.app.appactivitiesapply.bean.Appactivitiesapply"
+		useGeneratedKeys="true" keyProperty="id">
+		declare @cnno int
+		exec @cnno = getchnoseq
+		insert into tb_app_activities_apply (
+		pkid,
+		chno,
+		userid,
+		genre,
+		bewrite,
+		chstatus,
+		createdate,
+		updateby,
+		updatedate,
+		remark,
+        reviwer_id,
+        reviwer_date,
+        reviwer_remark
+		)
+		values (
+		#{pkid},
+		(select 'pxxq' + right('0000000000' + cast(@cnno as varchar(10)), 10)),
+		#{userid},
+		#{genre},
+		#{bewrite},
+		#{chstatus},
+		getdate(),
+		#{updateby},
+		getdate(),
+		#{remark},
+        #{reviwer_id},
+        #{reviwer_date},
+        #{reviwer_remark}
+		)
+
+	</insert>
+
+	<update id="app.appactivitiesapply.update"
+		parameterType="com.winpow.services.app.appactivitiesapply.bean.Appactivitiesapply">
+		update tb_app_activities_apply set
+
+		<if test=" genre !=null and  genre !=''">
+			genre=#{genre},
+		</if>
+
+		<if test=" bewrite !=null and  bewrite !=''">
+			bewrite=#{bewrite},
+		</if>
+
+		<if test=" chstatus !=null and  chstatus !=''">
+			chstatus=#{chstatus},
+		</if>
+
+		<if test=" updateby !=null and  updateby !=''">
+			updateby=#{updateby},
+		</if>
+
+		<if test="remark!=null and remark !=''">
+			remark=#{remark},
+		</if>
+        <if test=" reviwer_id !=null and  reviwer_id !=''">
+            reviwer_id=#{reviwer_id},
+        </if>
+        <if test=" reviwer_date !=null and  reviwer_date !=''">
+            reviwer_date=getdate(),
+        </if>
+        <if test=" reviwer_remark !=null and  reviwer_remark !=''">
+            reviwer_remark=#{reviwer_remark},
+        </if>
+		updatedate=getdate()
+		where pkid=#{pkid}
+	</update>
+
+</mapper>  

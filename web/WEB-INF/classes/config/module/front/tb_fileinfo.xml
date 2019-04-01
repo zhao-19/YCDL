@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE mapper PUBLIC 
+"-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="front">
+	
+	<select id="front.fileinfo.selectPageList" parameterType="com.winpow.services.manage.fileinfo.bean.Fileinfo" resultType="hashMap">
+	select * from (
+		SELECT  ROW_NUMBER() over(order by id desc) as  rownumber ,
+								 	id,
+			 								 	activitiesid,
+			 								 	title,
+			 								 	contents,
+			 								 	fileurl,
+			 								 	downcount,
+			 								 	lurushijian,
+			 								 	inputuser,
+			 								  lastchgtime
+			 		   from tb_fileinfo )t  where rownumber &gt; = #{offset} and rownumber &lt; = #{pageSize}+#{offset} 
+	</select>
+	<select id="front.fileinfo.selectPageCount" parameterType="com.winpow.services.manage.fileinfo.bean.Fileinfo" resultType="java.lang.Integer">
+		
+			select count(*) from (
+					SELECT  ROW_NUMBER() over(order by id) as  rownumber ,
+																	 	id,
+						 																	 	activitiesid,
+						 																	 	title,
+						 																	 	contents,
+						 																	 	fileurl,
+						 																	 	downcount,
+						 																	 	lurushijian,
+						 																	 	inputuser,
+						 																	  lastchgtime
+						 								   from tb_fileinfo )t  
+
+	</select>
+	
+	<select id="front.fileinfo.selectOne" parameterType="com.winpow.services.manage.fileinfo.bean.Fileinfo" resultType="com.winpow.services.manage.fileinfo.bean.Fileinfo">
+			SELECT  
+											 	id,
+				 											 	activitiesid,
+				 											 	title,
+				 											 	contents,
+				 											 	fileurl,
+				 											 	downcount,
+				 											 	lurushijian,
+				 											 	inputuser,
+				 											  lastchgtime
+				 						  from tb_fileinfo t  where 1=1  
+			<if test="id!=null and id!=''">
+				and t.id=#{id}
+			</if>
+			<if test="activitiesid!=null and activitiesid!=''">
+				and t.activitiesid=#{activitiesid}
+			</if>
+	</select>
+	
+	<select id="front.fileinfo.selectCount" parameterType="com.winpow.services.manage.fileinfo.bean.Fileinfo" resultType="int">
+			select count(*)  
+				 FROM tb_fileinfo t  where 1=1  
+				<if test="id!=null and id!=''">
+					and t.id=#{id}
+				</if>
+	</select>
+	
+	<select id="front.fileinfo.selectList" parameterType="com.winpow.services.manage.fileinfo.bean.Fileinfo" resultType="com.winpow.services.manage.fileinfo.bean.Fileinfo">
+			SELECT  
+											 	id,
+				 											 	activitiesid,
+				 											 	title,
+				 											 	contents,
+				 											 	fileurl,
+				 											 	downcount,
+				 											 	lurushijian,
+				 											 	inputuser,
+				 											  lastchgtime
+				 					 from  tb_fileinfo   t  where 1=1  
+			<if test="id!=null and id!=''">
+				and t.id=#{id}
+			</if>
+			<if test="activitiesid!=null and activitiesid!=''">
+				and t.activitiesid=#{activitiesid}
+			</if>
+	</select>
+	
+	<insert id="front.fileinfo.insert" parameterType="com.winpow.services.manage.fileinfo.bean.Fileinfo" useGeneratedKeys="true" 
+		keyProperty="id">
+	 		insert into tb_fileinfo ( 
+	 								 
+													 	activitiesid,
+													 	title,
+													 	contents,
+													 	fileurl,
+													 	downcount,
+													 	lurushijian,
+													 	inputuser,
+													  lastchgtime
+			 						) values ( 
+										  
+				 										 	#{activitiesid},
+				 										 	#{title},
+				 										 	#{contents},
+				 										 	#{fileurl},
+				 										 	#{downcount},
+				 										 	getdate(),
+				 										 	#{inputuser},
+				 											getdate()
+				 						)
+		 
+	</insert>
+	
+	<update id="front.fileinfo.update" parameterType="com.winpow.services.manage.fileinfo.bean.Fileinfo">
+		update tb_fileinfo set 
+                       
+				 			                <if test="activitiesid!=null and activitiesid!=''">
+                        activitiesid=#{activitiesid},
+                        </if>
+		
+				 			                <if test="title!=null and title!=''">
+                        title=#{title},
+                        </if>
+		
+				 			                <if test="contents!=null and contents!=''">
+                        contents=#{contents},
+                        </if>
+		
+				 			                <if test="fileurl!=null and fileurl!=''">
+                        fileurl=#{fileurl},
+                        </if>
+		
+				 			                <if test="downcount!=null and downcount!=''">
+                        downcount=#{downcount},
+                        </if>
+				 			                <if test="inputuser!=null and inputuser!=''">
+                        inputuser=#{inputuser},
+                        </if>
+                         lastchgtime=getdate()
+          						 
+		where id=#{id}
+	</update>
+	
+</mapper>  

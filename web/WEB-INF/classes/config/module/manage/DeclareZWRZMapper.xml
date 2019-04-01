@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.winpow.services.manage.declare.mapper.DeclareZWRZMapper">
+
+    <select id="selectPageList"
+            parameterType="com.winpow.services.manage.declare.bean.DeclareZWRZ" resultType="com.winpow.services.manage.declare.bean.DeclareZWRZ">
+        select * from (
+        SELECT  ROW_NUMBER() over(order by a.lastchgtime desc) as  rownumber ,
+        a.*
+        from tb_sb_zwrz a where 1=1
+        <if test="userid != null and userid !=''">
+            and a.userid like '%' + #{userid} + '%'
+        </if>
+        <if test="status != null and status !=''">
+            and a.status = #{status}
+        </if>
+        <if test="qiyemingcheng != null and qiyemingcheng !=''">
+            and a.qiyemingcheng like '%' + #{qiyemingcheng} + '%'
+        </if>
+        <if test="startTime != null and startTime !=''">
+            and a.lurushijian &gt;= #{startTime}
+        </if>
+        <if test="endTime != null and endTime !=''">
+            and a.lurushijian &lt; #{endTime}
+        </if>
+         )t  where rownumber &gt; = #{offset} and rownumber &lt; = #{pageSize}+#{offset}
+    </select>
+
+    <select id="selectPageCount"
+            parameterType="com.winpow.services.manage.declare.bean.DeclareZWRZ"
+            resultType="java.lang.Integer">
+        select count(id) from (
+        SELECT  ROW_NUMBER() over(order by a.lastchgtime) as  rownumber ,
+        a.id
+        from tb_sb_zwrz a left join tb_sb_base b on a.userid = b.userid where 1=1
+        <if test="userid != null and userid !=''">
+            and a.userid like '%' + #{userid} + '%'
+        </if>
+        <if test="status != null and status !=''">
+            and a.status = #{status}
+        </if>
+        <if test="qiyemingcheng != null and qiyemingcheng !=''">
+            and b.qiyemingcheng like '%' + #{qiyemingcheng} + '%'
+        </if>
+        <if test="startTime != null and startTime !=''">
+            and a.lurushijian &gt;= #{startTime}
+        </if>
+        <if test="endTime != null and endTime !=''">
+            and a.lurushijian &lt; #{endTime}
+        </if>
+         )t
+    </select>
+
+    <select id="selectOne"
+            parameterType="com.winpow.services.manage.declare.bean.DeclareZWRZ"
+            resultType="com.winpow.services.manage.declare.bean.DeclareZWRZ">
+        SELECT TOP 1
+        *
+        from tb_sb_zwrz t  where t.id=#{id}
+        	<if test="pichi != null  and pichi != ''">
+            and t.pichi = #{pichi}
+        </if>
+    </select>
+
+    <select id="selectAllList"
+            parameterType="com.winpow.services.manage.declare.bean.DeclareZWRZ"
+            resultType="com.winpow.services.manage.declare.bean.DeclareZWRZ">
+        SELECT
+        *
+        from  tb_sb_zwrz t where 1=1
+        <if test="userid != null and userid !=''">
+            and userid = #{userid}
+        </if>
+        <if test="pichi != null  and pichi != ''">
+            and pichi = #{pichi}
+        </if>
+    </select>
+
+    <insert id="insert"
+            parameterType="com.winpow.services.manage.declare.bean.DeclareZWRZ" useGeneratedKeys="true"
+            keyProperty="id">
+		insert into tb_sb_zwrz (
+													 	userid,
+													 	rele_id,
+													 	qiyemingcheng,
+													 	qysqje,
+													 	zwrzlb,
+													 	kaishiriqi,
+													 	daoqiriqi,
+													 	rongzijine,
+													 	rongzfeiyong,
+													 	pingjijieguo,
+													 	xtjsje,
+													 	status,pichi, 
+													 	memo,
+													 	lurushijian,
+													 	inputuser,
+													  lastchgtime,
+													  zlsfwz
+			 						) values (
+				 										 	#{userid},
+                                                            #{rele_id},
+                                                            #{qiyemingcheng},
+                                                            #{qysqje},
+                                                            #{zwrzlb},
+                                                            #{kaishiriqi},
+                                                            #{daoqiriqi},
+                                                            #{rongzijine},
+                                                            #{rongzfeiyong},
+                                                            #{pingjijieguo},
+				 										 	#{xtjsje},
+				 										 	#{status},#{pichi},
+				 										 	#{memo},
+				 										 	getdate(),
+				 										 	#{inputuser},
+				 											getdate(),
+				 											#{zlsfwz}
+				 						)
+	</insert>
+
+    <update id="update"
+            parameterType="com.winpow.services.manage.declare.bean.DeclareZWRZ">
+        update tb_sb_zwrz set
+
+        <if test=" userid !=null and  userid !=''">
+            userid=#{userid},
+        </if>
+
+        <if test=" rele_id !=null and  rele_id !=''">
+            rele_id=#{rele_id},
+        </if>
+
+        <if test=" qiyemingcheng !=null and  qiyemingcheng !=''">
+            qiyemingcheng=#{qiyemingcheng},
+        </if>
+
+        <if test=" qysqje !=null">
+            qysqje=#{qysqje},
+        </if>
+
+        <if test=" zwrzlb !=null and  zwrzlb !=''">
+            zwrzlb=#{zwrzlb},
+        </if>
+
+        <if test=" kaishiriqi !=null and  kaishiriqi !=''">
+            kaishiriqi=#{kaishiriqi},
+        </if>
+
+        <if test=" daoqiriqi !=null and  daoqiriqi !=''">
+            daoqiriqi=#{daoqiriqi},
+        </if>
+
+        <if test=" rongzijine !=null">
+            rongzijine=#{rongzijine},
+        </if>
+
+        <if test=" rongzfeiyong !=null">
+            rongzfeiyong=#{rongzfeiyong},
+        </if>
+
+        <if test=" pingjijieguo !=null and  pingjijieguo !=''">
+            pingjijieguo=#{pingjijieguo},
+        </if>
+
+        <if test=" xtjsje !=null  ">
+            xtjsje=#{xtjsje},
+        </if>
+
+        <if test=" status !=null and  status !=''">
+            status=#{status},
+        </if>
+
+        <if test=" memo !=null and  memo !=''">
+            memo=#{memo},
+        </if>
+
+        <if test=" zlsfwz !=null and  zlsfwz !=''">
+            zlsfwz=#{zlsfwz},
+        </if>
+
+            lastchgtime=getdate()
+
+        where id=#{id}
+    </update>
+    <delete id="delete">
+        delete tb_sb_zwrz where id=#{id}
+    </delete>
+</mapper>  

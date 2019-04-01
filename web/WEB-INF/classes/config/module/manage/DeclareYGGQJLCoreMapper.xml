@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="com.winpow.services.manage.declare.mapper.DeclareYGGQJLCoreMapper">
+
+	<select id="selectPageList"
+		parameterType="com.winpow.services.manage.declare.bean.DeclareYGGQJLCore"
+		resultType="hashMap">
+		select * from (
+		SELECT ROW_NUMBER() over(order by id) as rownumber ,
+		id,
+		userid,
+		rele_id,
+		cgptcg,
+		cgptzgbs,
+		cgptptgbs,
+		lurushijian,
+		inputuser,
+		lastchgtime,cgptname
+		from tb_sb_yggqjl_core where 1=1
+		)t where rownumber &gt; = #{offset} and rownumber &lt; =
+		#{pageSize}+#{offset}
+	</select>
+	<select id="selectPageCount"
+		parameterType="com.winpow.services.manage.declare.bean.DeclareYGGQJLCore"
+		resultType="java.lang.Integer">
+		select count(id) from (
+		SELECT ROW_NUMBER() over(order by id) as rownumber ,
+		id,
+		userid,
+		rele_id,
+		cgptcg,
+		cgptzgbs,
+		cgptptgbs,
+		lurushijian,
+		inputuser,
+		lastchgtime,cgptname
+		from tb_sb_yggqjl_core where 1=1
+		)t
+	</select>
+
+	<select id="selectOne"
+		parameterType="com.winpow.services.manage.declare.bean.DeclareYGGQJLCore"
+		resultType="com.winpow.services.manage.declare.bean.DeclareYGGQJLCore">
+		select top(1) * from tb_sb_yggqjl_core t where t.id=#{id}
+	</select>
+
+	<select id="selectAllList"
+		parameterType="com.winpow.services.manage.declare.bean.DeclareYGGQJLCore"
+		resultType="com.winpow.services.manage.declare.bean.DeclareYGGQJLCore">
+		select * from tb_sb_yggqjl_core t
+	</select>
+
+	<insert id="insert"
+		parameterType="com.winpow.services.manage.declare.bean.DeclareYGGQJLCore"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into tb_sb_yggqjl_core (
+		userid,
+		rele_id,
+		cgptcg,
+		cgptzgbs,
+		cgptptgbs,
+		lurushijian,
+		inputuser,
+		lastchgtime,cgptname
+		) values (
+		#{userid},
+		#{rele_id},
+		#{cgptcg},
+		#{cgptzgbs},
+		#{cgptptgbs},
+		getdate(),
+		#{inputuser},
+		getdate(),#{cgptname}
+		)
+	</insert>
+
+	<update id="update"
+		parameterType="com.winpow.services.manage.declare.bean.DeclareYGGQJLCore">
+		update tb_sb_yggqjl_core set
+
+		<if test=" userid !=null and  userid !=''">
+			userid=#{userid},
+		</if>
+
+		<if test=" rele_id !=null and  rele_id !=''">
+			rele_id=#{rele_id},
+		</if>
+
+		<if test=" cgptcg !=null">
+			cgptcg=#{cgptcg},
+		</if>
+
+		<if test=" cgptzgbs !=null">
+			cgptzgbs=#{cgptzgbs},
+		</if>
+
+		<if test=" cgptptgbs !=null">
+			cgptptgbs=#{cgptptgbs},
+		</if>
+		
+		<if test=" cgptname !=null and  cgptname !=''">
+			cgptname=#{cgptname},
+		</if>
+		
+		lastchgtime=getdate()
+		where id=#{id}
+	</update>
+	<delete id="delete">
+		delete tb_sb_yggqjl_core where id=#{id}
+	</delete>
+</mapper>  

@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC 
+"-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="app">
+
+	<select id="app.apparea.selectPageList" parameterType="com.winpow.services.app.apparea.bean.Apparea"
+		resultType="hashMap">
+		select top ${pageSize} * from (
+			select row_number() over(order by c.lastchgtime desc) as rownumber ,c.* 
+			from tb_app_area c where 1=1
+			<if test=" name !=null and  name !=''">
+				and c.name like '%'+#{name}+'%'
+			</if>
+	    ) a where rownumber > ${pageSize}*(${offset} - 1)
+	</select>
+	
+	<select id="app.apparea.selectPageCount" parameterType="com.winpow.services.app.apparea.bean.Apparea"
+		resultType="java.lang.Integer">
+		select count(*) from tb_app_area c where 1=1
+		<if test=" name !=null and  name !=''">
+			and c.name like '%'+#{name}+'%'
+		</if>
+	</select>
+
+	<select id="app.apparea.selectOne" parameterType="com.winpow.services.app.apparea.bean.Apparea"
+		resultType="com.winpow.services.app.apparea.bean.Apparea">
+		select * from tb_app_area t where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+
+	<select id="app.apparea.selectCount" parameterType="com.winpow.services.app.apparea.bean.Apparea"
+		resultType="int">
+		select count(*) from tb_app_area t where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+
+	<select id="app.apparea.selectOneByCondition" parameterType="com.winpow.services.app.apparea.bean.Apparea"
+		resultType="com.winpow.services.app.apparea.bean.Apparea">
+		select * from tb_app_area t where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+
+	<select id="app.apparea.selectList" parameterType="com.winpow.services.app.apparea.bean.Apparea"
+		resultType="com.winpow.services.app.apparea.bean.Apparea">
+		select * from tb_app_area t where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+		<if test="subst != null and subst != ''">
+			and t.subst=#{subst}
+		</if>
+	</select>
+
+	<insert id="app.apparea.insert" parameterType="com.winpow.services.app.apparea.bean.Apparea"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into tb_app_area (
+		pkid,
+		name,
+		parent,
+		level,
+		enable,
+		sort,
+		lurushijian,
+		inputuser,
+		lastchgtime,subst
+		) values (
+		#{pkid},
+		#{name},
+		#{parent},
+		#{level},
+		#{enable},
+		#{sort},
+		getdate(),
+		#{inputuser},
+		getdate(),#{subst}
+		)
+	</insert>
+
+	<update id="app.apparea.update" parameterType="com.winpow.services.app.apparea.bean.Apparea">
+		update tb_app_area set
+		<if test=" name !=null and  name !=''">
+			name=#{name},
+		</if>
+
+		<if test=" parent !=null and  parent !=''">
+			parent=#{parent},
+		</if>
+
+		<if test=" level !=null and  level !=''">
+			level=#{level},
+		</if>
+
+		<if test=" enable !=null and  enable !=''">
+			enable=#{enable},
+		</if>
+
+		<if test=" sort !=null and  sort !=''">
+			sort=#{sort},
+		</if>
+		<if test=" subst !=null and  subst !=''">
+			subst=#{subst},
+		</if>
+		lastchgtime=getdate()
+		where pkid=#{pkid}
+	</update>
+	
+	<select id="app.apparea.selectAppList" parameterType="com.winpow.services.app.apparea.bean.Apparea"
+		resultType="com.winpow.services.app.apparea.bean.Apparea">
+		select * from tb_app_area t where enable='10001' order by sort
+	</select>
+
+</mapper>  

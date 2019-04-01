@@ -1,0 +1,386 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+"-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="manage">
+
+	<select id="manage.tbjrdb.selectPageList" parameterType="com.winpow.services.manage.jr.tbjrdb.bean.Tbjrdb"
+		resultType="hashMap">
+		select * from (
+		SELECT ROW_NUMBER() over(order by lastchgtime desc) as rownumber ,
+		id,
+		other_org_id,
+		org_name,
+		time_port,
+		cast(guar_cu_amt as decimal(18,2)) guar_cu_amt,
+		cast(guar_total_amt as decimal(18,2)) guar_total_amt,
+		cast(guar_cu_compen as decimal(18,2)) guar_cu_compen,
+		guar_incre_count,
+		guar_total_count,
+		cast(business_income as decimal(18,2)) business_income,
+		cast(profit as decimal(18,2)) profit,
+		cast(fixed_assets as decimal(18,2)) fixed_assets,
+		cast(intangible_assets as decimal(18,2)) intangible_assets,
+		cast(salaries as decimal(18,2)) salaries,
+		cast(added_tax as decimal(18,2)) added_tax,
+		cast(income_tax as decimal(18,2)) income_tax,
+		cast(other_tax as decimal(18,2)) other_tax,
+		contact_name,
+		contact_tele,
+		contact_duty,
+		status,
+		inputtime,
+		inputuser,
+		lastchgtime,leader_tele
+		from tb_jr_db where 1=1
+		<if test="org_name !=null and org_name !=''">
+			and org_name like '%'+#{org_name}+'%'
+		</if>
+		<if test="time_port !=null and time_port !=''">
+			and time_port=#{time_port}
+		</if>
+		<if test="inputuser!=null and inputuser!=''">
+			and inputuser=#{inputuser}
+		</if>
+		<if test="status!=null and status!=''">
+			and status=#{status}
+		</if>
+		)t where rownumber &gt; = #{offset} and rownumber &lt; =
+		#{pageSize}+#{offset}
+	</select>
+	<select id="manage.tbjrdb.selectPageCount" parameterType="com.winpow.services.manage.jr.tbjrdb.bean.Tbjrdb" resultType="java.lang.Integer">
+		select count(*) from tb_jr_db where 1=1
+		<if test="org_name !=null and org_name !=''">
+			and org_name like '%'+#{org_name}+'%'
+		</if>
+		<if test="time_port !=null and time_port !=''">
+			and time_port=#{time_port}
+		</if>
+		<if test="inputuser!=null and inputuser!=''">
+			and inputuser=#{inputuser}
+		</if>
+		<if test="status!=null and status!=''">
+			and status=#{status}
+		</if>
+	</select>
+
+	<select id="manage.tbjrdb.selectOne" parameterType="com.winpow.services.manage.jr.tbjrdb.bean.Tbjrdb"
+		resultType="com.winpow.services.manage.jr.tbjrdb.bean.Tbjrdb">
+		SELECT
+		id,
+		other_org_id,
+		org_name,
+		time_port,
+		cast(guar_cu_amt as decimal(18,2)) guar_cu_amt,
+		cast(guar_total_amt as decimal(18,2)) guar_total_amt,
+		cast(guar_cu_compen as decimal(18,2)) guar_cu_compen,
+		guar_incre_count,
+		guar_total_count,
+		cast(business_income as decimal(18,2)) business_income,
+		cast(profit as decimal(18,2)) profit,
+		cast(fixed_assets as decimal(18,2)) fixed_assets,
+		cast(intangible_assets as decimal(18,2)) intangible_assets,
+		cast(salaries as decimal(18,2)) salaries,
+		cast(added_tax as decimal(18,2)) added_tax,
+		cast(income_tax as decimal(18,2)) income_tax,
+		cast(other_tax as decimal(18,2)) other_tax,
+		contact_name,
+		contact_tele,
+		contact_duty,
+		status,
+		inputtime,
+		inputuser,
+		lastchgtime,leader_tele
+		from tb_jr_db t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+		<if test=" time_port !=null and  time_port !=''">
+			and time_port=#{time_port}
+		</if>
+	</select>
+
+	<select id="manage.tbjrdb.selectCount" parameterType="com.winpow.services.manage.jr.tbjrdb.bean.Tbjrdb"
+		resultType="int">
+		select count(*)
+		FROM tb_jr_db t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+	</select>
+
+	<select id="manage.tbjrdb.selectOneByCondition" parameterType="com.winpow.services.manage.jr.tbjrdb.bean.Tbjrdb"
+		resultType="com.winpow.services.manage.jr.tbjrdb.bean.Tbjrdb">
+		SELECT
+		id,
+		other_org_id,
+		org_name,
+		time_port,
+		guar_cu_amt,
+		guar_total_amt,
+		guar_cu_compen,
+		guar_incre_count,
+		guar_total_count,
+		business_income,
+		profit,
+		fixed_assets,
+		intangible_assets,
+		salaries,
+		added_tax,
+		income_tax,
+		other_tax,
+		contact_name,
+		contact_tele,
+		contact_duty,
+		status,
+		inputtime,
+		inputuser,
+		lastchgtime,leader_tele
+		from tb_jr_db t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+	</select>
+
+	<select id="manage.tbjrdb.selectList" parameterType="com.winpow.services.manage.jr.tbjrdb.bean.Tbjrdb"
+		resultType="com.winpow.services.manage.jr.tbjrdb.bean.Tbjrdb">
+		SELECT
+		id,
+		other_org_id,
+		org_name,
+		time_port,
+		guar_cu_amt,
+		guar_total_amt,
+		guar_cu_compen,
+		guar_incre_count,
+		guar_total_count,
+		business_income,
+		profit,
+		fixed_assets,
+		intangible_assets,
+		salaries,
+		added_tax,
+		income_tax,
+		other_tax,
+		contact_name,
+		contact_tele,
+		contact_duty,
+		status,
+		inputtime,
+		inputuser,
+		lastchgtime,leader_tele
+		from tb_jr_db t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+	</select>
+
+	<insert id="manage.tbjrdb.insert" parameterType="com.winpow.services.manage.jr.tbjrdb.bean.Tbjrdb"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into tb_jr_db (
+		id,
+		other_org_id,
+		org_name,
+		time_port,
+		guar_cu_amt,
+		guar_total_amt,
+		guar_cu_compen,
+		guar_incre_count,
+		guar_total_count,
+		business_income,
+		profit,
+		fixed_assets,
+		intangible_assets,
+		salaries,
+		added_tax,
+		income_tax,
+		other_tax,
+		contact_name,
+		contact_tele,
+		contact_duty,
+		status,
+		inputtime,
+		inputuser,
+		lastchgtime,leader_tele
+		) values (
+		#{id},
+		#{other_org_id},
+		#{org_name},
+		#{time_port},
+		#{guar_cu_amt},
+		#{guar_total_amt},
+		#{guar_cu_compen},
+		#{guar_incre_count},
+		#{guar_total_count},
+		#{business_income},
+		#{profit},
+		#{fixed_assets},
+		#{intangible_assets},
+		#{salaries},
+		#{added_tax},
+		#{income_tax},
+		#{other_tax},
+		#{contact_name},
+		#{contact_tele},
+		#{contact_duty},
+		#{status},
+		getdate(),
+		#{inputuser},
+		getdate(),#{leader_tele}
+		)
+
+	</insert>
+
+	<update id="manage.tbjrdb.update" parameterType="com.winpow.services.manage.jr.tbjrdb.bean.Tbjrdb">
+		update tb_jr_db set
+		<if test=" other_org_id !=null and  other_org_id !=''">
+			other_org_id=#{other_org_id},
+		</if>
+		<if test=" org_name !=null and  org_name !=''">
+			org_name=#{org_name},
+		</if>
+		<if test=" time_port !=null and  time_port !=''">
+			time_port=#{time_port},
+		</if>
+		<if test=" guar_cu_amt !=null">
+			guar_cu_amt=#{guar_cu_amt},
+		</if>
+		<if test=" guar_total_amt !=null">
+			guar_total_amt=#{guar_total_amt},
+		</if>
+		<if test=" guar_cu_compen !=null">
+			guar_cu_compen=#{guar_cu_compen},
+		</if>
+		<if test=" guar_incre_count !=null">
+			guar_incre_count=#{guar_incre_count},
+		</if>
+		<if test=" guar_total_count !=null">
+			guar_total_count=#{guar_total_count},
+		</if>
+		<if test=" business_income !=null">
+			business_income=#{business_income},
+		</if>
+
+		<if test=" profit !=null">
+			profit=#{profit},
+		</if>
+
+		<if test=" fixed_assets !=null">
+			fixed_assets=#{fixed_assets},
+		</if>
+
+		<if test=" intangible_assets !=null">
+			intangible_assets=#{intangible_assets},
+		</if>
+
+		<if test=" salaries !=null">
+			salaries=#{salaries},
+		</if>
+
+		<if test=" added_tax !=null">
+			added_tax=#{added_tax},
+		</if>
+
+		<if test=" income_tax !=null">
+			income_tax=#{income_tax},
+		</if>
+
+		<if test=" other_tax !=null">
+			other_tax=#{other_tax},
+		</if>
+		<if test=" status !=null and  status !=''">
+			status=#{status},
+		</if>
+		
+		<if test=" contact_name !=null and  contact_name !=''">
+			contact_name=#{contact_name},
+		</if>
+		
+		<if test=" contact_tele !=null and  contact_tele !=''">
+			contact_tele=#{contact_tele},
+		</if>
+		
+		<if test=" contact_duty !=null and  contact_duty !=''">
+			contact_duty=#{contact_duty},
+		</if>
+		
+		<if test=" leader_tele !=null and  leader_tele !=''">
+			leader_tele=#{leader_tele},
+		</if>
+		
+		lastchgtime=getdate()
+		where id=#{id}
+	</update>
+	
+	<select id="manage.tbjrdb.selectByUserId" parameterType="string" resultType="com.winpow.services.manage.jr.tbjrdb.bean.Tbjrdb">
+		select 
+		o.id,
+		o.other_org_id,
+		o.org_name,
+		o.time_port,
+		cast(o.guar_cu_amt as decimal(18,2)) guar_cu_amt,
+		cast(o.guar_total_amt as decimal(18,2)) guar_total_amt,
+		cast(o.guar_cu_compen as decimal(18,2)) guar_cu_compen,
+		o.guar_incre_count,
+		o.guar_total_count,
+		cast(o.business_income as decimal(18,2)) business_income,
+		cast(o.profit as decimal(18,2)) profit,
+		cast(o.fixed_assets as decimal(18,2)) fixed_assets,
+		cast(o.intangible_assets as decimal(18,2)) intangible_assets,
+		cast(o.salaries as decimal(18,2)) salaries,
+		cast(o.added_tax as decimal(18,2)) added_tax,
+		cast(o.income_tax as decimal(18,2)) income_tax,
+		cast(o.other_tax as decimal(18,2)) other_tax,
+		o.contact_name,
+		o.contact_tele,
+		o.contact_duty,
+		o.status,
+		o.inputtime,
+		o.inputuser,
+		o.lastchgtime,o.leader_tele
+		from tb_cust c left join tb_jr_db o on c.f_id=o.other_org_id where c.userId=#{userId} and c.status='aaaaaaaaaaaaaaaaaaaaaaaaaaaaa006'
+		and o.id is not null order by o.time_port
+	</select>
+	
+	<delete id="manage.tbjrdb.deletebyId" parameterType="String">
+		delete from tb_jr_db where id=#{id}
+	</delete>
+
+	<select id="manage.tbjrdb.exportSelect" resultType="com.winpow.web.action.manage.declare.vo.Exportvo" parameterType="list">
+		select
+		id 'result1',
+		other_org_id 'result2',
+		org_name 'result3',
+		time_port 'result4',
+		cast(guar_cu_amt as decimal(18,2)) 'result5',
+		cast(guar_total_amt as decimal(18,2)) 'result6',
+		cast(guar_cu_compen as decimal(18,2)) 'result7',
+		guar_incre_count 'result8',
+		guar_total_count 'result9',
+		cast(business_income as decimal(18,2)) 'result10',
+		cast(profit as decimal(18,2)) 'result11',
+		cast(fixed_assets as decimal(18,2)) 'result12',
+		cast(intangible_assets as decimal(18,2)) 'result13',
+		cast(salaries as decimal(18,2)) 'result14',
+		cast(added_tax as decimal(18,2)) 'result15',
+		cast(income_tax as decimal(18,2)) 'result16',
+		cast(other_tax as decimal(18,2)) 'result17',
+		case status
+		when 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaa080' then '未提交'
+		when 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaa081' then '审批中'
+		when 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaa083' then '审批通过'
+		when 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaa084' then '驳回'
+		else '' end 'result18',
+		contact_name 'result19',
+		contact_tele 'result20',
+		contact_duty 'result21',
+		inputtime 'result22',
+		inputuser 'result23',
+		lastchgtime 'result24'
+		from tb_jr_db t where 1=1
+		and id in
+        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">  
+  			#{item}  
+ 		</foreach>
+    </select>
+</mapper>  

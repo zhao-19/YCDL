@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC 
+"-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="manage">
+
+	<select id="manage.tbexpscore.selectPageList"
+		parameterType="com.winpow.services.manage.tbexpscore.bean.Tbexpscore"
+		resultType="hashMap">
+		select * from (
+			select row_number() over(order by lastchgtime desc) as rownumber ,* from tb_exp_score 
+		)t where rownumber &gt; = #{offset} and rownumber &lt; =
+		#{pageSize}+#{offset}
+	</select>
+	<select id="manage.tbexpscore.selectPageCount"
+		parameterType="com.winpow.services.manage.tbexpscore.bean.Tbexpscore"
+		resultType="java.lang.Integer">
+		select count(*) from tb_exp_score 
+	</select>
+
+	<select id="manage.tbexpscore.selectOne"
+		parameterType="com.winpow.services.manage.tbexpscore.bean.Tbexpscore"
+		resultType="com.winpow.services.manage.tbexpscore.bean.Tbexpscore">
+		select * from tb_exp_score t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+	</select>
+
+	<select id="manage.tbexpscore.selectCount"
+		parameterType="com.winpow.services.manage.tbexpscore.bean.Tbexpscore"
+		resultType="int">
+		select count(*) from tb_exp_score t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+	</select>
+
+	<select id="manage.tbexpscore.selectOneByCondition"
+		parameterType="com.winpow.services.manage.tbexpscore.bean.Tbexpscore"
+		resultType="com.winpow.services.manage.tbexpscore.bean.Tbexpscore">
+		select * from tb_exp_score t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+	</select>
+
+	<select id="manage.tbexpscore.selectList"
+		parameterType="com.winpow.services.manage.tbexpscore.bean.Tbexpscore"
+		resultType="com.winpow.services.manage.tbexpscore.bean.Tbexpscore">
+		select * from tb_exp_score t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+		<if test=" rela_mingxi !=null">
+			and t.rela_mingxi=#{rela_mingxi}
+		</if>
+		order by inputtime
+	</select>
+
+	<insert id="manage.tbexpscore.insert"
+		parameterType="com.winpow.services.manage.tbexpscore.bean.Tbexpscore"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into tb_exp_score (
+		id,
+		rela_mingxi,
+		version_no,
+		pk_qiyeid,
+		qiyemingcheng,
+		intellectual_score,
+		authority_score,
+		research_score,
+		technology_score,
+		industry_score,
+		product_score,
+		team_score,
+		market_score,
+		finance_score,
+		public_score,
+		total_score,
+		expert_name,
+		expert_memo,
+		evaluate_date,
+		inputtime,
+		inputuser,
+		lastchgtime,party_branch,party_member,manage_party_member,all_party
+		) values (
+		#{id},
+		#{rela_mingxi},
+		#{version_no},
+		#{pk_qiyeid},
+		#{qiyemingcheng},
+		#{intellectual_score},
+		#{authority_score},
+		#{research_score},
+		#{technology_score},
+		#{industry_score},
+		#{product_score},
+		#{team_score},
+		#{market_score},
+		#{finance_score},
+		#{public_score},
+		#{total_score},
+		#{expert_name},
+		#{expert_memo},
+		#{evaluate_date},
+		getdate(),
+		#{inputuser},
+		getdate(),#{party_branch},#{party_member},#{manage_party_member},#{all_party}
+		)
+	</insert>
+
+	<update id="manage.tbexpscore.update"
+		parameterType="com.winpow.services.manage.tbexpscore.bean.Tbexpscore">
+		update tb_exp_score set
+		
+		<if test=" rela_mingxi !=null">
+			rela_mingxi=#{rela_mingxi},
+		</if>
+		
+		<if test=" version_no !=null">
+			version_no=#{version_no},
+		</if>
+
+		<if test=" pk_qiyeid !=null and  pk_qiyeid !=''">
+			pk_qiyeid=#{pk_qiyeid},
+		</if>
+
+		<if test=" qiyemingcheng !=null and  qiyemingcheng !=''">
+			qiyemingcheng=#{qiyemingcheng},
+		</if>
+
+		<if test=" intellectual_score !=null">
+			intellectual_score=#{intellectual_score},
+		</if>
+
+		<if test=" authority_score !=null">
+			authority_score=#{authority_score},
+		</if>
+
+		<if test=" research_score !=null">
+			research_score=#{research_score},
+		</if>
+
+		<if test=" technology_score !=null">
+			technology_score=#{technology_score},
+		</if>
+
+		<if test=" industry_score !=null">
+			industry_score=#{industry_score},
+		</if>
+
+		<if test=" product_score !=null">
+			product_score=#{product_score},
+		</if>
+
+		<if test=" team_score !=null">
+			team_score=#{team_score},
+		</if>
+
+		<if test=" market_score !=null">
+			market_score=#{market_score},
+		</if>
+
+		<if test=" finance_score !=null">
+			finance_score=#{finance_score},
+		</if>
+
+		<if test=" public_score !=null">
+			public_score=#{public_score},
+		</if>
+
+		<if test=" total_score !=null">
+			total_score=#{total_score},
+		</if>
+
+		<if test=" expert_name !=null and  expert_name !=''">
+			expert_name=#{expert_name},
+		</if>
+
+		<if test=" expert_memo !=null and  expert_memo !=''">
+			expert_memo=#{expert_memo},
+		</if>
+
+		<if test=" evaluate_date !=null and  evaluate_date !=''">
+			evaluate_date=#{evaluate_date},
+		</if>
+		
+		<if test=" party_branch !=null">
+			party_branch=#{party_branch},
+		</if>
+		
+		<if test=" party_member !=null">
+			party_member=#{party_member},
+		</if>
+		
+		<if test=" manage_party_member !=null">
+			manage_party_member=#{manage_party_member},
+		</if>
+		<if test=" all_party !=null">
+			all_party=#{all_party},
+		</if>
+		
+		lastchgtime=getdate()
+		where id=#{id}
+	</update>
+	
+	
+	<select id="manage.tbexpscore.getAvgScore" resultType="map" parameterType="list">
+		select rela_mingxi ID,sum(total_score)/count(*) SCORE from tb_exp_score where rela_mingxi in 
+ 		<foreach item="item" index="index" collection="list" open="(" separator="," close=")">  
+  			#{item}  
+ 		</foreach>
+		 group by rela_mingxi
+	</select>
+
+</mapper>  

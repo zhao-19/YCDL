@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE mapper PUBLIC 
+"-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="front">
+	
+	<select id="front.guquanchengyuan.selectPageList" parameterType="com.winpow.services.manage.guquanchengyuan.bean.Guquanchengyuan" resultType="hashMap">
+	select * from (
+		SELECT  ROW_NUMBER() over(order by id) as  rownumber ,
+								 	id,
+			 								 	guquanid,
+			 								 	xingming,
+			 								 	tupian,
+			 								 	jianjie,
+			 								  lurushijian
+			 		   from Tb_guquan_chengyuan )t  where rownumber &gt; = #{offset} and rownumber &lt; = #{pageSize}+#{offset} 
+	</select>
+	<select id="front.guquanchengyuan.selectPageCount" parameterType="com.winpow.services.manage.guquanchengyuan.bean.Guquanchengyuan" resultType="java.lang.Integer">
+		
+			select count(*) from (
+					SELECT  ROW_NUMBER() over(order by id) as  rownumber ,
+																	 	id,
+						 																	 	guquanid,
+						 																	 	xingming,
+						 																	 	tupian,
+						 																	 	jianjie,
+						 																	  lurushijian
+						 								   from Tb_guquan_chengyuan )t  
+
+	</select>
+	
+	<select id="front.guquanchengyuan.selectOne" parameterType="com.winpow.services.manage.guquanchengyuan.bean.Guquanchengyuan" resultType="com.winpow.services.manage.guquanchengyuan.bean.Guquanchengyuan">
+			SELECT  
+											 	id,
+				 											 	guquanid,
+				 											 	xingming,
+				 											 	tupian,
+				 											 	jianjie,
+				 											  lurushijian
+				 						  from Tb_guquan_chengyuan t  where 1=1  
+			<if test="id!=null and id!=''">
+				and t.id=#{id}
+			</if>
+	</select>
+	
+	<select id="front.guquanchengyuan.selectCount" parameterType="com.winpow.services.manage.guquanchengyuan.bean.Guquanchengyuan" resultType="int">
+			select count(*)  
+				 FROM Tb_guquan_chengyuan t  where 1=1  
+				<if test="id!=null and id!=''">
+					and t.id=#{id}
+				</if>
+	</select>
+	
+	<select id="front.guquanchengyuan.selectOneByCondition" parameterType="com.winpow.services.manage.guquanchengyuan.bean.Guquanchengyuan" resultType="com.winpow.services.manage.guquanchengyuan.bean.Guquanchengyuan">
+			SELECT  
+											 	id,
+				 											 	guquanid,
+				 											 	xingming,
+				 											 	tupian,
+				 											 	jianjie,
+				 											  lurushijian
+				 					 from  Tb_guquan_chengyuan   t  where 1=1  
+			<if test="id!=null and id!=''">
+				and t.id=#{id}
+			</if>
+	</select>
+	
+	
+		<select id="front.guquanchengyuan.selectList" parameterType="com.winpow.services.manage.guquanchengyuan.bean.Guquanchengyuan" resultType="com.winpow.services.manage.guquanchengyuan.bean.Guquanchengyuan">
+			SELECT  
+											 	id,
+				 											 	guquanid,
+				 											 	xingming,
+				 											 	tupian,
+				 											 	jianjie,
+				 											  lurushijian
+				 					 from  Tb_guquan_chengyuan   t  where 1=1  
+			<if test="id!=null and id!=''">
+				and t.id=#{id}
+			</if>
+			 <if test="guquanid!=null and guquanid!=''">
+                 and t.guquanid=#{guquanid}
+            </if>
+	</select>
+	
+	
+	<insert id="front.guquanchengyuan.insert" parameterType="com.winpow.services.manage.guquanchengyuan.bean.Guquanchengyuan" useGeneratedKeys="true" 
+		keyProperty="id">
+	 		insert into Tb_guquan_chengyuan ( 
+													 	guquanid,
+													 	xingming,
+													 	tupian,
+													 	jianjie,
+													  lurushijian
+			 						) values ( 
+				 										 	#{guquanid},
+				 										 	#{xingming},
+				 										 	#{tupian},
+				 										 	#{jianjie},
+				 											getdate()
+				 						)
+		 
+	</insert>
+	
+	<update id="front.guquanchengyuan.update" parameterType="com.winpow.services.manage.guquanchengyuan.bean.Guquanchengyuan">
+		update tb_guquanchengyuan set 
+                     
+				 		<if test="guquanid!=null and guquanid!=''">
+                        guquanid=#{guquanid},
+                        </if>
+		
+		                <if test="xingming!=null and xingming!=''">
+                        xingming=#{xingming},
+                        </if>
+		
+		                <if test="tupian!=null and tupian!=''">
+                        tupian=#{tupian},
+                        </if>
+		
+			                <if test="jianjie!=null and jianjie!=''">
+                        jianjie=#{jianjie},
+                        </if>
+                        lurushijian=getdate()
+         						 
+		where id=#{id}
+	</update>
+	
+</mapper>  

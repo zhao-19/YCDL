@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE mapper PUBLIC 
+"-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="front">
+	
+	<select id="front.activitiesapp.selectPageList" parameterType="com.winpow.services.manage.activitiesapp.bean.Activitiesapp" resultType="hashMap">
+	select * from (
+		SELECT  ROW_NUMBER() over(order by id) as  rownumber ,
+								 	id,
+			 								 	activitiid,
+			 								 	activities_name,
+			 								 	userid,
+			 								 	username,
+			 								 	attendname,
+			 								 	attendcell,
+			 								 	attendduty,
+			 								 	checkuser,
+			 								 	lurushijian,
+			 								  lastchgtime
+			 		   from tb_Activities_app )t  where rownumber &gt; = #{offset} and rownumber &lt; = #{pageSize}+#{offset} 
+	</select>
+	<select id="front.activitiesapp.selectPageCount" parameterType="com.winpow.services.manage.activitiesapp.bean.Activitiesapp" resultType="java.lang.Integer">
+		
+			select count(*) from (
+					SELECT  ROW_NUMBER() over(order by id) as  rownumber ,
+																	 	id,
+						 																	 	activitiid,
+						 																	 	activities_name,
+						 																	 	userid,
+						 																	 	username,
+						 																	 	attendname,
+						 																	 	attendcell,
+						 																	 	attendduty,
+						 																	 	checkuser,
+						 																	 	lurushijian,
+						 																	  lastchgtime
+						 								   from tb_Activities_app )t  
+
+	</select>
+	
+	<select id="front.activitiesapp.selectOne" parameterType="com.winpow.services.manage.activitiesapp.bean.Activitiesapp" resultType="com.winpow.services.manage.activitiesapp.bean.Activitiesapp">
+			SELECT  
+											 	id,
+				 											 	activitiid,
+				 											 	activities_name,
+				 											 	userid,
+				 											 	username,
+				 											 	attendname,
+				 											 	attendcell,
+				 											 	attendduty,
+				 											 	checkuser,
+				 											 	lurushijian,
+				 											  lastchgtime
+				 						  from tb_Activities_app t  where 1=1  
+			<if test="id!=null and id!=''">
+				and t.id=#{id}
+			</if>
+	</select>
+	
+	<select id="front.activitiesapp.selectCount" parameterType="com.winpow.services.manage.activitiesapp.bean.Activitiesapp" resultType="int">
+			select count(*)  
+				 FROM tb_Activities_app t  where 1=1  
+				<if test="id!=null and id!=''">
+					and t.id=#{id}
+				</if>
+	</select>
+	
+	<select id="front.activitiesapp.selectOneByCondition" parameterType="com.winpow.services.manage.activitiesapp.bean.Activitiesapp" resultType="com.winpow.services.manage.activitiesapp.bean.Activitiesapp">
+			SELECT  
+											 	id,
+				 											 	activitiid,
+				 											 	activities_name,
+				 											 	userid,
+				 											 	username,
+				 											 	attendname,
+				 											 	attendcell,
+				 											 	attendduty,
+				 											 	checkuser,
+				 											 	lurushijian,
+				 											  lastchgtime
+				 					 from  tb_Activities_app   t  where 1=1  
+			<if test="id!=null and id!=''">
+				and t.id=#{id}
+			</if>
+	</select>
+	
+	<insert id="front.activitiesapp.insert" parameterType="com.winpow.services.manage.activitiesapp.bean.Activitiesapp" useGeneratedKeys="true" 
+		keyProperty="id">
+	 		insert into tb_Activities_app ( 
+	 								 	 
+													 	activitiid,
+													 	activities_name,
+													 	userid,
+													 	username,
+													 	attendname,
+													 	attendcell,
+													 	attendduty,
+													 	checkuser,
+													 	lurushijian,
+													  lastchgtime
+			 						) values ( 
+										 	 
+				 										 	#{activitiid},
+				 										 	#{activities_name},
+				 										 	#{userid},
+				 										 	#{username},
+				 										 	#{attendname},
+				 										 	#{attendcell},
+				 										 	#{attendduty},
+				 										 	#{checkuser},
+				 										     getdate(),
+				 											getdate()
+				 						)
+		 
+	</insert>
+	
+	<update id="front.activitiesapp.update" parameterType="com.winpow.services.manage.activitiesapp.bean.Activitiesapp">
+		update tb_activitiesapp set 
+                             <if test="activitiid!=null and activitiid!=''">
+                        activitiid=#{activitiid},
+                        </if>
+		
+				 			                <if test="activities_name!=null and activities_name!=''">
+                        activities_name=#{activities_name},
+                        </if>
+		
+				 			                <if test="userid!=null and userid!=''">
+                        userid=#{userid},
+                        </if>
+		
+				 			                <if test="username!=null and username!=''">
+                        username=#{username},
+                        </if>
+		
+				 			                <if test="attendname!=null and attendname!=''">
+                        attendname=#{attendname},
+                        </if>
+		
+				 			                <if test="attendcell!=null and attendcell!=''">
+                        attendcell=#{attendcell},
+                        </if>
+		
+				 			                <if test="attendduty!=null and attendduty!=''">
+                        attendduty=#{attendduty},
+                        </if>
+		
+				 			                <if test="checkuser!=null and checkuser!=''">
+                        checkuser=#{checkuser},
+                        </if>
+		
+				 			                <if test="lurushijian!=null and lurushijian!=''">
+                        lurushijian=#{lurushijian},
+                        </if>
+		
+				 			                <if test="lastchgtime!=null and lastchgtime!=''">
+                        lastchgtime=#{lastchgtime}
+                        </if>
+         						 
+		where id=#{id}
+	</update>
+	
+</mapper>  

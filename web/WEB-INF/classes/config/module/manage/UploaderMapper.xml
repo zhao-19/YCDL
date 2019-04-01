@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.winpow.services.manage.declare.mapper.UploaderMapper">
+
+    <select id="selectPageList"
+            parameterType="com.winpow.services.manage.declare.bean.Uploader" resultType="hashMap">
+        SELECT  [id]
+      ,   fileName
+      ,[filePath]
+      ,[fileSize]/1024/1024  as  fileSize 
+      ,[type]
+      ,[LURUSHIJIAN]
+      ,[INPUTUSER]
+      ,[LASTCHGTIME]
+      ,[status]
+  FROM  [tb_uploader]  a where 1=1
+        <if test="inputuser != null and inputuser !=''">
+            and a.inputuser = #{inputuser}
+        </if>
+        <if test="fileName != null and fileName !=''">
+            and a.fileName= #{fileName}
+        </if>
+        order by LURUSHIJIAN desc
+            
+    </select>
+    <select id="selectPageCount"
+            parameterType="com.winpow.services.manage.declare.bean.Uploader"
+            resultType="java.lang.Integer">
+        select count(id) from (
+        SELECT  ROW_NUMBER() over(order by a.id) as  rownumber ,
+        a.id
+        from tb_uploader a where 1=1
+        <if test="inputuser != null and inputuser !=''">
+            and a.inputuser=#{inputuser}
+        </if>
+        <if test="fileName != null and fileName !=''">
+            and a.fileName=#{fileName} 
+        </if>
+      
+        )t
+    </select>
+
+    <select id="selectOne"
+            parameterType="com.winpow.services.manage.declare.bean.Uploader"
+            resultType="com.winpow.services.manage.declare.bean.Uploader">
+        SELECT TOP 1
+ 		 [id]
+      ,[fileName]
+      ,[filePath]
+      ,[type]
+      ,[LURUSHIJIAN]
+      ,[INPUTUSER]
+      ,[LASTCHGTIME] 
+      ,[status]
+      ,abs(DATEPART(mi,GETDATE())-30 -DATEPART(mi,[LURUSHIJIAN]))   as [fileSize]
+        from tb_uploader a    where 1=1 
+        
+        <choose>
+        <when test="id != null and id !=''">
+             and a.id = #{id}
+        </when>
+        <otherwise>
+            and a.fileName=#{fileName} and a.inputuser=#{inputuser} and  lurushijian &gt;= dateadd(mi,-30,getdate()) order by lurushijian desc
+        </otherwise>
+      </choose>
+     
+    </select>
+
+    <select id="selectAllList"
+            parameterType="com.winpow.services.manage.declare.bean.Uploader"
+            resultType="com.winpow.services.manage.declare.bean.Uploader">
+               select  *  from tb_uploader t1 where t1.status=1  and t1.fileName not in (select fileName from tb_uploader t2 where t2.status=3)
+       
+    </select>
+
+ <select id="selectList"
+            parameterType="com.winpow.services.manage.declare.bean.Uploader"
+            resultType="com.winpow.services.manage.declare.bean.Uploader">
+        select  *  from tb_uploader t1 where t1.status=1  and t1.fileName not in (select fileName from tb_uploader t2 where t2.status=3)
+    </select>
+    
+    <insert id="insert"
+            parameterType="com.winpow.services.manage.declare.bean.Uploader" useGeneratedKeys="true"
+            keyProperty="id">
+		insert into tb_uploader (
+													 	fileName,
+													 	filePath,
+													 	fileSize,
+													 	type,
+													 	lurushijian,
+													 	lastchgtime,
+													 	status,
+													 	inputuser
+			 						) values (
+				 										 	#{fileName},
+                                                            #{filePath},
+                                                            #{fileSize},
+                                                            #{type},
+                                                            getdate(),
+                                                            getdate(),
+                                                            #{status},
+                                                            #{inputuser}
+				 						)
+	</insert>
+
+    <update id="update"
+            parameterType="com.winpow.services.manage.declare.bean.Uploader">
+        update tb_uploader set
+
+        <if test=" inputuser !=null and  inputuser !=''">
+            inputuser=#{inputuser},
+        </if>
+
+        <if test=" fileName !=null and  fileName !=''">
+            fileName=#{fileName},
+        </if>
+
+        <if test=" filePath !=null and  filePath !=''">
+            filePath=#{filePath},
+        </if>
+
+        <if test=" fileSize !=null">
+            fileSize=#{fileSize},
+        </if>
+
+        <if test=" type !=null">
+            type=#{type},
+        </if>
+
+ 		<if test=" status !=null">
+            status=#{status},
+        </if>
+
+
+            lastchgtime=getdate()
+
+        where id=#{id}
+    </update>
+    <delete id="delete">
+        delete tb_uploader where id=#{id}
+    </delete>
+</mapper>  

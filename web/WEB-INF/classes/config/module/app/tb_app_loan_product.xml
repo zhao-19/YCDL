@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+"-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="app">
+
+	<select id="app.apploanproduct.selectPageList"
+		parameterType="com.winpow.services.app.apploanproduct.bean.Apploanproduct"
+		resultType="hashMap">
+		select * from (
+		SELECT ROW_NUMBER() over(order by createtime desc) as rownumber ,t.*,case when tq.PK_QIYEID is not null then tq.QIYEMINGCHENG when tj.ID is not null then tj.JIGOUMINGCHENG when too.id is not null then too.org_name else '--' end as cmpname
+         from (SELECT pkid,userid,title,chstatus,createtime,'贷款产品供应' as type,
+        case when t2.ID IS null then '10002' else '10001' end as ispost,'11202' as genre,reviwer_id 
+        from tb_app_loan_product t1 left join Tb_product t2 on t1.pkid = t2.appid
+        union all
+        select t3.pkid,t3.userid,t3.title,t3.chstatus,t3.create_time,case when
+        t3.genre ='11201' then '中介服务供应' when t3.genre = '11204' then '企业服务供应'
+        when t3.genre = '11205' then '企业产品供应' else '技术服务供应' end,case when
+        t4.ID is null and t5.pkid IS null then '10002' else '10001' end as ispost,t3.genre,reviwer_id
+         from  tb_app_added_product t3 left join tb_incre t4 on t3.pkid = t4.appid
+        left join tb_pc_goods t5 on t3.pkid = t5.appid where t3.genre in
+        ('11201','11204','11205','11206')
+        union all
+        select pkid,userid,title,chstatus,create_time,'股权融资供应',case when t7.ID is
+        null then '10002' else '10001' end,'11203',reviwer_id
+         from tb_app_postequityprojects t6 left join tb_guquan t7 on t6.pkid = t7.appId
+        union all
+        select pkid,userid,title,chstatus,createdate,'培训活动供应',case when t9.ID is
+        null then '10002' else '10001' end,'11207',reviwer_id
+         from tb_app_activities_demands t8 left join tb_Activities t9 on t8.pkid = t9.appid
+        )t
+        left join tb_cust t1 on t.userid = t1.USERID left join tb_Qiye tq on t1.f_id = tq.PK_QIYEID left join Tb_jigou tj on t1.f_id = tj.ID left join tb_other_org too on t1.f_id = too.id
+        
+		where 1=1
+		<if test=" userid !=null and  userid !=''">
+			and t.userid=#{userid}
+		</if>
+		<if test=" genre !=null and  genre !=''">
+			and t.genre=#{genre}
+		</if>
+		) a where rownumber &gt; #{offset} and rownumber
+		&lt; = #{pageSize}+#{offset}
+	</select>
+	<select id="app.apploanproduct.selectPageCount"
+		parameterType="com.winpow.services.app.apploanproduct.bean.Apploanproduct"
+		resultType="java.lang.Integer">
+
+		SELECT count(*) from (
+		SELECT pkid,userid,title,chstatus,createtime,'贷款产品供应' as type,
+		case when t2.ID IS null then '否' else '是' end as ispost from
+		tb_app_loan_product t1 left join Tb_product t2 on t1.pkid = t2.appid
+		union all
+		select t3.pkid,t3.userid,t3.title,t3.chstatus,t3.create_time,case when
+		t3.genre ='11201' then '中介服务供应' when t3.genre = '11204' then '企业服务供应'
+		when t3.genre = '11205' then '企业产品供应' else '技术服务供应' end,case when
+		t4.ID is null and t5.pkid IS null then '否' else '是' end as ispost from
+		tb_app_added_product t3 left join tb_incre t4 on t3.pkid = t4.appid
+		left join tb_pc_goods t5 on t3.pkid = t5.appid where t3.genre in
+		('11201','11204','11205','11206')
+		union all
+		select pkid,userid,title,chstatus,create_time,'股权融资供应',case when t7.ID is
+		null then '否' else '是' end from tb_app_postequityprojects t6 left join
+		tb_guquan t7 on t6.pkid = t7.appId
+		union all
+		select pkid,userid,title,chstatus,createdate,'培训活动供应',case when t9.ID is
+		null then '否' else '是' end from tb_app_activities_demands t8 left join
+		tb_Activities t9 on t8.pkid = t9.appid
+		)t
+
+	</select>
+
+	<select id="app.apploanproduct.selectOne"
+		parameterType="com.winpow.services.app.apploanproduct.bean.Apploanproduct"
+		resultType="com.winpow.services.app.apploanproduct.bean.Apploanproduct">
+		select * from tb_app_loan_product t where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+
+	<select id="app.apploanproduct.selectCount"
+		parameterType="com.winpow.services.app.apploanproduct.bean.Apploanproduct"
+		resultType="int">
+		select count(*) from tb_app_loan_product t where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+
+	<select id="app.apploanproduct.selectOneByCondition"
+		parameterType="com.winpow.services.app.apploanproduct.bean.Apploanproduct"
+		resultType="com.winpow.services.app.apploanproduct.bean.Apploanproduct">
+		select * from tb_app_loan_product t where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+
+	<select id="app.apploanproduct.selectList"
+		parameterType="com.winpow.services.app.apploanproduct.bean.Apploanproduct"
+		resultType="com.winpow.services.app.apploanproduct.bean.Apploanproduct">
+		select * from tb_app_loan_product t where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+
+    <select id="app.apploanproduct.selectLists"
+        parameterType="com.winpow.services.app.apploanproduct.bean.Apploanproduct"
+        resultType="com.winpow.services.app.apploanproduct.bean.Apploanproduct">
+        SELECT
+        pkid,
+        chno,
+        userid,
+        title,
+        genre,
+        loanusage,
+        price,
+        deadline,
+        chstatus,
+        remark,
+        createtime,
+        updateby,
+        updatetime,
+        reviwer_id,
+        reviwer_date,
+        reviwer_remark
+        from tb_app_loan_product t left join Tb_product t2 on t.pkid = t2.appid where
+        t2.ID is null
+    </select>
+
+	<insert id="app.apploanproduct.insert"
+		parameterType="com.winpow.services.app.apploanproduct.bean.Apploanproduct"
+		useGeneratedKeys="true" keyProperty="id">
+		declare @cnno int
+		exec @cnno =
+		getchnoseq
+		insert into tb_app_loan_product (
+		pkid,
+		chno,
+		userid,
+		title,
+		genre,
+		loanusage,
+		price,
+		deadline,
+		chstatus,
+		remark,
+		createtime,
+		updateby,
+		updatetime,
+		reviwer_id,
+		<if test="reviwer_date != null and reviwer_date != ''">
+		reviwer_date,
+		</if>
+		reviwer_remark
+		) values (
+		#{pkid},
+		(select 'dkfb' + right('0000000000' + cast(@cnno as
+		varchar(10)), 10)),
+		#{userid},
+		#{title},
+		#{genre},
+		#{loanusage},
+		#{price},
+		#{deadline},
+		#{chstatus},
+		#{remark},
+		getdate(),
+		#{updateby},
+		getdate(),
+		#{reviwer_id},
+		<if test="reviwer_date != null and reviwer_date != ''">
+		getdate(),
+        </if>
+		#{reviwer_remark}
+		)
+
+	</insert>
+
+	<update id="app.apploanproduct.update"
+		parameterType="com.winpow.services.app.apploanproduct.bean.Apploanproduct">
+		update tb_app_loan_product set
+		<if test=" userid !=null and  userid !=''">
+			userid=#{userid},
+		</if>
+
+		<if test=" title !=null and  title !=''">
+			title=#{title},
+		</if>
+
+		<if test=" genre !=null and  genre !=''">
+			genre=#{genre},
+		</if>
+
+		<if test=" loanusage !=null and  loanusage !=''">
+			loanusage=#{loanusage},
+		</if>
+
+		<if test=" price !=null ">
+			price=#{price},
+		</if>
+
+		<if test=" deadline !=null">
+			deadline=#{deadline},
+		</if>
+
+		<if test=" chstatus !=null and  chstatus !=''">
+			chstatus=#{chstatus},
+		</if>
+
+		<if test=" remark !=null and  remark !=''">
+			remark=#{remark},
+		</if>
+
+		<if test=" updateby !=null and  updateby !=''">
+			updateby=#{updateby},
+		</if>
+		<if test=" reviwer_id !=null and  reviwer_id !=''">
+			reviwer_id=#{reviwer_id},
+		</if>
+		<if test=" reviwer_date !=null and  reviwer_date !=''">
+			reviwer_date=getdate(),
+		</if>
+		<if test=" reviwer_remark !=null and  reviwer_remark !=''">
+			reviwer_remark=#{reviwer_remark},
+		</if>
+		updatetime=getdate()
+		where pkid=#{pkid}
+	</update>
+
+</mapper>  

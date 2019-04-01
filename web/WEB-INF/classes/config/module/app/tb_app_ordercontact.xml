@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+"-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="app">
+
+	<select id="app.appordercontact.selectPageList"
+		parameterType="com.winpow.services.app.appordercontact.bean.Appordercontact"
+		resultType="hashMap">
+		select * from (
+		SELECT ROW_NUMBER() over(order by createdate desc) as rownumber ,
+		pkid,
+		userid,
+		name,
+		address,
+		mobile,
+		isdefault,
+		chstatus,
+		createdate,
+		updatedate
+		from tb_app_ordercontact )t where rownumber &gt; = #{offset} and rownumber
+		&lt; = #{pageSize}+#{offset}
+	</select>
+	<select id="app.appordercontact.selectPageCount"
+		parameterType="com.winpow.services.app.appordercontact.bean.Appordercontact"
+		resultType="java.lang.Integer">
+
+		select count(*) from (
+		SELECT ROW_NUMBER() over(order by createdate desc) as rownumber ,
+		pkid,
+		userid,
+		name,
+		address,
+		mobile,
+		isdefault,
+		chstatus,
+		createdate,
+		updatedate
+		from tb_app_ordercontact )t
+
+	</select>
+
+	<select id="app.appordercontact.selectOne"
+		parameterType="com.winpow.services.app.appordercontact.bean.Appordercontact"
+		resultType="com.winpow.services.app.appordercontact.bean.Appordercontact">
+		SELECT
+		pkid,
+		userid,
+		name,
+		address,
+		mobile,
+		isdefault,
+		chstatus,
+		createdate,
+		updatedate
+		from tb_app_ordercontact t where 1=1
+		<if test="userid!=null and userid!=''">
+			and t.userid=#{userid} and isdefault=1
+		</if>
+	</select>
+
+	<select id="app.appordercontact.selectCount"
+		parameterType="com.winpow.services.app.appordercontact.bean.Appordercontact"
+		resultType="int">
+		select count(*)
+		FROM tb_app_ordercontact t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+	</select>
+
+	<select id="app.appordercontact.selectOneByCondition"
+		parameterType="com.winpow.services.app.appordercontact.bean.Appordercontact"
+		resultType="com.winpow.services.app.appordercontact.bean.Appordercontact">
+		SELECT
+		pkid,
+		userid,
+		name,
+		address,
+		mobile,
+		isdefault,
+		chstatus,
+		createdate,
+		updatedate
+		from tb_app_ordercontact t where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+
+
+
+	<select id="app.appordercontact.selectList"
+		parameterType="com.winpow.services.app.appordercontact.bean.Appordercontact"
+		resultType="com.winpow.services.app.appordercontact.bean.Appordercontact">
+		SELECT
+		pkid,
+		userid,
+		name,
+		address,
+		mobile,
+		isdefault,
+		chstatus,
+		createdate,
+		updatedate
+		from tb_app_ordercontact t where 1=1
+		<if test="userid!=null and userid!=''">
+			and t.userid=#{userid}
+		</if>
+		    order by isdefault asc,updatedate desc
+	</select>
+
+	<insert id="app.appordercontact.insert"
+		parameterType="com.winpow.services.app.appordercontact.bean.Appordercontact"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into tb_app_ordercontact (
+		pkid,
+		userid,
+		name,
+		address,
+		mobile,
+		isdefault,
+		chstatus,
+		createdate,
+		updatedate
+		) values (
+		#{pkid},
+		#{userid},
+		#{name},
+		#{address},
+		#{mobile},
+		#{isdefault},
+		#{chstatus},
+		getdate(),
+		getdate()
+		)
+
+	</insert>
+	
+	<update id="app.appordercontact.updateDefault"
+		parameterType="com.winpow.services.app.appordercontact.bean.Appordercontact">
+		update tb_app_ordercontact 
+		set isdefault='10002' 
+		where userid=#{userid};
+	</update>
+	
+	<select id="app.appordercontact.selectDefault"
+		parameterType="com.winpow.services.app.appordercontact.bean.Appordercontact"
+		resultType="com.winpow.services.app.appordercontact.bean.Appordercontact">
+		select * from tb_app_ordercontact 
+		where userid=#{userid} and isDefault = '10001';
+	</select>
+
+	<update id="app.appordercontact.update"
+		parameterType="com.winpow.services.app.appordercontact.bean.Appordercontact">
+		
+		update tb_app_ordercontact set
+			
+		<if test=" userid !=null and  userid !=''">
+			userid=#{userid},
+		</if>
+
+		<if test=" name !=null and  name !=''">
+			name=#{name},
+		</if>
+
+		<if test=" address !=null and  address !=''">
+			address=#{address},
+		</if>
+
+		<if test=" mobile !=null and  mobile !=''">
+			mobile=#{mobile},
+		</if>
+
+		<if test=" isdefault !=null and  isdefault !=''">
+			isdefault=#{isdefault},
+		</if>
+
+		<if test=" chstatus !=null and  chstatus !=''">
+			chstatus=#{chstatus},
+		</if>
+
+		updatedate=getdate()
+		where userid=#{userid}
+		<if test=" pkid !=null and  pkid !=''">
+           and pkid=#{pkid}
+        </if>
+	</update>
+
+</mapper>  

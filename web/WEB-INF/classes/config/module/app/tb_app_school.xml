@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC 
+"-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="app">
+
+	<select id="app.appschool.selectPageList" parameterType="com.winpow.services.app.appschool.bean.Appschool"
+		resultType="hashMap">
+		select top ${pageSize} * from (
+			select row_number() over(order by c.lastchgtime desc) as rownumber ,c.* 
+			from tb_app_school c where 1=1
+			<if test=" title !=null and  title !=''">
+				and c.title like '%'+#{title}+'%'
+			</if>
+	    ) a where rownumber > ${pageSize}*(${offset} - 1)
+	</select>
+	
+	<select id="app.appschool.selectPageCount" parameterType="com.winpow.services.app.appschool.bean.Appschool"
+		resultType="java.lang.Integer">
+		select count(*) from tb_app_school c where 1=1 
+		<if test=" title !=null and  title !=''">
+			and c.title like '%'+#{title}+'%'
+		</if>
+	</select>
+
+	<select id="app.appschool.selectOne" parameterType="com.winpow.services.app.appschool.bean.Appschool"
+		resultType="com.winpow.services.app.appschool.bean.Appschool">
+		select * from tb_app_school t where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+
+	<select id="app.appschool.selectCount" parameterType="com.winpow.services.app.appschool.bean.Appschool"
+		resultType="int">
+		select count(*) from tb_app_school t where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+
+	<select id="app.appschool.selectOneByCondition"
+		parameterType="com.winpow.services.app.appschool.bean.Appschool"
+		resultType="com.winpow.services.app.appschool.bean.Appschool">
+		select * from tb_app_school t where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+
+	<select id="app.appschool.selectList" parameterType="com.winpow.services.app.appschool.bean.Appschool"
+		resultType="com.winpow.services.app.appschool.bean.Appschool">
+		select * from tb_app_school t where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+		<if test="rele !=null and rele !=''">
+			and t.rele=#{rele}
+		</if>
+		order by sort
+	</select>
+
+	<insert id="app.appschool.insert" parameterType="com.winpow.services.app.appschool.bean.Appschool"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into tb_app_school (
+		pkid,
+		userid,
+		title,
+		username,
+		qiyename,
+		label,
+		imgurl,
+		price,
+		rele,
+		genre,
+		sourcetype,
+		sourceurl_stand,
+		sourceurl_high,
+		sourceurl_super,
+		sourcetime,
+		intro,
+		bewrite,
+		content,
+		enable,
+		sort,
+		playtimes,
+		lurushijian,
+		inputuser,
+		lastchgtime,coursenotes,downtimes
+		) values (
+		#{pkid},
+		#{userid},
+		#{title},
+		#{username},
+		#{qiyename},
+		#{label},
+		#{imgurl},
+		#{price},
+		#{rele},
+		#{genre},
+		#{sourcetype},
+		#{sourceurl_stand},
+		#{sourceurl_high},
+		#{sourceurl_super},
+		#{sourcetime},
+		#{intro},
+		#{bewrite},
+		#{content},
+		#{enable},
+		#{sort},
+		0,
+		getdate(),
+		#{inputuser},
+		getdate(),#{coursenotes},0
+		)
+
+	</insert>
+
+	<update id="app.appschool.update" parameterType="com.winpow.services.app.appschool.bean.Appschool">
+		update tb_app_school set
+		<if test=" userid !=null and  userid !=''">
+			userid=#{userid},
+		</if>
+
+		<if test=" title !=null and  title !=''">
+			title=#{title},
+		</if>
+
+		<if test=" username !=null and  username !=''">
+			username=#{username},
+		</if>
+
+		<if test=" qiyename !=null and  qiyename !=''">
+			qiyename=#{qiyename},
+		</if>
+
+		<if test=" label !=null and  label !=''">
+			label=#{label},
+		</if>
+
+		<if test=" imgurl !=null and  imgurl !=''">
+			imgurl=#{imgurl},
+		</if>
+
+		<if test=" price !=null and  price !=''">
+			price=#{price},
+		</if>
+
+		<if test=" rele !=null and  rele !=''">
+			rele=#{rele},
+		</if>
+
+		<if test=" genre !=null and  genre !=''">
+			genre=#{genre},
+		</if>
+
+		<if test=" sourcetype !=null and  sourcetype !=''">
+			sourcetype=#{sourcetype},
+		</if>
+
+		<if test=" sourceurl_stand !=null and  sourceurl_stand !=''">
+			sourceurl_stand=#{sourceurl_stand},
+		</if>
+
+		<if test=" sourceurl_high !=null and  sourceurl_high !=''">
+			sourceurl_high=#{sourceurl_high},
+		</if>
+
+		<if test=" sourceurl_super !=null and  sourceurl_super !=''">
+			sourceurl_super=#{sourceurl_super},
+		</if>
+
+		<if test=" sourcetime !=null and  sourcetime !=''">
+			sourcetime=#{sourcetime},
+		</if>
+		
+		<if test=" intro !=null and  intro !=''">
+			intro=#{intro},
+		</if>
+
+		<if test=" bewrite !=null and  bewrite !=''">
+			bewrite=#{bewrite},
+		</if>
+
+		<if test=" content !=null and  content !=''">
+			content=#{content},
+		</if>
+
+		<if test=" enable !=null and  enable !=''">
+			enable=#{enable},
+		</if>
+
+		<if test=" sort !=null and  sort !=''">
+			sort=#{sort},
+		</if>
+		
+		<if test=" coursenotes !=null and  coursenotes !=''">
+			coursenotes=#{coursenotes},
+		</if>
+		
+		lastchgtime=getdate()
+		where pkid=#{pkid}
+	</update>
+	
+	<update id="app.appschool.updateRele" parameterType="map">
+		update tb_app_school set rele=#{rele} where pkid in 
+		 <foreach collection="ids" item="item" index="index" separator="," open="(" close=")">  
+	       #{item} 
+	    </foreach>
+	</update>
+	
+	<select id="app.appschool.selectPageLists" parameterType="com.winpow.services.app.appschool.bean.Appschool"
+		resultType="com.winpow.services.app.appschool.bean.Appschool">
+		select top ${pageSize} * from (
+			select row_number() over (order by ${lurushijian}) as rownumber,*
+			from tb_app_school s where s.enable='10001'
+			<if test="genre !=null and genre !=''">
+				and s.genre=#{genre}
+			</if>
+			<if test="sourcetype !=null and sourcetype !=''">
+				and s.sourcetype=#{sourcetype}
+			</if>
+		) a where rownumber > ${pageSize}*(${offset} - 1)
+	</select>
+	
+	<update id="app.appschool.updateplaytimes" parameterType="string">
+		update tb_app_school set playtimes = playtimes + 1 where pkid=#{pkid}
+	</update>
+	
+	<update id="app.appschool.updatedowntimes" parameterType="string">
+		update tb_app_school set downtimes = downtimes + 1 where pkid=#{pkid}
+	</update>
+
+</mapper>  

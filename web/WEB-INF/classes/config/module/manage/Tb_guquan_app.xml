@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="manage">
+
+	<select id="manage.guquanapp.selectPageList" parameterType="com.winpow.services.manage.guquanapp.bean.Guquanapp"
+		resultType="hashMap">
+		select * from (
+		SELECT
+		ROW_NUMBER() over(order by id desc) as rownumber , id,
+		increid,increname,
+		userid,
+		status,
+		checkuser,
+		result,
+		lurushijian,
+		lastchgtime,
+		source,return_reason,
+		chno
+		from Tb_guquan_app where 1=1
+		<if test="increid!=null and increid!=''">
+			and increid like '%' + #{increid} + '%'
+		</if>
+		<if test="userid!=null and userid!=''">
+			and userid like '%' + #{userid} + '%'
+		</if>
+		<if test="status!=null and status!=''">
+			and status = #{status}
+		</if>
+		<if test="checkuser!=null and checkuser!=''">
+			and checkuser like '%' + #{checkuser} + '%'
+		</if>
+		)t where rownumber &gt; = #{offset} and rownumber &lt; =
+		#{pageSize}+#{offset}
+	</select>
+	<select id="manage.guquanapp.selectPageCount" parameterType="com.winpow.services.manage.guquanapp.bean.Guquanapp"
+		resultType="java.lang.Integer">
+
+		select count(*) from (
+		SELECT ROW_NUMBER() over(order by id) as rownumber ,
+		id,
+		increid,
+		userid,
+		status,
+		checkuser,
+		result,
+		lurushijian,
+		lastchgtime,
+		source,
+		chno
+		from Tb_guquan_app where 1=1
+		<if test="increid!=null and increid!=''">
+			and increid like '%' + #{increid} + '%'
+		</if>
+		<if test="userid!=null and userid!=''">
+			and userid like '%' + #{userid} + '%'
+		</if>
+		<if test="status!=null and status!=''">
+			and status = #{status}
+		</if>
+		<if test="checkuser!=null and checkuser!=''">
+			and checkuser like '%' + #{checkuser} + '%'
+		</if>
+		)t
+
+	</select>
+
+	<select id="manage.guquanapp.selectOne" parameterType="com.winpow.services.manage.guquanapp.bean.Guquanapp"
+		resultType="com.winpow.services.manage.guquanapp.bean.Guquanapp">
+		SELECT
+		id,
+		increid,increname,
+		userid,
+		status,
+		checkuser,
+		result,
+		lurushijian,
+		lastchgtime,
+		source,return_reason,
+		chno
+		from Tb_guquan_app t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+	</select>
+
+	<select id="manage.guquanapp.selectCount" parameterType="com.winpow.services.manage.guquanapp.bean.Guquanapp"
+		resultType="int">
+		select count(*)
+		FROM Tb_guquan_app t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+	</select>
+
+	<select id="manage.guquanapp.selectOneByCondition"
+		parameterType="com.winpow.services.manage.guquanapp.bean.Guquanapp"
+		resultType="com.winpow.services.manage.guquanapp.bean.Guquanapp">
+		SELECT
+		id,
+		increid,increname,
+		userid,
+		status,
+		checkuser,
+		result,
+		lurushijian,
+		lastchgtime,
+		source,return_reason,
+		chno
+		from Tb_guquan_app t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+	</select>
+
+	<insert id="manage.guquanapp.insert" parameterType="com.winpow.services.manage.guquanapp.bean.Guquanapp"
+		useGeneratedKeys="true" keyProperty="id">
+		declare @cnno int
+        exec @cnno =  getchnoseq
+		insert into Tb_guquan_app (
+
+		increid,
+		userid,
+		status,
+		checkuser,
+		result,
+		lurushijian,
+		incamt,increname,
+		lastchgtime,
+        source,
+        chno
+		) values (
+
+		#{increid},
+		#{userid},
+		#{status},
+		#{checkuser},
+		#{result},
+		getdate(),
+		#{incamt},#{increname},
+		getdate(),
+        #{source},
+        (select 'gqyt' + right('0000000000' + cast(@cnno as varchar(5)), 10))
+		)
+	</insert>
+
+	<update id="manage.guquanapp.update" parameterType="com.winpow.services.manage.guquanapp.bean.Guquanapp">
+		update tb_guquan_app set
+
+
+		<if test="increid!=null and increid!=''">
+			increid=#{increid},
+		</if>
+
+		<if test="userid!=null and userid!=''">
+			userid=#{userid},
+		</if>
+
+		<if test="status!=null and status!=''">
+			status=#{status},
+		</if>
+
+		<if test="checkuser!=null and checkuser!=''">
+			checkuser=#{checkuser},
+		</if>
+
+		<if test="result!=null and result!=''">
+			result=#{result},
+		</if>
+		<if test="source!=null and source!=''">
+            source=#{source},
+        </if>
+        <if test="chno!=null and chno!=''">
+            chno=#{chno},
+        </if>
+        <if test="return_reason!=null and return_reason!=''">
+            return_reason=#{return_reason},
+        </if>
+
+
+		lastchgtime=getdate()
+
+
+		where id=#{id}
+	</update>
+	<select id="manage.guquanapp.select4index" parameterType="com.winpow.services.manage.guquanapp.bean.Guquanapp"
+		resultType="com.winpow.services.manage.guquanapp.bean.Guquanapp">
+		select * from (
+		SELECT ROW_NUMBER() over(order by id desc) as rownumber ,
+		id,
+		increid,increname,
+		userid,
+		status,
+		checkuser,
+		result,
+		lurushijian,
+		lastchgtime
+		from Tb_guquan_app )t where rownumber &lt; = 4
+	</select>
+	<select id="manage.guquanapp.guquanInterviewCount"
+		parameterType="java.lang.String" resultType="java.lang.Integer">
+		select count(ID) from
+		Tb_guquan_app where INCREID = #{guquanId}
+	</select>
+</mapper>  

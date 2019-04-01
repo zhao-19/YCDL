@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+"-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="app">
+
+	<select id="app.apppostequityprojects.selectPageList"
+		parameterType="com.winpow.services.app.apppostequityprojects.bean.Apppostequityprojects"
+		resultType="hashMap">
+		select * from (
+			select row_number() over(order by update_at desc) as rownumber ,*
+			from tb_app_postequityprojects 
+		)t where rownumber &gt; = #{offset} and
+		rownumber &lt; = #{pageSize}+#{offset}
+	</select>
+	
+	<select id="app.apppostequityprojects.selectPageCount"
+		parameterType="com.winpow.services.app.apppostequityprojects.bean.Apppostequityprojects"
+		resultType="java.lang.Integer">
+		select count(*) from tb_app_postequityprojects
+	</select>
+
+	<select id="app.apppostequityprojects.selectOne"
+		parameterType="com.winpow.services.app.apppostequityprojects.bean.Apppostequityprojects"
+		resultType="com.winpow.services.app.apppostequityprojects.bean.Apppostequityprojects">
+		select * from tb_app_postequityprojects t where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+
+	<select id="app.apppostequityprojects.selectCount"
+		parameterType="com.winpow.services.app.apppostequityprojects.bean.Apppostequityprojects"
+		resultType="int">
+		select count(*) from tb_app_postequityprojects t where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+
+	<select id="app.apppostequityprojects.selectOneByCondition"
+		parameterType="com.winpow.services.app.apppostequityprojects.bean.Apppostequityprojects"
+		resultType="com.winpow.services.app.apppostequityprojects.bean.Apppostequityprojects">
+		select * from tb_app_postequityprojects t where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+
+	<select id="app.apppostequityprojects.selectList"
+		parameterType="com.winpow.services.app.apppostequityprojects.bean.Apppostequityprojects"
+		resultType="com.winpow.services.app.apppostequityprojects.bean.Apppostequityprojects">
+		select * from tb_app_postequityprojects t where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+	
+	<select id="app.apppostequityprojects.selectLists"
+        parameterType="com.winpow.services.app.apppostequityprojects.bean.Apppostequityprojects"
+        resultType="com.winpow.services.app.apppostequityprojects.bean.Apppostequityprojects">
+        SELECT
+        pkid,
+        chno,
+        userid,
+        title,
+        amount,
+        sellshares,
+        established_at,
+        bewrite,
+        isincome,
+        isprofit,
+        chstatus,
+        create_time,
+        update_at,
+        reviwer_id,
+        review_date,
+        return_reason
+        from tb_app_postequityprojects t left join Tb_guquan t2 on t.pkid = t2.appid where 1=1
+        <if test="pkid!=null and pkid!=''">
+            and t.pkid=#{pkid}
+        </if>
+    </select>
+
+	<insert id="app.apppostequityprojects.insert"
+		parameterType="com.winpow.services.app.apppostequityprojects.bean.Apppostequityprojects"
+		useGeneratedKeys="true" keyProperty="id">
+		declare @cnno int
+		exec @cnno = getchnoseq
+		insert into tb_app_postequityprojects (
+		pkid,
+		chno,
+		userid,
+		title,
+		amount,
+		sellshares,
+		established_at,
+		bewrite,
+		isincome,
+		isprofit,
+		chstatus,
+		create_time,
+		update_at,
+		reviwer_id,
+		review_date,
+		return_reason,stage,industry
+		) values (
+		#{pkid},
+		(select 'sd' + right('0000000000' + cast(@cnno as varchar(10)), 10)),
+		#{userid},
+		#{title},
+		#{amount},
+		#{sellshares},
+		#{established_at},
+		#{bewrite},
+		#{isincome},
+		#{isprofit},
+		#{chstatus},
+		getdate(),
+		getdate(),
+		#{reviwer_id},
+		#{review_date},
+		#{return_reason},#{stage},#{industry}
+		)
+
+	</insert>
+
+	<update id="app.apppostequityprojects.update"
+		parameterType="com.winpow.services.app.apppostequityprojects.bean.Apppostequityprojects">
+		update tb_app_postequityprojects set
+		<if test=" userid !=null and  userid !=''">
+			userid=#{userid},
+		</if>
+
+		<if test=" title !=null and  title !=''">
+			title=#{title},
+		</if>
+
+		<if test=" amount !=null">
+			amount=#{amount},
+		</if>
+
+		<if test=" sellshares !=null">
+			sellshares=#{sellshares},
+		</if>
+
+		<if test=" established_at !=null and  established_at !=''">
+			established_at=#{established_at},
+		</if>
+
+		<if test=" bewrite !=null and  bewrite !=''">
+			bewrite=#{bewrite},
+		</if>
+
+		<if test=" isincome !=null and  isincome !=''">
+			isincome=#{isincome},
+		</if>
+
+		<if test=" isprofit !=null and  isprofit !=''">
+			isprofit=#{isprofit},
+		</if>
+
+		<if test=" chstatus !=null and  chstatus !=''">
+			chstatus=#{chstatus},
+		</if>
+
+		<if test=" reviwer_id !=null and  reviwer_id !=''">
+			reviwer_id=#{reviwer_id},
+		</if>
+
+		<if test=" review_date !=null and  review_date !=''">
+			review_date=getdate(),
+		</if>
+
+		<if test="return_reason!=null and return_reason !=''">
+			return_reason=#{return_reason},
+		</if>
+		
+		<if test="stage != null and stage !=''">
+			stage=#{stage},
+		</if>
+		
+		<if test="industry != null and industry !=''">
+			industry=#{industry},
+		</if>
+
+		update_at=getdate()
+		where pkid=#{pkid}
+	</update>
+	
+	<!-- 该查询的前提是tb_guquan表的 qiyeid字段为 userid -->
+	<!-- app股权项目发布表状态不是审核通过 guquantype ：0 -->
+	<!-- app股权项目发布表状态为通过，已经在pc上发布 guquantype：1 -->
+	<!-- app股权项目发布表状态为通过，未在pc上发布 guquantype：2 -->
+	<!-- 只存在与tb_guquan的数据 即 pc存量数据 guquantype：3 -->
+	<!-- 已经约谈的 guquantype：4 -->
+<!-- 	<select id="app.apppostequityprojects.selectPageByUserid" parameterType="com.winpow.services.app.apppostequityprojects.bean.Apppostequityprojects" 
+		resultType="com.winpow.services.app.apppostequityprojects.bean.Apppostequityprojects">
+		select top ${pageSize} * from (
+	        select row_number() over (order by create_time desc) as rownumber,* from(
+				select * from(	
+					select * from (
+						select '' remark ,p.pkid,p.userid,p.title,p.amount,p.sellshares,p.create_time,p.chstatus,p.chno,
+						'' as guid ,'0' as guquantype ,'' incamt,p.reviwer_id
+						from tb_app_postequityprojects p where p.chstatus!='10302'
+						union all
+						select case when g.shenhezhuangtai='aaaaaaaaaaaaaaaaaaaaaaaaaaaaa083' then '您的股权项目在pc端已经审核通过' else '您的股权项目还未在pc端审核通过' end remark ,
+						p.pkid,p.userid,p.title,p.amount,p.sellshares,p.create_time,g.shenhezhuangtai chstatus,p.chno,
+						g.id as guquanid ,'1' as guquantype,'' incamt  ,p.reviwer_id
+						from tb_app_postequityprojects p inner join tb_guquan g on g.appid=p.pkid where p.chstatus='10302'
+						union all
+						select '您的股权项目初审通过，请到pc端发布股权项目' as  remark ,
+						p.pkid,p.userid,p.title,p.amount,p.sellshares,p.create_time,p.chstatus,p.chno,
+						'' as guid ,'2' as guquantype ,'' incamt,p.reviwer_id
+						from tb_app_postequityprojects p  where p.chstatus='10302' and p.pkid not in (select appid from tb_guquan)
+						union all
+						select '' remark ,
+						'' pkid,qiyeid as userid,mingcheng title,rongziedu amount,crgqbl sellshares,lurushijian create_time,shenhezhuangtai chstatus,'' chno,
+						g.id guid   ,'3' as guquantype,'' incamt,'' reviwer_id
+						from  tb_guquan g where (g.appid is null or g.appid='') and g.lurushijian>='2016-10-1'
+					) t where 1=1
+					union all 
+					select g.userid+ '已约谈该股权项目拟投资'+convert(varchar,g.incamt)+'万元' remark ,
+					p.pkid,p.userid,p.title,p.amount,p.sellshares,p.create_time,p.chstatus,p.chno,
+					g.increid as guid ,'4' as guquantype ,g.incamt incamt,p.reviwer_id
+					from tb_app_postequityprojects p 
+					inner join tb_guquan gu on p.pkid=gu.appid
+					inner join tb_guquan_app g on g.increid=gu.id 
+		 			where p.chstatus='10302' and g.id is not null
+				) c where 1=1
+ 				<if test=" userid !=null and  userid !=''">
+					and c.userid=#{userid}
+				</if>
+				<if test=" reviwer_id !=null and  reviwer_id !=''">
+					and c.reviwer_id=#{reviwer_id}
+				</if>
+			) b  
+	    ) a   where rownumber > ${pageSize}*(${offset} - 1)
+	</select> -->
+
+	<select id="app.apppostequityprojects.selectPageByUserid" parameterType="com.winpow.services.app.apppostequityprojects.bean.Apppostequityprojects" 
+		resultType="com.winpow.services.app.apppostequityprojects.bean.Apppostequityprojects">
+		select top ${pageSize} * from (
+	        select row_number() over (order by create_time desc) as rownumber,* from(
+				select pkid,userid,title,amount,sellshares,create_time,chstatus,chno,'' as guid ,'0' incamt,'0' type,return_reason,reviwer_id
+				from tb_app_postequityprojects where 1=1 
+				<if test=" reviwer_id == null">
+					and pkid not in (select appid from tb_guquan where appid is not null)
+				</if>
+				<choose>
+			        <when test=" userid !=null and  userid !=''">
+			            and userid=#{userid}
+			        </when>
+			        <when test=" pkid !=null and  pkid !=''">
+			            and userid in (select userid from tb_cust where f_id=#{pkid})
+			        </when>
+			        <when test=" reviwer_id !=null and  reviwer_id !=''">
+		            	and reviwer_id=#{reviwer_id}
+		        	</when>
+	       		</choose>
+	       		 <if test=" reviwer_id ==null">
+					union all
+					select gappid pkid,userid,mingcheng title,rongziedu amount,crgqbl sellshares,apptime create_time,
+					zhuangtai chstatus,apchno chno,id guid,incamt,type,reason return_reason,'' reviwer_id
+					from (	
+						 <if test=" pkid !=null and  pkid !=''">
+				            select *,'' reason,'' apchno,shenhezhuangtai zhuangtai,case when appid is not null then appid else id end gappid,lurushijian apptime,'0' incamt,'1' type ,qiyeid userid
+				            from tb_guquan where (qiyeid=#{pkid} or qiyeid in (select userid from tb_cust where f_id=#{pkid}))
+				            union
+				         </if>
+						 select *,'' reason,'' apchno,shenhezhuangtai zhuangtai,case when appid is not null then appid else id end gappid,lurushijian apptime,'0' incamt,'1' type ,qiyeid userid
+						 from tb_guquan where 1=1
+						<choose>
+					        <when test=" userid !=null and  userid !=''">
+					            and releuserid=#{userid}
+					        </when>
+					        <when test=" pkid !=null and  pkid !=''">
+					            and releuserid in (select userid from tb_cust where f_id=#{pkid})
+					        </when>
+			       		</choose>
+						union
+						select gu.*,ap.return_reason reason,ap.chno apchno,ap.status zhuangtai,convert(varchar, ap.id) gappid,ap.lurushijian apptime,
+						 convert(varchar, ap.incamt) incamt,'2' type,ap.userid
+						from tb_guquan gu
+						left join tb_guquan_app ap on gu.id=ap.increid
+						where 1=1
+						<choose>
+					        <when test=" userid !=null and  userid !=''">
+					            and ap.userid=#{userid}
+					        </when>
+					        <when test=" pkid !=null and  pkid !=''">
+					            and ap.userid in (select userid from tb_cust where f_id=#{pkid})
+					        </when>
+		       			</choose>
+					) c
+				</if>	
+				<if test=" reviwer_id !=null">
+					union all
+					select gappid pkid,userid,mingcheng title,rongziedu amount,crgqbl sellshares,apptime create_time,
+					zhuangtai chstatus,apchno chno,id guid,incamt,type,reason return_reason,'' reviwer_id
+					from (	 
+						select gu.*,ap.userid,ap.return_reason reason,ap.chno apchno,ap.status zhuangtai,convert(varchar, ap.id) gappid,ap.lurushijian apptime, convert(varchar, ap.incamt) incamt,'2' type
+						from tb_guquan gu right join tb_guquan_app ap on gu.id=ap.increid 
+					) c
+				</if>	
+			) b  
+	    ) a   where rownumber > ${pageSize}*(${offset} - 1)
+	</select>
+
+</mapper>  

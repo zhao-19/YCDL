@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC 
+"-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="manage">
+
+	<select id="manage.news.selectPageList" parameterType="com.winpow.services.manage.news.bean.News"
+		resultType="hashMap">
+		select * from (
+		SELECT
+		ROW_NUMBER() over(order by id desc) as rownumber
+		, id,
+		title,
+		contents, contents as show,
+		cataid,
+		CONVERT(char(10),sendtime,23 ) sendtime,
+		editor,
+		hits,
+		source,
+		adduser,
+		ischeck,
+		cover,
+		lurushijian,
+		inputuser,
+		lastchgtime,
+		pic_app,label,showlocation
+		from tb_news
+		where 1=1
+		<if test="title!=null and title!=''">
+			and title like '%'+#{title}+'%'
+		</if>
+		<if test="ischeck!=null and ischeck!=''">
+			and ischeck =#{ischeck}
+		</if>
+		<if test="showlocation!=null and showlocation!=''">
+			and showlocation !=#{showlocation}
+		</if>
+		)t where rownumber &gt; = #{offset} and rownumber &lt; =
+		#{pageSize}+#{offset}
+	</select>
+	
+	<select id="manage.news.selectPageCount" parameterType="com.winpow.services.manage.news.bean.News"
+		resultType="java.lang.Integer">
+		select count(*) from tb_news where 1=1
+		<if test="title!=null and title!=''">
+			and title like '%'+#{title}+'%'
+		</if>
+		<if test="ischeck!=null and ischeck!=''">
+			and ischeck = #{ischeck}
+		</if>
+		<if test="showlocation!=null and showlocation!=''">
+			and showlocation !=#{showlocation}
+		</if>
+		<if test="substation != null and substation != ''">
+			and substation=#{substation}
+		</if>
+	</select>
+	
+	<select id="manage.news.selectPageList2" parameterType="com.winpow.services.manage.news.bean.News"
+		resultType="hashMap">
+		select top ${pageSize} * from (
+			select row_number() over(order by id desc) as rownumber ,* 
+			from tb_news where 1=1
+			<if test="title!=null and title!=''">
+				and title like '%'+#{title}+'%'
+			</if>
+			<if test="ischeck!=null and ischeck!=''">
+				and ischeck =#{ischeck}
+			</if>
+			<if test="showlocation!=null and showlocation!=''">
+				and showlocation !=#{showlocation}
+			</if>
+			<if test="substation != null and substation != ''">
+				and substation=#{substation}
+			</if>
+	    ) a where rownumber > ${pageSize}*(${offset} - 1)
+	</select>
+	
+	<select id="manage.news.selectOne" parameterType="com.winpow.services.manage.news.bean.News"
+		resultType="com.winpow.services.manage.news.bean.News">
+		SELECT
+		id,
+		title,
+		contents, contents as show,
+		cataid,
+		CONVERT(char(10),sendtime,23 ) sendtime,
+		editor,
+		hits,
+		source,
+		adduser,
+		ischeck,
+		cover,
+		lurushijian,
+		inputuser,
+		lastchgtime,
+		pic_app,label,showlocation,substation
+		from tb_news t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+	</select>
+
+	<select id="manage.news.selectCount" parameterType="com.winpow.services.manage.news.bean.News"
+		resultType="int">
+		select count(*) from tb_news t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+	</select>
+
+	<select id="manage.news.selectOneByCondition" parameterType="com.winpow.services.manage.news.bean.News"
+		resultType="com.winpow.services.manage.news.bean.News">
+		SELECT
+		id,
+		title,
+		contents, contents as show,
+		cataid,
+		CONVERT(char(10),sendtime,23 ) sendtime,
+		editor,
+		hits,
+		source,
+		adduser,
+		ischeck,
+		cover,
+		lurushijian,
+		inputuser,
+		lastchgtime,
+		pic_app,label,showlocation
+		from tb_news t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+	</select>
+
+	<insert id="manage.news.insert" parameterType="com.winpow.services.manage.news.bean.News"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into tb_news (
+
+		title,
+		contents,
+		cataid,
+		sendtime,
+		editor,
+		hits,
+		source,
+		adduser,
+		ischeck,
+		cover,
+		lurushijian,
+		inputuser,
+		lastchgtime,
+		pic_app,
+		label,showlocation,substation
+		) values (
+
+		#{title},
+		#{contents},
+		#{cataid},
+		#{sendtime},
+		#{editor},
+		#{hits},
+		#{source},
+		#{adduser},
+		#{ischeck},
+		#{cover},
+		GETDATE(),
+		#{inputuser},
+		GETDATE(),
+		#{pic_app},
+		#{label},#{showlocation}
+		<choose><when test="substation=='all'">,null</when><otherwise>,#{substation}</otherwise></choose>
+		)
+
+	</insert>
+
+	<update id="manage.news.update" parameterType="com.winpow.services.manage.news.bean.News">
+		update tb_news set
+
+		<if test="title!=null and title!=''">
+			title=#{title},
+		</if>
+
+		<if test="contents!=null and contents!=''">
+			contents=#{contents},
+		</if>
+
+		<if test="cataid!=null and cataid!=''">
+			cataid=#{cataid},
+		</if>
+
+		<if test="sendtime!=null and sendtime!=''">
+			sendtime=#{sendtime},
+		</if>
+
+		<if test="editor!=null and editor!=''">
+			editor=#{editor},
+		</if>
+
+		<if test="hits!=null and hits!=''">
+			hits=#{hits},
+		</if>
+
+		<if test="source!=null and source!=''">
+			source=#{source},
+		</if>
+
+		<if test="adduser!=null and adduser!=''">
+			adduser=#{adduser},
+		</if>
+
+		<if test="ischeck!=null and ischeck!=''">
+			ischeck=#{ischeck},
+		</if>
+
+		<if test="cover!=null and cover!=''">
+			cover=#{cover},
+		</if>
+
+		<if test="lurushijian!=null and lurushijian!=''">
+			lurushijian=#{lurushijian},
+		</if>
+
+		<if test="inputuser!=null and inputuser!=''">
+			inputuser=#{inputuser},
+		</if>
+		<if test="pic_app !=null and pic_app !=''">
+			pic_app=#{pic_app},
+		</if>
+		
+		<if test="label !=null and label !=''">
+			label=#{label},
+		</if>
+		<if test="showlocation !=null and showlocation !=''">
+			showlocation=#{showlocation},
+		</if>
+		<if test=" substation !=null and  substation !='' and substation != 'all'">
+            substation=#{substation},
+        </if>
+        
+        <if test=" substation !=null and  substation !='' and substation == 'all'">
+            substation = null,
+        </if>
+		lastchgtime= getdate()
+
+		where id=#{id}
+	</update>
+	<update id="manage.news.updatebrosecount" parameterType="com.winpow.services.manage.news.bean.News">
+		update
+		tb_news set
+		HITS=HITS+1, lastchgtime=getdate()
+		where id=#{id}
+	</update>
+
+	<select id="manage.news.select4index" parameterType="com.winpow.services.manage.news.bean.News"
+		resultType="com.winpow.services.manage.news.bean.News">
+		select top(9) id, title, contents, contents as show, cataid,
+		convert(char(10),sendtime,23 ) sendtime,
+		editor,
+		hits,
+		source,
+		adduser,
+		ischeck,
+		cover,
+		lurushijian,
+		inputuser,
+		lastchgtime,label,showlocation
+		from tb_news where showlocation != '12703'
+		order by id desc
+	</select>
+	
+	<delete id="manage.news.delete" parameterType="String">
+		delete from
+		tb_news where id=#{id}
+	</delete>
+	
+	<select id="manage.news.selectLists" parameterType="com.winpow.services.manage.news.bean.News"
+		resultType="com.winpow.services.manage.news.bean.News">
+		select top ${pageSize} * from (
+			select row_number() over (order by lurushijian desc) as rownumber,* from (
+				select 'news' tabletype,convert(varchar, id) id,title,case when cover is null or cover='' then pic_app else cover end cover,label,hits,lurushijian,c.code_name cataid 
+				from tb_news n left join tb_code c on n.cataid=c.pk_codeid where showlocation != '12702'
+				union all
+				select 'appnews' tabletype,pkid id,detail title,'/image/appnews.jpg' cover,label,times hits,lurushijian,'每日资讯' cataid
+				from tb_app_news where enable='10001'
+			) b
+		) a where rownumber > #{pageSize}*(#{offset} - 1)
+
+	</select>
+</mapper>  

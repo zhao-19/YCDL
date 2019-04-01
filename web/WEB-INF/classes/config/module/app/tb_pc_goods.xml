@@ -1,0 +1,364 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+"-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="app">
+
+	<select id="app.pcgoods.selectPageList" parameterType="com.winpow.services.app.pcgoods.bean.Pcgoods"
+		resultType="hashMap">
+		select * from (
+		SELECT ROW_NUMBER() over(order by sort desc,
+		updatedate desc) as rownumber , * from (
+		select 
+		tp.pkid pkid ,
+		tp.genre genre ,
+		tp.title title ,
+		tp.bewrite bewrite ,
+		tp.content content ,
+		tp.industry industry ,
+		tp.price price ,
+		tp.imgurl imgurl ,
+		tp.createby createby ,
+		tp.createdate createdate ,
+		tp.updateby updateby ,
+		tp.updatedate updatedate ,
+		tp.data_source data_source ,
+		tp.appid appid ,
+		tp.releid releid ,
+		tp.releuserid releuserid ,
+		tp.prologo prologo ,
+		tp.sort sort,
+		case when tq.qiyemingcheng is not null then tq.qiyemingcheng when
+		tj.JIGOUMINGCHENG IS not null then tj.JIGOUMINGCHENG when too.org_name
+		IS not null then too.org_name else '' end as agencyname
+		from tb_pc_goods tp left join tb_Qiye tq on tp.releid = tq.PK_QIYEID left
+		join Tb_jigou tj on tp.releid = tj.id left join tb_other_org too on
+		tp.releid = too.id
+		) t1 where 1 = 1
+		<if test=" agencyname !=null and  agencyname !=''">
+            and agencyname like '%'+#{agencyname}+'%'
+        </if>
+		<if test=" genre !=null and  genre !=''">
+			and genre=#{genre}
+		</if>
+
+		<if test=" title !=null and  title !=''">
+			and title like '%'+#{title}+'%'
+		</if>
+		)t where
+		rownumber
+		&gt; #{offset} and rownumber &lt; =
+		#{pageSize}+#{offset}
+	</select>
+	<select id="app.pcgoods.selectPageCount" parameterType="com.winpow.services.app.pcgoods.bean.Pcgoods"
+		resultType="java.lang.Integer">
+
+		select count(*) from (
+		select 
+        tp.pkid pkid ,
+        tp.genre genre ,
+        tp.title title ,
+        tp.bewrite bewrite ,
+        tp.content content ,
+        tp.industry industry ,
+        tp.price price ,
+        tp.imgurl imgurl ,
+        tp.createby createby ,
+        tp.createdate createdate ,
+        tp.updateby updateby ,
+        tp.updatedate updatedate ,
+        tp.data_source data_source ,
+        tp.appid appid ,
+        tp.releid releid ,
+        tp.releuserid releuserid ,
+        tp.prologo prologo ,
+        tp.sort sort,
+        case when tq.qiyemingcheng is not null then tq.qiyemingcheng when
+        tj.JIGOUMINGCHENG IS not null then tj.JIGOUMINGCHENG when too.org_name
+        IS not null then too.org_name else '' end as agencyname
+        from tb_pc_goods tp left join tb_Qiye tq on tp.releid = tq.PK_QIYEID left
+        join Tb_jigou tj on tp.releid = tj.id left join tb_other_org too on
+        tp.releid = too.id
+        ) t1 where 1 = 1
+        <if test=" agencyname !=null and  agencyname !=''">
+            and agencyname like '%'+#{agencyname}+'%'
+        </if>
+        <if test=" genre !=null and  genre !=''">
+            and genre=#{genre}
+        </if>
+
+        <if test=" title !=null and  title !=''">
+            and title like '%'+#{title}+'%'
+        </if> 
+
+	</select>
+
+	<select id="app.pcgoods.selectOne" parameterType="com.winpow.services.app.pcgoods.bean.Pcgoods"
+		resultType="com.winpow.services.app.pcgoods.bean.Pcgoods">
+		SELECT
+		pkid,
+		genre,
+		title,
+		bewrite,
+		content,
+		industry,
+		price,
+		imgurl,
+		createby,
+		createdate,
+		updateby,
+		updatedate,
+		data_source,
+		appid,
+		releid,
+		releuserid,
+		prologo,sort,lnglat,
+		(select SUM(num) from tb_app_order where
+		releid =#{pkid}) as sellcount
+		from tb_pc_goods t where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+
+	<select id="app.pcgoods.selectCount" parameterType="com.winpow.services.app.pcgoods.bean.Pcgoods"
+		resultType="int">
+		select count(*)
+		FROM tb_pc_goods t where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+
+	<select id="app.pcgoods.selectOneByCondition" parameterType="com.winpow.services.app.pcgoods.bean.Pcgoods"
+		resultType="com.winpow.services.app.pcgoods.bean.Pcgoods">
+		SELECT
+		pkid,
+		genre,
+		title,
+		bewrite,
+		content,
+		industry,
+		price,
+		imgurl,
+		createby,
+		createdate,
+		updateby,
+		updatedate,
+		data_source,
+		appid,
+		releid,
+		releuserid,
+		prologo,
+		sort
+		from tb_pc_goods t where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+
+	<select id="app.pcgoods.selectList" parameterType="com.winpow.services.app.pcgoods.bean.Pcgoods"
+		resultType="com.winpow.services.app.pcgoods.bean.Pcgoods">
+		SELECT
+		pkid,
+		genre,
+		title,
+		bewrite,
+		content,
+		industry,
+		price,
+		imgurl,
+		createby,
+		createdate,
+		updateby,
+		updatedate,
+		data_source,
+		appid,
+		releid,
+		releuserid,
+		prologo,
+		sort
+		from tb_pc_goods t where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+
+	<insert id="app.pcgoods.insert" parameterType="com.winpow.services.app.pcgoods.bean.Pcgoods"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into tb_pc_goods (
+		pkid,
+		genre,
+		title,
+		bewrite,
+		content,
+		industry,
+		price,
+		imgurl,
+		createby,
+		createdate,
+		updateby,
+		updatedate,
+		data_source,
+		appid,
+		releid,
+		releuserid,
+		prologo,
+		sort,lnglat
+		)
+		values (
+		#{pkid},
+		#{genre},
+		#{title},
+		#{bewrite},
+		#{content},
+		#{industry},
+		#{price},
+		#{imgurl},
+		#{createby},
+		getdate(),
+		#{updateby},
+		getdate(),
+		#{data_source},
+		#{appid},
+		#{releid},
+		#{releuserid},
+		#{prologo},
+		#{sort},#{lnglat}
+		)
+
+	</insert>
+
+	<update id="app.pcgoods.update" parameterType="com.winpow.services.app.pcgoods.bean.Pcgoods">
+		update tb_pc_goods set
+		<if test=" genre !=null and  genre !=''">
+			genre=#{genre},
+		</if>
+
+		<if test=" title !=null and  title !=''">
+			title=#{title},
+		</if>
+
+		<if test=" bewrite !=null and  bewrite !=''">
+			bewrite=#{bewrite},
+		</if>
+
+		<if test=" content !=null and  content !=''">
+			content=#{content},
+		</if>
+
+		<if test=" industry !=null and  industry !=''">
+			industry=#{industry},
+		</if>
+
+		<if test=" price !=null">
+			price=#{price},
+		</if>
+
+		<if test=" imgurl !=null and  imgurl !=''">
+			imgurl=#{imgurl},
+		</if>
+
+		<if test=" updateby !=null and  updateby !=''">
+			updateby=#{updateby},
+		</if>
+
+		<if test=" data_source !=null">
+			data_source=#{data_source},
+		</if>
+
+		<if test=" appid !=null and  appid !=''">
+			appid=#{appid},
+		</if>
+
+		<if test=" releid !=null and  releid !=''">
+			releid=#{releid},
+		</if>
+
+		<if test="releuserid!=null and releuserid !=''">
+			releuserid=#{releuserid},
+		</if>
+
+		<if test="prologo!=null and prologo !=''">
+			prologo=#{prologo},
+		</if>
+		<if test="sort !=null">
+			sort=#{sort},
+		</if>
+		<if test="lnglat !=null and lnglat !=''">
+            lnglat=#{lnglat},
+        </if>
+		updatedate=getdate()
+		where pkid=#{pkid}
+	</update>
+	<select id="app.pcgoods.selectListByTitle" parameterType="com.winpow.services.app.pcgoods.bean.Pcgoods"
+		resultType="com.winpow.services.app.pcgoods.bean.Pcgoods">
+		select top ${pageSize} * from (
+		select row_number() over
+		(order by sort desc,updatedate desc) as rownumber,* from(
+		select * from
+		tb_pc_goods where title like '%'+#{title}+'%'
+		) b
+		) a where rownumber >
+		#{pageSize}*(#{offset} - 1)
+	</select>
+
+	<select id="app.pcgoods.selectLists" parameterType="com.winpow.services.app.pcgoods.bean.Pcgoods"
+		resultType="com.winpow.services.app.pcgoods.bean.Pcgoods">
+		select top ${pageSize} * from (
+		select row_number() over (order by sort
+		desc,
+		updatedate desc) as rownumber,*
+		from tb_pc_goods where 1=1
+		<choose>
+			<when test="title !=null and title !=''">
+				and title like '%'+#{title}+'%'
+			</when>
+			<otherwise>
+				<choose>
+					<when test="genre == '11206'">
+						and genre=#{genre}
+					</when>
+					<otherwise>
+						and genre = '11204' or genre = '11205'
+					</otherwise>
+				</choose>
+			</otherwise>
+		</choose>
+
+		) a where rownumber > #{pageSize}*(#{offset} - 1)
+	</select>
+
+	<delete id="app.pcgoods.delete" parameterType="com.winpow.services.app.pcgoods.bean.Pcgoods">
+		delete from tb_pc_goods where pkid=#{pkid}
+	</delete>
+
+	<select id="app.pcgoods.selectAllList" parameterType="com.winpow.services.app.pcgoods.bean.Pcgoods"
+		resultType="com.winpow.services.app.pcgoods.bean.Pcgoods">
+		select t1.* from tb_pc_goods t1 left join tb_app_banner t2 on t2.appid
+		= t1.pkid where t2.pkid is null
+		<if test=" genre !=null and  genre !=''">
+			and genre=#{genre}
+		</if>
+		order by updatedate desc
+	</select>
+
+	<select id="app.pcgoods.selectBanner" parameterType="com.winpow.services.app.appbanner.bean.Appbanner"
+		resultType="com.winpow.services.app.appbanner.bean.Appbanner">
+		select top ${pageSize} * from (
+			select row_number() over (order by sort desc,createdate desc) as rownumber,* from(
+				select * from tb_app_banner where iseffective='10001' and location=#{location}
+			) b
+		) a where rownumber > ${pageSize}*(${offset} - 1)
+	</select>
+
+	<select id="app.pcgoods.selectMsgList" parameterType="com.winpow.services.app.pcgoods.bean.Pcgoods"
+        resultType="com.winpow.services.app.pcgoods.bean.Pcgoods">
+        select top(50) * from tb_pc_goods t where 1=1
+		<if test="title !=null and title!=''">
+			and title like '%'+#{title}+'%'
+		</if>
+		order by createdate desc
+    </select>
+
+</mapper>  

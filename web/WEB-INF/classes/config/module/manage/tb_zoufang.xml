@@ -1,0 +1,411 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE mapper PUBLIC 
+"-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="manage">
+	
+	<select id="manage.zoufang.selectPageList" parameterType="com.winpow.services.manage.zoufang.bean.Zoufang" resultType="hashMap">
+	select * from (
+		SELECT  ROW_NUMBER() over(order by id) as  rownumber ,
+								 	id,
+			 								 	qiyemingcheng,
+			 								 	qiyexingzhi,
+			 								 	suozaidizhi,
+			 								 	chengliriqi,
+			 								 	hangyeguishu,
+			 								 	zhuceziben,
+			 								 	faren,
+			 								 	farentele,
+			 								 	lianxiren,
+			 								 	lianxirentele,
+			 								 	gongsijianjie,
+			 								 	zhuyaochanpin,
+			 								 	thirdyear,
+			 								 	thirdsell,
+			 								 	thirdinte,
+			 								 	secondsell,
+			 								 	secondinte,
+			 								 	firstsell,
+			 								 	firstinte,
+			 								 	qitaguanzhuneirong,
+			 								 	qiyerongzixuqiu,
+			 								 	shifougenjin,
+			 								 	memo,
+			 								 	baifangshijian,
+			 								 	baifangren,
+			 								 	lurushijian,
+			 								 	inputuser,
+			 								 	lastchgtime,
+			 								 	yixiangchanpin,
+			 								  genzongdongtai
+			 		   from tb_zoufang )t  where rownumber &gt; = #{offset} and rownumber &lt; = #{pageSize}+#{offset} 
+	</select>
+	<select id="manage.zoufang.selectPageCount" parameterType="com.winpow.services.manage.zoufang.bean.Zoufang" resultType="java.lang.Integer">
+		
+			select count(*) from (
+					SELECT  ROW_NUMBER() over(order by id) as  rownumber ,
+																	 	id,
+						 																	 	qiyemingcheng,
+						 																	 	qiyexingzhi,
+						 																	 	suozaidizhi,
+						 																	 	chengliriqi,
+						 																	 	hangyeguishu,
+						 																	 	zhuceziben,
+						 																	 	faren,
+						 																	 	farentele,
+						 																	 	lianxiren,
+						 																	 	lianxirentele,
+						 																	 	gongsijianjie,
+						 																	 	zhuyaochanpin,
+						 																	 	thirdyear,
+						 																	 	thirdsell,
+						 																	 	thirdinte,
+						 																	 	secondsell,
+						 																	 	secondinte,
+						 																	 	firstsell,
+						 																	 	firstinte,
+						 																	 	qitaguanzhuneirong,
+						 																	 	qiyerongzixuqiu,
+						 																	 	shifougenjin,
+						 																	 	memo,
+						 																	 	baifangshijian,
+						 																	 	baifangren,
+						 																	 	lurushijian,
+						 																	 	inputuser,
+						 																	 	lastchgtime,
+						 																	 	yixiangchanpin,
+						 																	  genzongdongtai
+						 								   from tb_zoufang )t  
+
+	</select>
+	
+	<select id="manage.zoufang.selectOne" parameterType="com.winpow.services.manage.zoufang.bean.Zoufang" resultType="com.winpow.services.manage.zoufang.bean.Zoufang">
+			SELECT  
+											 	id,
+				 											 	qiyemingcheng,
+				 											 	qiyexingzhi,
+				 											 	suozaidizhi,
+				 											 	chengliriqi,
+				 											 	hangyeguishu,
+				 											 	zhuceziben,
+				 											 	faren,
+				 											 	farentele,
+				 											 	lianxiren,
+				 											 	lianxirentele,
+				 											 	gongsijianjie,
+				 											 	zhuyaochanpin,
+				 											 	thirdyear,
+				 											 	thirdsell,
+				 											 	thirdinte,
+				 											 	secondsell,
+				 											 	secondinte,
+				 											 	firstsell,
+				 											 	firstinte,
+				 											 	qitaguanzhuneirong,
+				 											 	qiyerongzixuqiu,
+				 											 	shifougenjin,
+				 											 	memo,
+				 											 	baifangshijian,
+				 											 	baifangren,
+				 											 	lurushijian,
+				 											 	inputuser,
+				 											 	lastchgtime,
+				 											 	yixiangchanpin,
+				 											  genzongdongtai
+				 						  from tb_zoufang t  where 1=1  
+			<if test="id!=null and id!=''">
+				and t.id=#{id}
+			</if>
+	</select>
+	
+	<select id="manage.zoufang.selectCount" parameterType="com.winpow.services.manage.zoufang.bean.Zoufang" resultType="int">
+			select count(*)  
+				 FROM tb_zoufang t  where 1=1  
+				<if test="id!=null and id!=''">
+					and t.id=#{id}
+				</if>
+	</select>
+	
+	<select id="manage.zoufang.selectOneByCondition" parameterType="com.winpow.services.manage.zoufang.bean.Zoufang" resultType="com.winpow.services.manage.zoufang.bean.Zoufang">
+			SELECT  
+											 	id,
+				 											 	qiyemingcheng,
+				 											 	qiyexingzhi,
+				 											 	suozaidizhi,
+				 											 	chengliriqi,
+				 											 	hangyeguishu,
+				 											 	zhuceziben,
+				 											 	faren,
+				 											 	farentele,
+				 											 	lianxiren,
+				 											 	lianxirentele,
+				 											 	gongsijianjie,
+				 											 	zhuyaochanpin,
+				 											 	thirdyear,
+				 											 	thirdsell,
+				 											 	thirdinte,
+				 											 	secondsell,
+				 											 	secondinte,
+				 											 	firstsell,
+				 											 	firstinte,
+				 											 	qitaguanzhuneirong,
+				 											 	qiyerongzixuqiu,
+				 											 	shifougenjin,
+				 											 	memo,
+				 											 	baifangshijian,
+				 											 	baifangren,
+				 											 	lurushijian,
+				 											 	inputuser,
+				 											 	lastchgtime,
+				 											 	yixiangchanpin,
+				 											  genzongdongtai
+				 					 from  tb_zoufang   t  where 1=1  
+			<if test="id!=null and id!=''">
+				and t.id=#{id}
+			</if>
+	</select>
+	
+	
+	
+		<select id="manage.zoufang.selectList" parameterType="com.winpow.services.manage.zoufang.bean.Zoufang" resultType="com.winpow.services.manage.zoufang.bean.Zoufang">
+			SELECT  
+											 	id,
+				 											 	qiyemingcheng,
+				 											 	qiyexingzhi,
+				 											 	suozaidizhi,
+				 											 	chengliriqi,
+				 											 	hangyeguishu,
+				 											 	zhuceziben,
+				 											 	faren,
+				 											 	farentele,
+				 											 	lianxiren,
+				 											 	lianxirentele,
+				 											 	gongsijianjie,
+				 											 	zhuyaochanpin,
+				 											 	thirdyear,
+				 											 	thirdsell,
+				 											 	thirdinte,
+				 											 	secondsell,
+				 											 	secondinte,
+				 											 	firstsell,
+				 											 	firstinte,
+				 											 	qitaguanzhuneirong,
+				 											 	qiyerongzixuqiu,
+				 											 	shifougenjin,
+				 											 	memo,
+				 											 	baifangshijian,
+				 											 	baifangren,
+				 											 	lurushijian,
+				 											 	inputuser,
+				 											 	lastchgtime,
+				 											 	yixiangchanpin,
+				 											  genzongdongtai
+				 					 from  tb_zoufang   t  where 1=1  
+			<if test="id!=null and id!=''">
+				and t.id=#{id}
+			</if>
+	</select>
+	
+	
+	
+	
+	<insert id="manage.zoufang.insert" parameterType="com.winpow.services.manage.zoufang.bean.Zoufang" useGeneratedKeys="true" 
+		keyProperty="id">
+	 		insert into tb_zoufang ( 
+	 								 	id,
+													 	qiyemingcheng,
+													 	qiyexingzhi,
+													 	suozaidizhi,
+													 	chengliriqi,
+													 	hangyeguishu,
+													 	zhuceziben,
+													 	faren,
+													 	farentele,
+													 	lianxiren,
+													 	lianxirentele,
+													 	gongsijianjie,
+													 	zhuyaochanpin,
+													 	thirdyear,
+													 	thirdsell,
+													 	thirdinte,
+													 	secondsell,
+													 	secondinte,
+													 	firstsell,
+													 	firstinte,
+													 	qitaguanzhuneirong,
+													 	qiyerongzixuqiu,
+													 	shifougenjin,
+													 	memo,
+													 	baifangshijian,
+													 	baifangren,
+													 	lurushijian,
+													 	inputuser,
+													 	lastchgtime,
+													 	yixiangchanpin,
+													  genzongdongtai
+			 						) values ( 
+										 	#{id},
+				 										 	#{qiyemingcheng},
+				 										 	#{qiyexingzhi},
+				 										 	#{suozaidizhi},
+				 										 	#{chengliriqi},
+				 										 	#{hangyeguishu},
+				 										 	#{zhuceziben},
+				 										 	#{faren},
+				 										 	#{farentele},
+				 										 	#{lianxiren},
+				 										 	#{lianxirentele},
+				 										 	#{gongsijianjie},
+				 										 	#{zhuyaochanpin},
+				 										 	#{thirdyear},
+				 										 	#{thirdsell},
+				 										 	#{thirdinte},
+				 										 	#{secondsell},
+				 										 	#{secondinte},
+				 										 	#{firstsell},
+				 										 	#{firstinte},
+				 										 	#{qitaguanzhuneirong},
+				 										 	#{qiyerongzixuqiu},
+				 										 	#{shifougenjin},
+				 										 	#{memo},
+				 										 	#{baifangshijian},
+				 										 	#{baifangren},
+				 										 	#{lurushijian},
+				 										 	#{inputuser},
+				 										 	#{lastchgtime},
+				 										 	#{yixiangchanpin},
+				 											#{genzongdongtai}
+				 						)
+		 
+	</insert>
+	
+	<update id="manage.zoufang.update" parameterType="com.winpow.services.manage.zoufang.bean.Zoufang">
+		update tb_zoufang set 
+                        <if test=" id !=null and  id !=''">
+                        id=#{id},
+                        </if>
+		
+				 			                <if test=" qiyemingcheng !=null and  qiyemingcheng !=''">
+                        qiyemingcheng=#{qiyemingcheng},
+                        </if>
+		
+				 			                <if test=" qiyexingzhi !=null and  qiyexingzhi !=''">
+                        qiyexingzhi=#{qiyexingzhi},
+                        </if>
+		
+				 			                <if test=" suozaidizhi !=null and  suozaidizhi !=''">
+                        suozaidizhi=#{suozaidizhi},
+                        </if>
+		
+				 			                <if test=" chengliriqi !=null and  chengliriqi !=''">
+                        chengliriqi=#{chengliriqi},
+                        </if>
+		
+				 			                <if test=" hangyeguishu !=null and  hangyeguishu !=''">
+                        hangyeguishu=#{hangyeguishu},
+                        </if>
+		
+				 			                <if test=" zhuceziben !=null and  zhuceziben !=''">
+                        zhuceziben=#{zhuceziben},
+                        </if>
+		
+				 			                <if test=" faren !=null and  faren !=''">
+                        faren=#{faren},
+                        </if>
+		
+				 			                <if test=" farentele !=null and  farentele !=''">
+                        farentele=#{farentele},
+                        </if>
+		
+				 			                <if test=" lianxiren !=null and  lianxiren !=''">
+                        lianxiren=#{lianxiren},
+                        </if>
+		
+				 			                <if test=" lianxirentele !=null and  lianxirentele !=''">
+                        lianxirentele=#{lianxirentele},
+                        </if>
+		
+				 			                <if test=" gongsijianjie !=null and  gongsijianjie !=''">
+                        gongsijianjie=#{gongsijianjie},
+                        </if>
+		
+				 			                <if test=" zhuyaochanpin !=null and  zhuyaochanpin !=''">
+                        zhuyaochanpin=#{zhuyaochanpin},
+                        </if>
+		
+				 			                <if test=" thirdyear !=null and  thirdyear !=''">
+                        thirdyear=#{thirdyear},
+                        </if>
+		
+				 			                <if test=" thirdsell !=null and  thirdsell !=''">
+                        thirdsell=#{thirdsell},
+                        </if>
+		
+				 			                <if test=" thirdinte !=null and  thirdinte !=''">
+                        thirdinte=#{thirdinte},
+                        </if>
+		
+				 			                <if test=" secondsell !=null and  secondsell !=''">
+                        secondsell=#{secondsell},
+                        </if>
+		
+				 			                <if test=" secondinte !=null and  secondinte !=''">
+                        secondinte=#{secondinte},
+                        </if>
+		
+				 			                <if test=" firstsell !=null and  firstsell !=''">
+                        firstsell=#{firstsell},
+                        </if>
+		
+				 			                <if test=" firstinte !=null and  firstinte !=''">
+                        firstinte=#{firstinte},
+                        </if>
+		
+				 			                <if test=" qitaguanzhuneirong !=null and  qitaguanzhuneirong !=''">
+                        qitaguanzhuneirong=#{qitaguanzhuneirong},
+                        </if>
+		
+				 			                <if test=" qiyerongzixuqiu !=null and  qiyerongzixuqiu !=''">
+                        qiyerongzixuqiu=#{qiyerongzixuqiu},
+                        </if>
+		
+				 			                <if test=" shifougenjin !=null and  shifougenjin !=''">
+                        shifougenjin=#{shifougenjin},
+                        </if>
+		
+				 			                <if test=" memo !=null and  memo !=''">
+                        memo=#{memo},
+                        </if>
+		
+				 			                <if test=" baifangshijian !=null and  baifangshijian !=''">
+                        baifangshijian=#{baifangshijian},
+                        </if>
+		
+				 			                <if test=" baifangren !=null and  baifangren !=''">
+                        baifangren=#{baifangren},
+                        </if>
+		
+				 			                <if test=" lurushijian !=null and  lurushijian !=''">
+                        lurushijian=#{lurushijian},
+                        </if>
+		
+				 			                <if test=" inputuser !=null and  inputuser !=''">
+                        inputuser=#{inputuser},
+                        </if>
+		
+				 			                <if test=" lastchgtime !=null and  lastchgtime !=''">
+                        lastchgtime=#{lastchgtime},
+                        </if>
+		
+				 			                <if test=" yixiangchanpin !=null and  yixiangchanpin !=''">
+                        yixiangchanpin=#{yixiangchanpin},
+                        </if>
+		
+				 			                <if test="genzongdongtai!=null and genzongdongtai !=''">
+                        genzongdongtai=#{genzongdongtai}
+                        </if>
+         						 
+		where id=#{id}
+	</update>
+	
+</mapper>  

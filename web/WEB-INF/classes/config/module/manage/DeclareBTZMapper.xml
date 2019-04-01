@@ -1,0 +1,397 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.winpow.services.manage.declare.mapper.DeclareBTZMapper">
+
+    <resultMap type="com.winpow.services.manage.declare.bean.DeclareBTZ" id="declareBTZMap">
+        <id column="pId" property="id"/>
+        <result column="pRele_id" property="rele_id"/>
+        <result column="pUserid" property="userid"/>
+        <result column="leibie" property="leibie"/>
+        <result column="qiyemingcheng" property="qiyemingcheng"/>
+        <result column="zyyw" property="zyyw"/>
+        <result column="clri" property="clri"/>
+        <result column="dizhi" property="dizhi"/>
+        <result column="gdsjnjg" property="gdsjnjg"/>
+        <result column="tjgxszd" property="tjgxszd"/>
+        <result column="sscy" property="sscy"/>
+        <result column="fzr" property="fzr"/>
+        <result column="fzrzw" property="fzrzw"/>
+        <result column="fzrsj" property="fzrsj"/>
+        <result column="lxr" property="lxr"/>
+        <result column="lxrzw" property="lxrzw"/>
+        <result column="lxrsj" property="lxrsj"/>
+        <result column="qysqje" property="qysqje"/>
+        <result column="xtjsje" property="xtjsje"/>
+        <result column="status" property="status"/>
+        <result column="memo" property="memo"/>
+        <result column="pLurushijian" property="lurushijian"/>
+        <result column="pInputuser" property="inputuser"/>
+        <result column="pLastchgtime" property="lastchgtime"/>
+        <result column="zlsfwz" property="zlsfwz" />
+		<result column="pichi" property="pichi" />
+        <collection property="declareBTZCoreList" ofType="com.winpow.services.manage.declare.bean.DeclareBTZCore"
+                    column="rele_id">
+            <id column="id" property="id"/>
+            <result column="userid" property="userid"/>
+            <result column="jgmc" property="jgmc"/>
+            <result column="jgzzjgdm" property="jgzzjgdm"/>
+            <result column="jgzyyw" property="jgzyyw"/>
+            <result column="jgtzje" property="jgtzje"/>
+            <result column="jgszgf" property="jgszgf"/>
+            <result column="tzsfdz" property="tzsfdz"/>
+            <result column="dzsj" property="dzsj"/>
+            <result column="gsbgsj" property="gsbgsj"/>
+            <result column="jgsfba" property="jgsfba"/>
+            <result column="jgbasj" property="jgbasj"/>
+            <result column="lurushijian" property="lurushijian"/>
+            <result column="inputuser" property="inputuser"/>
+            <result column="lastchgtime" property="lastchgtime"/>
+        </collection>
+
+    </resultMap>
+
+    <select id="selectPageList"
+            parameterType="com.winpow.services.manage.declare.bean.DeclareBTZ" resultType="hashMap">
+        select * from (
+        SELECT ROW_NUMBER() over(order by lastchgtime desc) as rownumber ,
+        id,
+        rele_id,
+        userid,
+        leibie,
+        qiyemingcheng,
+        zyyw,
+        clri,
+        dizhi,
+        gdsjnjg,
+        tjgxszd,
+        sscy,
+        fzr,
+        fzrzw,
+        fzrsj,
+        lxr,
+        lxrzw,
+        lxrsj,
+        qysqje,
+        xtjsje,
+        status,
+        memo,
+        pichi,
+        lurushijian,
+        inputuser,
+        lastchgtime,
+        zlsfwz
+        from tb_sb_btz where 1=1
+        <if test="userid != null and userid !=''">
+            and userid like '%' + #{userid} + '%'
+        </if>
+        <if test="status != null and status !=''">
+            and status = #{status}
+        </if>
+        <if test="leibie != null">
+            and leibie = #{leibie}
+        </if>
+        <if test="lxrsj != null and lxrsj !=''">
+            and lxrsj like '%' + #{lxrsj} + '%'
+        </if>
+        <if test="qiyemingcheng != null and qiyemingcheng !=''">
+            and qiyemingcheng like '%' + #{qiyemingcheng} + '%'
+        </if>
+        <if test="startTime != null and startTime !=''">
+            and lurushijian &gt;= #{startTime}
+        </if>
+        <if test="endTime != null and endTime !=''">
+            and lurushijian &lt; #{endTime}
+        </if>
+          <if test="pichi != null">
+            and pichi = #{pichi}
+        </if>
+        )t where rownumber &gt; = #{offset} and rownumber &lt; = #{pageSize}+#{offset}
+
+    </select>
+    <select id="selectPageCount"
+            parameterType="com.winpow.services.manage.declare.bean.DeclareBTZ"
+            resultType="java.lang.Integer">
+        select count(id) from (
+        SELECT ROW_NUMBER() over(order by lastchgtime) as rownumber ,
+        id,
+        rele_id,
+        userid,
+        leibie,
+        qiyemingcheng,
+        zyyw,
+        clri,
+        dizhi,
+        gdsjnjg,
+        tjgxszd,
+        sscy,
+        fzr,
+        fzrzw,
+        fzrsj,
+        lxr,
+        lxrzw,
+        lxrsj,
+        qysqje,
+        xtjsje,
+        status,
+        memo,pichi,
+        lurushijian,
+        inputuser,
+        lastchgtime
+        from tb_sb_btz where 1=1
+        <if test="userid != null and userid !=''">
+            and userid like '%' + #{userid} + '%'
+        </if>
+        <if test="status != null and status !=''">
+            and status = #{status}
+        </if>
+        <if test="leibie != null">
+            and leibie = #{leibie}
+        </if>
+        <if test="lxrsj != null and lxrsj !=''">
+            and lxrsj like '%' + #{lxrsj} + '%'
+        </if>
+        <if test="qiyemingcheng != null and qiyemingcheng !=''">
+            and qiyemingcheng like '%' + #{qiyemingcheng} + '%'
+        </if>
+        <if test="startTime != null and startTime !=''">
+            and lurushijian &gt;= #{startTime}
+        </if>
+        <if test="endTime != null and endTime !=''">
+            and lurushijian &lt; #{endTime}
+        </if>
+        	<if test="pichi != null">
+            and pichi = #{pichi}
+        </if>
+        )t
+    </select>
+
+    <select id="selectOne"
+            parameterType="com.winpow.services.manage.declare.bean.DeclareBTZ"
+            resultMap="declareBTZMap">
+        SELECT
+          t.id as pId,
+        t.rele_id as pRele_id,
+        t.userid as pUserid,
+        t.leibie,
+        t.qiyemingcheng,
+        t.zyyw,
+        t.clri,
+        t.dizhi,
+        t.gdsjnjg,
+        t.tjgxszd,
+        t.sscy,
+        t.fzr,
+        t.fzrzw,
+        t.fzrsj,
+        t.lxr,
+        t.lxrzw,
+        t.lxrsj,
+        t.qysqje,
+        t.xtjsje,
+        t.status,
+        t.memo,
+        t.pichi,
+        t.lurushijian as pLurushijian,
+        t.inputuser as pInputuser,
+        t.lastchgtime as pLastchgtime,
+        t.zlsfwz,
+        a.*
+        from tb_sb_btz t LEFT JOIN tb_sb_btz_core a ON t.id = a.rele_id where  t.id=#{id} 
+        
+         <if test="pichi != null">
+            and pichi = #{pichi}
+        </if>
+    </select>
+
+    <select id="selectAllList"
+            parameterType="com.winpow.services.manage.declare.bean.DeclareBTZ"
+            resultType="com.winpow.services.manage.declare.bean.DeclareBTZ">
+        SELECT
+        id,
+        rele_id,
+        userid,
+        leibie,
+        qiyemingcheng,
+        zyyw,
+        clri,
+        dizhi,
+        gdsjnjg,
+        tjgxszd,
+        sscy,
+        fzr,
+        fzrzw,
+        fzrsj,
+        lxr,
+        lxrzw,
+        lxrsj,
+        qysqje,
+        xtjsje,
+        status,
+        memo,
+        pichi,
+        lurushijian,
+        inputuser,
+        lastchgtime,
+        zlsfwz
+        from  tb_sb_btz t where 1=1
+        <if test="leibie != null">
+            and leibie = #{leibie}
+        </if>
+        <if test="userid != null and userid !=''">
+            and userid = #{userid}
+        </if>
+        <if test="pichi != null">
+            and pichi = #{pichi}
+        </if>
+    </select>
+
+    <insert id="insert"
+            parameterType="com.winpow.services.manage.declare.bean.DeclareBTZ" useGeneratedKeys="true"
+            keyProperty="id">
+		insert into tb_sb_btz (
+													 	rele_id,
+													 	userid,
+													 	leibie,
+													 	qiyemingcheng,
+													 	zyyw,
+													 	clri,
+													 	dizhi,
+													 	gdsjnjg,
+													 	tjgxszd,
+													 	sscy,
+													 	fzr,
+													 	fzrzw,
+													 	fzrsj,
+													 	lxr,
+													 	lxrzw,
+													 	lxrsj,
+													 	qysqje,
+													 	xtjsje,
+													 	status,
+													 	pichi,
+													 	memo,
+													 	lurushijian,
+													 	inputuser,
+													  lastchgtime,
+													  zlsfwz
+			 						) values (
+				 										 	#{rele_id},
+				 										 	#{userid},
+				 										 	#{leibie},
+				 										 	#{qiyemingcheng},
+				 										 	#{zyyw},
+				 										 	#{clri},
+				 										 	#{dizhi},
+				 										 	#{gdsjnjg},
+				 										 	#{tjgxszd},
+				 										 	#{sscy},
+				 										 	#{fzr},
+				 										 	#{fzrzw},
+				 										 	#{fzrsj},
+				 										 	#{lxr},
+				 										 	#{lxrzw},
+				 										 	#{lxrsj},
+				 										 	#{qysqje},
+				 										 	#{xtjsje},
+				 										 	#{status},
+				 										 	#{pichi},
+				 										 	#{memo},
+				 										 	getdate(),
+				 										 	#{inputuser},
+				 											getdate(),
+				 											#{zlsfwz}
+				 						)
+	</insert>
+
+    <update id="update"
+            parameterType="com.winpow.services.manage.declare.bean.DeclareBTZ">
+        update tb_sb_btz set
+
+        <if test=" rele_id !=null and  rele_id !=''">
+            rele_id=#{rele_id},
+        </if>
+
+        <if test=" userid !=null and  userid !=''">
+            userid=#{userid},
+        </if>
+
+        <if test=" qiyemingcheng !=null and  qiyemingcheng !=''">
+            qiyemingcheng=#{qiyemingcheng},
+        </if>
+
+        <if test=" zyyw !=null and  zyyw !=''">
+            zyyw=#{zyyw},
+        </if>
+
+        <if test=" clri !=null and  clri !=''">
+            clri=#{clri},
+        </if>
+
+        <if test=" dizhi !=null and  dizhi !=''">
+            dizhi=#{dizhi},
+        </if>
+
+        <if test=" gdsjnjg !=null and  gdsjnjg !=''">
+            gdsjnjg=#{gdsjnjg},
+        </if>
+
+        <if test=" tjgxszd !=null and  tjgxszd !=''">
+            tjgxszd=#{tjgxszd},
+        </if>
+
+        <if test=" sscy !=null and  sscy !=''">
+            sscy=#{sscy},
+        </if>
+
+        <if test=" fzr !=null and  fzr !=''">
+            fzr=#{fzr},
+        </if>
+
+        <if test=" fzrzw !=null and  fzrzw !=''">
+            fzrzw=#{fzrzw},
+        </if>
+
+        <if test=" fzrsj !=null and  fzrsj !=''">
+            fzrsj=#{fzrsj},
+        </if>
+
+        <if test=" lxr !=null and  lxr !=''">
+            lxr=#{lxr},
+        </if>
+
+        <if test=" lxrzw !=null and  lxrzw !=''">
+            lxrzw=#{lxrzw},
+        </if>
+
+        <if test=" lxrsj !=null and  lxrsj !=''">
+            lxrsj=#{lxrsj},
+        </if>
+
+        <if test=" qysqje !=null and  qysqje !=''">
+            qysqje=#{qysqje},
+        </if>
+
+        <if test=" xtjsje !=null ">
+            xtjsje=#{xtjsje},
+        </if>
+
+        <if test=" status !=null and  status !=''">
+            status=#{status},
+        </if>
+
+        <if test=" memo !=null and  memo !=''">
+            memo=#{memo},
+        </if>
+
+        <if test="zlsfwz != null and zlsfwz != ''">
+            zlsfwz=#{zlsfwz},
+        </if>
+        lastchgtime=getdate()
+        where id=#{id}
+    </update>
+    <delete id="delete">
+        delete tb_sb_btz where id=#{id}
+    </delete>
+</mapper>  

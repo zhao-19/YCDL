@@ -1,0 +1,367 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE mapper PUBLIC 
+"-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="front">
+	
+	<select id="front.caiwuzhaiyao.selectPageList" parameterType="com.winpow.services.manage.caiwuzhaiyao.bean.Caiwuzhaiyao" resultType="hashMap">
+	select * from (
+		SELECT  ROW_NUMBER() over(order by id) as  rownumber ,
+								 	id,
+			 								 	qyid,
+			 								 	type,
+			 								 	year,
+			 								 	month,
+			 								 	zongzichan,
+			 								 	liudongzichan,
+			 								 	gudingzichan,
+			 								 	zongfuzhai,
+			 								 	liudongfuzhai,
+			 								 	yingyeshouru,
+			 								 	zyywsr,
+			 								 	zyywcb,
+			 								 	yingyelirun,
+			 								 	lirunzonge,
+			 								 	jinliren,
+			 								 	yingshouzhangkuan,
+			 								 	cunhuo,
+			 								 	zhejiu,
+			 								 	zichanfuzhailv,
+			 								 	xsjlv,
+			 								 	xsmlv,
+			 								 	shuishou,
+			 								 	jingzichan,
+			 								 	xianjinliu,
+			 								 	sudongbilv,
+			 								 	jinzichanshouyilv,
+			 								 	shifouyuce,
+			 								 	inputuser,
+			 								 	lurushijian,
+			 								  lastchgtime
+			 		   from tb_QY_Caiwuzhaiyao )t  where rownumber &gt; = #{offset} and rownumber &lt; = #{pageSize}+#{offset} 
+	</select>
+	<select id="front.caiwuzhaiyao.selectPageCount" parameterType="com.winpow.services.manage.caiwuzhaiyao.bean.Caiwuzhaiyao" resultType="java.lang.Integer">
+		
+			select count(*) from (
+					SELECT  ROW_NUMBER() over(order by id) as  rownumber ,
+																	 	id,
+						 																	 	qyid,
+						 																	 	type,
+						 																	 	year,
+						 																	 	month,
+						 																	 	zongzichan,
+						 																	 	liudongzichan,
+						 																	 	gudingzichan,
+						 																	 	zongfuzhai,
+						 																	 	liudongfuzhai,
+						 																	 	yingyeshouru,
+						 																	 	zyywsr,
+						 																	 	zyywcb,
+						 																	 	yingyelirun,
+						 																	 	lirunzonge,
+						 																	 	jinliren,
+						 																	 	yingshouzhangkuan,
+						 																	 	cunhuo,
+						 																	 	zhejiu,
+						 																	 	zichanfuzhailv,
+						 																	 	xsjlv,
+						 																	 	xsmlv,
+						 																	 	shuishou,
+						 																	 	jingzichan,
+						 																	 	xianjinliu,
+						 																	 	sudongbilv,
+						 																	 	jinzichanshouyilv,
+						 																	 	shifouyuce,
+						 																	 	inputuser,
+						 																	 	lurushijian,
+						 																	  lastchgtime
+						 								   from tb_QY_Caiwuzhaiyao )t  
+
+	</select>
+	
+	<select id="front.caiwuzhaiyao.selectOne" parameterType="com.winpow.services.manage.caiwuzhaiyao.bean.Caiwuzhaiyao" resultType="com.winpow.services.manage.caiwuzhaiyao.bean.Caiwuzhaiyao">
+			SELECT  
+											 	id,
+				 											 	qyid,
+				 											 	type,
+				 											 	year,
+				 											 	month,
+				 											 	zongzichan,
+				 											 	liudongzichan,
+				 											 	gudingzichan,
+				 											 	zongfuzhai,
+				 											 	liudongfuzhai,
+				 											 	yingyeshouru,
+				 											 	zyywsr,
+				 											 	zyywcb,
+				 											 	yingyelirun,
+				 											 	lirunzonge,
+				 											 	jinliren,
+				 											 	yingshouzhangkuan,
+				 											 	cunhuo,
+				 											 	zhejiu,
+				 											 	zichanfuzhailv,
+				 											 	xsjlv,
+				 											 	xsmlv,
+				 											 	shuishou,
+				 											 	jingzichan,
+				 											 	xianjinliu,
+				 											 	sudongbilv,
+				 											 	jinzichanshouyilv,
+				 											 	shifouyuce,
+				 											 	inputuser,
+				 											 	lurushijian,
+				 											  lastchgtime
+				 						  from tb_QY_Caiwuzhaiyao t  where 1=1  
+			<if test="id!=null and id!=''">
+				and t.id=#{id}
+			</if>
+	</select>
+	
+	<select id="front.caiwuzhaiyao.selectCount" parameterType="com.winpow.services.manage.caiwuzhaiyao.bean.Caiwuzhaiyao" resultType="int">
+			select count(*)  
+				 FROM tb_QY_Caiwuzhaiyao t  where 1=1  
+				<if test="id!=null and id!=''">
+					and t.id=#{id}
+				</if>
+	</select>
+	
+	<select id="front.caiwuzhaiyao.selectOneByCondition" parameterType="com.winpow.services.manage.caiwuzhaiyao.bean.Caiwuzhaiyao" resultType="com.winpow.services.manage.caiwuzhaiyao.bean.Caiwuzhaiyao">
+			SELECT  
+											 	id,
+				 											 	qyid,
+				 											 	type,
+				 											 	year,
+				 											 	month,
+				 											 	zongzichan,
+				 											 	liudongzichan,
+				 											 	gudingzichan,
+				 											 	zongfuzhai,
+				 											 	liudongfuzhai,
+				 											 	yingyeshouru,
+				 											 	zyywsr,
+				 											 	zyywcb,
+				 											 	yingyelirun,
+				 											 	lirunzonge,
+				 											 	jinliren,
+				 											 	yingshouzhangkuan,
+				 											 	cunhuo,
+				 											 	zhejiu,
+				 											 	zichanfuzhailv,
+				 											 	xsjlv,
+				 											 	xsmlv,
+				 											 	shuishou,
+				 											 	jingzichan,
+				 											 	xianjinliu,
+				 											 	sudongbilv,
+				 											 	jinzichanshouyilv,
+				 											 	shifouyuce,
+				 											 	inputuser,
+				 											 	lurushijian,
+				 											  lastchgtime
+				 					 from  tb_QY_Caiwuzhaiyao   t  where 1=1  
+			<if test="id!=null and id!=''">
+				and t.id=#{id}
+			</if>
+	</select>
+	
+	<insert id="front.caiwuzhaiyao.insert" parameterType="com.winpow.services.manage.caiwuzhaiyao.bean.Caiwuzhaiyao" useGeneratedKeys="true" 
+		keyProperty="id">
+	 		insert into tb_QY_Caiwuzhaiyao ( 
+	 								 	id,
+													 	qyid,
+													 	type,
+													 	year,
+													 	month,
+													 	zongzichan,
+													 	liudongzichan,
+													 	gudingzichan,
+													 	zongfuzhai,
+													 	liudongfuzhai,
+													 	yingyeshouru,
+													 	zyywsr,
+													 	zyywcb,
+													 	yingyelirun,
+													 	lirunzonge,
+													 	jinliren,
+													 	yingshouzhangkuan,
+													 	cunhuo,
+													 	zhejiu,
+													 	zichanfuzhailv,
+													 	xsjlv,
+													 	xsmlv,
+													 	shuishou,
+													 	jingzichan,
+													 	xianjinliu,
+													 	sudongbilv,
+													 	jinzichanshouyilv,
+													 	shifouyuce,
+													 	inputuser,
+													 	lurushijian,
+													  lastchgtime
+			 						) values ( 
+										 	#{id},
+				 										 	#{qyid},
+				 										 	#{type},
+				 										 	#{year},
+				 										 	#{month},
+				 										 	#{zongzichan},
+				 										 	#{liudongzichan},
+				 										 	#{gudingzichan},
+				 										 	#{zongfuzhai},
+				 										 	#{liudongfuzhai},
+				 										 	#{yingyeshouru},
+				 										 	#{zyywsr},
+				 										 	#{zyywcb},
+				 										 	#{yingyelirun},
+				 										 	#{lirunzonge},
+				 										 	#{jinliren},
+				 										 	#{yingshouzhangkuan},
+				 										 	#{cunhuo},
+				 										 	#{zhejiu},
+				 										 	#{zichanfuzhailv},
+				 										 	#{xsjlv},
+				 										 	#{xsmlv},
+				 										 	#{shuishou},
+				 										 	#{jingzichan},
+				 										 	#{xianjinliu},
+				 										 	#{sudongbilv},
+				 										 	#{jinzichanshouyilv},
+				 										 	#{shifouyuce},
+				 										 	#{inputuser},
+				 										 	#{lurushijian},
+				 											#{lastchgtime}
+				 						)
+		 
+	</insert>
+	
+	<update id="front.caiwuzhaiyao.update" parameterType="com.winpow.services.manage.caiwuzhaiyao.bean.Caiwuzhaiyao">
+		update tb_caiwuzhaiyao set 
+                        <if test="id!=null and id!=''">
+                        id=#{id},
+                        </if>
+		
+				 			                <if test="qyid!=null and qyid!=''">
+                        qyid=#{qyid},
+                        </if>
+		
+				 			                <if test="type!=null and type!=''">
+                        type=#{type},
+                        </if>
+		
+				 			                <if test="year!=null and year!=''">
+                        year=#{year},
+                        </if>
+		
+				 			                <if test="month!=null and month!=''">
+                        month=#{month},
+                        </if>
+		
+				 			                <if test="zongzichan!=null and zongzichan!=''">
+                        zongzichan=#{zongzichan},
+                        </if>
+		
+				 			                <if test="liudongzichan!=null and liudongzichan!=''">
+                        liudongzichan=#{liudongzichan},
+                        </if>
+		
+				 			                <if test="gudingzichan!=null and gudingzichan!=''">
+                        gudingzichan=#{gudingzichan},
+                        </if>
+		
+				 			                <if test="zongfuzhai!=null and zongfuzhai!=''">
+                        zongfuzhai=#{zongfuzhai},
+                        </if>
+		
+				 			                <if test="liudongfuzhai!=null and liudongfuzhai!=''">
+                        liudongfuzhai=#{liudongfuzhai},
+                        </if>
+		
+				 			                <if test="yingyeshouru!=null and yingyeshouru!=''">
+                        yingyeshouru=#{yingyeshouru},
+                        </if>
+		
+				 			                <if test="zyywsr!=null and zyywsr!=''">
+                        zyywsr=#{zyywsr},
+                        </if>
+		
+				 			                <if test="zyywcb!=null and zyywcb!=''">
+                        zyywcb=#{zyywcb},
+                        </if>
+		
+				 			                <if test="yingyelirun!=null and yingyelirun!=''">
+                        yingyelirun=#{yingyelirun},
+                        </if>
+		
+				 			                <if test="lirunzonge!=null and lirunzonge!=''">
+                        lirunzonge=#{lirunzonge},
+                        </if>
+		
+				 			                <if test="jinliren!=null and jinliren!=''">
+                        jinliren=#{jinliren},
+                        </if>
+		
+				 			                <if test="yingshouzhangkuan!=null and yingshouzhangkuan!=''">
+                        yingshouzhangkuan=#{yingshouzhangkuan},
+                        </if>
+		
+				 			                <if test="cunhuo!=null and cunhuo!=''">
+                        cunhuo=#{cunhuo},
+                        </if>
+		
+				 			                <if test="zhejiu!=null and zhejiu!=''">
+                        zhejiu=#{zhejiu},
+                        </if>
+		
+				 			                <if test="zichanfuzhailv!=null and zichanfuzhailv!=''">
+                        zichanfuzhailv=#{zichanfuzhailv},
+                        </if>
+		
+				 			                <if test="xsjlv!=null and xsjlv!=''">
+                        xsjlv=#{xsjlv},
+                        </if>
+		
+				 			                <if test="xsmlv!=null and xsmlv!=''">
+                        xsmlv=#{xsmlv},
+                        </if>
+		
+				 			                <if test="shuishou!=null and shuishou!=''">
+                        shuishou=#{shuishou},
+                        </if>
+		
+				 			                <if test="jingzichan!=null and jingzichan!=''">
+                        jingzichan=#{jingzichan},
+                        </if>
+		
+				 			                <if test="xianjinliu!=null and xianjinliu!=''">
+                        xianjinliu=#{xianjinliu},
+                        </if>
+		
+				 			                <if test="sudongbilv!=null and sudongbilv!=''">
+                        sudongbilv=#{sudongbilv},
+                        </if>
+		
+				 			                <if test="jinzichanshouyilv!=null and jinzichanshouyilv!=''">
+                        jinzichanshouyilv=#{jinzichanshouyilv},
+                        </if>
+		
+				 			                <if test="shifouyuce!=null and shifouyuce!=''">
+                        shifouyuce=#{shifouyuce},
+                        </if>
+		
+				 			                <if test="inputuser!=null and inputuser!=''">
+                        inputuser=#{inputuser},
+                        </if>
+		
+				 			                <if test="lurushijian!=null and lurushijian!=''">
+                        lurushijian=#{lurushijian},
+                        </if>
+		
+				 			                <if test="lastchgtime!=null and lastchgtime!=''">
+                        lastchgtime=#{lastchgtime}
+                        </if>
+         						 
+		where id=#{id}
+	</update>
+	
+</mapper>  

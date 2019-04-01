@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE mapper PUBLIC 
+"-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="manage">
+	
+	<select id="manage.fundapp.selectPageList" parameterType="com.winpow.services.manage.fundapp.bean.Fundapp" resultType="hashMap">
+	select * from (
+		SELECT  ROW_NUMBER() over(order by id) as  rownumber ,
+								 	id,
+			 								 	prodname,
+			 								 	qiyemingcheng,
+			 								 	loanamt,
+			 								 	loanterm,
+			 								 	loanrate,
+			 								 	dbgs,
+			 								 	begindate,
+			 								 	enddate,
+			 								 	stat,
+			 								 	lurushijian,
+			 								 	inputuser,
+			 								  lastchgtime
+			 		   from tb_fund_app t  where 1=1 
+			 		   <if test="qiyemingcheng!=null and qiyemingcheng!=''">
+						and qiyemingcheng like  '%'+#{qiyemingcheng}+'%' 
+						</if>
+						
+						<if test="prodname!=null and prodname!=''">
+						and prodname like  '%'+#{prodname}+'%' 
+						</if>
+						
+						)t  where rownumber &gt; = #{offset} and rownumber &lt; = #{pageSize}+#{offset} 
+	</select>
+	<select id="manage.fundapp.selectPageCount" parameterType="com.winpow.services.manage.fundapp.bean.Fundapp" resultType="java.lang.Integer">
+		
+			select count(*) from (
+					SELECT  ROW_NUMBER() over(order by id) as  rownumber ,
+																	 	id,
+						 																	 	prodname,
+						 																	 	qiyemingcheng,
+						 																	 	loanamt,
+						 																	 	loanterm,
+						 																	 	loanrate,
+						 																	 	dbgs,
+						 																	 	begindate,
+						 																	 	enddate,
+						 																	 	stat,
+						 																	 	lurushijian,
+						 																	 	inputuser,
+						 																	  lastchgtime
+						 								   from tb_fund_app t  where 1=1 
+			 		   <if test="qiyemingcheng!=null and qiyemingcheng!=''">
+						and qiyemingcheng like  '%'+#{qiyemingcheng}+'%' 
+						</if>
+						
+						<if test="prodname!=null and prodname!=''">
+						and prodname like  '%'+#{prodname}+'%' 
+						</if> )t  
+
+	</select>
+	
+	<select id="manage.fundapp.selectOne" parameterType="com.winpow.services.manage.fundapp.bean.Fundapp" resultType="com.winpow.services.manage.fundapp.bean.Fundapp">
+			SELECT  
+											 	id,
+				 											 	prodname,
+				 											 	qiyemingcheng,
+				 											 	loanamt,
+				 											 	loanterm,
+				 											 	loanrate,
+				 											 	dbgs,
+				 											 	begindate,
+				 											 	enddate,
+				 											 	stat,
+				 											 	lurushijian,
+				 											 	inputuser,
+				 											  lastchgtime
+				 						  from tb_fund_app t  where 1=1  
+			<if test="id!=null and id!=''">
+				and t.id=#{id}
+			</if>
+	</select>
+	
+	<select id="manage.fundapp.selectCount" parameterType="com.winpow.services.manage.fundapp.bean.Fundapp" resultType="int">
+			select count(*)  
+				 FROM tb_fund_app t  where 1=1  
+				<if test="id!=null and id!=''">
+					and t.id=#{id}
+				</if>
+	</select>
+	
+	<select id="manage.fundapp.selectOneByCondition" parameterType="com.winpow.services.manage.fundapp.bean.Fundapp" resultType="com.winpow.services.manage.fundapp.bean.Fundapp">
+			SELECT  
+											 	id,
+				 											 	prodname,
+				 											 	qiyemingcheng,
+				 											 	loanamt,
+				 											 	loanterm,
+				 											 	loanrate,
+				 											 	dbgs,
+				 											 	begindate,
+				 											 	enddate,
+				 											 	stat,
+				 											 	lurushijian,
+				 											 	inputuser,
+				 											  lastchgtime
+				 					 from  tb_fund_app   t  where 1=1  
+			<if test="id!=null and id!=''">
+				and t.id=#{id}
+			</if>
+	</select>
+	
+	
+	
+		<select id="manage.fundapp.selectList" parameterType="com.winpow.services.manage.fundapp.bean.Fundapp" resultType="com.winpow.services.manage.fundapp.bean.Fundapp">
+			SELECT  
+											 	id,
+				 											 	prodname,
+				 											 	qiyemingcheng,
+				 											 	loanamt,
+				 											 	loanterm,
+				 											 	loanrate,
+				 											 	dbgs,
+				 											 	begindate,
+				 											 	enddate,
+				 											 	stat,
+				 											 	lurushijian,
+				 											 	inputuser,
+				 											  lastchgtime
+				 					 from  tb_fund_app   t  where 1=1  
+			<if test="id!=null and id!=''">
+				and t.id=#{id}
+			</if>
+	</select>
+	
+	
+	
+	
+	<insert id="manage.fundapp.insert" parameterType="com.winpow.services.manage.fundapp.bean.Fundapp" useGeneratedKeys="true" 
+		keyProperty="id">
+	 		insert into tb_fund_app ( 
+	 								 	 
+													 	prodname,
+													 	qiyemingcheng,
+													 	loanamt,
+													 	loanterm,
+													 	loanrate,
+													 	dbgs,
+													 	begindate,
+													 	enddate,
+													 	stat,
+													 	lurushijian,
+													 	inputuser,
+													  lastchgtime
+			 						) values ( 
+										  
+				 										 	#{prodname},
+				 										 	#{qiyemingcheng},
+				 										 	#{loanamt},
+				 										 	#{loanterm},
+				 										 	#{loanrate},
+				 										 	#{dbgs},
+				 										 	#{begindate},
+				 										 	#{enddate},
+				 										 	#{stat},
+				 										 	getdate(),
+				 										 	#{inputuser},
+				 											getdate()
+				 						)
+		 
+	</insert>
+	
+	<update id="manage.fundapp.update" parameterType="com.winpow.services.manage.fundapp.bean.Fundapp">
+		update tb_fund_app set 
+                        
+		
+				 			                <if test=" prodname !=null and  prodname !=''">
+                        prodname=#{prodname},
+                        </if>
+		
+				 			                <if test=" qiyemingcheng !=null and  qiyemingcheng !=''">
+                        qiyemingcheng=#{qiyemingcheng},
+                        </if>
+		
+				 			                <if test=" loanamt !=null and  loanamt !=''">
+                        loanamt=#{loanamt},
+                        </if>
+		
+				 			                <if test=" loanterm !=null and  loanterm !=''">
+                        loanterm=#{loanterm},
+                        </if>
+		
+				 			                <if test=" loanrate !=null and  loanrate !=''">
+                        loanrate=#{loanrate},
+                        </if>
+		
+				 			                <if test=" dbgs !=null and  dbgs !=''">
+                        dbgs=#{dbgs},
+                        </if>
+		
+				 			                <if test=" begindate !=null and  begindate !=''">
+                        begindate=#{begindate},
+                        </if>
+		
+				 			                <if test=" enddate !=null and  enddate !=''">
+                        enddate=#{enddate},
+                        </if>
+		
+				 			                <if test=" stat !=null and  stat !=''">
+                        stat=#{stat},
+                        </if>
+		 
+		 
+                        lastchgtime=getdate()
+         						 
+		where id=#{id}
+	</update>
+	
+</mapper>  

@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE urlrewrite PUBLIC "-//tuckey.org//DTD UrlRewrite 3.1//EN"
+        "http://tuckey.org/res/dtds/urlrewrite3.1.dtd">
+<urlrewrite>
+	 
+	<!-- 分站 -->
+	<rule>
+		<from>/substation/([a-zA-Z0-9]+)/([a-zA-Z0-9]+).html</from>
+		<to last="true">/substation!$1.action?subnum=$2</to>
+	</rule>
+	
+ 	<!-- 兼容DM单二维码首页 -->
+	<rule>
+		<from>/Default.html</from>
+		<to last="true">index.jsp</to>
+	</rule>
+	 
+	<!-- 会员中心 -->
+	<rule>
+		<from>/user/([a-zA-Z0-9]+).html</from>
+		<to last="true">/account!$1.action</to>
+	</rule>
+	 
+	<!-- 盈创学院二级页面 -->
+	<rule>
+		<from>/college/([a-zA-Z0-9]+).html</from>
+		<to last="true">/activities!$1.action</to>
+	</rule>
+	<!-- 盈创学院三级页面 -->
+	<rule>
+		<from>/collegedetail/([a-zA-Z0-9]+).html</from>
+		<to last="true">/activities!detail.action?id=$1</to>
+	</rule>
+	<!-- 债权融资二级页面 -->
+	<rule>
+		<from>/product/([a-zA-Z0-9]+).html</from>
+		<to last="true">/product!$1.action</to>
+	</rule>
+	<!-- 债权融资三级页面 -->
+	<rule>
+		<from>/productdetail/([a-zA-Z0-9]+).html</from>
+		<to last="true">/product!detail.action?id=$1</to>
+	</rule>
+	
+	
+	<!-- 资讯二级页面 -->
+	<rule>
+		<from>/news/([a-zA-Z0-9]+).html</from>
+		<to last="true">/news!$1.action</to>
+	</rule>
+	<!-- 资讯三级页面 -->
+	<rule>
+		<from>/newsdetail/([a-zA-Z0-9]+).html</from>
+		<to last="true">/news!detail.action?e.id=$1</to>
+	</rule>
+	
+	<!-- 资料下载二级页面 -->
+	<rule>
+		<from>/files/([a-zA-Z0-9]+).html</from>
+		<to last="true">/files!$1.action</to>
+	</rule>
+	 
+	 
+	 	
+	<!-- 股权二级页面 -->
+	<rule>
+		<from>/stock/([a-zA-Z0-9]+).html</from>
+		<to last="true">/stock!$1.action</to>
+	</rule>
+	<!-- 股权三级页面 -->
+	<rule>
+		<from>/stockdetail/([a-zA-Z0-9]+).html</from>
+		<to last="true">/stock!detail.action?id=$1</to>
+	</rule>
+	
+	
+	
+	 	
+	<!-- 增值二级页面 -->
+	<rule>
+		<from>/incre/([a-zA-Z0-9]+).html</from>
+		<to last="true">/incre!$1.action</to>
+	</rule>
+	<!-- 增值三级页面 -->
+	<rule>
+		<from>/incredetail/([a-zA-Z0-9]+).html</from>
+		<to last="true">/incre!detail.action?id=$1</to>
+	</rule>
+	
+	
+	
+	<!-- 盈创数据 -->
+	<rule>
+		<from>/data/([a-zA-Z0-9]+).html</from>
+		<to last="true">/data!$1.action</to>
+	</rule>
+	 
+	 
+	<!-- 关于我们 -->
+	<rule>
+		<from>/aboutus/([a-zA-Z0-9]+).html</from>
+		<to last="true">/aboutus!$1.action</to>
+	</rule>
+	
+	<!-- 用户中心-->
+	<rule>
+		<from>/usercenter/([a-zA-Z0-9]+).html</from>
+		<to last="true">/usercenter!$1.action</to>
+	</rule>
+	
+	<!-- 用户中心扩展-->
+	<rule>
+		<from>/userextend/([a-zA-Z0-9]+).html</from>
+		<to last="true">/userextend!$1.action</to>
+	</rule>
+	
+	<!-- 用户中心扩展2-->
+	<rule>
+		<from>/userinfo/([a-zA-Z0-9]+).html</from>
+		<to last="true">/userinfo!$1.action</to>
+	</rule>
+	
+	<!-- 用户中心分站管理-->
+	<rule>
+		<from>/usermanage/([a-zA-Z0-9]+).html</from>
+		<to last="true">/usermanage!$1.action</to>
+	</rule>
+	
+	<!--贴息申报-->
+	<rule>
+		<from>/interestapp/([a-zA-Z0-9]+).html</from>
+		<to last="true">/interestapp!$1.action</to>
+	</rule>
+	<!--债权  成长贷申请-->
+	<rule>
+		<from>/productczdbase/([a-zA-Z0-9]+).html</from>
+		<to last="true">/productczdbase!$1.action</to>
+	</rule>
+	<!--企业被投资补贴申请-->
+	<rule>
+		<from>/declare_btz/([a-zA-Z0-9]+).html</from>
+		<to last="true">/declare_btz!$1.action</to>
+	</rule>
+	<!--政策申报企业信息主表-->
+	<rule>
+		<from>/declare_base/([a-zA-Z0-9]+).html</from>
+		<to last="true">/declare_base!$1.action</to>
+	</rule>
+	<!--重组并购申请补贴-->
+	<rule>
+		<from>/declare_czbg/([a-zA-Z0-9]+).html</from>
+		<to last="true">/declare_czbg!$1.action</to>
+	</rule>
+	<!--股份制改造补贴申请-->
+	<rule>
+		<from>/declare_gfzgz/([a-zA-Z0-9]+).html</from>
+		<to last="true">/declare_gfzgz!$1.action</to>
+	</rule>
+	<!--IPO获得证监会受理申请补贴-->
+	<rule>
+		<from>/declare_ipo/([a-zA-Z0-9]+).html</from>
+		<to last="true">/declare_ipo!$1.action</to>
+	</rule>
+	<!--境外资本上市成功补贴-->
+	<rule>
+		<from>/declare_jwzb/([a-zA-Z0-9]+).html</from>
+		<to last="true">/declare_jwzb!$1.action</to>
+	</rule>
+	<!--信用评级补贴申请-->
+	<rule>
+		<from>/declare_pj/([a-zA-Z0-9]+).html</from>
+		<to last="true">/declare_pj!$1.action</to>
+	</rule>
+	<!--上市挂牌成功补贴-->
+	<rule>
+		<from>/declare_ssgp/([a-zA-Z0-9]+).html</from>
+		<to last="true">/declare_ssgp!$1.action</to>
+	</rule>
+	<!--员工股权激励补贴-->
+	<rule>
+		<from>/declare_yggqjl/([a-zA-Z0-9]+).html</from>
+		<to last="true">/declare_yggqjl!$1.action</to>
+	</rule>
+	<!--转增股本补贴-->
+	<rule>
+		<from>/declare_zzgb/([a-zA-Z0-9]+).html</from>
+		<to last="true">/declare_zzgb!$1.action</to>
+	</rule>
+	<!--融资租赁政策-->
+	<rule>
+		<from>/declare_rzzn/([a-zA-Z0-9]+).html</from>
+		<to last="true">/declare_rzzn!$1.action</to>
+	</rule>
+	<!--科技保险政策-->
+	<rule>
+		<from>/declare_kjbx/([a-zA-Z0-9]+).html</from>
+		<to last="true">/declare_kjbx!$1.action</to>
+	</rule>
+	<!--债务类工具直接融资补贴-->
+	<rule>
+		<from>/declare_zwrz/([a-zA-Z0-9]+).html</from>
+		<to last="true">/declare_zwrz!$1.action</to>
+	</rule>
+	<rule>
+	<!-- 申报文件生成 -->
+	<from>/declare_uploader/([a-zA-Z0-9]+).html</from>
+		<to last="true">/declare_uploader!$1.action</to>
+	</rule>
+	<!-- 不过java的映射 -->
+	<rule>
+		<from>/sbdirectdata/([a-zA-Z0-9]+).html</from>
+		<to last="true">/data/$1.jsp</to>
+	</rule>
+	
+		<!-- 帮助-->
+	<rule>
+		<from>/help/([a-zA-Z0-9]+).html</from>
+		<to last="true">/user/help$1.jsp</to>
+	</rule>
+	
+	
+</urlrewrite>

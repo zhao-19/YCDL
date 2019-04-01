@@ -1,0 +1,15 @@
+@charset "utf-8";
+/* CSS Document */
+ 
+
+ *html{background-image:url(about:blank);background-attachment:fixed;}/*低版本浏览器防止抖动的，必须有*/
+#tbox{width:30px; height:200px; float:right; position:fixed; display: none;
+_position:absolute;
+_bottom:auto;
+_top:expression(eval(document.documentElement.scrollTop+document.documentElement.clientHeight-this.offsetHeight-(parseInt(this.currentStyle.marginTop,10)||0)-(parseInt(this.currentStyle.marginBottom,10)||0)));
+_margin-bottom:50px;
+}/*这个只能改宽高其他的不要修改，需要滚动的内容都要放在这个div里面*/
+.taoba{display:block; background:#c2c2c2; width:30px; height:30px; margin-bottom:4px;text-align: center; color: #fff; line-height: 30px; overflow: hidden;cursor:pointer}
+.taoba:hover{background:#ff4200; text-decoration: none; color: #fff;}
+#gotop{display:block; width:30px; height:30px; text-indent:-9999px; overflow: hidden; color: #fff; background:url(../../../images/top_icon.gif) no-repeat;  position:absolute; display:none; cursor:pointer} /*这个样式随便改，必须有position:absolute; */
+#gotop:hover{background-position: 0 -30px;}

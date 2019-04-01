@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE mapper PUBLIC 
+"-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="manage.code">
+	
+	<select id="manage.code.selectPageList" parameterType="com.winpow.services.manage.code.bean.Code" resultType="hashMap">
+	select * from (
+		SELECT  ROW_NUMBER() over(order by level asc) as  rownumber ,
+								 	pk_codeid,
+			 								 	code_name,
+			 								 	code_parentid,
+			 								 	code_remark,
+			 								 	code_state,
+			 								  level
+			 		   from tb_code )t  where rownumber &gt; = #{offset} and rownumber &lt; = #{pageSize}+#{offset} 
+	</select>
+	<select id="manage.code.selectappcount" parameterType="com.winpow.services.manage.code.bean.Code" resultType="hashMap">
+		 select 'guquan' as datatype ,shenhezhuangtai as status ,count(*) as ct  from tb_guquan  where convert(varchar(10),lurushijian,120)  = convert(varchar(10),getdate(),120)  group by shenhezhuangtai
+		union all
+		select 'zhaiquanapp' as datatype ,status ,count(*) as ct  from tb_product_app  where convert(varchar(10),lurushijian,120)  = convert(varchar(10),getdate(),120)  group by status
+		union all
+		select 'increapp' as datatype ,status ,count(*) as ct  from tb_incre_app  where convert(varchar(10),lurushijian,120)  = convert(varchar(10),getdate(),120)  group by status
+		union all
+		select 'guquanapp' as datatype ,status ,count(*) as ct  from tb_guquan_app  where convert(varchar(10),lurushijian,120)  = convert(varchar(10),getdate(),120)  group by status
+	 	 	</select>
+
+	<select id="manage.code.selectlogincount" parameterType="com.winpow.services.manage.code.bean.Code" resultType="java.lang.Integer">
+	 	 select COUNT(*) ct from t_systemlog where Convert(varchar(10),logintime,120) =Convert(varchar(10),GETDATE(),120)  
+	</select>
+		<select id="manage.code.selectregistcount" parameterType="com.winpow.services.manage.code.bean.Code" resultType="hashMap">
+ select  usertype  ,COUNT(*) as ct from tb_cust  where Convert(varchar(10),adddate,120) =Convert(varchar(10),GETDATE(),120)   group by usertype
+ 	</select>
+	
+	
+	
+	<select id="manage.code.selectList" parameterType="com.winpow.services.manage.code.bean.Code" resultType="com.winpow.services.manage.code.bean.Code">
+ 
+		SELECT   	 RTRIM(	pk_codeid) pk_codeid,
+			 								 	code_name,
+			 								 	RTRIM(code_parentid) code_parentid,
+			 								 	code_remark,
+			 								 	code_state,
+			 								  level
+			 		   from tb_code  t order by level asc ,sort
+	</select>
+	<select id="manage.code.selectPageCount" parameterType="com.winpow.services.manage.code.bean.Code" resultType="java.lang.Integer">
+		select count(*) from tb_code t  where 1=1  
+			<if test="id!=null and id!=''">
+				and t.id=#{id}
+			</if>
+	</select>
+	
+	<select id="manage.code.selectOne" parameterType="com.winpow.services.manage.code.bean.Code" resultType="com.winpow.services.manage.code.bean.Code">
+			SELECT  
+											 	pk_codeid,
+				 											 	code_name,
+				 											 	code_parentid,
+				 											 	code_remark,
+				 											 	code_state,
+				 											  level
+				 						  from tb_code t  where 1=1  
+			<if test="id!=null and id!=''">
+				and t.id=#{id}
+			</if>
+	</select>
+	
+	<select id="manage.code.selectCount" parameterType="com.winpow.services.manage.code.bean.Code" resultType="int">
+			select count(*)  
+				 FROM tb_code t  where 1=1  
+				<if test="id!=null and id!=''">
+					and t.id=#{id}
+				</if>
+	</select>
+	
+	<select id="manage.code.selectOneByCondition" parameterType="com.winpow.services.manage.code.bean.Code" resultType="com.winpow.services.manage.code.bean.Code">
+			SELECT  
+											 	pk_codeid,
+				 											 	code_name,
+				 											 	code_parentid,
+				 											 	code_remark,
+				 											 	code_state,
+				 											  level
+				 					 from  tb_code   t  where 1=1  
+			<if test="id!=null and id!=''">
+				and t.id=#{id}
+			</if>
+			order by level asc
+	</select>
+	
+	<insert id="manage.code.insert" parameterType="com.winpow.services.manage.code.bean.Code" useGeneratedKeys="true" 
+		keyProperty="id">
+	 		insert into tb_code ( 
+	 								 	pk_codeid,
+													 	code_name,
+													 	code_parentid,
+													 	code_remark,
+													 	code_state,
+													  level
+			 						) values ( 
+										 	#{pk_codeid},
+				 										 	#{code_name},
+				 										 	#{code_parentid},
+				 										 	#{code_remark},
+				 										 	#{code_state},
+				 											#{level}
+				 						)
+		 
+	</insert>
+	
+	<update id="manage.code.update" parameterType="com.winpow.services.manage.code.bean.Code">
+		update tb_code set 
+                        <if test="pk_codeid!=null and pk_codeid!=''">
+                        pk_codeid=#{pk_codeid},
+                        </if>
+		
+				 			                <if test="code_name!=null and code_name!=''">
+                        code_name=#{code_name},
+                        </if>
+		
+				 			                <if test="code_parentid!=null and code_parentid!=''">
+                        code_parentid=#{code_parentid},
+                        </if>
+		
+				 			                <if test="code_remark!=null and code_remark!=''">
+                        code_remark=#{code_remark},
+                        </if>
+		
+				 			                <if test="code_state!=null and code_state!=''">
+                        code_state=#{code_state},
+                        </if>
+		
+				 			                <if test="level!=null and level!=''">
+                        level=#{level}
+                        </if>
+         						 
+		where id=#{id}
+	</update>
+	
+</mapper>  

@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+"-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="app">
+
+	<select id="app.appapplyequityprojects.selectPageList"
+		parameterType="com.winpow.services.app.appapplyequityprojects.bean.Appapplyequityprojects"
+		resultType="hashMap">
+		select * from (
+		SELECT ROW_NUMBER() over(order by updatedate desc) as rownumber ,
+		pkid,
+		chno,
+		userid,
+		epid,
+		amount,
+		chstatus,
+		createdate,
+		updateby,
+		updatedate,
+		remark
+		from tb_app_applyequityprojects )t where rownumber &gt; = #{offset} and
+		rownumber &lt; = #{pageSize}+#{offset}
+	</select>
+	<select id="app.appapplyequityprojects.selectPageCount"
+		parameterType="com.winpow.services.app.appapplyequityprojects.bean.Appapplyequityprojects"
+		resultType="java.lang.Integer">
+
+		select count(*) from (
+		SELECT ROW_NUMBER() over(order by updatedate desc) as rownumber ,
+		pkid,
+		chno,
+		userid,
+		epid,
+		amount,
+		chstatus,
+		createdate,
+		updateby,
+		updatedate,
+		remark
+		from tb_app_applyequityprojects )t
+
+	</select>
+
+	<select id="app.appapplyequityprojects.selectOne"
+		parameterType="com.winpow.services.app.appapplyequityprojects.bean.Appapplyequityprojects"
+		resultType="com.winpow.services.app.appapplyequityprojects.bean.Appapplyequityprojects">
+		SELECT
+		pkid,
+		chno,
+		userid,
+		epid,
+		amount,
+		chstatus,
+		createdate,
+		updateby,
+		updatedate,
+		remark
+		from tb_app_applyequityprojects t where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+
+	<select id="app.appapplyequityprojects.selectCount"
+		parameterType="com.winpow.services.app.appapplyequityprojects.bean.Appapplyequityprojects"
+		resultType="int">
+		select count(*)
+		FROM tb_app_applyequityprojects t where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+
+	<select id="app.appapplyequityprojects.selectOneByCondition"
+		parameterType="com.winpow.services.app.appapplyequityprojects.bean.Appapplyequityprojects"
+		resultType="com.winpow.services.app.appapplyequityprojects.bean.Appapplyequityprojects">
+		SELECT
+		pkid,
+		chno,
+		userid,
+		epid,
+		amount,
+		chstatus,
+		createdate,
+		updateby,
+		updatedate,
+		remark
+		from tb_app_applyequityprojects t where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+
+	<select id="app.appapplyequityprojects.selectList"
+		parameterType="com.winpow.services.app.appapplyequityprojects.bean.Appapplyequityprojects"
+		resultType="com.winpow.services.app.appapplyequityprojects.bean.Appapplyequityprojects">
+		SELECT
+		pkid,
+		chno,
+		userid,
+		epid,
+		amount,
+		chstatus,
+		createdate,
+		updateby,
+		updatedate,
+		remark
+		from tb_app_applyequityprojects t where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+
+	<insert id="app.appapplyequityprojects.insert"
+		parameterType="com.winpow.services.app.appapplyequityprojects.bean.Appapplyequityprojects"
+		useGeneratedKeys="true" keyProperty="id">
+		declare @cnno int
+		exec @cnno =  getchnoseq
+		insert into tb_app_applyequityprojects (
+		pkid,
+		chno,
+		userid,
+		epid,
+		amount,
+		chstatus,
+		createdate,
+		updateby,
+		updatedate,
+		remark
+		) values (
+		#{pkid},
+		(select 'gqyt' + right('0000000000' + cast(@cnno as varchar(10)), 10)),
+		#{userid},
+		#{epid},
+		#{amount},
+		#{chstatus},
+		getdate(),
+		#{updateby},
+		getdate(),
+		#{remark}
+		)
+
+	</insert>
+
+	<update id="app.appapplyequityprojects.update"
+		parameterType="com.winpow.services.app.appapplyequityprojects.bean.Appapplyequityprojects">
+		update tb_app_applyequityprojects set
+		<if test=" userid !=null and  userid !=''">
+			userid=#{userid},
+		</if>
+
+		<if test=" epid !=null and  epid !=''">
+			epid=#{epid},
+		</if>
+
+		<if test=" amount !=null and  amount !=''">
+			amount=#{amount},
+		</if>
+
+		<if test=" chstatus !=null and  chstatus !=''">
+			chstatus=#{chstatus},
+		</if>
+
+		<if test=" updateby !=null and  updateby !=''">
+			updateby=#{updateby},
+		</if>
+
+		<if test="remark!=null and remark !=''">
+			remark=#{remark},
+		</if>
+
+		updatedate=getdate()
+		where pkid=#{pkid}
+	</update>
+
+</mapper>  

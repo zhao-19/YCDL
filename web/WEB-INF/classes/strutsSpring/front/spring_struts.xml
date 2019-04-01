@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+           http://www.springframework.org/schema/context  
+           http://www.springframework.org/schema/context/spring-context-3.0.xsd
+           http://www.springframework.org/schema/aop 
+           http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+           http://www.springframework.org/schema/tx 
+           http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
+	
+	<!-- 会员管理 -->
+	<bean id="accountActionFront" class="com.winpow.web.action.front.account.AccountAction" scope="prototype">
+		<property name="server" ref="accountServiceFront"></property>
+		<property name="accountService" ref="accountServiceFront"></property>
+		<property name="systemlogService" ref="systemlogServiceFront"></property>
+		<property name="messageService" ref="messageServiceManage"></property>
+		<property name="userService" ref="userServiceManage"></property>
+		<property name="tbotherorgService" ref="tbotherorgServiceManage"></property>
+
+	</bean>
+	
+	<!-- 盈创学院 -->
+	<bean id="activitiesActionFront" class="com.winpow.web.action.front.activities.ActivitiesAction" scope="prototype">
+		<property name="server" ref="activitiesServiceFront"></property>
+		<property name="activitiesService" ref="activitiesServiceFront"></property>
+		<property name="fileinfoService" ref="fileinfoServiceManage"></property>
+		<property name="activitiesappService" ref="activitiesappServiceManage"></property>
+		<property name="messageService" ref="messageServiceManage"></property>
+		<property name="activitieslinkuserService" ref="activitieslinkuserServiceManage"></property>
+		<property name="personService" ref="personServiceManage"></property>
+		<property name="qiyeService" ref="qiyeServiceManage"></property>
+		<property name="jigouService" ref="jigouServiceManage"></property>
+		
+	</bean>
+		<!-- 资料下载（不是前台资料下载那个功能模块）-->
+	<bean id="downloadActionFront" class="com.winpow.web.action.front.download.DownloadAction" scope="prototype">
+		<property name="server" ref="activitiesServiceFront"></property>
+		<property name="fileinfoService" ref="fileinfoServiceManage"></property>
+		<property name="zhengceshenbaoService" ref="zhengceshenbaoServiceManage"></property>
+	</bean>
+	 		<!-- 资讯 -->
+	<bean id="newsActionFront" class="com.winpow.web.action.front.news.NewsAction" scope="prototype">
+		<property name="server" ref="newsServiceManage"></property>
+		<property name="newsService" ref="newsServiceManage"></property>
+	</bean>
+		<!-- 资料二级页面（是前台那个功能模块）-->
+	<bean id="filesActionFront" class="com.winpow.web.action.front.files.FilesAction" scope="prototype">
+		<property name="server" ref="fileinfoServiceManage"></property>
+		<property name="fileinfoService" ref="fileinfoServiceManage"></property>
+	</bean>
+	<!-- 债权-->
+	<bean id="productActionFront" class="com.winpow.web.action.front.product.ProductAction" scope="prototype">
+		<property name="server" ref="productServiceManage"></property>
+		<property name="productService" ref="productServiceManage"></property>
+		<property name="productczdbaseService" ref="productczdbaseServiceManage"></property>
+
+	</bean>
+		<!-- 股权-->
+	<bean id="stockActionFront" class="com.winpow.web.action.front.stock.StockAction">
+		<property name="server" ref="guquanServiceManage"></property>
+		<property name="guquanService" ref="guquanServiceManage"></property>
+		<property name="guquanchengyuanService" ref="guquanchengyuanServiceManage"></property>
+		<property name="guquanhuangtaiService" ref="guquanhuangtaiServiceManage"></property>
+		<property name="guquanjingchengService" ref="guquanjingchengServiceManage"></property>
+		<property name="guquanappService" ref="guquanappServiceManage"></property>
+		<property name="custService" ref="custServiceManage"></property>
+		<property name="jigouService" ref="jigouServiceManage"></property>
+		<property name="tbemaillogService" ref="tbemaillogServiceManage"></property>
+		
+		
+	</bean>
+		<!-- 增值-->
+	<bean id="increActionFront" class="com.winpow.web.action.front.incre.IncreAction" scope="prototype">
+		<property name="server" ref="increServiceManage"></property>
+		<property name="increService" ref="increServiceManage"></property>
+	</bean>
+		<!-- 盈创数据-->
+	<bean id="dataActionFront" class="com.winpow.web.action.front.data.DataAction" scope="prototype">
+		<property name="server" ref="activitiesServiceFront"></property>
+		<property name="guquanService" ref="guquanServiceManage"></property>
+		<property name="jigouService" ref="jigouServiceManage"></property>
+		<property name="personService" ref="personServiceManage"></property>
+		<property name="qiyeService" ref="qiyeServiceManage"></property>
+		<property name="productappService" ref="productappServiceManage"></property>
+		<property name="biaozhunService" ref="biaozhunServiceManage"></property>
+		
+		
+	</bean>
+	 
+	 	<!--关于我们-->
+	<bean id="aboutusActionFront" class="com.winpow.web.action.front.aboutus.AboutAction" scope="prototype">
+		<property name="server" ref="activitiesServiceFront"></property>
+		<property name="feedbackService" ref="feedbackServiceManage"></property>
+		<property name="fzlcService" ref="fzlcServiceManage"></property>
+		
+		
+	</bean>
+		<!-- 用户中心-->
+	<bean id="usercenterActionFront" class="com.winpow.web.action.front.usercenter.UsercenterAction" scope="prototype">
+		<property name="server" ref="usercenterServiceManage"></property>
+		<property name="usercenterService" ref="usercenterServiceManage"></property>
+		<property name="activitiesappService" ref="activitiesappServiceManage"></property>
+		<property name="activitieslinkuserService" ref="activitieslinkuserServiceManage"></property>
+		<property name="activitiesService" ref="activitiesServiceManage"></property>
+		<property name="custService" ref="custServiceManage"></property>
+		<property name="qiyeService" ref="qiyeServiceManage"></property>
+		<property name="messageService" ref="messageServiceManage"></property>
+		<property name="guquanjingchengService" ref="guquanjingchengServiceManage"></property>
+		<property name="guquanchengyuanService" ref="guquanchengyuanServiceManage"></property>
+		<property name="userService" ref="userServiceManage"></property>
+		<property name="jigouService" ref="jigouServiceManage"></property>
+		<property name="tbotherorgService" ref="tbotherorgServiceManage"></property>
+		<property name="tbfinareportService" ref="tbfinareportServiceManage"></property>
+	</bean>
+	<!-- 用户中心扩展-->
+	<bean id="userextendActionFront" class="com.winpow.web.action.front.usercenter.UserextendAction" scope="prototype">
+	</bean>
+	<!-- 用户中心扩展2-->
+	<bean id="userinfoActionFront" class="com.winpow.web.action.front.usercenter.UserinfoAction" scope="prototype">
+	</bean>
+	<!-- 用户中心分站管理-->
+	<bean id="usermanageActionFront" class="com.winpow.web.action.front.usercenter.UsermanageAction" scope="prototype">
+	</bean>
+		<!--贴息申报-->
+	<bean id="interestappActionFront" class="com.winpow.web.action.front.interestapp.InterestappAction" scope="prototype">
+		<property name="server" ref="interestappServiceFront"></property>
+		<property name="interestappService" ref="interestappServiceManage"></property>
+		<property name="qiyeService" ref="qiyeServiceManage"></property>
+		<property name="pictureService" ref="pictureServiceManage"></property>
+		<property name="zhengceshenbaoService" ref="zhengceshenbaoServiceManage"></property>
+		<property name="fuchizhengceService" ref="fuchizhengceServiceManage"></property>
+
+	</bean>
+	
+	
+	<!-- 成长贷主表 -->
+	<bean id="productczdbaseActionFront" class="com.winpow.web.action.front.productczd.ProductczdbaseAction" scope="prototype">
+		<property name="server" ref="productczdbaseServiceManage"></property>
+		<property name="usercenterService" ref="usercenterServiceManage"></property>
+		<property name="productczdbaseService" ref="productczdbaseServiceManage"></property>
+		<property name="productczddwdbqkService" ref="productczddwdbqkServiceManage"></property>
+		<property name="productczdcwxxService" ref="productczdcwxxServiceManage"></property>
+		<property name="productczdfdbcsService" ref="productczdfdbcsServiceManage"></property>
+		<property name="productczdgdqqService" ref="productczdgdqqServiceManage"></property>
+		<property name="productczdgysxssxxService" ref="productczdgysxssxxServiceManage"></property>
+		<property name="productczdqtdkqkService" ref="productczdqtdkqkServiceManage"></property>
+		<property name="productczdqtxxService" ref="productczdqtxxServiceManage"></property>
+		<property name="productczdbzqkService" ref="productczdbzqkServiceManage"></property>
+		<property name="productczdcpxxService" ref="productczdcpxxServiceManage"></property>
+		<property name="messageService" ref="messageServiceManage"></property>
+		
+	</bean>
+	
+	<!--首页的融资申请 -->
+	<bean id="indexappActionFront" class="com.winpow.web.action.front.indexapp.IndexappAction" scope="prototype">
+		<property name="server" ref="indexappServiceManage"></property>
+		<property name="indexappService" ref="indexappServiceManage"></property>
+		<property name="messageService" ref="messageServiceManage"></property>
+	</bean>
+
+	<!--股权融资项目-->
+	<bean id="guquanFinancingActionFront" class="com.winpow.web.action.front.guquanfinancing.GuquanFinancingAction">
+		<property name="server" ref="guquanfinancingServiceFront"></property>
+		<property name="guquanFinancingService" ref="guquanfinancingServiceFront"></property>
+	</bean>
+	
+	<!-- 分站通用 -->
+	<bean id="substationActionManage" class="com.winpow.web.action.front.common.SubstationAction" scope="prototype">
+		<property name="server" ref="pcaboutusServiceManage"></property>
+	</bean>
+</beans>

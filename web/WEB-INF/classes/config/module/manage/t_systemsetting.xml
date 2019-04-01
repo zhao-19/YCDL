@@ -1,0 +1,350 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE mapper PUBLIC 
+"-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="manage">
+	
+	<select id="manage.systemSetting.selectPageList" parameterType="com.winpow.services.manage.systemSetting.bean.SystemSetting" resultType="hashMap">
+	select * from (
+		SELECT  ROW_NUMBER() over(order by id) as  rownumber ,
+								 	id,
+			 								 	systemcode,
+			 								 	name,
+			 								 	www,
+			 								 	log,
+			 								 	title,
+			 								 	description,
+			 								 	keywords,
+			 								 	shortcuticon,
+			 								 	address,
+			 								 	tel,
+			 								 	email,
+			 								 	icp,
+			 								 	isopen,
+			 								 	closemsg,
+			 								 	qq,
+			 								 	imagerootpath,
+			 								 	managehttp,
+			 								 	defaultproductimg,
+			 								 	style,
+			 								 	version,
+			 								 	qqhelphtml,
+			 								 	images,
+			 								 	managelefttreeleaficon,
+			 								 	statisticscode,
+			 								  openresponsive
+			 		   from t_systemsetting )t  where rownumber &gt; = #{offset} and rownumber &lt; = #{pageSize}+#{offset} 
+	</select>
+	<select id="manage.systemSetting.selectPageCount" parameterType="com.winpow.services.manage.systemSetting.bean.SystemSetting" resultType="java.lang.Integer">
+		
+			select count(*) from (
+					SELECT  ROW_NUMBER() over(order by id) as  rownumber ,
+																	 	id,
+						 																	 	systemcode,
+						 																	 	name,
+						 																	 	www,
+						 																	 	log,
+						 																	 	title,
+						 																	 	description,
+						 																	 	keywords,
+						 																	 	shortcuticon,
+						 																	 	address,
+						 																	 	tel,
+						 																	 	email,
+						 																	 	icp,
+						 																	 	isopen,
+						 																	 	closemsg,
+						 																	 	qq,
+						 																	 	imagerootpath,
+						 																	 	managehttp,
+						 																	 	defaultproductimg,
+						 																	 	style,
+						 																	 	version,
+						 																	 	qqhelphtml,
+						 																	 	images,
+						 																	 	managelefttreeleaficon,
+						 																	 	statisticscode,
+						 																	  openresponsive
+						 								   from t_systemsetting )t  
+
+	</select>
+	
+	<select id="manage.systemSetting.selectOne" parameterType="com.winpow.services.manage.systemSetting.bean.SystemSetting" resultType="com.winpow.services.manage.systemSetting.bean.SystemSetting">
+			SELECT  
+											 	id,
+				 											 	systemcode,
+				 											 	name,
+				 											 	www,
+				 											 	log,
+				 											 	title,
+				 											 	description,
+				 											 	keywords,
+				 											 	shortcuticon,
+				 											 	address,
+				 											 	tel,
+				 											 	email,
+				 											 	icp,
+				 											 	isopen,
+				 											 	closemsg,
+				 											 	qq,
+				 											 	imagerootpath,
+				 											 	managehttp,
+				 											 	defaultproductimg,
+				 											 	style,
+				 											 	version,
+				 											 	qqhelphtml,
+				 											 	images,
+				 											 	managelefttreeleaficon,
+				 											 	statisticscode,
+				 											  openresponsive
+				 						  from t_systemsetting t  where 1=1  
+			<if test="id!=null and id!=''">
+				and t.id=#{id}
+			</if>
+	</select>
+	
+	
+	<select id="manage.systemSetting.selectById" parameterType="com.winpow.services.manage.systemSetting.bean.SystemSetting" resultType="com.winpow.services.manage.systemSetting.bean.SystemSetting">
+			SELECT  
+											 	id,
+				 											 	systemcode,
+				 											 	name,
+				 											 	www,
+				 											 	log,
+				 											 	title,
+				 											 	description,
+				 											 	keywords,
+				 											 	shortcuticon,
+				 											 	address,
+				 											 	tel,
+				 											 	email,
+				 											 	icp,
+				 											 	isopen,
+				 											 	closemsg,
+				 											 	qq,
+				 											 	imagerootpath,
+				 											 	managehttp,
+				 											 	defaultproductimg,
+				 											 	style,
+				 											 	version,
+				 											 	qqhelphtml,
+				 											 	images,
+				 											 	managelefttreeleaficon,
+				 											 	statisticscode,
+				 											  openresponsive
+				 						  from t_systemsetting t  where 1=1  
+			<if test="id!=null and id!=''">
+				and t.id=#{id}
+			</if>
+	</select>
+	
+	
+	<select id="manage.systemSetting.selectCount" parameterType="com.winpow.services.manage.systemSetting.bean.SystemSetting" resultType="int">
+			select count(*)  
+				 FROM t_systemsetting t  where 1=1  
+				<if test="id!=null and id!=''">
+					and t.id=#{id}
+				</if>
+	</select>
+	
+	<select id="manage.systemSetting.selectOneByCondition" parameterType="com.winpow.services.manage.systemSetting.bean.SystemSetting" resultType="com.winpow.services.manage.systemSetting.bean.SystemSetting">
+			SELECT  
+											 	id,
+				 											 	systemcode,
+				 											 	name,
+				 											 	www,
+				 											 	log,
+				 											 	title,
+				 											 	description,
+				 											 	keywords,
+				 											 	shortcuticon,
+				 											 	address,
+				 											 	tel,
+				 											 	email,
+				 											 	icp,
+				 											 	isopen,
+				 											 	closemsg,
+				 											 	qq,
+				 											 	imagerootpath,
+				 											 	managehttp,
+				 											 	defaultproductimg,
+				 											 	style,
+				 											 	version,
+				 											 	qqhelphtml,
+				 											 	images,
+				 											 	managelefttreeleaficon,
+				 											 	statisticscode,
+				 											  openresponsive
+				 					 from  t_systemsetting   t  where 1=1  
+			<if test="id!=null and id!=''">
+				and t.id=#{id}
+			</if>
+	</select>
+	
+	<insert id="manage.systemSetting.insert" parameterType="com.winpow.services.manage.systemSetting.bean.SystemSetting" useGeneratedKeys="true" 
+		keyProperty="id">
+	 		insert into t_systemsetting ( 
+	 								  	 	systemcode,
+													 	name,
+													 	www,
+													 	log,
+													 	title,
+													 	description,
+													 	keywords,
+													 	shortcuticon,
+													 	address,
+													 	tel,
+													 	email,
+													 	icp,
+													 	isopen,
+													 	closemsg,
+													 	qq,
+													 	imagerootpath,
+													 	managehttp,
+													 	defaultproductimg,
+													 	style,
+													 	version,
+													 	qqhelphtml,
+													 	images,
+													 	managelefttreeleaficon,
+													 	statisticscode,
+													  openresponsive
+			 						) values ( 
+										  
+				 										 	#{systemcode},
+				 										 	#{name},
+				 										 	#{www},
+				 										 	#{log},
+				 										 	#{title},
+				 										 	#{description},
+				 										 	#{keywords},
+				 										 	#{shortcuticon},
+				 										 	#{address},
+				 										 	#{tel},
+				 										 	#{email},
+				 										 	#{icp},
+				 										 	#{isopen},
+				 										 	#{closemsg},
+				 										 	#{qq},
+				 										 	#{imagerootpath},
+				 										 	#{managehttp},
+				 										 	#{defaultproductimg},
+				 										 	#{style},
+				 										 	#{version},
+				 										 	#{qqhelphtml},
+				 										 	#{images},
+				 										 	#{managelefttreeleaficon},
+				 										 	#{statisticscode},
+				 											#{openresponsive}
+				 						)
+		 
+	</insert>
+	
+	<update id="manage.systemSetting.update" parameterType="com.winpow.services.manage.systemSetting.bean.SystemSetting">
+		update t_systemsetting set 
+                        
+		
+				 			                <if test="#{systemcode}!=null and #{systemcode}!=''">
+                        systemcode=#{systemcode},
+                        </if>
+		
+				 			                <if test="#{name}!=null and #{name}!=''">
+                        name=#{name},
+                        </if>
+		
+				 			                <if test="#{www}!=null and #{www}!=''">
+                        www=#{www},
+                        </if>
+		
+				 			                <if test="#{log}!=null and #{log}!=''">
+                        log=#{log},
+                        </if>
+		
+				 			                <if test="#{title}!=null and #{title}!=''">
+                        title=#{title},
+                        </if>
+		
+				 			                <if test="#{description}!=null and #{description}!=''">
+                        description=#{description},
+                        </if>
+		
+				 			                <if test="#{keywords}!=null and #{keywords}!=''">
+                        keywords=#{keywords},
+                        </if>
+		
+				 			                <if test="#{shortcuticon}!=null and #{shortcuticon}!=''">
+                        shortcuticon=#{shortcuticon},
+                        </if>
+		
+				 			                <if test="#{address}!=null and #{address}!=''">
+                        address=#{address},
+                        </if>
+		
+				 			                <if test="#{tel}!=null and #{tel}!=''">
+                        tel=#{tel},
+                        </if>
+		
+				 			                <if test="#{email}!=null and #{email}!=''">
+                        email=#{email},
+                        </if>
+		
+				 			                <if test="#{icp}!=null and #{icp}!=''">
+                        icp=#{icp},
+                        </if>
+		
+				 			                <if test="#{isopen}!=null and #{isopen}!=''">
+                        isopen=#{isopen},
+                        </if>
+		
+				 			                <if test="#{closemsg}!=null and #{closemsg}!=''">
+                        closemsg=#{closemsg},
+                        </if>
+		
+				 			                <if test="#{qq}!=null and #{qq}!=''">
+                        qq=#{qq},
+                        </if>
+		
+				 			                <if test="#{imagerootpath}!=null and #{imagerootpath}!=''">
+                        imagerootpath=#{imagerootpath},
+                        </if>
+		
+				 			                <if test="#{managehttp}!=null and #{managehttp}!=''">
+                        managehttp=#{managehttp},
+                        </if>
+		
+				 			                <if test="#{defaultproductimg}!=null and #{defaultproductimg}!=''">
+                        defaultproductimg=#{defaultproductimg},
+                        </if>
+		
+				 			                <if test="#{style}!=null and #{style}!=''">
+                        style=#{style},
+                        </if>
+		
+				 			                <if test="#{version}!=null and #{version}!=''">
+                        version=#{version},
+                        </if>
+		
+				 			                <if test="#{qqhelphtml}!=null and #{qqhelphtml}!=''">
+                        qqhelphtml=#{qqhelphtml},
+                        </if>
+		
+				 			                <if test="#{images}!=null and #{images}!=''">
+                        images=#{images},
+                        </if>
+		
+				 			                <if test="#{managelefttreeleaficon}!=null and #{managelefttreeleaficon}!=''">
+                        managelefttreeleaficon=#{managelefttreeleaficon},
+                        </if>
+		
+				 			                <if test="#{statisticscode}!=null and #{statisticscode}!=''">
+                        statisticscode=#{statisticscode},
+                        </if>
+		
+				 			                <if test="#{openresponsive}!=null and #{openresponsive}!=''">
+                        openresponsive=#{openresponsive}
+                        </if>
+         						 
+		where id=#{id}
+	</update>
+	
+</mapper>  

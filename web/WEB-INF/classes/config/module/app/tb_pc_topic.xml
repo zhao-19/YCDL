@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+"-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="app">
+
+	<select id="app.pctopic.selectPageList" parameterType="com.winpow.services.app.pctopic.bean.Pctopic"
+		resultType="hashMap">
+		select * from (
+		select row_number() over(order by updatedate desc) as rownumber ,*
+		from tb_pc_topic where 1=1 
+		<if test="title != null and title != ''">
+		  and title like '%'+#{title}+'%'
+		</if>
+		)t where
+		rownumber &gt;  #{offset} and rownumber &lt; =
+		#{pageSize}+#{offset}
+	</select>
+	<select id="app.pctopic.selectPageCount" parameterType="com.winpow.services.app.pctopic.bean.Pctopic"
+		resultType="java.lang.Integer">
+		select count(*) from tb_pc_topic where 1=1 
+		<if test="title != null and title != ''">
+		  and title like '%'+#{title}+'%'
+		</if>
+	</select>
+
+	<select id="app.pctopic.selectOne" parameterType="com.winpow.services.app.pctopic.bean.Pctopic"
+		resultType="com.winpow.services.app.pctopic.bean.Pctopic">
+		select * from tb_pc_topic t where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+
+	<select id="app.pctopic.selectCount" parameterType="com.winpow.services.app.pctopic.bean.Pctopic"
+		resultType="int">
+		select count(*) from tb_pc_topic t where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+
+	<select id="app.pctopic.selectOneByCondition" parameterType="com.winpow.services.app.pctopic.bean.Pctopic"
+		resultType="com.winpow.services.app.pctopic.bean.Pctopic">
+		select * from tb_pc_topic t where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+
+	<select id="app.pctopic.selectList" parameterType="com.winpow.services.app.pctopic.bean.Pctopic"
+		resultType="com.winpow.services.app.pctopic.bean.Pctopic">
+		select * from tb_pc_topic t where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+
+	<insert id="app.pctopic.insert" parameterType="com.winpow.services.app.pctopic.bean.Pctopic"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into tb_pc_topic (
+		pkid,
+		userid,
+		title,
+		equityid,
+		content,
+		createby,
+		createdate,
+		updateby,
+		updatedate,
+		remark,
+        tag,
+        appid,picture,source,lnglat
+		) values (
+		#{pkid},
+		#{userid},
+		#{title},
+		#{equityid},
+		#{content},
+		#{createby},
+		getdate(),
+		#{updateby},
+		getdate(),
+		#{remark},
+        #{tag},
+        #{appid},#{picture},#{source},#{lnglat}
+		)
+	</insert>
+
+	<update id="app.pctopic.update" parameterType="com.winpow.services.app.pctopic.bean.Pctopic">
+		update tb_pc_topic set
+		<if test=" userid !=null and  userid !=''">
+			userid=#{userid},
+		</if>
+		<if test=" title !=null and  title !=''">
+			title=#{title},
+		</if>
+		<if test=" equityid !=null and  equityid !=''">
+			equityid=#{equityid},
+		</if>
+
+		<if test=" content !=null and  content !=''">
+			content=#{content},
+		</if>
+
+		<if test=" updateby !=null and  updateby !=''">
+			updateby=#{updateby},
+		</if>
+
+		<if test="remark!=null and remark !=''">
+			remark=#{remark},
+		</if>
+		
+		<if test=" tag !=null and  tag !=''">
+            tag=#{tag},
+        </if>
+        
+        <if test=" appid !=null and  appid !=''">
+            appid=#{appid},
+        </if>
+        
+        <if test=" picture !=null and  picture !=''">
+            picture=#{picture},
+        </if>
+        
+        <if test=" source !=null and  source !=''">
+            source=#{source},
+        </if>
+        <if test="lnglat !=null and lnglat !=''">
+            lnglat=#{lnglat},
+        </if>
+		updatedate=getdate()
+		where pkid=#{pkid}
+	</update>
+	
+	<select id="app.pctopic.selectPageAll" parameterType="com.winpow.services.app.pctopic.bean.Pctopic"
+        resultType="com.winpow.services.app.pctopic.bean.Pctopic">
+        select top ${pageSize} * from (
+        	select row_number() over (order by updatedate desc) as rownumber,* from tb_pc_topic
+        ) a where rownumber > #{pageSize}*(#{offset} - 1)
+    </select>
+    
+	<delete id="app.pctopic.delete" parameterType="com.winpow.services.app.pctopic.bean.Pctopic">
+	    delete tb_pc_topic where pkid = #{pkid}
+	</delete>
+</mapper>  

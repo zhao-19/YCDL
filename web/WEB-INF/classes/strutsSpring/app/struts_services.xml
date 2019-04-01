@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
+	"http://struts.apache.org/dtds/struts-2.5.dtd">
+<struts>
+
+	<package name="appuserport" namespace="/app" extends="struts-winpow-app">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="appuser" class="appUserActionFront">
+			<result name="toLogin">/user/login.jsp</result>
+		</action>
+	</package>
+	
+	<package name="appexpandport" namespace="/app" extends="struts-winpow-app">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="appexpand" class="appExtendActionFront">
+			<result name="toLogin">/user/login.jsp</result>
+		</action>
+	</package>
+	
+	<package name="appfirstport" namespace="/app" extends="struts-winpow-app">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="appfirst" class="appFirstActionFront">
+			<result name="toLogin">/user/login.jsp</result>
+		</action>
+	</package>
+	
+	<package name="appsecondport" namespace="/app" extends="struts-winpow-app">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="appsecond" class="appSecondActionFront">
+			<result name="toLogin">/user/login.jsp</result>
+		</action>
+	</package>
+	
+	<package name="appworkflowport" namespace="/app" extends="struts-winpow-app">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="appworkflow" class="appWorkFlowActionFront">
+			<result name="toLogin">/user/login.jsp</result>
+		</action>
+	</package>
+	
+</struts>

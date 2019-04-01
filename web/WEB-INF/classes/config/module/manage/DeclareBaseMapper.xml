@@ -1,0 +1,735 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.winpow.services.manage.declare.mapper.DeclareBaseMapper">
+
+    <resultMap type="com.winpow.services.manage.declare.bean.DeclareBase" id="declareBaseMap">
+        <id column="pId" property="id"/>
+        <result column="pUserid" property="userid"/>
+        <result column="pichi" property="pichi"/>
+        <result column="qiyemingcheng" property="qiyemingcheng"/>
+        <result column="zzjgdm" property="zzjgdm"/>
+        <result column="dizhi" property="dizhi"/>
+        <result column="sjdizhi" property="sjdizhi"/>
+        <result column="zhuceziben" property="zhuceziben"/>
+        <result column="shijiaoziben" property="shijiaoziben"/>
+        <result column="sscy" property="sscy"/>
+        <result column="zyyw" property="zyyw"/>
+        <result column="qylx" property="qylx"/>
+        <result column="cyrs" property="cyrs"/>
+        <result column="qncyrs" property="qncyrs"/>
+        <result column="fzr" property="fzr"/>
+        <result column="fzrzw" property="fzrzw"/>
+        <result column="fzrsj" property="fzrsj"/>
+        <result column="lxr" property="lxr"/>
+        <result column="lxrzw" property="lxrzw"/>
+        <result column="lxrsj" property="lxrsj"/>
+        <result column="gszcjg" property="gszcjg"/>
+        <result column="gdsjnjg" property="gdsjnjg"/>
+        <result column="tjgxszd" property="tjgxszd"/>
+        <result column="snmzzc" property="snmzzc"/>
+        <result column="snmzfz" property="snmzfz"/>
+        <result column="thirdyear" property="thirdyear"/>
+        <result column="thirdsell" property="thirdsell"/>
+        <result column="thirdinte" property="thirdinte"/>
+        <result column="thirdtax" property="thirdtax"/>
+        <result column="secondsell" property="secondsell"/>
+        <result column="secondinte" property="secondinte"/>
+        <result column="secondtax" property="secondtax"/>
+        <result column="firstsell" property="firstsell"/>
+        <result column="firstinte" property="firstinte"/>
+        <result column="firsttax" property="firsttax"/>
+        <result column="yrgqsj" property="yrgqsj"/>
+        <result column="yrgqjg" property="yrgqjg"/>
+        <result column="yrgqje" property="yrgqje"/>
+        <result column="rzfs" property="rzfs"/>
+        <result column="qtrzfs" property="qtrzfs"/>
+        <result column="rzje" property="rzje"/>
+        <result column="ywkdyzc" property="ywkdyzc"/>
+        <result column="pLurushijian" property="lurushijian"/>
+        <result column="pInputuser" property="inputuser"/>
+        <result column="pLastchgtime" property="lastchgtime"/>
+        <result column="zczjbz" property="zczjbz"/>
+        <result column="first_income_tax" property="first_income_tax"/>
+        <result column="first_sales_tax" property="first_sales_tax"/>
+        <result column="first_added_tax" property="first_added_tax"/>
+        <result column="second_income_tax" property="second_income_tax"/>
+        <result column="second_sales_tax" property="second_sales_tax"/>
+        <result column="second_added_tax" property="second_added_tax"/>
+        <result column="third_income_tax" property="third_income_tax"/>
+        <result column="third_sales_tax" property="third_sales_tax"/>
+        <result column="third_added_tax" property="third_added_tax"/>
+        <result column="high_tech_stat" property="high_tech_stat"/>
+        <result column="strategy_stat" property="strategy_stat"/>
+        <result column="iscomplete" property="iscomplete"/>
+        <result column="qiyeindustry" property="qiyeindustry"/>
+        <result column="socialsecurity" property="socialsecurity"/>
+        <collection property="declareBaseCoreList" ofType="com.winpow.services.manage.declare.bean.DeclareBaseCore"
+                    column="rele_id">
+            <id column="id" property="id"/>
+            <result column="userid" property="userid"/>
+            <result column="rele_id" property="rele_id" />
+            <result column="jgmc" property="jgmc"/>
+            <result column="jgtzje" property="jgtzje"/>
+            <result column="dzsj" property="dzsj"/>
+            <result column="lurushijian" property="lurushijian"/>
+            <result column="inputuser" property="inputuser"/>
+            <result column="lastchgtime" property="lastchgtime"/>
+        </collection>
+
+    </resultMap>
+
+    <select id="selectPageList"
+            parameterType="com.winpow.services.manage.declare.bean.DeclareBase" resultType="hashMap">
+        select * from (
+        select ROW_NUMBER() over(order by id desc) as rownumber ,
+        id,
+        userid,
+        pichi,
+        qiyemingcheng,
+        zzjgdm,
+        dizhi,
+        sjdizhi,
+        zhuceziben,
+        shijiaoziben,
+        sscy,
+        zyyw,
+        qylx,
+        cyrs,
+        qncyrs,
+        fzr,
+        fzrzw,
+        fzrsj,
+        lxr,
+        lxrzw,
+        lxrsj,
+        gszcjg,
+        gdsjnjg,
+        tjgxszd,
+        snmzzc,
+        snmzfz,
+        thirdyear,
+        thirdsell,
+        thirdinte,
+        thirdtax,
+        secondsell,
+        secondinte,
+        secondtax,
+        firstsell,
+        firstinte,
+        firsttax,
+        yrgqsj,
+        yrgqjg,
+        yrgqje,
+        rzfs,
+        qtrzfs,
+        rzje,
+        ywkdyzc,
+        lurushijian,
+        inputuser,
+        lastchgtime,
+        zczjbz,
+        first_income_tax,
+		first_sales_tax,
+		first_added_tax,
+		second_income_tax,
+		second_sales_tax,
+		second_added_tax,
+		third_income_tax,
+		third_sales_tax,
+		third_added_tax,
+		high_tech_stat,
+		strategy_stat,
+		iscomplete,qiyeindustry,socialsecurity
+        from tb_sb_base where 1 = 1
+
+        <if test="lxr!=null and lxr!=''">
+            and lxr LIKE '%' + #{lxr} + '%'
+        </if>
+        <if test="lxrsj!=null and lxrsj!=''">
+            and lxrsj LIKE '%' + #{lxrsj} + '%'
+        </if>
+        <if test="qiyemingcheng!=null and qiyemingcheng!=''">
+            and qiyemingcheng LIKE '%' + #{qiyemingcheng} + '%'
+        </if>
+        <if test="userid!=null and userid!=''">
+            and userid LIKE '%' + #{userid} + '%'
+        </if>
+        )t where rownumber &gt; = #{offset} and rownumber &lt; = #{pageSize}+#{offset}
+    </select>
+    <select id="selectPageCount"
+            parameterType="com.winpow.services.manage.declare.bean.DeclareBase"
+            resultType="java.lang.Integer">
+        select count(id) from tb_sb_base t where 1 = 1
+        <if test="id!=null and id!=''">
+            and t.ID = #{id}
+        </if>
+    </select>
+
+    <select id="selectOne"
+            parameterType="com.winpow.services.manage.declare.bean.DeclareBase"
+            resultMap="declareBaseMap">
+        SELECT top 1 t.id as pId,
+        t.userid as pUserid,
+        t.pichi,
+        t.qiyemingcheng,
+        t.zzjgdm,
+        t.dizhi,
+        t.sjdizhi,
+        t.zhuceziben,
+        t.shijiaoziben,
+        t.sscy,
+        t.zyyw,
+        t.qylx,
+        t.cyrs,
+        t.qncyrs,
+        t.fzr,
+        t.fzrzw,
+        t.fzrsj,
+        t.lxr,
+        t.lxrzw,
+        t.lxrsj,
+        t.gszcjg,
+        t.gdsjnjg,
+        t.tjgxszd,
+        t.snmzzc,
+        t.snmzfz,
+        t.thirdyear,
+        t.thirdsell,
+        t.thirdinte,
+        t.thirdtax,
+        t.secondsell,
+        t.secondinte,
+        t.secondtax,
+        t.firstsell,
+        t.firstinte,
+        t.firsttax,
+        t.yrgqsj,
+        t.yrgqjg,
+        t.yrgqje,
+        t.rzfs,
+        t.qtrzfs,
+        t.rzje,
+        t.ywkdyzc,
+        t.lurushijian as pLurushijian,
+        t.inputuser as pInputuser,
+        t.lastchgtime as pLastchagtime,
+        t.zczjbz,
+        t.first_income_tax,
+		t.first_sales_tax,
+		t.first_added_tax,
+		t.second_income_tax,
+		t.second_sales_tax,
+		t.second_added_tax,
+		t.third_income_tax,
+		t.third_sales_tax,
+		t.third_added_tax,
+		t.high_tech_stat,
+		t.strategy_stat,
+		t.iscomplete,t.qiyeindustry,t.socialsecurity,
+		a.* 
+        FROM tb_sb_base t 
+        LEFT JOIN tb_sb_base_core a ON t.id = a.RELE_ID where 1 = 1
+
+        <if test="id != null and id !=''">
+            and t.id=#{id}
+        </if>
+        <if test="userid!=null and userid!=''">
+            and t.userid = #{userid}
+        </if>
+        <if test="pichi!=null and pichi!=''">
+            and t.pichi = #{pichi}
+        </if>
+        order by t.pichi desc
+    </select>
+
+    <select id="selectByUserId"
+            parameterType="com.winpow.services.manage.declare.bean.DeclareBase"
+            resultMap="declareBaseMap">
+        SELECT top 1 * from (
+        select 
+        pichi,
+        qiyemingcheng
+        FROM tb_sb_base t where 1=1 
+        <if test="userid!=null and userid!=''">
+            and userid = #{userid}
+        </if> 
+        <if test="pichi!=null and pichi!=''">
+            and pichi = #{pichi}
+        </if> 
+        union all 
+        select top 1 pichi,org_name from tb_sb_base_jg where 1=1 
+        <if test="userid!=null and userid!=''">
+            and userid = #{userid}
+        </if> 
+        <if test="pichi!=null and pichi!=''">
+            and pichi = #{pichi}
+        </if> 
+        ) t
+        order by t.pichi desc
+    </select>
+
+    <select id="selectAllList"
+            parameterType="com.winpow.services.manage.declare.bean.DeclareBase"
+            resultType="com.winpow.services.manage.declare.bean.DeclareBase">
+        SELECT * FROM tb_sb_base t
+    </select>
+
+    <select id="exportSelect" resultType="com.winpow.web.action.manage.declare.vo.Exportvo" parameterType="com.winpow.services.manage.declare.bean.DeclareBase">
+        <if test="zcfx == 'txdb'">
+			<!-- select  t1.qiyemingcheng as 'result1' , t1.dkyy as 'result2' ,t1.dkje as 'result3' ,t1.dkll as 'result4' ,t1.dbfl as 'result5' ,t1.fksj as 'result6' ,t1.daycount as 'result7' ,t1.inteamt as 'result8' ,t1.dbfamt as 'result9' ,t1.dsfxypj as 'result10' ,t2.THIRDSELL 'result11' ,t2.THIRDINTE 'result12' ,t2.THIRDTAX 'result13'  ,t2.SECONDSELL 'result14' ,t2.SECONDINTE 'result15' ,t2.SECONDTAX 'result16'   ,t2.FIRSTSELL 'result17' ,t2.FIRSTINTE 'result18' ,t2.FIRSTTAX 'result19' ,T2.LXR AS 'result20' ,t2.LXRZW 'result21' ,t2.LXRSJ 'result22' ,t2.FZR 'result23' ,t2.FZRZW 'result24' ,t2.FZRSJ 'result25'  ,t1.stat 'result26' from (SELECT app.userid , app.qiyemingcheng as qiyemingcheng , core.dkyy as dkyy , core.dkje as dkje , core.dkll as dkll , core.dbfl as dbfl , convert(char(10),core.fksj,120) as fksj , convert(char(10),core.dqsj,120) as dqsj , core.daycount as daycount , core.inteamt/10000 as inteamt , core.dbfamt/10000 as dbfamt , app.dsfxypj as dsfxypj , app.Thirdsell as Thirdsell , app.thirdinte as thirdinte , app.thirdtax as thirdtax , app.secondsell as secondsell , app.secondinte as secondinte , app.secondtax as secondtax , app.lxr as lxr , app.lxrzhiwu as lxrzhiwu , app.lxrtlle as lxrtlle , app.fzr as fzr , app.fzrzhiwu as fzrzhiwu , app.fzrtele as fzrtele , app.zqrzds as zqrzds , app.gqrzds as gqrzds  ,app.lurushijian ,(select code_name from tb_Code where pk_CodeID=app.stat)  as stat from Tb_interest_app app inner join tb_interest_core core on app.id=core.rele_id where 1=1 )t1  right join tb_sb_base t2 on t1.userid=t2.userid where  t1.lurushijian >'2017-03-01' -->
+        	select t1.qiyemingcheng as 'result1', t1.dkyy as 'result2', t1.dkje as 'result3', t1.dkll as 'result4', t1.dbfl as 'result5', t1.fksj as 'result6', t1.dqsj as 'result7', t1.daycount as 'result8', t1.inteamt as 'result9', t1.dbfamt as 'result10', t1.dsfxypj as 'result11', t2.thirdsell 'result12', t2.thirdinte 'result13', t2.thirdtax 'result14', t2.secondsell 'result15', t2.secondinte 'result16', t2.secondtax 'result17', t2.firstsell 'result18', t2.firstinte 'result19', t2.firsttax 'result20', t2.lxr as 'result21', t2.lxrzw 'result22', t2.lxrsj 'result23', t2.fzr 'result24', t2.fzrzw 'result25', t2.fzrsj 'result26', t1.stat 'result27', t2.first_income_tax 'result28', t2.first_sales_tax 'result29', t2.first_added_tax 'result30', t2.second_income_tax 'result31', t2.second_sales_tax 'result32', t2.second_added_tax 'result33', t2.third_income_tax 'result34', t2.third_sales_tax 'result35', t2.third_added_tax 'result36', case t2.high_tech_stat when '0' then '否' when '1' then '是' else '' end 'result37', case t2.strategy_stat when '0' then '否' when '1' then '是' else '' end 'result38', t1.pichi 'result39', t1.qysqje 'result40', t1.xtjsje 'result41' from ( select app.pichi, app.qysqje, app.xtjsje, app.userid, app.qiyemingcheng as qiyemingcheng, core.dkyy as dkyy, core.dkje as dkje, core.dkll as dkll, core.dbfl as dbfl, convert (char(10), core.fksj, 120) as fksj, convert (char(10), core.dqsj, 120) as dqsj, core.daycount as daycount, core.inteamt / 10000 as inteamt, core.dbfamt / 10000 as dbfamt, app.dsfxypj as dsfxypj, app.thirdsell as thirdsell, app.thirdinte as thirdinte, app.thirdtax as thirdtax, app.secondsell as secondsell, app.secondinte as secondinte, app.secondtax as secondtax, app.lxr as lxr, app.lxrzhiwu as lxrzhiwu, app.lxrtlle as lxrtlle, app.fzr as fzr, app.fzrzhiwu as fzrzhiwu, app.fzrtele as fzrtele, app.zqrzds as zqrzds, app.gqrzds as gqrzds, app.lurushijian, ( select code_name from tb_code where pk_codeid = app.stat ) as stat from tb_interest_app app inner join tb_interest_core core on app.id = core.rele_id where 1 = 1 ) t1 right join ( select t.* from ( select b.*, row_number () over ( partition by userid order by lurushijian desc ) rn from tb_sb_base b ) t where rn = 1 ) t2 on t1.userid = t2.userid where t1.lurushijian > '${lurushijian}'
+        </if>
+        <if test="zcfx == 'qygzbt'">
+            <!-- select t2.QIYEMINGCHENG  'result1' ,t3.Code_name 'result2' ,t1.ZQGSMC 'result3' ,t1.KJSSWS 'result4' ,t1.LSSWS1 'result5' , t1.qysqje 'result6' ,t1.XTJSJE 'result7' ,T2.LXR AS 'result8' ,t2.LXRZW 'result9' ,t2.LXRSJ 'result10' ,t2.FZR 'result11' ,t2.FZRZW 'result12' ,t2.FZRSJ 'result13' ,(select code_name from tb_Code where pk_CodeID=t1.STATUS) as 'result14'   from tb_sb_gfzgz t1 left join tb_sb_base  t2  on t1.USERID=t2.USERID left join tb_Code t3 on t1.NSSJYS =t3.pk_CodeID -->
+        	select t2.qiyemingcheng 'result1', t3.code_name 'result2', t1.zqgsmc 'result3', t1.kjssws 'result4', t1.lssws1 'result5', t1.qysqje 'result6', t1.xtjsje 'result7', t2.lxr as 'result8', t2.lxrzw 'result9', t2.lxrsj 'result10', t2.fzr 'result11', t2.fzrzw 'result12', t2.fzrsj 'result13', ( select code_name from tb_code where pk_codeid = t1.status ) as 'result14', t2.first_income_tax 'result15', t2.first_sales_tax 'result16', t2.first_added_tax 'result17', t2.second_income_tax 'result18', t2.second_sales_tax 'result19', t2.second_added_tax 'result20', t2.third_income_tax 'result21', t2.third_sales_tax 'result22', t2.third_added_tax 'result23', case t2.high_tech_stat when '0' then '否' when '1' then '是' else '' end 'result24', case t2.strategy_stat when '0' then '否' when '1' then '是' else '' end 'result25', t1.pichi 'result26' from tb_sb_gfzgz t1 left join ( select t.* from ( select b.*, row_number () over ( partition by userid order by lurushijian desc ) rn from tb_sb_base b ) t where rn = 1 ) t2 on t1.userid = t2.userid left join tb_code t3 on t1.nssjys = t3.pk_codeid where t1.lurushijian > '${lurushijian}'
+        </if>
+        <if test="zcfx == 'ipohjbt'">
+            <!-- select t2.QIYEMINGCHENG  'result1' ,t3.Code_name  'result2'  , convert(char(10),t1.SLSJ,120) 'result3' ,t1.QYSQJE 'result4' ,t1.XTJSJE 'result5'  ,T2.LXR AS 'result6' ,t2.LXRZW 'result7' ,t2.LXRSJ 'result8' ,t2.FZR 'result9' ,t2.FZRZW 'result10' ,t2.FZRSJ 'result11' ,(select code_name from tb_Code where pk_CodeID=t1.STATUS) as 'result12'   from    tb_sb_ipo t1 left join tb_sb_base  t2  on t1.USERID=t2.USERID left join tb_Code t3 on t1.NSSJYS =t3.pk_CodeID -->
+        	select t2.qiyemingcheng 'result1', t3.code_name 'result2', convert (char(10), t1.slsj, 120) 'result3', t1.qysqje 'result4', t1.xtjsje 'result5', t2.lxr as 'result6', t2.lxrzw 'result7', t2.lxrsj 'result8', t2.fzr 'result9', t2.fzrzw 'result10', t2.fzrsj 'result11', ( select code_name from tb_code where pk_codeid = t1.status ) as 'result12', t2.first_income_tax 'result13', t2.first_sales_tax 'result14', t2.first_added_tax 'result15', t2.second_income_tax 'result16', t2.second_sales_tax 'result17', t2.second_added_tax 'result18', t2.third_income_tax 'result19', t2.third_sales_tax 'result20', t2.third_added_tax 'result21', case t2.high_tech_stat when '0' then '否' when '1' then '是' else '' end 'result22', case t2.strategy_stat when '0' then '否' when '1' then '是' else '' end 'result23', t1.pichi 'result24' from tb_sb_ipo t1 left join ( select t.* from ( select b.*, row_number () over ( partition by userid order by lurushijian desc ) rn from tb_sb_base b ) t where rn = 1 ) t2 on t1.userid = t2.userid left join tb_code t3 on t1.nssjys = t3.pk_codeid where t1.lurushijian > '${lurushijian}'
+        </if>
+        <if test="zcfx == 'sscgbt'">
+			<!-- select t2.QIYEMINGCHENG  'result1'  ,t3.Code_name 'result2'   ,  convert(char(10),t1.SSSJ ,120)  'result3' ,t1.QYSQJE 'result4' ,t1.XTJSJE 'result5'  ,T2.LXR AS 'result6' ,t2.LXRZW 'result7' ,t2.LXRSJ 'result8' ,t2.FZR 'result9' ,t2.FZRZW 'result10' ,t2.FZRSJ 'result11'  ,(select code_name from tb_Code where pk_CodeID=t1.STATUS) as 'result12'   from    tb_sb_ssgp t1 left join tb_sb_base  t2  on t1.USERID=t2.USERID left join tb_Code t3 on t1.NSSJYS =t3.pk_CodeID -->        
+			select t2.qiyemingcheng 'result1', t3.code_name 'result2', convert (char(10), t1.sssj, 120) 'result3', t1.qysqje 'result4', t1.xtjsje 'result5', t2.lxr as 'result6', t2.lxrzw 'result7', t2.lxrsj 'result8', t2.fzr 'result9', t2.fzrzw 'result10', t2.fzrsj 'result11', ( select code_name from tb_code where pk_codeid = t1.status ) as 'result12', t2.first_income_tax 'result13', t2.first_sales_tax 'result14', t2.first_added_tax 'result15', t2.second_income_tax 'result16', t2.second_sales_tax 'result17', t2.second_added_tax 'result18', t2.third_income_tax 'result19', t2.third_sales_tax 'result20', t2.third_added_tax 'result21', case t2.high_tech_stat when '0' then '否' when '1' then '是' else '' end 'result22', case t2.strategy_stat when '0' then '否' when '1' then '是' else '' end 'result23', t1.pichi 'result24' from tb_sb_ssgp t1 left join ( select t.* from ( select b.*, row_number () over ( partition by userid order by lurushijian desc ) rn from tb_sb_base b ) t where rn = 1 ) t2 on t1.userid = t2.userid left join tb_code t3 on t1.nssjys = t3.pk_codeid where t1.lurushijian > '${lurushijian}'
+		</if>
+        <if test="zcfx == 'jwsscgbt'">
+            <!-- select t2.QIYEMINGCHENG  'result1'  ,t1.GPDD  'result2',t1.RZJE 'result3'   ,  convert(char(10),t1.SSSJ ,120)  'result4' ,t1.QYSQJE 'result5' ,t1.XTJSJE 'result6'  ,T2.LXR AS 'result7' ,t2.LXRZW 'result8' ,t2.LXRSJ 'result9' ,t2.FZR 'result10' ,t2.FZRZW 'result11' ,t2.FZRSJ 'result12'  ,(select code_name from tb_Code where pk_CodeID=t1.STATUS) as 'result13'   from    tb_sb_jwzb t1 left join tb_sb_base  t2  on t1.USERID=t2.USERID -->
+        	select t2.qiyemingcheng 'result1', t1.gpdd 'result2', t1.rzje 'result3', convert (char(10), t1.sssj, 120) 'result4', t1.qysqje 'result5', t1.xtjsje 'result6', t2.lxr as 'result7', t2.lxrzw 'result8', t2.lxrsj 'result9', t2.fzr 'result10', t2.fzrzw 'result11', t2.fzrsj 'result12', ( select code_name from tb_code where pk_codeid = t1.status ) as 'result13', t2.first_income_tax 'result14', t2.first_sales_tax 'result15', t2.first_added_tax 'result16', t2.second_income_tax 'result17', t2.second_sales_tax 'result18', t2.second_added_tax 'result19', t2.third_income_tax 'result20', t2.third_sales_tax 'result21', t2.third_added_tax 'result22', case t2.high_tech_stat when '0' then '否' when '1' then '是' else '' end 'result23', case t2.strategy_stat when '0' then '否' when '1' then '是' else '' end 'result24', t1.pichi 'result25' from tb_sb_jwzb t1 left join ( select t.* from ( select b.*, row_number () over ( partition by userid order by lurushijian desc ) rn from tb_sb_base b ) t where rn = 1 ) t2 on t1.userid = t2.userid where t1.lurushijian > '${lurushijian}'
+        </if>
+        <if test="zcfx == 'zzgbbt'">
+            <!-- select t2.QIYEMINGCHENG  'result1'  ,t1.zzgbje 'result2'  ,  convert(char(10),t1.GGSJ ,120)  'result3' ,t1.QYSQJE 'result4' ,t1.XTJSJE 'result5'  ,T2.LXR AS 'result6' ,t2.LXRZW 'result7' ,t2.LXRSJ 'result8' ,t2.FZR 'result9' ,t2.FZRZW 'result10' ,t2.FZRSJ 'result11'  ,(select code_name from tb_Code where pk_CodeID=t1.STATUS) as 'result12'   from    tb_sb_zzgb t1 left join tb_sb_base  t2  on t1.USERID=t2.USERID -->
+        	select t2.qiyemingcheng 'result1', t1.zzgbje 'result2', convert (char(10), t1.ggsj, 120) 'result3', t1.qysqje 'result4', t1.xtjsje 'result5', t2.lxr as 'result6', t2.lxrzw 'result7', t2.lxrsj 'result8', t2.fzr 'result9', t2.fzrzw 'result10', t2.fzrsj 'result11', ( select code_name from tb_code where pk_codeid = t1.status ) as 'result12', t2.first_income_tax 'result13', t2.first_sales_tax 'result14', t2.first_added_tax 'result15', t2.second_income_tax 'result16', t2.second_sales_tax 'result17', t2.second_added_tax 'result18', t2.third_income_tax 'result19', t2.third_sales_tax 'result20', t2.third_added_tax 'result21', case t2.high_tech_stat when '0' then '否' when '1' then '是' else '' end 'result22', case t2.strategy_stat when '0' then '否' when '1' then '是' else '' end 'result23', t1.pichi 'result24', t1.stock_amount 'result25', t1.stock_price 'result26', t1.stock_tax 'result27',t3.appname 'result28',t3.idcard 'result29',t3.duty 'result30',t3.zzgbcount 'result31',t3.stocks 'result32',t3.incometax 'result33' from tb_sb_zzgb t1 left join tb_sb_zzgb_core t3 on t1.id=t3.rele_id left join ( select t.* from ( select b.*, row_number () over ( partition by userid order by lurushijian desc ) rn from tb_sb_base b ) t where rn = 1 ) t2 on t1.userid = t2.userid where t1.lurushijian > '${lurushijian}'
+        </if>
+        <if test="zcfx == 'czbgbt'">
+            <!-- select t2.QIYEMINGCHENG  'result1'  ,t1.SQFX 'result2' ,t1.BBGQYMC 'result3' ,t1.JYJE 'result4' ,t1.QYSQJE 'result5' ,t1.XTJSJE 'result6'  ,   T2.LXR AS 'result7' ,t2.LXRZW 'result8' ,t2.LXRSJ 'result9' ,t2.FZR 'result10' ,t2.FZRZW 'result11' ,t2.FZRSJ 'result12'  ,(select code_name from tb_Code where pk_CodeID=t1.STATUS) as 'result13'   from    tb_sb_czbg t1 left join tb_sb_base  t2  on t1.USERID=t2.USERID -->
+        	select t2.qiyemingcheng 'result1', t1.sqfx 'result2', t1.bbgqymc 'result3', t1.jyje 'result4', t1.qysqje 'result5', t1.xtjsje 'result6', t2.lxr as 'result7', t2.lxrzw 'result8', t2.lxrsj 'result9', t2.fzr 'result10', t2.fzrzw 'result11', t2.fzrsj 'result12', ( select code_name from tb_code where pk_codeid = t1.status ) as 'result13', t2.first_income_tax 'result14', t2.first_sales_tax 'result15', t2.first_added_tax 'result16', t2.second_income_tax 'result17', t2.second_sales_tax 'result18', t2.second_added_tax 'result19', t2.third_income_tax 'result20', t2.third_sales_tax 'result21', t2.third_added_tax 'result22', case t2.high_tech_stat when '0' then '否' when '1' then '是' else '' end 'result23', case t2.strategy_stat when '0' then '否' when '1' then '是' else '' end 'result24', t1.pichi 'result25', t1.deal_time 'result26' from tb_sb_czbg t1 left join ( select t.* from ( select b.*, row_number () over ( partition by userid order by lurushijian desc ) rn from tb_sb_base b ) t where rn = 1 ) t2 on t1.userid = t2.userid where t1.lurushijian > '${lurushijian}'
+        </if>
+        <if test="zcfx == 'xypjbt'">
+            <!-- select t2.QIYEMINGCHENG  'result1'  ,t1.zcfx 'result2' ,t1.PJORG 'result3' ,t1.PJJG 'result4' , convert(char(10),t1.PJSJ ,120)   'result5' ,t1.PJFY 'result6' ,t1.SBJE 'result7' ,t1.XTJSJE 'result8'  ,   T2.LXR AS 'result9' ,t2.LXRZW 'result10' ,t2.LXRSJ 'result11' ,t2.FZR 'result12' ,t2.FZRZW 'result13' ,t2.FZRSJ 'result14'    ,(select code_name from tb_Code where pk_CodeID=t1.STATUS) as 'result15'  from    tb_sb_pj t1 left join tb_sb_base  t2  on t1.USERID=t2.USERID -->
+        	select t2.qiyemingcheng 'result1', t1.zcfx 'result2', t1.pjorg 'result3', t1.pjjg 'result4', convert (char(10), t1.pjsj, 120) 'result5', t1.pjfy 'result6', t1.sbje 'result7', t1.xtjsje 'result8', t2.lxr as 'result9', t2.lxrzw 'result10', t2.lxrsj 'result11', t2.fzr 'result12', t2.fzrzw 'result13', t2.fzrsj 'result14', ( select code_name from tb_code where pk_codeid = t1.status ) as 'result15', t2.first_income_tax 'result16', t2.first_sales_tax 'result17', t2.first_added_tax 'result18', t2.second_income_tax 'result19', t2.second_sales_tax 'result20', t2.second_added_tax 'result21', t2.third_income_tax 'result22', t2.third_sales_tax 'result23', t2.third_added_tax 'result24', case t2.high_tech_stat when '0' then '否' when '1' then '是' else '' end 'result25', case t2.strategy_stat when '0' then '否' when '1' then '是' else '' end 'result26', t1.pichi 'result27' from tb_sb_pj t1 left join ( select t.* from ( select b.*, row_number () over ( partition by userid order by lurushijian desc ) rn from tb_sb_base b ) t where rn = 1 ) t2 on t1.userid = t2.userid where t1.lurushijian > '${lurushijian}'
+        </if>
+        <if test="zcfx == 'rzznbt'">
+            <!-- select t2.QIYEMINGCHENG 'result1' ,t0.CHUZUJIGOU 'result2',t0.ZHULINGFEIYONG 'result3'  , convert(char(10),t0.QICHUSHIJIAN ,120) as 'result4'    ,convert(char(10),t0.JIESHUSHIJIAN ,120)  as 'result5'   ,convert(char(10),t0.BUTIEKAISHIRIQI ,120) as 'result6'     ,convert(char(10),t0.BUTIJIESHURIQI ,120) as 'result7'    ,t0.BUTIETIANSHU as 'result8' ,t0.ZHULINGFEIYONG   as 'result9' ,t0.BUTIEJINE 'result10',t1.QYSQJE 'result11' ,t1.XTJSJE  'result12' ,(select code_name from tb_Code where pk_CodeID=t1.STATUS) as 'result13' from tb_sb_rzzn_core t0 inner join tb_sb_rzzn t1 on t0.RELE_ID =t1.id  left join tb_sb_base t2 on t1.USERID =t2.USERID -->
+        	select t2.qiyemingcheng 'result1', t0.chuzujigou 'result2', t0.zhulingfeiyong 'result3', convert ( char (10), t0.qichushijian, 120 ) as 'result4', convert ( char (10), t0.jieshushijian, 120 ) as 'result5', convert ( char (10), t0.butiekaishiriqi, 120 ) as 'result6', convert ( char (10), t0.butijieshuriqi, 120 ) as 'result7', t0.butietianshu as 'result8', t0.zhulingfeiyong as 'result9', t0.butiejine 'result10', t1.qysqje 'result11', t1.xtjsje 'result12', ( select code_name from tb_code where pk_codeid = t1.status ) as 'result13', t2.first_income_tax 'result14', t2.first_sales_tax 'result15', t2.first_added_tax 'result16', t2.second_income_tax 'result17', t2.second_sales_tax 'result18', t2.second_added_tax 'result19', t2.third_income_tax 'result20', t2.third_sales_tax 'result21', t2.third_added_tax 'result22', case t2.high_tech_stat when '0' then '否' when '1' then '是' else '' end 'result23', case t2.strategy_stat when '0' then '否' when '1' then '是' else '' end 'result24', t1.pichi 'result25', t2.lxr as 'result26', t2.lxrzw 'result27', t2.lxrsj 'result28' from tb_sb_rzzn_core t0 inner join tb_sb_rzzn t1 on t0.rele_id = t1.id left join ( select t.* from ( select b.*, row_number () over ( partition by userid order by lurushijian desc ) rn from tb_sb_base b ) t where rn = 1 ) t2 on t1.userid = t2.userid where t1.lurushijian > '${lurushijian}'
+        </if>
+        <if test="zcfx == 'kjbxbt'">
+            <!-- select t2.QIYEMINGCHENG 'result1' , t0.BAOXIANGONGSI 'result2' ,t0.TOUBAOPINZHOGN 'result3',t0.BAOFEI 'result4' ,t1.QYSQJE  'result5', t1.XTJSJE 'result6'   ,(select code_name from tb_Code where pk_CodeID=t1.STATUS) as 'result7'  from  tb_sb_kjbx_core t0 left join tb_sb_kjbx t1 on t0.RELE_ID =t1.id    inner join tb_sb_base t2 on t1.USERID =t2.USERID -->
+        	select t2.qiyemingcheng 'result1', t0.baoxiangongsi 'result2', t0.toubaopinzhogn 'result3', t0.baofei 'result4', t1.qysqje 'result5', t1.xtjsje 'result6', ( select code_name from tb_code where pk_codeid = t1.status ) as 'result7', t2.first_income_tax 'result8', t2.first_sales_tax 'result9', t2.first_added_tax 'result10', t2.second_income_tax 'result11', t2.second_sales_tax 'result12', t2.second_added_tax 'result13', t2.third_income_tax 'result14', t2.third_sales_tax 'result15', t2.third_added_tax 'result16', case t2.high_tech_stat when '0' then '否' when '1' then '是' else '' end 'result17', case t2.strategy_stat when '0' then '否' when '1' then '是' else '' end 'result18', t1.pichi 'result19', t2.lxr as 'result20', t2.lxrzw 'result21', t2.lxrsj 'result22' from tb_sb_kjbx_core t0 left join tb_sb_kjbx t1 on t0.rele_id = t1.id inner join ( select t.* from ( select b.*, row_number () over ( partition by userid order by lurushijian desc ) rn from tb_sb_base b ) t where rn = 1 ) t2 on t1.userid = t2.userid where t1.lurushijian > '${lurushijian}'
+        </if>
+        <if test="zcfx == 'qybtz'">
+            <!-- select t2.QIYEMINGCHENG 'result1',  qiye.CHENGLIRIQI 'result2' ,qiye.ZHUYINGYEWU 'result3',(select code_name from tb_Code where pk_CodeID=qiye.HANGYEID)  'result4' ,t2.LXR  'result5',t2.LXRZW 'result6' ,t2.LXRSJ 'result7' ,t2.FZR 'result8',t2.FZRZW 'result9' ,t2.FZRSJ 'result10' ,case when t1.LEIBIE=1 then #{pjjg}  else #{nssjys}   end 'result11'  , t0.JGMC 'result12'  , '' as 'result13' ,(select code_name from tb_Code where pk_CodeID=t0.JGSFBA)  'result14' ,t0.JGTZJE 'result15','' as 'result16' ,t0.DZSJ  'result17',t0.GSBGSJ 'result18' ,t2.FIRSTTAX 'result19' ,t2.SECONDTAX 'result20' ,t2.THIRDTAX  'result21',t1.QYSQJE 'result22'  ,t1.XTJSJE 'result23'   ,(select code_name from tb_Code where pk_CodeID=t1.STATUS) as 'result24'  from tb_sb_btz_core t0 inner join tb_sb_btz t1  on t0.RELE_ID =t1.id    left join tb_sb_base t2 on t1.USERID =t2.USERID left join tb_Qiye qiye on t2.USERID =qiye.USERID --> 
+        	select t2.qiyemingcheng 'result1', qiye.chengliriqi 'result2', qiye.zhuyingyewu 'result3', ( select code_name from tb_code where pk_codeid = qiye.hangyeid ) 'result4', t2.lxr 'result5', t2.lxrzw 'result6', t2.lxrsj 'result7', t2.fzr 'result8', t2.fzrzw 'result9', t2.fzrsj 'result10', case when t1.leibie = 1 then #{ pjjg } else #{ nssjys } end 'result11', t0.jgmc 'result12', '' as 'result13', ( select code_name from tb_code where pk_codeid = t0.jgsfba ) 'result14', t0.jgtzje 'result15', '' as 'result16', t0.dzsj 'result17', t0.gsbgsj 'result18', t2.firsttax 'result19', t2.secondtax 'result20', t2.thirdtax 'result21', t1.qysqje 'result22', t1.xtjsje 'result23', ( select code_name from tb_code where pk_codeid = t1.status ) as 'result24', t2.first_income_tax 'result25', t2.first_sales_tax 'result26', t2.first_added_tax 'result27', t2.second_income_tax 'result28', t2.second_sales_tax 'result29', t2.second_added_tax 'result30', t2.third_income_tax 'result31', t2.third_sales_tax 'result32', t2.third_added_tax 'result33', case t2.high_tech_stat when '0' then '否' when '1' then '是' else '' end 'result34', case t2.strategy_stat when '0' then '否' when '1' then '是' else '' end 'result35', t1.pichi 'result36' from tb_sb_btz_core t0 inner join tb_sb_btz t1 on t0.rele_id = t1.id left join ( select t.* from ( select b.*, row_number () over ( partition by userid order by lurushijian desc ) rn from tb_sb_base b ) t where rn = 1 ) t2 on t1.userid = t2.userid left join tb_qiye qiye on t2.userid = qiye.userid where t1.lurushijian > '${lurushijian}'
+        </if>
+        <if test="zcfx == 'yggqbt'">
+			<!-- select base.QIYEMINGCHENG 'result1' ,convert(char(10),t1.gqjlwcsj ,120) 'result2' ,t1.JZC 'result3' ,case when t1.cgptcg=0 then 0 else t1.cgptzgbs/t1.cgptcg end 'result4' , case when t0.cgptzgbs=0 then 0 else t0.cgptcg/t0.cgptzgbs end as 'result5' , case when t0.cgptzgbs=0 then 0 else  t0.cgptptgbs/t0.cgptzgbs end as 'result6' , t1.SBJE 'result7',t1.XTJSJE 'result8' , base.LXR AS 'result9' ,base.LXRZW 'result10' ,base.LXRSJ 'result11' ,base.FZR 'result12' ,base.FZRZW 'result13' ,base.FZRSJ 'result14'  ,(select code_name from tb_Code where pk_CodeID=t1.STATUS) as 'result15' from tb_sb_yggqjl_core t0 inner join TB_SB_YGGQJL t1 on t0.USERID =t1.USERID left join tb_sb_base t2 on t1.USERID=t2.USERID left join tb_sb_base base on t2.USERID=base.USERID -->
+			select base.qiyemingcheng 'result1', convert (char(10), t1.gqjlwcsj, 120) 'result2', t1.jzc 'result3', case when t1.cgptcg = 0 then 0 else t1.cgptzgbs / t1.cgptcg end 'result4', case when t0.cgptzgbs = 0 then 0 else t0.cgptcg / t0.cgptzgbs end as 'result5', case when t0.cgptzgbs = 0 then 0 else t0.cgptptgbs / t0.cgptzgbs end as 'result6', t1.sbje 'result7', t1.xtjsje 'result8', base.lxr as 'result9', base.lxrzw 'result10', base.lxrsj 'result11', base.fzr 'result12', base.fzrzw 'result13', base.fzrsj 'result14', ( select code_name from tb_code where pk_codeid = t1.status ) as 'result15', t2.first_income_tax 'result16', t2.first_sales_tax 'result17', t2.first_added_tax 'result18', t2.second_income_tax 'result19', t2.second_sales_tax 'result20', t2.second_added_tax 'result21', t2.third_income_tax 'result22', t2.third_sales_tax 'result23', t2.third_added_tax 'result24', case t2.high_tech_stat when '0' then '否' when '1' then '是' else '' end 'result25', case t2.strategy_stat when '0' then '否' when '1' then '是' else '' end 'result26', t1.pichi 'result27',t0.cgptname 'result28' from tb_sb_yggqjl_core t0 inner join tb_sb_yggqjl t1 on t0.userid = t1.userid left join ( select t.* from ( select b.*, row_number () over ( partition by userid order by lurushijian desc ) rn from tb_sb_base b ) t where rn = 1 ) t2 on t1.userid = t2.userid left join ( select t.* from ( select b.*, row_number () over ( partition by userid order by lurushijian desc ) rn from tb_sb_base b ) t where rn = 1 ) base on t2.userid = base.userid where t1.lurushijian > '${lurushijian}' 
+        </if>
+        <if test="zcfx == 'zwrzbt'">
+			select t1.qiyemingcheng 'result1', t1.qysqje 'result2', t1.xtjsje 'result3', t1.zwrzlb 'result4', t1.kaishiriqi 'result5', t1.daoqiriqi 'result6', t1.rongzijine 'result7', t1.rongzfeiyong 'result8', t1.pingjijieguo 'result9', t1.memo 'result10', t1.lastchgtime 'result11', t2.thirdsell 'result12', t2.thirdinte 'result13', t2.thirdtax 'result14', t2.secondsell 'result15', t2.secondinte 'result16', t2.secondtax 'result17', t2.firstsell 'result18', t2.firstinte 'result19', t2.firsttax 'result20', t2.lxr as 'result21', t2.lxrzw 'result22', t2.lxrsj 'result23', t2.fzr 'result24', t2.fzrzw 'result25', t2.fzrsj 'result26', ( select code_name from tb_code where pk_codeid = t1.status ) as 'result27', t2.first_income_tax 'result28', t2.first_sales_tax 'result29', t2.first_added_tax 'result30', t2.second_income_tax 'result31', t2.second_sales_tax 'result32', t2.second_added_tax 'result33', t2.third_income_tax 'result34', t2.third_sales_tax 'resul35', t2.third_added_tax 'result36', case t2.high_tech_stat when '0' then '否' when '1' then '是' else '' end 'result37', case t2.strategy_stat when '0' then '否' when '1' then '是' else '' end 'result38', t1.pichi 'result39' from tb_sb_zwrz t1 left join ( select t.* from ( select b.*, row_number () over ( partition by userid order by lurushijian desc ) rn from tb_sb_base b ) t where rn = 1 ) t2 on t1.userid = t2.userid where t1.lurushijian > '${lurushijian}'
+        </if>
+    </select>
+
+    <select id="selectAllBT" resultType="hashMap">
+    select * from(
+        select amt_confirm,lurushijian,'btz' as type, status, convert(varchar, id) id,'' as nssjys,'' as zcfx, convert(varchar, leibie) leibie,xtjsje,'3eff48cae44a41b1bb570b13b631a5b7' as policyid,pichi from tb_sb_btz where USERID = #{userid}
+        UNION ALL
+        select amt_confirm,lurushijian,'czbg' as type, status, convert(varchar, id) id,'' as nssjys,'' as zcfx,'' as leibie,xtjsje,'3b1ae2ef7d714f9aa0d23330aaaecc60' as policyid,pichi from tb_sb_czbg where USERID = #{userid}
+        UNION ALL
+        select amt_confirm,lurushijian,'gfzgz' as type, status, convert(varchar, id) id,'' as nssjys,'' as zcfx,'' as leibie,xtjsje,'5ac1343dc9f44104bd1d35137a2e285f' as policyid,pichi from tb_sb_gfzgz where USERID = #{userid}
+        UNION ALL
+        select amt_confirm,lurushijian,'ipo' as type, status, convert(varchar, id) id,'' as nssjys,'' as zcfx,'' as leibie,xtjsje,'c97d10ee282c4e7492c6dfca2d8a81d8' as policyid,pichi from tb_sb_ipo where USERID = #{userid}
+        UNION ALL
+        select amt_confirm,lurushijian,'jwzb' as type, status, convert(varchar, id) id,'' as nssjys,'' as zcfx,'' as leibie,xtjsje,'19405a8899fa44e1aeb2b2233d9e05f8' as policyid,pichi from tb_sb_jwzb where USERID = #{userid}
+        UNION ALL
+        select amt_confirm,lurushijian,'kjbx' as type, status, convert(varchar, id) id,'' as nssjys,'' as zcfx,'' as leibie,xtjsje,'24e4705e37684b52b70cbe9b9f2cf9d0' as policyid,pichi from tb_sb_kjbx where USERID = #{userid}
+        UNION ALL
+        select amt_confirm,lurushijian,'rzzn' as type, status, convert(varchar, id) id,'' as nssjys,'' as zcfx,'' as leibie,xtjsje,'217a3a328e9e471f8fb10ec9865fcf07' as policyid,pichi from tb_sb_rzzn where USERID = #{userid}
+        UNION ALL
+        select amt_confirm,lurushijian,'yggqjl' as type, status, convert(varchar, id) id,'' as nssjys,'' as zcfx,'' as leibie,xtjsje,'96490c4236bd4672affc6e7a3da5cb58' as policyid,pichi from tb_sb_yggqjl where USERID = #{userid}
+        UNION ALL
+        select amt_confirm,lurushijian,'zwrz' as type, status, convert(varchar, id) id,'' as nssjys,'' as zcfx,'' as leibie,xtjsje,'b9f522a9b43f4d2e96e848dfd917921f' as policyid,pichi from tb_sb_zwrz where USERID = #{userid}
+        UNION ALL
+        select amt_confirm,lurushijian,'zzgb' as type, status, convert(varchar, id) id,'' as nssjys,'' as zcfx,'' as leibie,xtjsje,'6d00b081869f48bf9824124110b4258a' as policyid,pichi from tb_sb_zzgb where USERID = #{userid}
+        UNION ALL
+        select amt_confirm,lurushijian,'interest' as type, stat as status, convert(varchar, id) id,'' as nssjys,'' as zcfx,'' as leibie,xtjsje,'717fe76c435d48dc82557e17ecf7a118' as policyid,pichi from tb_interest_app where userid = #{userid}
+        UNION ALL
+        select amt_confirm,lurushijian,'ssgp' as type, status, convert(varchar, id) id, nssjys,'' as zcfx,'' as leibie,xtjsje,'f17ec4b7496b41a99a8362432c377a97' as policyid,pichi from tb_sb_ssgp where USERID = #{userid}
+        UNION ALL
+        select amt_confirm,lurushijian,'pj' as type, status, convert(varchar, id) id,'' as nssjys, zcfx,'' as leibie,xtjsje,'76e15fc2cd464f0c8c193484e1514636' as policyid,pichi from tb_sb_pj where USERID = #{userid}
+        union all
+        select amt_confirm,co.lurushijian, 'common' type, status, co.id, po.policy_name nssjys, po.url zcfx, po.id leibie,xtjsje,po.id,pichi from tb_sb_common co 
+        left join tb_sb_policy po on co.policy_id = po.id where userid = #{userid}
+        union all
+        select amt_confirm,gp.lurushijian, 'gp' type, status, gp.id, po.policy_name nssjys, po.url zcfx, po.id leibie,xtjsje,po.id,pichi from tb_sb_gp gp
+        left join tb_sb_policy po on gp.policy_id = po.id where userid = #{userid}
+        union all
+        select amt_confirm,bo.lurushijian, 'border' type, bo.status, bo.id, po.policy_name nssjys, po.url zcfx, po.id leibie,xtjsje,po.id,pichi from tb_sb_border bo
+        left join tb_sb_policy po on bo.policy_id = po.id where userid = #{userid}
+    ) a order by lurushijian desc
+    </select>
+
+	<insert id="insert" parameterType="com.winpow.services.manage.declare.bean.DeclareBase"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into tb_sb_base (
+		userid,
+		pichi,
+		qiyemingcheng,
+		zzjgdm,
+		dizhi,
+		sjdizhi,
+		zhuceziben,
+		shijiaoziben,
+		sscy,
+		zyyw,
+		qylx,
+		cyrs,
+		qncyrs,
+		fzr,
+		fzrzw,
+		fzrsj,
+		lxr,
+		lxrzw,
+		lxrsj,
+		gszcjg,
+		gdsjnjg,
+		tjgxszd,
+		snmzzc,
+		snmzfz,
+		thirdyear,
+		thirdsell,
+		thirdinte,
+		thirdtax,
+		secondsell,
+		secondinte,
+		secondtax,
+		firstsell,
+		firstinte,
+		firsttax,
+		yrgqsj,
+		yrgqjg,
+		yrgqje,
+		rzfs,
+		qtrzfs,
+		rzje,
+		ywkdyzc,
+		lurushijian,
+		inputuser,
+		lastchgtime,
+		zczjbz,
+        first_income_tax,
+		first_sales_tax,
+		first_added_tax,
+		second_income_tax,
+		second_sales_tax,
+		second_added_tax,
+		third_income_tax,
+		third_sales_tax,
+		third_added_tax,
+		high_tech_stat,
+		strategy_stat,
+		iscomplete,qiyeindustry,socialsecurity
+		) values (
+		#{userid},
+		#{pichi},
+		#{qiyemingcheng},
+		#{zzjgdm},
+		#{dizhi},
+		#{sjdizhi},
+		#{zhuceziben},
+		#{shijiaoziben},
+		#{sscy},
+		#{zyyw},
+		#{qylx},
+		#{cyrs},
+		#{qncyrs},
+		#{fzr},
+		#{fzrzw},
+		#{fzrsj},
+		#{lxr},
+		#{lxrzw},
+		#{lxrsj},
+		#{gszcjg},
+		#{gdsjnjg},
+		#{tjgxszd},
+		#{snmzzc},
+		#{snmzfz},
+		#{thirdyear},
+		#{thirdsell},
+		#{thirdinte},
+		#{thirdtax},
+		#{secondsell},
+		#{secondinte},
+		#{secondtax},
+		#{firstsell},
+		#{firstinte},
+		#{firsttax},
+		#{yrgqsj},
+		#{yrgqjg},
+		#{yrgqje},
+		#{rzfs},
+		#{qtrzfs},
+		#{rzje},
+		#{ywkdyzc},
+		getdate(),
+		#{inputuser},
+		getdate(),
+		#{zczjbz},
+		#{first_income_tax},
+		#{first_sales_tax},
+		#{first_added_tax},
+		#{second_income_tax},
+		#{second_sales_tax},
+		#{second_added_tax},
+		#{third_income_tax},
+		#{third_sales_tax},
+		#{third_added_tax},
+		#{high_tech_stat},
+		#{strategy_stat},
+		#{iscomplete},#{qiyeindustry},#{socialsecurity}
+		)
+	</insert>
+
+    <update id="updatePick" parameterType="com.winpow.services.manage.picture.bean.Picture">
+        update Tb_picture set Rele_id = #{rele_id} where id=#{id}
+    </update>
+
+    <update id="update"
+            parameterType="com.winpow.services.manage.declare.bean.DeclareBase">
+        update tb_sb_base set
+
+        <if test=" userid !=null and  userid !=''">
+            userid=#{userid},
+        </if>
+
+        <if test=" pichi !=null and  pichi !=''">
+            pichi=#{pichi},
+        </if>
+
+        <if test=" qiyemingcheng !=null and  qiyemingcheng !=''">
+            qiyemingcheng=#{qiyemingcheng},
+        </if>
+
+        <if test=" zzjgdm !=null and  zzjgdm !=''">
+            zzjgdm=#{zzjgdm},
+        </if>
+
+        <if test=" dizhi !=null and  dizhi !=''">
+            dizhi=#{dizhi},
+        </if>
+
+        <if test=" sjdizhi !=null and  sjdizhi !=''">
+            sjdizhi=#{sjdizhi},
+        </if>
+
+        <if test=" zhuceziben !=null">
+            zhuceziben=#{zhuceziben},
+        </if>
+
+        <if test=" shijiaoziben !=null">
+            shijiaoziben=#{shijiaoziben},
+        </if>
+
+        <if test=" sscy !=null and  sscy !=''">
+            sscy=#{sscy},
+        </if>
+
+        <if test=" zyyw !=null and  zyyw !=''">
+            zyyw=#{zyyw},
+        </if>
+
+        <if test=" qylx !=null and  qylx !=''">
+            qylx=#{qylx},
+        </if>
+
+        <if test=" cyrs !=null and  cyrs !=''">
+            cyrs=#{cyrs},
+        </if>
+
+        <if test=" qncyrs !=null and  qncyrs !=''">
+            qncyrs=#{qncyrs},
+        </if>
+
+        <if test=" fzr !=null and  fzr !=''">
+            fzr=#{fzr},
+        </if>
+
+        <if test=" fzrzw !=null and  fzrzw !=''">
+            fzrzw=#{fzrzw},
+        </if>
+
+        <if test=" fzrsj !=null and  fzrsj !=''">
+            fzrsj=#{fzrsj},
+        </if>
+
+        <if test=" lxr !=null and  lxr !=''">
+            lxr=#{lxr},
+        </if>
+
+        <if test=" lxrzw !=null and  lxrzw !=''">
+            lxrzw=#{lxrzw},
+        </if>
+
+        <if test=" lxrsj !=null and  lxrsj !=''">
+            lxrsj=#{lxrsj},
+        </if>
+
+        <if test=" gszcjg !=null and  gszcjg !=''">
+            gszcjg=#{gszcjg},
+        </if>
+
+        <if test=" gdsjnjg !=null and  gdsjnjg !=''">
+            gdsjnjg=#{gdsjnjg},
+        </if>
+
+        <if test=" tjgxszd !=null and  tjgxszd !=''">
+            tjgxszd=#{tjgxszd},
+        </if>
+
+        <if test=" snmzzc !=null ">
+            snmzzc=#{snmzzc},
+        </if>
+
+        <if test=" snmzfz !=null">
+            snmzfz=#{snmzfz},
+        </if>
+
+        <if test=" thirdyear !=null">
+            thirdyear=#{thirdyear},
+        </if>
+
+        <if test=" thirdsell !=null">
+            thirdsell=#{thirdsell},
+        </if>
+
+        <if test=" thirdinte !=null">
+            thirdinte=#{thirdinte},
+        </if>
+
+        <if test=" thirdtax !=null">
+            thirdtax=#{thirdtax},
+        </if>
+
+        <if test=" secondsell !=null">
+            secondsell=#{secondsell},
+        </if>
+
+        <if test=" secondinte !=null">
+            secondinte=#{secondinte},
+        </if>
+
+        <if test=" secondtax !=null ">
+            secondtax=#{secondtax},
+        </if>
+
+        <if test=" firstsell !=null">
+            firstsell=#{firstsell},
+        </if>
+
+        <if test=" firstinte !=null">
+            firstinte=#{firstinte},
+        </if>
+
+        <if test=" firsttax !=null ">
+            firsttax=#{firsttax},
+        </if>
+
+        <if test=" yrgqsj !=null and  yrgqsj !=''">
+            yrgqsj=#{yrgqsj},
+        </if>
+
+        <if test=" yrgqjg !=null and  yrgqjg !=''">
+            yrgqjg=#{yrgqjg},
+        </if>
+
+        <if test=" yrgqje !=null ">
+            yrgqje=#{yrgqje},
+        </if>
+
+        <if test=" rzfs !=null and  rzfs !=''">
+            rzfs=#{rzfs},
+        </if>
+
+        <if test=" qtrzfs !=null and  qtrzfs !=''">
+            qtrzfs=#{qtrzfs},
+        </if>
+
+        <if test=" rzje !=null ">
+            rzje=#{rzje},
+        </if>
+
+        <if test=" ywkdyzc !=null and  ywkdyzc !=''">
+            ywkdyzc=#{ywkdyzc},
+        </if>
+
+        <if test=" zczjbz !=null and  zczjbz !=''">
+            zczjbz=#{zczjbz},
+        </if>
+        
+        <if test=" first_income_tax !=null">
+            first_income_tax=#{first_income_tax},
+        </if>
+        
+        <if test=" first_sales_tax !=null">
+            first_sales_tax=#{first_sales_tax},
+        </if>
+        
+        <if test=" first_added_tax !=null">
+            first_added_tax=#{first_added_tax},
+        </if>
+        
+        <if test=" second_income_tax !=null">
+            second_income_tax=#{second_income_tax},
+        </if>
+        
+        <if test=" second_sales_tax !=null">
+            second_sales_tax=#{second_sales_tax},
+        </if>
+        
+        <if test=" second_added_tax !=null">
+            second_added_tax=#{second_added_tax},
+        </if>
+        
+        <if test=" third_income_tax !=null">
+            third_income_tax=#{third_income_tax},
+        </if>
+        
+        <if test=" third_sales_tax !=null">
+            third_sales_tax=#{third_sales_tax},
+        </if>
+        
+        <if test=" third_added_tax !=null">
+            third_added_tax=#{third_added_tax},
+        </if>
+        
+        <if test=" high_tech_stat !=null">
+            high_tech_stat=#{high_tech_stat},
+        </if>
+        
+        <if test=" strategy_stat !=null">
+            strategy_stat=#{strategy_stat},
+        </if>
+        <if test=" iscomplete !=null and iscomplete != ''">
+            iscomplete=#{iscomplete},
+        </if>
+        <if test=" qiyeindustry !=null and qiyeindustry != ''">
+            qiyeindustry=#{qiyeindustry},
+        </if>
+        <if test=" socialsecurity !=null">
+            socialsecurity=#{socialsecurity},
+        </if>
+
+        lastchgtime=getdate()
+        where id=#{id}
+    </update>
+
+    <delete id="delete">
+        delete tb_sb_base where id=#{id}
+    </delete>
+    
+    <select id="selectQysqje" parameterType="hashMap" resultType="hashMap">
+    select 
+    cast(${qysqje} as varchar(20)) qysqje
+    from ${tablename} where id=#{id}
+    </select>
+</mapper>

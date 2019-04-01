@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="manage">
+
+    <select id="manage.config.selectPageList"
+            parameterType="com.winpow.core.system.bean.Config" resultType="hashMap">
+        select * from tb_config t where 1 = 1
+        <if test="id!=null and id!=''">
+            and t.ID = #{id}
+        </if>
+        <if test="configName!=null and configName!=''">
+            and t.CONFIGNAME like '%'+#{configName}+'%'
+        </if>
+    </select>
+    <select id="manage.config.selectPageCount"
+            parameterType="com.winpow.core.system.bean.Config"
+            resultType="java.lang.Integer">
+        select count(id) from tb_config t where 1 = 1
+        <if test="id!=null and id!=''">
+            and t.ID = #{id}
+        </if>
+        <if test="configName!=null and configName!=''">
+            and t.CONFIGNAME like '%'+#{configName}+'%'
+        </if>
+    </select>
+
+    <select id="manage.config.selectOne"
+            parameterType="com.winpow.core.system.bean.Config"
+            resultType="com.winpow.core.system.bean.Config">
+        SELECT id, CONFIGNAME as configName, CONFIGDETAIL as configDetail, CONFIGVALUE as configValue, LURUSHIJIAN as startDate,
+        INPUTUSER as inputuser, LASTCHGTIME as endDate FROM tb_config t where t.id=#{id}
+    </select>
+
+    <select id="manage.config.selectList"
+            parameterType="com.winpow.core.system.bean.Config"
+            resultType="com.winpow.core.system.bean.Config">
+        SELECT  id, CONFIGNAME as configName, CONFIGDETAIL as configDetail, CONFIGVALUE as configValue, LURUSHIJIAN as startDate,
+        INPUTUSER as inputUser, LASTCHGTIME as endDate FROM tb_config t
+    </select>
+    
+    <select id="manage.config.selectLists" parameterType="com.winpow.core.system.bean.Config" resultType="map">
+        select * from tb_config t where 1=1
+        <if test="configName != null and configName == 'adminqriostestqr'">
+            and configname in ('adminqr', 'iostestqr')
+        </if>
+    </select>
+
+    <insert id="manage.config.insert"
+            parameterType="com.winpow.core.system.bean.Config" useGeneratedKeys="true"
+            keyProperty="id">
+		insert into tb_config (CONFIGNAME, CONFIGDETAIL, CONFIGVALUE, LURUSHIJIAN, INPUTUSER, LASTCHGTIME)
+		 values (#{configName}, #{configDetail}, #{configValue}, getdate(), #{inputUser}, getdate())
+	</insert>
+
+    <update id="manage.config.update"
+            parameterType="com.winpow.core.system.bean.Config">
+        update tb_config set LASTCHGTIME = getdate()
+        <if test="configName!=null and configName!=''">
+            ,CONFIGNAME=#{configName}
+        </if>
+        <if test="configDetail!=null and configDetail!=''">
+            ,CONFIGDETAIL=#{configDetail}
+        </if>
+        <if test="configValue!=null and configValue!=''">
+            ,CONFIGVALUE=#{configValue}
+        </if>
+        <if test="inputUser!=null and inputUser!=''">
+            ,INPUTUSER=#{inputUser}
+        </if>
+        where id=#{id}
+    </update>
+    
+    <update id="manage.config.updatebyname" parameterType="com.winpow.core.system.bean.Config">
+        update tb_config set configvalue=#{configValue},lastchgtime=getdate() where configname=#{configName}
+    </update>
+    
+    <delete id="manage.config.delete">
+        delete tb_config where id=#{id}
+    </delete>
+</mapper>  

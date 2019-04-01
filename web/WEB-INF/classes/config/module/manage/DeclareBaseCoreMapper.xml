@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="com.winpow.services.manage.declare.mapper.DeclareBaseCoreMapper">
+
+	<select id="selectPageList"
+		parameterType="com.winpow.services.manage.declare.bean.DeclareBaseCore"
+		resultType="hashMap">
+		select * from (
+		SELECT ROW_NUMBER() over(order by id) as rownumber ,
+		id,
+		userid,
+		rele_id,
+		jgmc,
+		jgtzje,
+		dzsj,
+		lurushijian,
+		inputuser,
+		lastchgtime
+		from tb_sb_base_core where 1=1
+		)t where rownumber &gt; = #{offset} and rownumber &lt; =
+		#{pageSize}+#{offset}
+	</select>
+	<select id="selectPageCount"
+		parameterType="com.winpow.services.manage.declare.bean.DeclareBaseCore"
+		resultType="java.lang.Integer">
+		select count(id) from (
+		SELECT ROW_NUMBER() over(order by id) as rownumber ,
+		id,
+		userid,
+		rele_id,
+		jgmc,
+		jgtzje,
+		dzsj,
+		lurushijian,
+		inputuser,
+		lastchgtime
+		from tb_sb_base_core where 1=1
+		)t
+	</select>
+
+	<select id="selectOne"
+		parameterType="com.winpow.services.manage.declare.bean.DeclareBaseCore"
+		resultType="com.winpow.services.manage.declare.bean.DeclareBaseCore">
+		SELECT TOP 1
+		id,
+		userid,
+		rele_id,
+		jgmc,
+		jgtzje,
+		dzsj,
+		lurushijian,
+		inputuser,
+		lastchgtime
+		from tb_sb_base_core t where t.id=#{id}
+	</select>
+
+	<select id="selectAllList" parameterType="com.winpow.services.manage.declare.bean.DeclareBaseCore"
+		resultType="com.winpow.services.manage.declare.bean.DeclareBaseCore">
+		select * from tb_sb_base_core t where 1=1
+		<if test=" userid !=null and  userid !=''">
+			and userid=#{userid}
+		</if>
+		<if test=" rele_id !=null and  rele_id !=''">
+			and rele_id=#{rele_id}
+		</if>
+	</select>
+
+	<insert id="insert"
+		parameterType="com.winpow.services.manage.declare.bean.DeclareBaseCore"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into tb_sb_base_core (
+		userid,
+		rele_id,
+		jgmc,
+		jgtzje,
+		dzsj,
+		lurushijian,
+		inputuser,
+		lastchgtime
+		) values (
+		#{userid},
+		#{rele_id},
+		#{jgmc},
+		#{jgtzje},
+		#{dzsj},
+		getdate(),
+		#{inputuser},
+		getdate()
+		)
+	</insert>
+
+	<update id="update"
+		parameterType="com.winpow.services.manage.declare.bean.DeclareBaseCore">
+		update tb_sb_base_core set
+
+		<if test=" userid !=null and  userid !=''">
+			userid=#{userid},
+		</if>
+
+		<if test=" rele_id !=null and  rele_id !=''">
+			rele_id=#{rele_id},
+		</if>
+
+		<if test=" jgmc !=null and  jgmc !=''">
+			jgmc=#{jgmc},
+		</if>
+
+		<if test=" jgtzje !=null">
+			jgtzje=#{jgtzje},
+		</if>
+
+		<if test=" dzsj !=null and  dzsj !=''">
+			dzsj=#{dzsj},
+		</if>
+		lastchgtime=getdate()
+
+		where id=#{id}
+	</update>
+	<delete id="delete">
+		delete tb_sb_base_core where id=#{id}
+	</delete>
+</mapper>  

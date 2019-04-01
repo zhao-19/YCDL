@@ -1,0 +1,912 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC 
+"-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="manage">
+
+	<select id="manage.productczdbase.selectPageList"
+		parameterType="com.winpow.services.manage.productczdbase.bean.Productczdbase"
+		resultType="hashMap">
+		select top ${pageSize} * from (
+			select row_number() over(order by id desc) as rownumber , *,
+			case when status=0 then '未提交' when status=10 then '初审中' 
+			when status=1 then '驳回' when status=21 then '驳回' 
+			when status=20 then '请填写、提交详细资料' when status=30 then '详细资料已提交待审核' 
+			when status=40 then '详细资料审查通过' when status=50 then '项目评审通过' 
+			when status=60 then '担保公司审批通过' when status=70 then '银行审批通过' 
+			when status=80 then '金融办审批通过' when status=90 then '银行放款完毕' else cast(status as varchar) end as status_trans
+			from tb_product_czd_base where 1=1
+			<if test="qiyemingcheng!=null and qiyemingcheng!=''">
+				and qiyemingcheng like '%'+#{qiyemingcheng}+'%'
+			</if>
+			<if test="daikuanpingz !=null and daikuanpingz !=''">
+				and daikuanpingz = #{daikuanpingz}
+			</if>
+			<if test="checkuser !=null and checkuser !=''">
+				and checkuser = #{checkuser}
+			</if>
+			<if test="status !=null and status !=''">
+				and status = #{status}
+			</if>
+	    ) a where rownumber > ${pageSize}*(${offset} - 1)
+	</select>
+	
+	<select id="manage.productczdbase.selectPageCount"
+		parameterType="com.winpow.services.manage.productczdbase.bean.Productczdbase"
+		resultType="java.lang.Integer">
+		select count(*) from Tb_product_czd_base where 1=1
+		<if test="qiyemingcheng!=null and qiyemingcheng!=''">
+			and qiyemingcheng like '%'+#{qiyemingcheng}+'%'
+		</if>
+		<if test="daikuanpingz !=null and daikuanpingz !=''">
+			and daikuanpingz = #{daikuanpingz}
+		</if>
+		<if test="checkuser !=null and checkuser !=''">
+			and checkuser = #{checkuser}
+		</if>
+		<if test="status !=null and status !=''">
+			and status = #{status}
+		</if>
+	</select>
+
+	<select id="manage.productczdbase.selectAllList"
+		parameterType="com.winpow.services.manage.productczdbase.bean.Productczdbase"
+		resultType="hashMap">
+		SELECT
+		id,
+		userid,
+		username,
+		qiyemingcheng,
+		CONVERT(char(10),chengliriqi,21) AS chengliriqi,
+		gszcd,
+		bgdz,
+		zhuceziben,
+		scdz,
+		faren,
+		sfzhm,
+		lianxiren,
+		zhiwu,
+		dianhua,
+		dianzhiyoujian,
+		kehuleixing,
+		yewulaiyuan,
+		zhuyingyewu,
+		jianyingywu,
+		zhuyingchanpin,
+		jianyingchanpin,
+		zhizhizhegnshu,
+		zhuanligeshu,
+		hangyeguishu,
+		qiyexingzhi,
+		yuangongshu,
+		jishurenyuanshu,
+		shuoshirenshu,
+		guanliyuanrenshu,
+		dazhuanrenshu,
+		benkerenshu,
+		zhonggaojirenshu,
+		benkeyishangrenshu,
+		shenqingjine,
+		daikuanpingz,
+		daikuanqixian,
+		daikuanyinhang,
+		danbaogongsi,
+		daikuanyongtu,
+		xiangmuqingkuang,
+		huankuanlaiyuan,
+		lianxiren2,
+		lianxidianh2,
+		status,
+		case when status=0 then '未提交' when status=10 then
+		'初审中' when status=1 then '驳回' when status=21 then '驳回' when status=20
+		then '请填写、提交详细资料' when status=30 then '详细资料已提交待审核' when status=40 then
+		'详细资料审查通过' when status=50 then '项目评审通过' when status=60 then '担保公司审批通过'
+		when status=70 then '银行审批通过' when status=80 then '金融办审批通过' when
+		status=90 then '银行放款完毕' else '' end as status_trans,
+		checkuser,
+		CONVERT(char(10),lurushijian,21) AS lurushijian,
+		inputuser,jinrongxinyong,gonggongxinyong,memo,
+		gszcd_province ,
+		gszcd_city ,
+		gszcd_county ,zhonghepingjia,
+		lastchgtime,prodid
+		from
+		Tb_product_czd_base
+		where 1=1
+		<if test="qiyemingcheng!=null and qiyemingcheng!=''">
+			and qiyemingcheng like '%'+#{qiyemingcheng}+'%'
+		</if>
+		<if test="querytype==1">
+			and daikuanpingz in ('成长贷','新创贷','壮大贷')
+		</if>
+		<if test="querytype==2">
+			and daikuanpingz in ('开行统借统还贷款','口行统借统还贷款')
+		</if>
+		<if test="querytype==3">
+			and status in (20, 30, 40, 50, 60)
+		</if>
+	</select>
+
+	<select id="manage.productczdbase.selectOne"
+		parameterType="com.winpow.services.manage.productczdbase.bean.Productczdbase"
+		resultType="com.winpow.services.manage.productczdbase.bean.Productczdbase">
+		SELECT
+		id,
+		userid,
+		username,
+		qiyemingcheng,
+		CONVERT(char(10),chengliriqi,21) AS chengliriqi,
+		gszcd,
+		bgdz,
+		zhuceziben,
+		scdz,
+		faren,
+		sfzhm,
+		lianxiren,
+		zhiwu,
+		dianhua,
+		dianzhiyoujian,
+		kehuleixing,
+		yewulaiyuan,
+		zhuyingyewu,
+		jianyingywu,
+		zhuyingchanpin,
+		jianyingchanpin,
+		zhizhizhegnshu,
+		zhuanligeshu,
+		hangyeguishu,
+		qiyexingzhi,
+		yuangongshu,
+		jishurenyuanshu,
+		shuoshirenshu,
+		guanliyuanrenshu,
+		dazhuanrenshu,
+		benkerenshu,
+		zhonggaojirenshu,
+		benkeyishangrenshu,
+		shenqingjine,
+		daikuanpingz,
+		daikuanqixian,
+		daikuanyinhang,
+		danbaogongsi,
+		daikuanyongtu,
+		xiangmuqingkuang,
+		huankuanlaiyuan,
+		lianxiren2,
+		lianxidianh2,
+		status,
+		case when status=0 then '未提交' when status=10 then '初审中' when status=11
+		then '驳回' when status=20 then '初审通过' when status=30 then '资料审查通过' when
+		status=40 then '项目评审通过' when status=50 then '担保公司审批通过' when status=60
+		then '银行审批通过' when status=70 then '金融办审批通过' when status=80 then
+		'银行放款完毕' else '' end as status_trans,
+		checkuser,
+		lurushijian,
+		inputuser,jinrongxinyong,gonggongxinyong,memo,
+		gszcd_province ,
+		gszcd_city ,
+		gszcd_county ,zhonghepingjia,releid,
+		lastchgtime,prodid
+		from Tb_product_czd_base t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+		<if test="releid!=null and releid!=''">
+            and t.releid=#{releid}
+        </if>
+	</select>
+
+	<select id="manage.productczdbase.selectCount"
+		parameterType="com.winpow.services.manage.productczdbase.bean.Productczdbase"
+		resultType="int">
+		select count(*)
+		FROM Tb_product_czd_base t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+	</select>
+
+	<select id="manage.productczdbase.selectOneByCondition"
+		parameterType="com.winpow.services.manage.productczdbase.bean.Productczdbase"
+		resultType="com.winpow.services.manage.productczdbase.bean.Productczdbase">
+		SELECT
+		id,
+		userid,
+		username,
+		qiyemingcheng,
+		CONVERT(char(10),chengliriqi,21) AS chengliriqi,
+		gszcd,
+		bgdz,
+		zhuceziben,
+		scdz,
+		faren,
+		sfzhm,
+		lianxiren,
+		zhiwu,
+		dianhua,
+		dianzhiyoujian,
+		kehuleixing,
+		yewulaiyuan,
+		zhuyingyewu,
+		jianyingywu,
+		zhuyingchanpin,
+		jianyingchanpin,
+		zhizhizhegnshu,
+		zhuanligeshu,
+		hangyeguishu,
+		qiyexingzhi,
+		yuangongshu,
+		jishurenyuanshu,
+		shuoshirenshu,
+		guanliyuanrenshu,
+		dazhuanrenshu,
+		benkerenshu,
+		zhonggaojirenshu,
+		benkeyishangrenshu,
+		shenqingjine,
+		daikuanpingz,
+		daikuanqixian,
+		daikuanyinhang,
+		danbaogongsi,
+		daikuanyongtu,
+		xiangmuqingkuang,
+		huankuanlaiyuan,
+		lianxiren2,
+		lianxidianh2,
+		status,
+		case when status=0 then '未提交' when status=10 then '初审中' when status=11
+		then '驳回' when status=20 then '初审通过' when status=30 then '资料审查通过' when
+		status=40 then '项目评审通过' when status=50 then '担保公司审批通过' when status=60
+		then '银行审批通过' when status=70 then '金融办审批通过' when status=80 then
+		'银行放款完毕' else '' end as status_trans,
+		checkuser,
+		lurushijian,
+		inputuser,jinrongxinyong,gonggongxinyong,memo,
+		gszcd_province ,
+		gszcd_city ,
+		gszcd_county ,zhonghepingjia,
+		lastchgtime,prodid
+		from Tb_product_czd_base t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+	</select>
+
+
+
+	<select id="manage.productczdbase.selectList"
+		parameterType="com.winpow.services.manage.productczdbase.bean.Productczdbase"
+		resultType="com.winpow.services.manage.productczdbase.bean.Productczdbase">
+		SELECT
+		id,
+		userid,
+		username,
+		qiyemingcheng,
+		CONVERT(char(10),chengliriqi,21) AS chengliriqi,
+		gszcd,
+		bgdz,
+		zhuceziben,
+		scdz,
+		faren,
+		sfzhm,
+		lianxiren,
+		zhiwu,
+		dianhua,
+		dianzhiyoujian,
+		kehuleixing,
+		yewulaiyuan,
+		zhuyingyewu,
+		jianyingywu,
+		zhuyingchanpin,
+		jianyingchanpin,
+		zhizhizhegnshu,
+		zhuanligeshu,
+		hangyeguishu,
+		qiyexingzhi,
+		yuangongshu,
+		jishurenyuanshu,
+		shuoshirenshu,
+		guanliyuanrenshu,
+		dazhuanrenshu,
+		benkerenshu,
+		zhonggaojirenshu,
+		benkeyishangrenshu,
+		shenqingjine,
+		daikuanpingz,
+		daikuanqixian,
+		daikuanyinhang,
+		danbaogongsi,
+		daikuanyongtu,
+		xiangmuqingkuang,
+		huankuanlaiyuan,
+		lianxiren2,
+		lianxidianh2,
+		status,
+		case when status=0 then '未提交' when status=10 then '初审中' when status=11
+		then '驳回' when status=20 then '初审通过' when status=30 then '资料审查通过' when
+		status=40 then '项目评审通过' when status=50 then '担保公司审批通过' when status=60
+		then '银行审批通过' when status=70 then '金融办审批通过' when status=80 then
+		'银行放款完毕' else '' end as status_trans,
+		checkuser,
+		lurushijian,
+		inputuser,jinrongxinyong,gonggongxinyong,memo,
+		gszcd_province ,
+		gszcd_city ,
+		gszcd_county ,zhonghepingjia,
+		lastchgtime,prodid
+		from Tb_product_czd_base t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+		<if test="userid!=null and userid!=''">
+			and t.userid=#{userid}
+		</if>
+	</select>
+
+	<select id="manage.productczdbase.queryByCustIdAndType"
+		parameterType="com.winpow.services.manage.productczdbase.bean.Productczdbase"
+		resultType="com.winpow.services.manage.productczdbase.bean.Productczdbase">
+		select top 1 id, userid
+		FROM Tb_product_czd_base t where 1=1
+		<if test="userid!=null and userid!=''">
+			and t.userid=#{userid}
+		</if>
+	</select>
+
+	<select id="manage.productczdbase.selectCountByCustId"
+		parameterType="com.winpow.services.manage.productczdbase.bean.Productczdbase"
+		resultType="int">
+		select count(*)
+		FROM Tb_product_czd_base t where 1=1
+		<if test="userid!=null and userid!=''">
+			and t.userid=#{userid}
+		</if>
+	</select>
+
+
+	<insert id="manage.productczdbase.insert"
+		parameterType="com.winpow.services.manage.productczdbase.bean.Productczdbase"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into Tb_product_czd_base (
+
+		userid,
+		username,
+		qiyemingcheng,
+		chengliriqi,
+		gszcd,
+		bgdz,
+		zhuceziben,
+		scdz,
+		faren,
+		sfzhm,
+		lianxiren,
+		zhiwu,
+		dianhua,
+		dianzhiyoujian,
+		kehuleixing,
+		yewulaiyuan,
+		zhuyingyewu,
+		jianyingywu,
+		zhuyingchanpin,
+		jianyingchanpin,
+		zhizhizhegnshu,
+		zhuanligeshu,
+		hangyeguishu,
+		qiyexingzhi,
+		yuangongshu,
+		jishurenyuanshu,
+		shuoshirenshu,
+		guanliyuanrenshu,
+		dazhuanrenshu,
+		benkerenshu,
+		zhonggaojirenshu,
+		benkeyishangrenshu,
+		shenqingjine,
+		daikuanpingz,
+		daikuanqixian,
+		daikuanyinhang,
+		danbaogongsi,
+		daikuanyongtu,
+		xiangmuqingkuang,
+		huankuanlaiyuan,
+		lianxiren2,
+		lianxidianh2,
+		status,
+		checkuser,
+		lurushijian,
+		inputuser,jinrongxinyong,gonggongxinyong,memo,
+		gszcd_province ,
+		gszcd_city ,
+		gszcd_county ,releid,
+		lastchgtime,prodid
+		) values (
+
+		#{userid},
+		#{username},
+		#{qiyemingcheng},
+		#{chengliriqi},
+		#{gszcd},
+		#{bgdz},
+		#{zhuceziben},
+		#{scdz},
+		#{faren},
+		#{sfzhm},
+		#{lianxiren},
+		#{zhiwu},
+		#{dianhua},
+		#{dianzhiyoujian},
+		#{kehuleixing},
+		#{yewulaiyuan},
+		#{zhuyingyewu},
+		#{jianyingywu},
+		#{zhuyingchanpin},
+		#{jianyingchanpin},
+		#{zhizhizhegnshu},
+		#{zhuanligeshu},
+		#{hangyeguishu},
+		#{qiyexingzhi},
+		#{yuangongshu},
+		#{jishurenyuanshu},
+		#{shuoshirenshu},
+		#{guanliyuanrenshu},
+		#{dazhuanrenshu},
+		#{benkerenshu},
+		#{zhonggaojirenshu},
+		#{benkeyishangrenshu},
+		#{shenqingjine},
+		#{daikuanpingz},
+		#{daikuanqixian},
+		#{daikuanyinhang},
+		#{danbaogongsi},
+		#{daikuanyongtu},
+		#{xiangmuqingkuang},
+		#{huankuanlaiyuan},
+		#{lianxiren2},
+		#{lianxidianh2},
+		#{status},
+		#{checkuser},
+		getdate(),
+		#{inputuser},#{jinrongxinyong},#{gonggongxinyong},#{memo},
+		#{gszcd_province} ,
+		#{gszcd_city} ,
+		#{gszcd_county} ,#{releid} ,
+		getdate(),#{prodid}
+		)
+
+	</insert>
+
+	<update id="manage.productczdbase.update"
+		parameterType="com.winpow.services.manage.productczdbase.bean.Productczdbase">
+		update Tb_product_czd_base set
+
+
+
+		<if test=" qiyemingcheng !=null and  qiyemingcheng !=''">
+			qiyemingcheng=#{qiyemingcheng},
+		</if>
+
+		<if test=" chengliriqi !=null and  chengliriqi !=''">
+			chengliriqi=#{chengliriqi},
+		</if>
+
+		<if test=" gszcd !=null and  gszcd !=''">
+			gszcd=#{gszcd},
+		</if>
+
+		<if test=" bgdz !=null and  bgdz !=''">
+			bgdz=#{bgdz},
+		</if>
+
+		<if test=" zhuceziben !=null and  zhuceziben !=''">
+			zhuceziben=#{zhuceziben},
+		</if>
+
+		<if test=" scdz !=null and  scdz !=''">
+			scdz=#{scdz},
+		</if>
+
+		<if test=" faren !=null and  faren !=''">
+			faren=#{faren},
+		</if>
+
+		<if test=" sfzhm !=null and  sfzhm !=''">
+			sfzhm=#{sfzhm},
+		</if>
+
+		<if test=" lianxiren !=null and  lianxiren !=''">
+			lianxiren=#{lianxiren},
+		</if>
+
+		<if test=" zhiwu !=null and  zhiwu !=''">
+			zhiwu=#{zhiwu},
+		</if>
+
+		<if test=" dianhua !=null and  dianhua !=''">
+			dianhua=#{dianhua},
+		</if>
+
+		<if test=" dianzhiyoujian !=null and  dianzhiyoujian !=''">
+			dianzhiyoujian=#{dianzhiyoujian},
+		</if>
+
+		<if test=" kehuleixing !=null and  kehuleixing !=''">
+			kehuleixing=#{kehuleixing},
+		</if>
+
+		<if test=" yewulaiyuan !=null and  yewulaiyuan !=''">
+			yewulaiyuan=#{yewulaiyuan},
+		</if>
+
+		<if test=" zhuyingyewu !=null and  zhuyingyewu !=''">
+			zhuyingyewu=#{zhuyingyewu},
+		</if>
+
+		<if test=" jianyingywu !=null and  jianyingywu !=''">
+			jianyingywu=#{jianyingywu},
+		</if>
+
+		<if test=" zhuyingchanpin !=null and  zhuyingchanpin !=''">
+			zhuyingchanpin=#{zhuyingchanpin},
+		</if>
+
+		<if test=" jianyingchanpin !=null and  jianyingchanpin !=''">
+			jianyingchanpin=#{jianyingchanpin},
+		</if>
+
+		<if test=" zhizhizhegnshu !=null and  zhizhizhegnshu !=''">
+			zhizhizhegnshu=#{zhizhizhegnshu},
+		</if>
+
+		<if test=" zhuanligeshu !=null and  zhuanligeshu !=''">
+			zhuanligeshu=#{zhuanligeshu},
+		</if>
+
+		<if test=" hangyeguishu !=null and  hangyeguishu !=''">
+			hangyeguishu=#{hangyeguishu},
+		</if>
+
+		<if test=" qiyexingzhi !=null and  qiyexingzhi !=''">
+			qiyexingzhi=#{qiyexingzhi},
+		</if>
+
+		<if test=" yuangongshu !=null and  yuangongshu !=''">
+			yuangongshu=#{yuangongshu},
+		</if>
+
+		<if test=" jishurenyuanshu !=null and  jishurenyuanshu !=''">
+			jishurenyuanshu=#{jishurenyuanshu},
+		</if>
+
+		<if test=" shuoshirenshu !=null and  shuoshirenshu !=''">
+			shuoshirenshu=#{shuoshirenshu},
+		</if>
+
+		<if test=" guanliyuanrenshu !=null and  guanliyuanrenshu !=''">
+			guanliyuanrenshu=#{guanliyuanrenshu},
+		</if>
+
+		<if test=" dazhuanrenshu !=null and  dazhuanrenshu !=''">
+			dazhuanrenshu=#{dazhuanrenshu},
+		</if>
+
+		<if test=" benkerenshu !=null and  benkerenshu !=''">
+			benkerenshu=#{benkerenshu},
+		</if>
+
+		<if test=" zhonggaojirenshu !=null and  zhonggaojirenshu !=''">
+			zhonggaojirenshu=#{zhonggaojirenshu},
+		</if>
+
+		<if test=" benkeyishangrenshu !=null and  benkeyishangrenshu !=''">
+			benkeyishangrenshu=#{benkeyishangrenshu},
+		</if>
+
+		<if test=" shenqingjine !=null and  shenqingjine !=''">
+			shenqingjine=#{shenqingjine},
+		</if>
+
+		<if test=" daikuanpingz !=null and  daikuanpingz !=''">
+			daikuanpingz=#{daikuanpingz},
+		</if>
+
+		<if test=" daikuanqixian !=null and  daikuanqixian !=''">
+			daikuanqixian=#{daikuanqixian},
+		</if>
+
+		<if test=" daikuanyinhang !=null and  daikuanyinhang !=''">
+			daikuanyinhang=#{daikuanyinhang},
+		</if>
+
+		<if test=" danbaogongsi !=null and  danbaogongsi !=''">
+			danbaogongsi=#{danbaogongsi},
+		</if>
+
+		<if test=" daikuanyongtu !=null and  daikuanyongtu !=''">
+			daikuanyongtu=#{daikuanyongtu},
+		</if>
+
+		<if test=" xiangmuqingkuang !=null and  xiangmuqingkuang !=''">
+			xiangmuqingkuang=#{xiangmuqingkuang},
+		</if>
+
+		<if test=" huankuanlaiyuan !=null and  huankuanlaiyuan !=''">
+			huankuanlaiyuan=#{huankuanlaiyuan},
+		</if>
+
+		<if test=" lianxiren2 !=null and  lianxiren2 !=''">
+			lianxiren2=#{lianxiren2},
+		</if>
+
+		<if test=" lianxidianh2 !=null and  lianxidianh2 !=''">
+			lianxidianh2=#{lianxidianh2},
+		</if>
+
+		<if test=" status !=null and  status !=''">
+			status=#{status},
+		</if>
+
+		<if test=" checkuser !=null and  checkuser !=''">
+			checkuser=#{checkuser},
+		</if>
+
+		<if test=" lurushijian !=null and  lurushijian !=''">
+			lurushijian=#{lurushijian},
+		</if>
+
+		<if test=" inputuser !=null and  inputuser !=''">
+			inputuser=#{inputuser},
+		</if>
+		<if test=" jinrongxinyong !=null and  jinrongxinyong !=''">
+			jinrongxinyong=#{jinrongxinyong},
+		</if>
+		<if test=" gonggongxinyong !=null and  gonggongxinyong !=''">
+			gonggongxinyong=#{gonggongxinyong},
+		</if>
+		<if test=" memo !=null and  memo !=''">
+			memo=#{memo},
+		</if>
+
+		<if test=" gszcd_province !=null and  gszcd_province !=''">
+			gszcd_province=#{gszcd_province},
+		</if>
+		<if test=" gszcd_city !=null and  gszcd_city !=''">
+			gszcd_city=#{gszcd_city},
+		</if>
+		<if test=" gszcd_county !=null and  gszcd_county !=''">
+			gszcd_county=#{gszcd_county},
+		</if>
+		<if test=" zhonghepingjia !=null and  zhonghepingjia !=''">
+			zhonghepingjia=#{zhonghepingjia},
+		</if>
+		<if test=" prodid !=null and  prodid !=''">
+			prodid=#{prodid},
+		</if>
+
+
+		lastchgtime=getdate()
+
+		where id=#{id} and userid=#{userid}
+
+	</update>
+	<!--&lt;!&ndash; 复制贷款基础信息 &ndash;&gt;-->
+	<!--<insert id="front.usercenter.copyproductapp" parameterType="hashMap">-->
+		<!--insert into Tb_product_app ( USERID , USERNAME , PRODID , PRODNAME ,-->
+		<!--QIYEMINGCHENG , LOANAMT , LOANUSER , FAREN , CHENGLIRIQI ,-->
+		<!--ZHUCEZIBEN , GSZCD , HANGYEID , ZHUANLI , LASTSELLINCOME , LASTIMCOME ,-->
+		<!--LASTLOANAMT , SELLINCOME , IMCOME , LOANAMT2 ,-->
+		<!--LIANXIREN , LIANXIDIANH , STATUS , CHECKUSER , LURUSHIJIAN , INPUTUSER ,-->
+		<!--LASTCHGTIME , memo , gszcd_province , gszcd_city ,-->
+		<!--gszcd_county , BLASTSELLINCOME , BLASTIMCOME , BLASTLOANAMT , loanterm ) SELECT-->
+		<!--USERID , USERNAME , PRODID , #{daikuanpingz} as PRODNAME ,-->
+		<!--QIYEMINGCHENG ,#{shenqingjine} as LOANAMT , LOANUSER , FAREN ,-->
+		<!--CHENGLIRIQI , ZHUCEZIBEN , GSZCD , HANGYEID , ZHUANLI , LASTSELLINCOME-->
+		<!--,-->
+		<!--LASTIMCOME , LASTLOANAMT , SELLINCOME , IMCOME , LOANAMT2 , LIANXIREN ,-->
+		<!--LIANXIDIANH , STATUS , CHECKUSER ,getdate() as LURUSHIJIAN ,-->
+		<!--INPUTUSER ,getdate() as LASTCHGTIME , memo , gszcd_province , gszcd_city ,-->
+		<!--gszcd_county , BLASTSELLINCOME , BLASTIMCOME , BLASTLOANAMT ,-->
+		<!--loanterm FROM Tb_product_app where ID=#{id}-->
+	<!--</insert>-->
+
+	<!--&lt;!&ndash; 复制贷款详细信息 &ndash;&gt;-->
+	<!--<insert id="front.usercenter.copyproductbase" parameterType="hashMap">-->
+		<!--insert into tb_product_czd_base ( userid , username , qiyemingcheng ,-->
+		<!--chengliriqi , gszcd , bgdz , zhuceziben , scdz , faren ,-->
+		<!--sfzhm , lianxiren , zhiwu , dianhua , dianzhiyoujian , kehuleixing ,-->
+		<!--yewulaiyuan , zhuyingyewu , jianyingywu , zhuyingchanpin ,-->
+		<!--jianyingchanpin , zhizhizhegnshu , zhuanligeshu , hangyeguishu ,-->
+		<!--qiyexingzhi , yuangongshu , jishurenyuanshu , shuoshirenshu ,-->
+		<!--guanliyuanrenshu , dazhuanrenshu , benkerenshu , zhonggaojirenshu ,-->
+		<!--benkeyishangrenshu , shenqingjine , daikuanpingz ,-->
+		<!--daikuanqixian , daikuanyinhang , danbaogongsi , daikuanyongtu , xiangmuqingkuang ,-->
+		<!--huankuanlaiyuan , lianxiren2 ,-->
+		<!--lianxidianh2 , status , checkuser , lurushijian , inputuser ,lastchgtime ,-->
+		<!--jinrongxinyong ,-->
+		<!--gonggongxinyong , memo , gszcd_province , gszcd_city , gszcd_county , zhonghepingjia-->
+		<!--, releid) SELECT userid , username ,-->
+		<!--qiyemingcheng , chengliriqi , gszcd , bgdz , zhuceziben , scdz , faren , sfzhm ,-->
+		<!--lianxiren , zhiwu , dianhua , dianzhiyoujian ,-->
+		<!--kehuleixing , yewulaiyuan , zhuyingyewu , jianyingywu , zhuyingchanpin ,-->
+		<!--jianyingchanpin , zhizhizhegnshu , zhuanligeshu ,-->
+		<!--hangyeguishu , qiyexingzhi , yuangongshu , jishurenyuanshu , shuoshirenshu ,-->
+		<!--guanliyuanrenshu , dazhuanrenshu ,-->
+		<!--benkerenshu , zhonggaojirenshu , benkeyishangrenshu ,#{shenqingjine} as-->
+		<!--shenqingjine , #{daikuanpingz} as daikuanpingz , daikuanqixian-->
+		<!--,#{daikuanyinhang} as daikuanyinhang ,-->
+		<!--#{danbaogongsi} as danbaogongsi , daikuanyongtu , xiangmuqingkuang , huankuanlaiyuan-->
+		<!--, lianxiren2 , lianxidianh2 ,20 as status ,-->
+		<!--checkuser ,getdate() as lurushijian , inputuser ,getdate() as lastchgtime ,-->
+		<!--jinrongxinyong , gonggongxinyong ,-->
+		<!--memo , gszcd_province , gszcd_city , gszcd_county , zhonghepingjia-->
+		<!--,#{appidnew} as releid FROM tb_product_czd_base where-->
+		<!--id=#{idold}-->
+	<!--</insert>-->
+
+	<!--&lt;!&ndash; 复制班子情况 &ndash;&gt;-->
+	<!--<insert id="front.usercenter.copyproductbzqk" parameterType="hashMap">-->
+		<!--insert into tb_product_czd_bzqk ( releid ,xingming ,zhiwu ,nianling-->
+		<!--,xueli ,zhicheng ,lurushijian ,inputuser ,lastchgtime ) SELECT-->
+		<!--#{idnew} as releid ,xingming ,zhiwu ,nianling ,xueli ,zhicheng-->
+		<!--,getdate() as lurushijian,inputuser ,getdate() as lastchgtime FROM-->
+		<!--tb_product_czd_bzqk where releid=#{idold}-->
+	<!--</insert>-->
+
+	<!--&lt;!&ndash; 复制产品信息 &ndash;&gt;-->
+	<!--<insert id="front.usercenter.copyproductcpxx" parameterType="hashMap">-->
+		<!--insert into tb_product_czd_cpxx ( releid , zhuyaochanpin ,-->
+		<!--zhuyaoxiaoshoushichang , jishuxianjinxing , guoneishichagnzhanyoulv ,-->
+		<!--sichuanshichagnzhanyoulv , shangnianduxiaoshoue , zhanshourubili ,-->
+		<!--lurushijian , inputuser , lastchgtime ) SELECT #{idnew} as releid ,-->
+		<!--zhuyaochanpin , zhuyaoxiaoshoushichang , jishuxianjinxing ,-->
+		<!--guoneishichagnzhanyoulv , sichuanshichagnzhanyoulv ,-->
+		<!--shangnianduxiaoshoue , zhanshourubili , getdate() as lurushijian,-->
+		<!--inputuser , getdate() as lastchgtime from tb_product_czd_cpxx where-->
+		<!--releid=#{idold}-->
+	<!--</insert>-->
+
+	<!--&lt;!&ndash; 复制财务信息 &ndash;&gt;-->
+	<!--<insert id="front.usercenter.copyproductcwxx" parameterType="hashMap">-->
+		<!--insert into tb_product_czd_cwxx ( releid , thirdyear , thirdzongzichan-->
+		<!--, thirdzongfuzai , thirdsuoyouzequanyi , thirdshishouzhiben ,-->
+		<!--thirdyinhangjiekuan , thirdxiaoshoushouru , thirdzhuyinyewushouru ,-->
+		<!--thirdlirunzonge , thirdjinglirun , thirdniandunashui ,-->
+		<!--secondzongzichan , secondzongfuzai , secondsuoyouzequanyi ,-->
+		<!--secondshishouzhiben , secondyinhangjiekuan , secondxiaoshoushouru ,-->
+		<!--secondzhuyinyewushouru , secondlirunzonge , secondjinglirun ,-->
+		<!--secondniandunashui , firstzongzichan , firstzongfuzai ,-->
+		<!--firstsuoyouzequanyi , firstshishouzhiben , firstyinhangjiekuan ,-->
+		<!--firstxiaoshoushouru , firstzhuyinyewushouru , firstlirunzonge ,-->
+		<!--firstjinglirun , firstniandunashui , maolilv , cunhuozhouzhuanlv ,-->
+		<!--liudongbilv , yingshouzhangkuanzhouzhuanlv , sudongbilv ,-->
+		<!--zichanfuzhailv , cudate , cuzongzichan , cuzongfuzai ,-->
+		<!--cusuoyouzequanyi , cushishouzhiben , cuyinhangjiekuan ,-->
+		<!--cuxiaoshoushouru , cuzhuyinyewushouru , culirunzonge , cujinglirun ,-->
+		<!--cuniandunashui , lastzongzichan , lastzongfuzai , lastsuoyouzequanyi ,-->
+		<!--lastshishouzhiben , lastyinhangjiekuan , lastxiaoshoushouru ,-->
+		<!--lastzhuyinyewushouru , lastlirunzonge , lastjinglirun ,-->
+		<!--lastniandunashui , changezongzichan , changezongfuzai ,-->
+		<!--changesuoyouzequanyi , changeshishouzhiben , changeyinhangjiekuan ,-->
+		<!--changexiaoshoushouru , changezhuyinyewushouru , changelirunzonge ,-->
+		<!--changejinglirun , changeniandunashui , lurushijian , inputuser ,-->
+		<!--lastchgtime , shiwusuo )select #{idnew} as releid , thirdyear ,-->
+		<!--thirdzongzichan , thirdzongfuzai , thirdsuoyouzequanyi ,-->
+		<!--thirdshishouzhiben , thirdyinhangjiekuan , thirdxiaoshoushouru ,-->
+		<!--thirdzhuyinyewushouru , thirdlirunzonge , thirdjinglirun ,-->
+		<!--thirdniandunashui , secondzongzichan , secondzongfuzai ,-->
+		<!--secondsuoyouzequanyi , secondshishouzhiben , secondyinhangjiekuan ,-->
+		<!--secondxiaoshoushouru , secondzhuyinyewushouru , secondlirunzonge ,-->
+		<!--secondjinglirun , secondniandunashui , firstzongzichan ,-->
+		<!--firstzongfuzai , firstsuoyouzequanyi , firstshishouzhiben ,-->
+		<!--firstyinhangjiekuan , firstxiaoshoushouru , firstzhuyinyewushouru ,-->
+		<!--firstlirunzonge , firstjinglirun , firstniandunashui , maolilv ,-->
+		<!--cunhuozhouzhuanlv , liudongbilv , yingshouzhangkuanzhouzhuanlv ,-->
+		<!--sudongbilv , zichanfuzhailv , cudate , cuzongzichan , cuzongfuzai ,-->
+		<!--cusuoyouzequanyi , cushishouzhiben , cuyinhangjiekuan ,-->
+		<!--cuxiaoshoushouru , cuzhuyinyewushouru , culirunzonge , cujinglirun ,-->
+		<!--cuniandunashui , lastzongzichan , lastzongfuzai , lastsuoyouzequanyi ,-->
+		<!--lastshishouzhiben , lastyinhangjiekuan , lastxiaoshoushouru ,-->
+		<!--lastzhuyinyewushouru , lastlirunzonge , lastjinglirun ,-->
+		<!--lastniandunashui , changezongzichan , changezongfuzai ,-->
+		<!--changesuoyouzequanyi , changeshishouzhiben , changeyinhangjiekuan ,-->
+		<!--changexiaoshoushouru , changezhuyinyewushouru , changelirunzonge ,-->
+		<!--changejinglirun , changeniandunashui , getdate() as lurushijian ,-->
+		<!--inputuser , getdate() as lastchgtime , shiwusuo FROM-->
+		<!--tb_product_czd_cwxx where releid=#{idold}-->
+	<!--</insert>-->
+
+	<!--&lt;!&ndash; 复制财务信息 &ndash;&gt;-->
+	<!--<insert id="front.usercenter.copyproductdwdbqk" parameterType="hashMap">-->
+		<!--insert into Tb_product_czd_dwdbqk ( releid , beidanbaoren , danbaoyue-->
+		<!--, danbaofangshi , kaishiriqi , daoqiriqi , lurushijian , inputuser ,-->
+		<!--lastchgtime ) select #{idnew} as releid , beidanbaoren , danbaoyue ,-->
+		<!--danbaofangshi , kaishiriqi , daoqiriqi , getdate() as lurushijian ,-->
+		<!--inputuser , getdate() as lastchgtime FROM Tb_product_czd_dwdbqk where-->
+		<!--releid=#{idold}-->
+	<!--</insert>-->
+
+	<!--&lt;!&ndash; 复制反担保信息 &ndash;&gt;-->
+	<!--<insert id="front.usercenter.copyproductfdbcs" parameterType="hashMap">-->
+		<!--insert into Tb_product_czd_fdbcs ( releid , baozhegndanbao ,-->
+		<!--zhiyadanbao , diyadanbao , qitadanbao , lurushijian , inputuser ,-->
+		<!--lastchgtime ) select #{idnew} as releid , baozhegndanbao , zhiyadanbao-->
+		<!--, diyadanbao , qitadanbao ,getdate() as lurushijian , inputuser-->
+		<!--,getdate() as lastchgtime FROM Tb_product_czd_fdbcs where-->
+		<!--releid=#{idold}-->
+	<!--</insert>-->
+
+	<!--&lt;!&ndash; 复制股东情况 &ndash;&gt;-->
+	<!--<insert id="front.usercenter.copyproductgdqq" parameterType="hashMap">-->
+		<!--insert into Tb_product_czd_gdqq ( releid , gudongmingcheng , chuzijine-->
+		<!--, zhanbi , lurushijian , inputuser , lastchgtime ) select #{idnew} as-->
+		<!--releid , gudongmingcheng , chuzijine , zhanbi , getdate() as-->
+		<!--lurushijian , inputuser , getdate() as lastchgtime FROM-->
+		<!--Tb_product_czd_gdqq where releid=#{idold}-->
+	<!--</insert>-->
+
+	<!--&lt;!&ndash; 复制供应商销售商 &ndash;&gt;-->
+	<!--<insert id="front.usercenter.copyproductgysxssxx" parameterType="hashMap">-->
+		<!--insert into Tb_product_czd_gysxssxx( releid ,custype ,shichangquyu-->
+		<!--,gongshingmingcheng ,shagnminmingcheng ,jine ,lurushijian ,inputuser-->
+		<!--,lastchgtime) select #{idnew} as releid ,custype ,shichangquyu-->
+		<!--,gongshingmingcheng ,shagnminmingcheng ,jine ,getdate() as lurushijian-->
+		<!--,inputuser ,getdate() as lastchgtime FROM Tb_product_czd_gysxssxx-->
+		<!--where releid=#{idold}-->
+	<!--</insert>-->
+
+	<!--&lt;!&ndash; 复制其他贷款情况 &ndash;&gt;-->
+	<!--<insert id="front.usercenter.copyproductqtdkqk" parameterType="hashMap">-->
+		<!--insert into Tb_product_czd_qtdkqk( releid , zhaiquanyinhang ,-->
+		<!--daikuanyue , daikuanfangshi , jiekuanriqi , daoqiriqi , lurushijian ,-->
+		<!--inputuser , lastchgtime ) select #{idnew} as releid , zhaiquanyinhang-->
+		<!--, daikuanyue , daikuanfangshi , jiekuanriqi , daoqiriqi , getdate() as-->
+		<!--lurushijian , inputuser , getdate() as lastchgtime FROM-->
+		<!--Tb_product_czd_qtdkqk where releid=#{idold}-->
+	<!--</insert>-->
+
+	<!--&lt;!&ndash; 复制其他信息 &ndash;&gt;-->
+	<!--<insert id="front.usercenter.copyproductqtxx" parameterType="hashMap">-->
+		<!--insert into Tb_product_czd_qtxx( releid , yanfafeiyongbili ,-->
+		<!--yanfarenyuanbili , zhishichanquan1 , zhishichanquan2 , zhishichanquan3-->
+		<!--, quanweirending1 , quanweirending2 , quanweirending3 ,-->
+		<!--shichangqianjing , fazhanqianjing , chanpinjingzhengli ,-->
+		<!--gaoguantuandui , tuozhanqianjing , lurushijian , inputuser ,-->
+		<!--lastchgtime , yanfafeiyong , xiaoshoufeiyong , yanfarenyuan ,-->
+		<!--gongsizongrenshu , zhuyaochanpingjieshao , sannianleijijiekuan ,-->
+		<!--sannianleijiguihuan , daoqichanghuanlv ) select #{idnew} as releid ,-->
+		<!--yanfafeiyongbili , yanfarenyuanbili , zhishichanquan1 ,-->
+		<!--zhishichanquan2 , zhishichanquan3 , quanweirending1 , quanweirending2-->
+		<!--, quanweirending3 , shichangqianjing , fazhanqianjing ,-->
+		<!--chanpinjingzhengli , gaoguantuandui , tuozhanqianjing , lurushijian ,-->
+		<!--inputuser ,getdate() as lastchgtime , yanfafeiyong , xiaoshoufeiyong ,-->
+		<!--yanfarenyuan , gongsizongrenshu , zhuyaochanpingjieshao ,-->
+		<!--sannianleijijiekuan , sannianleijiguihuan , daoqichanghuanlv FROM-->
+		<!--Tb_product_czd_qtxx where releid=#{idold}-->
+	<!--</insert>-->
+	<!--&lt;!&ndash; 根据userid 查询该表 该用户最大的id &ndash;&gt;-->
+	<!--<select id="front.usercenter.selectmaxappidbyuser"-->
+		<!--parameterType="com.winpow.services.manage.productapp.bean.Productapp"-->
+		<!--resultType="hashMap">-->
+		<!--select top 1 id as countres from tb_product_app where userid=#{userid} order-->
+		<!--by lurushijian desc-->
+	<!--</select>-->
+	<!--&lt;!&ndash; 根据userid 查询该表 该用户最大的id &ndash;&gt;-->
+	<!--<select id="front.usercenter.selectmaxbaseidbyuser"-->
+		<!--parameterType="com.winpow.services.manage.productczdbase.bean.Productczdbase"-->
+		<!--resultType="hashMap">-->
+		<!--select top 1 id as countres from tb_product_czd_base where userid=#{userid}-->
+		<!--order by lurushijian desc-->
+	<!--</select>-->
+
+	<select id="manage.productczdbase.getListByIds"
+		parameterType="com.winpow.services.manage.productczdbase.bean.Productczdbase"
+		resultType="com.winpow.services.front.productczdbase.bean.Productczdbase">
+		select * from tb_product_czd_base where id in
+		(#{productIds})
+	</select>
+	
+	<update id="manage.productczdbase.updateByReleId"
+		parameterType="com.winpow.services.manage.productczdbase.bean.Productczdbase">
+		update Tb_product_czd_base set status=#{status},lastchgtime=getdate() where releid=#{releid}
+	</update>
+
+</mapper>  

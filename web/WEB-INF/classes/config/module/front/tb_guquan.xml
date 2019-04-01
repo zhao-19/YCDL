@@ -1,0 +1,368 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE mapper PUBLIC 
+"-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="front">
+	
+	<select id="front.guquan.selectPageList" parameterType="com.winpow.services.manage.guquan.bean.Guquan" resultType="hashMap">
+		
+	 select * from ( SELECT ROW_NUMBER() over(order by tb_guquan.lurushijian desc) as rownumber
+	  , tb_guquan.id, mingcheng, jianjie, hexinjzl, picture, xiangmujincheng, xiangmutuandui, jihuashu
+	  , hangye, browsecount, markcount, rongziedu, rongzhijieduan, crgqbl, faburiqi, shifoutuijian,TUIJIANPIC
+	  , xiangmuzhuangtai, rongzizhuangtai, shenhezhuangtai, fabuzheleixing, biaoqian, fujianming, fujianlujing
+	  , sitename, xiangmutouzhi, tb_guquan.lurushijian, tb_guquan.inputuser, tb_guquan.lastchgtime
+	  ,tb_Qiye.QIYEMINGCHENG as qiyeid, number from tb_guquan  left join tb_Qiye on tb_guquan.QIYEID =tb_Qiye.userid  )t
+	    where rownumber &gt; = #{offset} and rownumber &lt; = #{pageSize}+#{offset} and shenhezhuangtai='aaaaaaaaaaaaaaaaaaaaaaaaaaaaa083'
+	     order by (case when number is null then 1 else 0 end),number
+	</select>
+	
+		<select id="front.guquan.select4index" parameterType="com.winpow.services.manage.guquan.bean.Guquan" resultType="com.winpow.services.manage.guquan.bean.Guquan">
+	 select * from ( SELECT ROW_NUMBER() over(order by (case when number is null then 1 else 0 end),number)) as rownumber
+	  , tb_guquan.id, mingcheng, jianjie, hexinjzl, picture, xiangmujincheng, xiangmutuandui, jihuashu
+	  , hangye, browsecount, markcount, rongziedu, rongzhijieduan, crgqbl, faburiqi, shifoutuijian,TUIJIANPIC
+	  , xiangmuzhuangtai, rongzizhuangtai, shenhezhuangtai, fabuzheleixing, biaoqian, fujianming, fujianlujing
+	  , sitename, xiangmutouzhi, tb_guquan.lurushijian, tb_guquan.inputuser, tb_guquan.lastchgtime
+	  ,tb_Qiye.QIYEMINGCHENG as qiyeid, number from tb_guquan  left join tb_Qiye on tb_guquan.QIYEID =tb_Qiye.userid  )t
+	    where rownumber  &lt; =4   and shenhezhuangtai='aaaaaaaaaaaaaaaaaaaaaaaaaaaaa083'
+	</select>
+	
+	
+	
+	<select id="front.guquan.selectPageCount" parameterType="com.winpow.services.manage.guquan.bean.Guquan" resultType="java.lang.Integer">
+		
+			select count(*) from (
+					SELECT    	id 
+						 								   from tb_guquan )t  
+
+	</select>
+	
+	<select id="front.guquan.selectOne" parameterType="com.winpow.services.manage.guquan.bean.Guquan" resultType="com.winpow.services.manage.guquan.bean.Guquan">
+			SELECT  
+											 	id,
+				 											 	mingcheng,
+				 											 	jianjie,
+				 											 	hexinjzl,
+				 											 	picture,
+				 											 	xiangmujincheng,
+				 											 	xiangmutuandui,
+				 											 	jihuashu,
+				 											 	hangye,
+				 											 	browsecount,
+				 											 	markcount,
+				 											 	rongziedu,
+				 											 	rongzhijieduan,
+				 											 	crgqbl,
+				 											 	qiyeid,
+				 											 	faburiqi,
+				 											 	shifoutuijian,tuijianpic,
+				 											 	
+				 											 	xiangmuzhuangtai,
+				 											 	rongzizhuangtai,
+				 											 	shenhezhuangtai,
+				 											 	fabuzheleixing,
+				 											 	biaoqian,
+				 											 	fujianming,
+				 											 	fujianlujing,
+				 											 	sitename,
+				 											 	xiangmutouzhi,
+				 											 	lurushijian,
+				 											 	inputuser,mubiaoyonghu,zhijinyongtu,yewushuju,weilaifazhanjihua,shichangfenxi,hangyejingzheng,qitaxinxi,
+				 											  lastchgtime,
+																number
+				 						  from tb_guquan t  where 1=1  
+			<if test="id!=null and id!=''">
+				and t.id=#{id}
+			</if>
+	</select>
+	
+	<select id="front.guquan.selectrecommend" parameterType="com.winpow.services.manage.guquan.bean.Guquan" resultType="com.winpow.services.manage.guquan.bean.Guquan">
+			SELECT   TOP 1
+											 	id,
+				 											 	mingcheng,
+				 											 	jianjie,
+				 											 	hexinjzl,
+				 											 	picture,
+				 											 	xiangmujincheng,
+				 											 	xiangmutuandui,
+				 											 	jihuashu,
+				 											 	hangye,
+				 											 	browsecount,
+				 											 	markcount,
+				 											 	rongziedu,
+				 											 	rongzhijieduan,
+				 											 	crgqbl,
+				 											 	qiyeid,
+				 											 	faburiqi,
+				 											 	shifoutuijian,tuijianpic,
+				 											 	xiangmuzhuangtai,
+				 											 	rongzizhuangtai,
+				 											 	shenhezhuangtai,
+				 											 	fabuzheleixing,
+				 											 	biaoqian,
+				 											 	fujianming,
+				 											 	fujianlujing,
+				 											 	sitename,
+				 											 	xiangmutouzhi,
+				 											 	lurushijian,
+				 											 	inputuser,mubiaoyonghu,zhijinyongtu,yewushuju,weilaifazhanjihua,shichangfenxi,hangyejingzheng,qitaxinxi,
+				 											  lastchgtime,
+				 											  number
+				 						  from tb_guquan t  where  SHIFOUTUIJIAN='aaaaaaaaaaaaaaaaaaaaaaaaaaaaa004' and  LASTCHGTIME = (select max(LASTCHGTIME) as LURUSHIJIAN from tb_guquan where SHIFOUTUIJIAN='aaaaaaaaaaaaaaaaaaaaaaaaaaaaa004')
+	</select>
+	
+	
+	
+	<select id="front.guquan.selectCount" parameterType="com.winpow.services.manage.guquan.bean.Guquan" resultType="int">
+			select count(*)  
+				 FROM tb_guquan t  where 1=1  
+				<if test="id!=null and id!=''">
+					and t.id=#{id}
+				</if>
+	</select>
+	
+	<select id="front.guquan.selectOneByCondition" parameterType="com.winpow.services.manage.guquan.bean.Guquan" resultType="com.winpow.services.manage.guquan.bean.Guquan">
+			SELECT  
+											 	id,
+				 											 	mingcheng,
+				 											 	jianjie,
+				 											 	hexinjzl,
+				 											 	picture,
+				 											 	xiangmujincheng,
+				 											 	xiangmutuandui,
+				 											 	jihuashu,
+				 											 	hangye,
+				 											 	browsecount,
+				 											 	markcount,
+				 											 	rongziedu,
+				 											 	rongzhijieduan,
+				 											 	crgqbl,
+				 											 	qiyeid,
+				 											 	faburiqi,
+				 											 	shifoutuijian,TUIJIANPIC,
+				 											 	xiangmuzhuangtai,
+				 											 	rongzizhuangtai,
+				 											 	shenhezhuangtai,
+				 											 	fabuzheleixing,
+				 											 	biaoqian,
+				 											 	fujianming,
+				 											 	fujianlujing,
+				 											 	sitename,
+				 											 	xiangmutouzhi,
+				 											 	lurushijian,
+				 											 	inputuser,mubiaoyonghu,zhijinyongtu,yewushuju,weilaifazhanjihua,shichangfenxi,hangyejingzheng,qitaxinxi,
+				 											  lastchgtime,
+																number
+				 					 from  tb_guquan   t  where 1=1  
+			<if test="id!=null and id!=''">
+				and t.id=#{id}
+			</if>
+	</select>
+	
+	<insert id="front.guquan.insert" parameterType="com.winpow.services.manage.guquan.bean.Guquan" useGeneratedKeys="true" 
+		keyProperty="id">
+	 		insert into tb_guquan ( 
+	 								 	id,
+													 	mingcheng,
+													 	jianjie,
+													 	hexinjzl,
+													 	picture,
+													 	xiangmujincheng,
+													 	xiangmutuandui,
+													 	jihuashu,
+													 	hangye,
+													 	browsecount,
+													 	markcount,
+													 	rongziedu,
+													 	rongzhijieduan,
+													 	crgqbl,
+													 	qiyeid,
+													 	faburiqi,
+													 	shifoutuijian,tuijianpic,
+													 	xiangmuzhuangtai,
+													 	rongzizhuangtai,
+													 	shenhezhuangtai,
+													 	fabuzheleixing,
+													 	biaoqian,
+													 	fujianming,
+													 	fujianlujing,
+													 	sitename,
+													 	xiangmutouzhi,
+													 	lurushijian,
+													 	inputuser,mubiaoyonghu,zhijinyongtu,yewushuju,weilaifazhanjihua,shichangfenxi,hangyejingzheng,qitaxinxi,
+													  lastchgtime,number
+			 						) values ( 
+										 	#{id},
+				 										 	#{mingcheng},
+				 										 	#{jianjie},
+				 										 	#{hexinjzl},
+				 										 	#{picture},
+				 										 	#{xiangmujincheng},
+				 										 	#{xiangmutuandui},
+				 										 	#{jihuashu},
+				 										 	#{hangye},
+				 										 	#{browsecount},
+				 										 	#{markcount},
+				 										 	#{rongziedu},
+				 										 	#{rongzhijieduan},
+				 										 	#{crgqbl},
+				 										 	#{qiyeid},
+				 										 	#{faburiqi},
+				 										 	#{shifoutuijian},#{tuijianpic},
+				 										 	#{xiangmuzhuangtai},
+				 										 	#{rongzizhuangtai},
+				 										 	#{shenhezhuangtai},
+				 										 	#{fabuzheleixing},
+				 										 	#{biaoqian},
+				 										 	#{fujianming},
+				 										 	#{fujianlujing},
+				 										 	#{sitename},
+				 										 	#{xiangmutouzhi},
+				 										 	getdate(),
+				 										 	#{inputuser},#{mubiaoyonghu},#{zhijinyongtu},#{yewushuju},#{weilaifazhanjihua},#{shichangfenxi},#{hangyejingzheng},#{qitaxinxi},
+				 											#{lastchgtime},#{number}
+				 						)
+		 
+	</insert>
+	
+	<update id="front.guquan.update" parameterType="com.winpow.services.manage.guquan.bean.Guquan">
+		update tb_guquan set 
+                        
+		
+				 			                <if test="mingcheng!=null and mingcheng!=''">
+                        mingcheng=#{mingcheng},
+                        </if>
+		
+				 			                <if test="jianjie!=null and jianjie!=''">
+                        jianjie=#{jianjie},
+                        </if>
+		
+				 			                <if test="hexinjzl!=null and hexinjzl!=''">
+                        hexinjzl=#{hexinjzl},
+                        </if>
+		
+				 			                <if test="picture!=null and picture!=''">
+                        picture=#{picture},
+                        </if>
+		
+				 			                <if test="xiangmujincheng!=null and xiangmujincheng!=''">
+                        xiangmujincheng=#{xiangmujincheng},
+                        </if>
+		
+				 			                <if test="xiangmutuandui!=null and xiangmutuandui!=''">
+                        xiangmutuandui=#{xiangmutuandui},
+                        </if>
+		
+				 			                <if test="jihuashu!=null and jihuashu!=''">
+                        jihuashu=#{jihuashu},
+                        </if>
+		
+				 			                <if test="hangye!=null and hangye!=''">
+                        hangye=#{hangye},
+                        </if>
+		
+				 			                <if test="browsecount!=null and browsecount!=''">
+                        browsecount=#{browsecount},
+                        </if>
+		
+				 			                <if test="markcount!=null and markcount!=''">
+                        markcount=#{markcount},
+                        </if>
+		
+				 			                <if test="rongziedu!=null and rongziedu!=''">
+                        rongziedu=#{rongziedu},
+                        </if>
+		
+				 			                <if test="rongzhijieduan!=null and rongzhijieduan!=''">
+                        rongzhijieduan=#{rongzhijieduan},
+                        </if>
+		
+				 			                <if test="crgqbl!=null and crgqbl!=''">
+                        crgqbl=#{crgqbl},
+                        </if>
+		
+				 			                <if test="qiyeid!=null and qiyeid!=''">
+                        qiyeid=#{qiyeid},
+                        </if>
+		
+				 			                <if test="faburiqi!=null and faburiqi!=''">
+                        faburiqi=#{faburiqi},
+                        </if>
+		
+				 			                <if test="shifoutuijian!=null and shifoutuijian!=''">
+                        shifoutuijian=#{shifoutuijian},
+                        </if>       
+                                 <if test="tuijianpic!=null and tuijianpic!=''">
+                        tuijianpic=#{tuijianpic},
+                        </if>
+				 			                <if test="xiangmuzhuangtai!=null and xiangmuzhuangtai!=''">
+                        xiangmuzhuangtai=#{xiangmuzhuangtai},
+                        </if>
+		
+				 			                <if test="rongzizhuangtai!=null and rongzizhuangtai!=''">
+                        rongzizhuangtai=#{rongzizhuangtai},
+                        </if>
+		
+				 			                <if test="shenhezhuangtai!=null and shenhezhuangtai!=''">
+                        shenhezhuangtai=#{shenhezhuangtai},
+                        </if>
+		
+				 			                <if test="fabuzheleixing!=null and fabuzheleixing!=''">
+                        fabuzheleixing=#{fabuzheleixing},
+                        </if>
+		
+				 			                <if test="biaoqian!=null and biaoqian!=''">
+                        biaoqian=#{biaoqian},
+                        </if>
+		
+				 			                <if test="fujianming!=null and fujianming!=''">
+                        fujianming=#{fujianming},
+                        </if>
+		
+				 			                <if test="fujianlujing!=null and fujianlujing!=''">
+                        fujianlujing=#{fujianlujing},
+                        </if>
+		
+				 			                <if test="sitename!=null and sitename!=''">
+                        sitename=#{sitename},
+                        </if>
+		
+				 			                <if test="xiangmutouzhi!=null and xiangmutouzhi!=''">
+                        xiangmutouzhi=#{xiangmutouzhi},
+                        </if>
+		
+				 			                <if test="inputuser!=null and inputuser!=''">
+                        inputuser=#{inputuser},
+                        </if>
+                        
+                        
+                            <if test="mubiaoyonghu!=null and mubiaoyonghu!=''">
+                        mubiaoyonghu=#{mubiaoyonghu},
+                        </if>
+                            <if test="zhijinyongtu!=null and zhijinyongtu!=''">
+                        zhijinyongtu=#{zhijinyongtu},
+                        </if>
+                            <if test="yewushuju!=null and yewushuju!=''">
+                        yewushuju=#{yewushuju},
+                        </if>
+                            <if test="weilaifazhanjihua!=null and weilaifazhanjihua!=''">
+                        weilaifazhanjihua=#{weilaifazhanjihua},
+                        </if>
+                            <if test="shichangfenxi!=null and shichangfenxi!=''">
+                        shichangfenxi=#{shichangfenxi},
+                        </if>
+                            <if test="hangyejingzheng!=null and hangyejingzheng!=''">
+                        hangyejingzheng=#{hangyejingzheng},
+                        </if>
+                            <if test="qitaxinxi!=null and qitaxinxi!=''">
+                        qitaxinxi=#{qitaxinxi},
+                        </if>
+						<if test="number!=null and number!=''">
+							number=#{number},
+						</if>
+                        lastchgtime=getdate()
+                       
+         						 
+		where id=#{id}
+	</update>
+	
+</mapper>  

@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC 
+"-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="manage">
+
+	<select id="manage.indexapp.selectPageList" parameterType="com.winpow.services.manage.indexapp.bean.Indexapp"
+		resultType="hashMap">
+		select * from (
+		SELECT ROW_NUMBER() over(order by id desc) as rownumber
+		,
+		id,
+		userid,
+		address,
+		xingming,
+		dianhuan,
+		leixing,
+		jine,
+		chegnliriqi,
+		qiyeqingkuang,
+		rongziyongtu,
+		status,
+		memo,
+		introduce,
+		studio,
+		lurushijian,
+		guquanfinancingtype
+		from tb_index_app where 1=1
+		<if test="xingming!=null and xingming!=''">
+			and xingming like '%'+#{xingming}+'%'
+		</if>
+		<if test="dianhuan!=null and dianhuan!=''">
+			and dianhuan=#{dianhuan}
+		</if>
+		<if test="leixing!=null and leixing!=''">
+			and leixing=#{leixing}
+		</if>
+		<if test="lurushijian!=null and lurushijian!=''">
+			and lurushijian=#{lurushijian}
+		</if>
+
+		)t where rownumber &gt; = #{offset} and rownumber &lt; =
+		#{pageSize}+#{offset}
+	</select>
+	<select id="manage.indexapp.selectPageCount" parameterType="com.winpow.services.manage.indexapp.bean.Indexapp"
+		resultType="java.lang.Integer">
+
+		select count(*) from (
+		SELECT ROW_NUMBER() over(order by id) as rownumber ,
+		id,
+		userid,
+		address,
+		xingming,
+		dianhuan,
+		leixing,
+		jine,
+		chegnliriqi,
+		qiyeqingkuang,
+		rongziyongtu,
+		status,
+		memo,
+		introduce,
+		studio,
+		lurushijian,
+		guquanfinancingtype
+		from tb_index_app )t
+
+	</select>
+
+	<select id="manage.indexapp.selectOne" parameterType="com.winpow.services.manage.indexapp.bean.Indexapp"
+		resultType="com.winpow.services.manage.indexapp.bean.Indexapp">
+		SELECT
+		id,
+		userid,
+		address,
+		xingming,
+		dianhuan,
+		leixing,
+		jine,
+		chegnliriqi,
+		qiyeqingkuang,
+		rongziyongtu,
+		status,
+		memo,
+		introduce,
+		studio,
+		lurushijian,
+		guquanfinancingtype,substation
+		from tb_index_app t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+	</select>
+
+	<select id="manage.indexapp.selectCount" parameterType="com.winpow.services.manage.indexapp.bean.Indexapp"
+		resultType="int">
+		select count(*)
+		FROM tb_index_app t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+	</select>
+
+	<select id="manage.indexapp.selectOneByCondition" parameterType="com.winpow.services.manage.indexapp.bean.Indexapp"
+		resultType="com.winpow.services.manage.indexapp.bean.Indexapp">
+		SELECT
+		id,
+		userid,
+		address,
+		xingming,
+		dianhuan,
+		leixing,
+		jine,
+		chegnliriqi,
+		qiyeqingkuang,
+		rongziyongtu,
+		status,
+		memo,
+		introduce,
+		studio,
+		lurushijian,
+		guquanfinancingtype
+		from tb_index_app t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+	</select>
+
+	<select id="manage.indexapp.selectList" parameterType="com.winpow.services.manage.indexapp.bean.Indexapp"
+		resultType="com.winpow.services.manage.indexapp.bean.Indexapp">
+		SELECT
+		id,
+		userid,
+		address,
+		xingming,
+		dianhuan,
+		leixing,
+		jine,
+		chegnliriqi,
+		qiyeqingkuang,
+		rongziyongtu,
+		status,
+		memo,
+		introduce,
+		studio,
+		lurushijian,
+		guquanfinancingtype
+		from tb_index_app t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+	</select>
+
+	<insert id="manage.indexapp.insert" parameterType="com.winpow.services.manage.indexapp.bean.Indexapp"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into tb_index_app (
+
+		userid,
+		address,
+		xingming,
+		dianhuan,
+		leixing,
+		jine,
+		chegnliriqi,
+		qiyeqingkuang,
+		rongziyongtu,
+		status,
+		memo,
+		introduce,
+		studio,
+		lurushijian,
+		guquanfinancingtype,substation
+		) values (
+
+		#{userid},
+		#{address},
+		#{xingming},
+		#{dianhuan},
+		#{leixing},
+		#{jine},
+		#{chegnliriqi},
+		#{qiyeqingkuang},
+		#{rongziyongtu},
+		'aaaaaaaaaaaaaaaaaaaaaaaaaaaaa081',
+		#{memo},
+		#{introduce},
+		#{studio},
+		getdate(),
+		#{guquanfinancingtype},#{substation}
+		)
+
+	</insert>
+
+	<update id="manage.indexapp.update" parameterType="com.winpow.services.manage.indexapp.bean.Indexapp">
+		update tb_index_app set
+
+
+		<if test=" userid !=null and  userid !=''">
+			userid=#{userid},
+		</if>
+
+		<if test=" address !=null and  address !=''">
+			address=#{address},
+		</if>
+
+		<if test=" xingming !=null and  xingming !=''">
+			xingming=#{xingming},
+		</if>
+
+		<if test=" dianhuan !=null and  dianhuan !=''">
+			dianhuan=#{dianhuan},
+		</if>
+
+		<if test=" leixing !=null and  leixing !=''">
+			leixing=#{leixing},
+		</if>
+
+		<if test=" jine !=null and  jine !=''">
+			jine=#{jine},
+		</if>
+
+		<if test=" chegnliriqi !=null and  chegnliriqi !=''">
+			chegnliriqi=#{chegnliriqi},
+		</if>
+
+		<if test=" qiyeqingkuang !=null and  qiyeqingkuang !=''">
+			qiyeqingkuang=#{qiyeqingkuang},
+		</if>
+
+		<if test=" rongziyongtu !=null and  rongziyongtu !=''">
+			rongziyongtu=#{rongziyongtu},
+		</if>
+
+		<if test=" status !=null and  status !=''">
+			status=#{status},
+		</if>
+
+		<if test=" memo !=null and  memo !=''">
+			memo=#{memo},
+		</if>
+
+		<if test=" introduce !=null and  introduce !=''">
+			introduce=#{introduce},
+		</if>
+
+		<if test=" studio !=null and  studio !=''">
+			studio=#{studio},
+		</if>
+
+		<if test=" guquanfinancingtype !=null and  guquanfinancingtype !=''">
+			guquanfinancingtype=#{guquanfinancingtype},
+		</if>
+		
+		<if test=" substation !=null and  substation !=''">
+			substation=#{substation},
+		</if>
+		
+		lurushijian=lurushijian
+
+		where id=#{id}
+	</update>
+
+</mapper>  

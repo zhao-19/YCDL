@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC 
+"-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="manage">
+
+	<select id="manage.pingshenhui.selectPageList"
+		parameterType="com.winpow.services.manage.pingshenhui.bean.Pingshenhui"
+		resultType="hashMap">
+		select * from (
+		SELECT ROW_NUMBER() over(order by id desc) as rownumber,
+		id,
+		shijian,
+		pichi,
+		pmingcheng,
+		content,
+		hushu,
+		shenqingzongjine,
+		experts,
+		lurushijian,
+		inputuser,
+		jiangeshijian,
+		lastchgtime
+		from tb_pingshenhui where 1=1
+		<if test="pmingcheng!=null and pmingcheng!=''">
+			and pmingcheng like '%'+#{pmingcheng}+'%'
+		</if>
+		<if test="shijian!=null and shijian!=''">
+			and shijian=#{shijian}
+		</if>
+		<if test="pichi!=null and pichi!=''">
+			and pichi=#{pichi}
+		</if>
+		<if test="qiyemingcheng!=null and qiyemingcheng!=''">
+			and id in (select rele_pingshenhui from tb_pingshenhui_mingxi where qiyemingcheng like '%'+#{qiyemingcheng}+'%')
+		</if>
+		<if test="experts !=null and experts !=''">
+			and experts like '%'+#{experts}+'%'
+		</if>
+		)t where rownumber &gt; = #{offset} and rownumber &lt; =
+		#{pageSize}+#{offset}
+	</select>
+	<select id="manage.pingshenhui.selectPageCount"
+		parameterType="com.winpow.services.manage.pingshenhui.bean.Pingshenhui"
+		resultType="java.lang.Integer">
+		select count(*) from (
+		SELECT ROW_NUMBER() over(order by id) as rownumber ,
+		id,
+		shijian,
+		pichi,
+		pmingcheng,
+		content,
+		hushu,
+		shenqingzongjine,
+		experts,
+		lurushijian,
+		inputuser,jiangeshijian,
+		lastchgtime
+		from tb_pingshenhui where 1=1
+		<if test="pmingcheng!=null and pmingcheng!=''">
+			and pmingcheng like '%'+#{pmingcheng}+'%'
+		</if>
+		<if test="shijian!=null and shijian!=''">
+			and shijian=#{shijian}
+		</if>
+		<if test="pichi!=null and pichi!=''">
+			and pichi=#{pichi}
+		</if>
+		<if test="qiyemingcheng!=null and qiyemingcheng!=''">
+			and id in (select rele_pingshenhui from tb_pingshenhui_mingxi where qiyemingcheng like '%'+#{qiyemingcheng}+'%')
+		</if>
+		<if test="experts !=null and experts !=''">
+			and experts like '%'+#{experts}+'%'
+		</if>
+		) t
+	</select>
+
+	<select id="manage.pingshenhui.selectOne"
+		parameterType="com.winpow.services.manage.pingshenhui.bean.Pingshenhui"
+		resultType="com.winpow.services.manage.pingshenhui.bean.Pingshenhui">
+		SELECT
+		id,
+		shijian,
+		pichi,
+		pmingcheng,
+		content,
+		hushu,
+		shenqingzongjine,
+		experts,
+		lurushijian,
+		inputuser,jiangeshijian,
+		lastchgtime
+		from tb_pingshenhui t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+	</select>
+
+	<select id="manage.pingshenhui.selectCount"
+		parameterType="com.winpow.services.manage.pingshenhui.bean.Pingshenhui"
+		resultType="int">
+		select count(*)
+		FROM tb_pingshenhui t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+	</select>
+
+	<select id="manage.pingshenhui.selectOneByCondition"
+		parameterType="com.winpow.services.manage.pingshenhui.bean.Pingshenhui"
+		resultType="com.winpow.services.manage.pingshenhui.bean.Pingshenhui">
+		SELECT
+		id,
+		shijian,
+		pichi,
+		pmingcheng,
+		content,
+		hushu,
+		shenqingzongjine,
+		experts,
+		lurushijian,
+		inputuser,jiangeshijian,
+		lastchgtime
+		from tb_pingshenhui t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+	</select>
+
+	<select id="manage.pingshenhui.selectList"
+		parameterType="com.winpow.services.manage.pingshenhui.bean.Pingshenhui"
+		resultType="com.winpow.services.manage.pingshenhui.bean.Pingshenhui">
+		SELECT
+		id,
+		shijian,
+		pichi,
+		pmingcheng,
+		content,
+		hushu,
+		shenqingzongjine,
+		experts,
+		lurushijian,
+		inputuser,jiangeshijian,
+		lastchgtime
+		from tb_pingshenhui t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+	</select>
+
+	<insert id="manage.pingshenhui.insert"
+		parameterType="com.winpow.services.manage.pingshenhui.bean.Pingshenhui"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into tb_pingshenhui (
+		shijian,
+		pichi,
+		pmingcheng,
+		content,
+		hushu,
+		shenqingzongjine,
+		experts,
+		lurushijian,
+		inputuser,jiangeshijian,
+		lastchgtime
+		) values (
+		#{shijian},
+		#{pichi},
+		#{pmingcheng},
+		#{content},
+		0,
+		0,
+		#{experts},
+		getdate(),
+		#{inputuser},#{jiangeshijian},
+		getdate()
+		)
+
+	</insert>
+
+	<update id="manage.pingshenhui.update"
+		parameterType="com.winpow.services.manage.pingshenhui.bean.Pingshenhui">
+		update tb_pingshenhui set
+
+		<if test=" shijian !=null and  shijian !=''">
+			shijian=#{shijian},
+		</if>
+
+		<if test=" pichi !=null and  pichi !=''">
+			pichi=#{pichi},
+		</if>
+
+		<if test=" pmingcheng !=null and  pmingcheng !=''">
+			pmingcheng=#{pmingcheng},
+		</if>
+
+		<if test=" content !=null and  content !=''">
+			content=#{content},
+		</if>
+
+		<if test=" hushu !=null and  hushu !=''">
+			hushu=#{hushu},
+		</if>
+
+		<if test=" shenqingzongjine !=null and  shenqingzongjine !=''">
+			shenqingzongjine=#{shenqingzongjine},
+		</if>
+		<if test=" experts !=null and  experts !=''">
+			experts=#{experts},
+		</if>
+
+		<if test=" lurushijian !=null and  lurushijian !=''">
+			lurushijian=getdate(),
+		</if>
+
+		<if test=" inputuser !=null and  inputuser !=''">
+			inputuser=#{inputuser},
+		</if>
+		<if test=" jiangeshijian !=null and  jiangeshijian !=''">
+			jiangeshijian=#{jiangeshijian},
+		</if>
+		lastchgtime=getdate()
+		where id=#{id}
+	</update>
+
+	<!-- 将户数与金额更新到评审会表 -->
+	<update id="manage.pingshenhui.updateCalc"
+		parameterType="com.winpow.services.manage.pingshenhui.bean.Pingshenhui">
+		update tb_pingshenhui set
+		<if test=" hushu !=null and  hushu !=''">
+			hushu=#{hushu},
+		</if>
+		<if test=" shenqingzongjine !=null and  shenqingzongjine !=''">
+			shenqingzongjine=#{shenqingzongjine}
+		</if>
+		where id=#{id}
+	</update>
+</mapper>  

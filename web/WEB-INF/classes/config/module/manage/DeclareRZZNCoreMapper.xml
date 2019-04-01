@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.winpow.services.manage.declare.mapper.DeclareRZZNCoreMapper">
+
+    <select id="selectPageList"
+            parameterType="com.winpow.services.manage.declare.bean.DeclareRZZNCore" resultType="hashMap">
+        select * from (
+        SELECT  ROW_NUMBER() over(order by id) as  rownumber ,
+        id,
+        userid,
+        rele_id,
+        chuzujigou,
+        chuzujigouzzjgdm,
+        zhulingwupin,
+        zhulingfeiyong,
+        qichushijian,
+        jieshushijian,
+        butiekaishiriqi,
+        butijieshuriqi,
+        butietianshu,
+        butiejine,
+        lurushijian,
+        inputuser,
+        lastchgtime,
+        shoufujin,
+        zulinchengben,
+        rongzie
+        from tb_sb_rzzn_core where 1=1
+         )t  where rownumber &gt; = #{offset} and rownumber &lt; = #{pageSize}+#{offset}
+    </select>
+    <select id="selectPageCount"
+            parameterType="com.winpow.services.manage.declare.bean.DeclareRZZNCore"
+            resultType="java.lang.Integer">
+        select count(id) from (
+        SELECT  ROW_NUMBER() over(order by id) as  rownumber ,
+        id,
+        userid,
+        rele_id,
+        chuzujigou,
+        chuzujigouzzjgdm,
+        zhulingwupin,
+        zhulingfeiyong,
+        qichushijian,
+        jieshushijian,
+        butiekaishiriqi,
+        butijieshuriqi,
+        butietianshu,
+        butiejine,
+        lurushijian,
+        inputuser,
+        lastchgtime,
+        shoufujin,
+        zulinchengben,
+        rongzie
+        from tb_sb_rzzn_core where 1=1
+         )t
+    </select>
+
+    <select id="selectOne"
+            parameterType="com.winpow.services.manage.declare.bean.DeclareRZZNCore"
+            resultType="com.winpow.services.manage.declare.bean.DeclareRZZNCore">
+        SELECT TOP 1
+        id,
+        userid,
+        rele_id,
+        chuzujigou,
+        chuzujigouzzjgdm,
+        zhulingwupin,
+        zhulingfeiyong,
+        qichushijian,
+        jieshushijian,
+        butiekaishiriqi,
+        butijieshuriqi,
+        butietianshu,
+        butiejine,
+        lurushijian,
+        inputuser,
+        lastchgtime,
+        shoufujin,
+        zulinchengben,
+        rongzie
+        from tb_sb_rzzn_core t  where t.id=#{id}
+    </select>
+
+    <select id="selectAllList"
+            parameterType="com.winpow.services.manage.declare.bean.DeclareRZZNCore"
+            resultType="com.winpow.services.manage.declare.bean.DeclareRZZNCore">
+        SELECT
+        id,
+        userid,
+        rele_id,
+        chuzujigou,
+        chuzujigouzzjgdm,
+        zhulingwupin,
+        zhulingfeiyong,
+        qichushijian,
+        jieshushijian,
+        butiekaishiriqi,
+        butijieshuriqi,
+        butietianshu,
+        butiejine,
+        inputuser,
+        lastchgtime,
+        shoufujin,
+        zulinchengben,
+        rongzie
+        from  tb_sb_rzzn_core t
+    </select>
+
+    <insert id="insert"
+            parameterType="com.winpow.services.manage.declare.bean.DeclareRZZNCore" useGeneratedKeys="true"
+            keyProperty="id">
+		insert into tb_sb_rzzn_core (
+													 	userid,
+													 	rele_id,
+													 	chuzujigou,
+                                                        chuzujigouzzjgdm,
+                                                        zhulingwupin,
+                                                        zhulingfeiyong,
+                                                        qichushijian,
+                                                        jieshushijian,
+                                                        butiekaishiriqi,
+                                                        butijieshuriqi,
+                                                        butietianshu,
+                                                        butiejine,
+													 	lurushijian,
+													 	inputuser,
+													    lastchgtime,
+                                                        shoufujin,
+                                                        zulinchengben,
+                                                        rongzie
+			 						) values (
+				 										 	#{userid},
+				 										 	#{rele_id},
+				 										 	#{chuzujigou},
+                                                            #{chuzujigouzzjgdm},
+                                                            #{zhulingwupin},
+                                                            #{zhulingfeiyong},
+                                                            #{qichushijian},
+                                                            #{jieshushijian},
+                                                            #{butiekaishiriqi},
+                                                            #{butijieshuriqi},
+                                                            #{butietianshu},
+                                                            #{butiejine},
+				 										 	getdate(),
+				 										 	#{inputuser},
+				 											getdate(),
+                                                            #{shoufujin},
+                                                            #{zulinchengben},
+                                                            #{rongzie}
+				 						)
+	</insert>
+
+    <update id="update"
+            parameterType="com.winpow.services.manage.declare.bean.DeclareRZZNCore">
+        update tb_sb_rzzn_core set
+
+        <if test=" userid !=null and  userid !=''">
+            userid=#{userid},
+        </if>
+
+        <if test=" rele_id !=null and  rele_id !=''">
+            rele_id=#{rele_id},
+        </if>
+
+        <if test=" chuzujigou !=null and  chuzujigou !=''">
+            chuzujigou=#{chuzujigou},
+        </if>
+
+        <if test=" chuzujigouzzjgdm !=null and  chuzujigouzzjgdm !=''">
+            chuzujigouzzjgdm=#{chuzujigouzzjgdm},
+        </if>
+
+        <if test=" zhulingwupin !=null and  zhulingwupin !=''">
+            zhulingwupin=#{zhulingwupin},
+        </if>
+
+        <if test=" zhulingfeiyong !=null and  zhulingfeiyong !=''">
+            zhulingfeiyong=#{zhulingfeiyong},
+        </if>
+
+        <if test=" qichushijian !=null and  qichushijian !=''">
+            qichushijian=#{qichushijian},
+        </if>
+
+        <if test=" jieshushijian !=null and  jieshushijian !=''">
+            jieshushijian=#{jieshushijian},
+        </if>
+
+        <if test=" butiekaishiriqi !=null and  butiekaishiriqi !=''">
+            butiekaishiriqi=#{butiekaishiriqi},
+        </if>
+
+        <if test=" butijieshuriqi !=null and  butijieshuriqi !=''">
+            butijieshuriqi=#{butijieshuriqi},
+        </if>
+
+        <if test=" butietianshu !=null  ">
+            butietianshu=#{butietianshu},
+        </if>
+
+        <if test=" butiejine !=null ">
+            butiejine=#{butiejine},
+        </if>
+
+        <if test=" shoufujin !=null">
+            shoufujin=#{shoufujin},
+        </if>
+
+        <if test=" zulinchengben !=null">
+            zulinchengben=#{zulinchengben},
+        </if>
+
+        <if test=" rongzie !=null">
+            rongzie=#{rongzie},
+        </if>
+
+            lastchgtime=getdate()
+
+        where id=#{id}
+    </update>
+    <delete id="delete">
+        delete tb_sb_rzzn_core where id=#{id}
+    </delete>
+</mapper>  

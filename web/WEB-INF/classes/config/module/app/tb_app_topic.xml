@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="app">
+
+	<select id="app.apptopic.selectPageList" parameterType="com.winpow.services.app.apptopic.bean.Apptopic"
+		resultType="hashMap">
+		select * from (
+		SELECT ROW_NUMBER() over(order by updatedate
+		desc) as rownumber ,
+		pkid,
+		userid,
+		content,
+		chstatus,
+		updatedate,
+		remark,
+		chno,
+		createdate,
+		updateby,
+		iscusread,
+        reviwer_id,
+        reviwer_date,
+        reviwer_remark
+		from tb_app_topic )t where rownumber
+		&gt; = #{offset} and rownumber &lt; =
+		#{pageSize}+#{offset}
+	</select>
+	<select id="app.apptopic.selectPageCount" parameterType="com.winpow.services.app.apptopic.bean.Apptopic"
+		resultType="java.lang.Integer">
+
+		select count(*) from (
+		SELECT ROW_NUMBER() over(order by
+		updatedate desc) as rownumber ,
+		pkid,
+		userid,
+		content,
+		chstatus,
+		updatedate,
+		remark,
+		chno,
+		createdate,
+		updateby,
+		iscusread,
+        reviwer_id,
+        reviwer_date,
+        reviwer_remark
+		from tb_app_topic )t
+
+	</select>
+
+	<select id="app.apptopic.selectOne" parameterType="com.winpow.services.app.apptopic.bean.Apptopic"
+		resultType="com.winpow.services.app.apptopic.bean.Apptopic">
+		SELECT
+		pkid,
+		userid,
+		content,
+		chstatus,
+		updatedate,
+		remark,
+		chno,
+		createdate,
+		updateby,
+		iscusread,
+        reviwer_id,
+        reviwer_date,
+        reviwer_remark
+		from tb_app_topic t where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+
+	<select id="app.apptopic.selectCount" parameterType="com.winpow.services.app.apptopic.bean.Apptopic"
+		resultType="int">
+		select count(*)
+		FROM tb_app_topic t where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+
+	<select id="app.apptopic.selectOneByCondition" parameterType="com.winpow.services.app.apptopic.bean.Apptopic"
+		resultType="com.winpow.services.app.apptopic.bean.Apptopic">
+		SELECT
+		pkid,
+		userid,
+		content,
+		chstatus,
+		updatedate,
+		remark,
+		chno,
+		createdate,
+		updateby,
+		iscusread,
+        reviwer_id,
+        reviwer_date,
+        reviwer_remark
+		from tb_app_topic t where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+
+	<select id="app.apptopic.selectList" parameterType="com.winpow.services.app.apptopic.bean.Apptopic"
+		resultType="com.winpow.services.app.apptopic.bean.Apptopic">
+		SELECT
+		pkid,
+		userid,
+		content,
+		chstatus,
+		updatedate,
+		remark,
+		chno,
+		createdate,
+		updateby,
+		iscusread,
+        reviwer_id,
+        reviwer_date,
+        reviwer_remark
+		from tb_app_topic t where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+
+	<insert id="app.apptopic.insert" parameterType="com.winpow.services.app.apptopic.bean.Apptopic"
+		useGeneratedKeys="true" keyProperty="id">
+		declare @cnno int
+		exec @cnno = getchnoseq
+		insert into tb_app_topic (
+		pkid,
+		userid,
+		content,
+		chstatus,
+		updatedate,
+		remark,
+		chno,
+		createdate,
+		updateby,
+		iscusread,
+        reviwer_id,
+        reviwer_date,
+        reviwer_remark
+		) values (
+		#{pkid},
+		#{userid},
+		#{content},
+		#{chstatus},
+		getdate(),
+		#{remark},
+		(select 'rzfd' + right('0000000000' + cast(@cnno as
+		varchar(10)), 10)),
+		getdate(),
+		#{updateby},
+		#{iscusread},
+        #{reviwer_id},
+        #{reviwer_date},
+        #{reviwer_remark}
+		)
+
+	</insert>
+
+	<update id="app.apptopic.update" parameterType="com.winpow.services.app.apptopic.bean.Apptopic">
+		update tb_app_topic set
+		<if test=" userid !=null and  userid !=''">
+			userid=#{userid},
+		</if>
+
+		<if test=" content !=null and  content !=''">
+			content=#{content},
+		</if>
+
+		<if test=" chstatus !=null and  chstatus !=''">
+			chstatus=#{chstatus},
+		</if>
+
+		<if test=" remark !=null and  remark !=''">
+			remark=#{remark},
+		</if>
+
+		<if test=" createdate !=null and  createdate !=''">
+			createdate=#{createdate},
+		</if>
+
+		<if test="updateby!=null and updateby !=''">
+			updateby=#{updateby},
+		</if>
+		<if test="iscusread!=null and iscusread !=''">
+			iscusread=#{iscusread},
+		</if>
+        <if test=" reviwer_id !=null and  reviwer_id !=''">
+            reviwer_id=#{reviwer_id},
+        </if>
+        <if test=" reviwer_date !=null and  reviwer_date !=''">
+            reviwer_date=getdate(),
+        </if>
+        <if test=" reviwer_remark !=null and  reviwer_remark !=''">
+            reviwer_remark=#{reviwer_remark},
+        </if>
+
+		updatedate=getdate()
+		where pkid=#{pkid}
+	</update>
+
+	<select id="app.apptopic.selectPageByUserid" parameterType="com.winpow.services.app.apptopic.bean.Apptopic"
+		resultType="com.winpow.services.app.apptopic.bean.Apptopic">
+		select top ${pageSize} * from (
+			select row_number() over (order by createdate desc) as rownumber,* from(
+				select t.*,pc.pkid pcid from tb_app_topic t
+				left join tb_pc_topic pc on t.pkid=pc.appid
+				where 1=1
+				<choose>
+			        <when test=" userid !=null and  userid !=''">
+			            and t.userid=#{userid}
+			        </when>
+			        <when test=" pkid !=null and  pkid !=''">
+			            and t.userid in (select userid from tb_cust where f_id=#{pkid})
+			        </when>
+			        <when test=" reviwer_id !=null and  reviwer_id !=''">
+						and t.reviwer_id=#{reviwer_id}
+					</when>
+	       		</choose>
+			) b
+		) a where rownumber > ${pageSize}*(${offset} - 1)
+	</select>
+	
+    <select id="app.apptopic.selectAllList" parameterType="com.winpow.services.app.apptopic.bean.Apptopic"
+        resultType="com.winpow.services.app.apptopic.bean.Apptopic">
+        SELECT 
+        t1.*
+        from tb_app_topic t1 left join tb_pc_topic t2 on t1.pkid=t2.appid 
+        where t2.pkid is null
+    </select>
+
+</mapper>  

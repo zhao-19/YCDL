@@ -1,0 +1,778 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC 
+"-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="front">
+
+	<select id="front.interestapp.selectPageList"
+		parameterType="com.winpow.services.manage.interestapp.bean.Interestapp"
+		resultType="hashMap">
+		select * from (
+		SELECT ROW_NUMBER() over(order by id) as rownumber
+		,lxjsksrq,dbf,dbfl,dbfamt,
+		id,
+		userid,
+		zzjgdm,
+		qiyemingcheng,
+		zhuceziben,
+		chengliriqi,
+		dizhi,
+		faren,
+		farentele,
+		fzr,
+		fzrtele,
+		lxr,
+		lxrtlle,
+		dkyy,
+		dkje,
+		dkll,
+		zflx,
+		fksj,
+		dqsj,
+		lxjsjzrq,
+		vcpe,
+		dsfxypj,
+		qygm,
+		tjgxqk,
+		sscy,
+		qylx,
+		kykt,
+		zhuyingyewu,
+		tjgxszd,
+		gsjngxszd,
+		dsjngxszd,
+		yhxydj,
+		zcze,
+		fzze,
+		ckchze,
+		cpsczyl,
+		sfgqrzxq,
+		gqrzds,
+		sfzqrzxq,
+		zqrzds,
+		step,
+		stat,
+		spr,
+		spsj,
+		inputuser,
+		lurushijian,
+		lastchgtime,
+		inteamt,
+		systemmemo,fzrzhiwu,lxrzhiwu,zcfx,
+		memo,zlsfwz,qysqje,xtjsje
+		from Tb_interest_app where userid=#{userid} )t where rownumber &gt; =
+		#{offset} and rownumber &lt; = #{pageSize}+#{offset}
+	</select>
+	<select id="front.interestapp.selectPageCount"
+		parameterType="com.winpow.services.manage.interestapp.bean.Interestapp"
+		resultType="java.lang.Integer">
+
+		select count(*) from Tb_interest_app where userid=#{userid}
+
+	</select>
+
+	<select id="front.interestapp.selectOne"
+		parameterType="com.winpow.services.manage.interestapp.bean.Interestapp"
+		resultType="com.winpow.services.manage.interestapp.bean.Interestapp">
+		SELECT id,
+		userid,lxjsksrq,dbf,dbfl,dbfamt,
+		zzjgdm,
+		qiyemingcheng,
+		zhuceziben,
+		convert(char(10),chengliriqi,21) as chengliriqi,
+		dizhi,
+		faren,
+		farentele,
+		fzr,
+		fzrtele,
+		lxr,
+		lxrtlle,
+		dkyy,
+		dkje,
+		dkll,
+		zflx,
+		convert(char(10),fksj,21) as fksj,
+		convert(char(10),dqsj,21) as dqsj,
+		convert(char(10),lxjsjzrq,21) as lxjsjzrq,
+		vcpe,
+		dsfxypj,
+		qygm,
+		tjgxqk,
+		sscy,
+		qylx,
+		kykt,
+		zhuyingyewu,
+		tjgxszd,
+		gsjngxszd,
+		dsjngxszd,
+		yhxydj,
+		zcze,
+		fzze,
+		ckchze,
+		cpsczyl,
+		sfgqrzxq,
+		gqrzds,
+		sfzqrzxq,
+		zqrzds,
+		step,
+		stat,
+		spr,
+		spsj,
+		inputuser,inteamt,Systemmemo,memo,daycount,
+		lurushijian,fzrzhiwu,lxrzhiwu,thirdyear,thirdsell,thirdinte,thirdtax,secondsell,secondinte,secondtax,firstsell,firstinte,firsttax,
+		lastchgtime,zcfx,zlsfwz,qysqje,xtjsje
+
+		from Tb_interest_app t where 1=1
+
+		and t.id=#{id}
+	</select>
+
+	<select id="front.interestapp.selectCount"
+		parameterType="com.winpow.services.manage.interestapp.bean.Interestapp"
+		resultType="int">
+		select count(*)
+		FROM Tb_interest_app t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+	</select>
+
+	<select id="front.interestapp.selectOneByCondition"
+		parameterType="com.winpow.services.manage.interestapp.bean.Interestapp"
+		resultType="com.winpow.services.manage.interestapp.bean.Interestapp">
+		SELECT
+		id,
+		userid,lxjsksrq,dbf,dbfl,dbfamt,
+		zzjgdm,
+		qiyemingcheng,
+		zhuceziben,
+		chengliriqi,
+		dizhi,
+		faren,
+		farentele,
+		fzr,
+		fzrtele,
+		lxr,
+		lxrtlle,
+		dkyy,
+		dkje,
+		dkll,
+		zflx,
+		fksj,
+		dqsj,
+		lxjsjzrq,
+		vcpe,
+		dsfxypj,
+		qygm,
+		tjgxqk,
+		sscy,
+		qylx,
+		kykt,
+		zhuyingyewu,
+		tjgxszd,
+		gsjngxszd,
+		dsjngxszd,
+		yhxydj,
+		zcze,
+		fzze,
+		ckchze,
+		cpsczyl,
+		sfgqrzxq,
+		gqrzds,
+		sfzqrzxq,
+		zqrzds,
+		step,
+		stat,
+		spr,
+		spsj,
+		inputuser,
+		lurushijian,
+		lastchgtime,
+		inteamt,
+		systemmemo,fzrzhiwu,lxrzhiwu,
+		memo,zcfx,zlsfwz,qysqje,xtjsje
+		from Tb_interest_app t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+	</select>
+
+
+
+	<select id="front.interestapp.selectList"
+		parameterType="com.winpow.services.manage.interestapp.bean.Interestapp"
+		resultType="com.winpow.services.manage.interestapp.bean.Interestapp">
+		SELECT
+		id,
+		userid,lxjsksrq,dbf,dbfl,dbfamt,
+		zzjgdm,
+		qiyemingcheng,
+		zhuceziben,
+		chengliriqi,
+		dizhi,
+		faren,
+		farentele,
+		fzr,
+		fzrtele,
+		lxr,
+		lxrtlle,
+		dkyy,
+		dkje,
+		dkll,
+		zflx,
+		fksj,
+		dqsj,
+		lxjsjzrq,
+		vcpe,
+		dsfxypj,
+		qygm,
+		tjgxqk,
+		sscy,
+		qylx,
+		kykt,
+		zhuyingyewu,
+		tjgxszd,
+		gsjngxszd,
+		dsjngxszd,
+		yhxydj,
+		zcze,
+		fzze,
+		ckchze,
+		cpsczyl,
+		sfgqrzxq,
+		gqrzds,
+		sfzqrzxq,
+		zqrzds,
+		step,
+		stat,
+		spr,
+		spsj,
+		inputuser,
+		lurushijian,
+		lastchgtime,
+		inteamt,
+		systemmemo,fzrzhiwu,lxrzhiwu,
+		memo,zcfx,zlsfwz,qysqje,xtjsje
+		from Tb_interest_app t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+	</select>
+
+
+
+
+	<insert id="front.interestapp.insert"
+		parameterType="com.winpow.services.manage.interestapp.bean.Interestapp"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into Tb_interest_app (
+
+		userid,lxjsksrq,dbf,dbfl,dbfamt,
+		zzjgdm,
+		qiyemingcheng,
+		zhuceziben,
+		chengliriqi,
+		dizhi,
+		faren,
+		farentele,
+		fzr,
+		fzrtele,
+		lxr,
+		lxrtlle,
+		dkyy,
+		dkje,
+		dkll,
+		zflx,
+		fksj,
+		dqsj,
+		lxjsjzrq,
+		vcpe,
+		dsfxypj,
+		qygm,
+		tjgxqk,
+		sscy,
+		qylx,
+		kykt,
+		zhuyingyewu,
+		tjgxszd,
+		gsjngxszd,
+		dsjngxszd,
+		yhxydj,
+		zcze,
+		fzze,
+		ckchze,
+		cpsczyl,
+		sfgqrzxq,
+		gqrzds,
+		sfzqrzxq,
+		zqrzds,
+		step,
+		stat,
+		spr,
+		spsj,
+		inputuser,
+		lurushijian,
+		lastchgtime,
+		inteamt,
+		systemmemo,
+		memo,fzrzhiwu,lxrzhiwu,thirdyear,thirdsell,thirdinte,thirdtax,secondsell,secondinte,secondtax,firstsell,firstinte,firsttax,zcfx,zlsfwz,qysqje,xtjsje
+		,pichi) values (
+
+		#{userid},#{lxjsksrq},#{dbf},#{dbfl},#{dbfamt},
+		#{zzjgdm},
+		#{qiyemingcheng},
+		#{zhuceziben},
+		#{chengliriqi},
+		#{dizhi},
+		#{faren},
+		#{farentele},
+		#{fzr},
+		#{fzrtele},
+		#{lxr},
+		#{lxrtlle},
+		#{dkyy},
+		#{dkje},
+		#{dkll},
+		#{zflx},
+		#{fksj},
+		#{dqsj},
+		#{lxjsjzrq},
+		#{vcpe},
+		#{dsfxypj},
+		#{qygm},
+		#{tjgxqk},
+		#{sscy},
+		#{qylx},
+		#{kykt},
+		#{zhuyingyewu},
+		#{tjgxszd},
+		#{gsjngxszd},
+		#{dsjngxszd},
+		#{yhxydj},
+		#{zcze},
+		#{fzze},
+		#{ckchze},
+		#{cpsczyl},
+		#{sfgqrzxq},
+		#{gqrzds},
+		#{sfzqrzxq},
+		#{zqrzds},
+		0,
+		#{stat},
+		#{spr},
+		#{spsj},
+		#{inputuser},
+		getdate(),
+		getdate(),
+		#{inteamt},
+		#{systemmemo},
+		#{memo},#{fzrzhiwu} ,#{lxrzhiwu}
+		,#{thirdyear},#{thirdsell},#{thirdinte},#{thirdtax},#{secondsell},#{secondinte},#{secondtax},#{firstsell},#{firstinte},#{firsttax},#{zcfx},#{zlsfwz}
+		,#{qysqje},#{xtjsje},#{pichi}
+		)
+
+	</insert>
+
+	<update id="front.interestapp.update"
+		parameterType="com.winpow.services.manage.interestapp.bean.Interestapp">
+		update Tb_interest_app set
+
+
+		<if test=" zzjgdm !=null and  zzjgdm !=''">
+			zzjgdm=#{zzjgdm},
+		</if>
+
+		<if test=" qiyemingcheng !=null and  qiyemingcheng !=''">
+			qiyemingcheng=#{qiyemingcheng},
+		</if>
+
+		<if test=" zhuceziben !=null and  zhuceziben !=''">
+			zhuceziben=#{zhuceziben},
+		</if>
+
+		<if test=" chengliriqi !=null and  chengliriqi !=''">
+			chengliriqi=#{chengliriqi},
+		</if>
+
+		<if test=" dizhi !=null and  dizhi !=''">
+			dizhi=#{dizhi},
+		</if>
+
+		<if test=" faren !=null and  faren !=''">
+			faren=#{faren},
+		</if>
+
+		<if test=" farentele !=null and  farentele !=''">
+			farentele=#{farentele},
+		</if>
+
+		<if test=" fzr !=null and  fzr !=''">
+			fzr=#{fzr},
+		</if>
+
+		<if test=" fzrtele !=null and  fzrtele !=''">
+			fzrtele=#{fzrtele},
+		</if>
+
+		<if test=" lxr !=null and  lxr !=''">
+			lxr=#{lxr},
+		</if>
+
+		<if test=" lxrtlle !=null and  lxrtlle !=''">
+			lxrtlle=#{lxrtlle},
+		</if>
+
+		<if test=" dkyy !=null and  dkyy !=''">
+			dkyy=#{dkyy},
+		</if>
+
+		<if test=" dkje !=null and  dkje !=''">
+			dkje=#{dkje},
+		</if>
+
+		<if test=" dkll !=null and  dkll !=''">
+			dkll=#{dkll},
+		</if>
+
+		<if test=" zflx !=null and  zflx !=''">
+			zflx=#{zflx},
+		</if>
+
+		<if test=" fksj !=null and  fksj !=''">
+			fksj=#{fksj},
+		</if>
+
+		<if test=" dqsj !=null and  dqsj !=''">
+			dqsj=#{dqsj},
+		</if>
+
+		<if test=" lxjsjzrq !=null and  lxjsjzrq !=''">
+			lxjsjzrq=#{lxjsjzrq},
+		</if>
+
+		<if test=" vcpe !=null and  vcpe !=''">
+			vcpe=#{vcpe},
+		</if>
+
+		<if test=" dsfxypj !=null and  dsfxypj !=''">
+			dsfxypj=#{dsfxypj},
+		</if>
+
+		<if test=" qygm !=null and  qygm !=''">
+			qygm=#{qygm},
+		</if>
+
+		<if test=" tjgxqk !=null and  tjgxqk !=''">
+			tjgxqk=#{tjgxqk},
+		</if>
+
+		<if test=" sscy !=null and  sscy !=''">
+			sscy=#{sscy},
+		</if>
+
+		<if test=" qylx !=null and  qylx !=''">
+			qylx=#{qylx},
+		</if>
+
+		<if test=" kykt !=null and  kykt !=''">
+			kykt=#{kykt},
+		</if>
+
+		<if test=" zhuyingyewu !=null and  zhuyingyewu !=''">
+			zhuyingyewu=#{zhuyingyewu},
+		</if>
+
+		<if test=" tjgxszd !=null and  tjgxszd !=''">
+			tjgxszd=#{tjgxszd},
+		</if>
+
+		<if test=" gsjngxszd !=null and  gsjngxszd !=''">
+			gsjngxszd=#{gsjngxszd},
+		</if>
+
+		<if test=" dsjngxszd !=null and  dsjngxszd !=''">
+			dsjngxszd=#{dsjngxszd},
+		</if>
+
+		<if test=" yhxydj !=null and  yhxydj !=''">
+			yhxydj=#{yhxydj},
+		</if>
+
+		<if test=" zcze !=null and  zcze !=''">
+			zcze=#{zcze},
+		</if>
+
+		<if test=" fzze !=null and  fzze !=''">
+			fzze=#{fzze},
+		</if>
+
+		<if test=" ckchze !=null and  ckchze !=''">
+			ckchze=#{ckchze},
+		</if>
+
+		<if test=" cpsczyl !=null and  cpsczyl !=''">
+			cpsczyl=#{cpsczyl},
+		</if>
+
+		<if test=" sfgqrzxq !=null and  sfgqrzxq !=''">
+			sfgqrzxq=#{sfgqrzxq},
+		</if>
+
+		<if test=" gqrzds !=null and  gqrzds !=''">
+			gqrzds=#{gqrzds},
+		</if>
+
+		<if test=" sfzqrzxq !=null and  sfzqrzxq !=''">
+			sfzqrzxq=#{sfzqrzxq},
+		</if>
+
+		<if test=" zqrzds !=null and  zqrzds !=''">
+			zqrzds=#{zqrzds},
+		</if>
+
+		<if test=" step !=null and  step !=''">
+			step=#{step},
+		</if>
+
+		<if test=" stat !=null and  stat !=''">
+			stat=#{stat},
+		</if>
+
+		<if test=" spr !=null and  spr !=''">
+			spr=#{spr},
+		</if>
+
+		<if test=" spsj !=null and  spsj !=''">
+			spsj=#{spsj},
+		</if>
+
+		<if test=" inputuser !=null and  inputuser !=''">
+			inputuser=#{inputuser},
+		</if>
+
+		<if test=" lurushijian !=null and  lurushijian !=''">
+			lurushijian=#{lurushijian},
+		</if>
+
+		<if test=" inteamt !=null and  inteamt !=''">
+			inteamt=#{inteamt},
+		</if>
+
+		<if test=" systemmemo !=null and  systemmemo !=''">
+			systemmemo=#{systemmemo},
+		</if>
+
+		<if test="memo!=null and memo !=''">
+			memo=#{memo} ,
+		</if>
+		<if test=" thirdyear !=null and  thirdyear !=''">
+			thirdyear=#{thirdyear},
+		</if>
+
+		<if test=" thirdsell !=null and  thirdsell !=''">
+			thirdsell=#{thirdsell},
+		</if>
+
+		<if test=" thirdinte !=null and  thirdinte !=''">
+			thirdinte=#{thirdinte},
+		</if>
+
+		<if test=" thirdtax !=null and  thirdtax !=''">
+			thirdtax=#{thirdtax},
+		</if>
+
+		<if test=" secondsell !=null and  secondsell !=''">
+			secondsell=#{secondsell},
+		</if>
+
+		<if test=" secondinte !=null and  secondinte !=''">
+			secondinte=#{secondinte},
+		</if>
+
+		<if test=" secondtax !=null and  secondtax !=''">
+			secondtax=#{secondtax},
+		</if>
+
+		<if test=" firstsell !=null and  firstsell !=''">
+			firstsell=#{firstsell},
+		</if>
+
+		<if test=" firstinte !=null and  firstinte !=''">
+			firstinte=#{firstinte},
+		</if>
+
+		<if test="firsttax!=null and firsttax !=''">
+			firsttax=#{firsttax},
+		</if>
+		<if test="fzrzhiwu!=null and fzrzhiwu !=''">
+			fzrzhiwu=#{fzrzhiwu},
+		</if>
+		<if test="lxrzhiwu!=null and lxrzhiwu !=''">
+			lxrzhiwu=#{lxrzhiwu},
+		</if>
+
+		<if test="lxjsksrq!=null and lxjsksrq !=''">
+			lxjsksrq=#{lxjsksrq},
+		</if>
+		<if test="dbf!=null ">
+			dbf=#{dbf},
+		</if>
+		<if test="dbfl!=null">
+			dbfl=#{dbfl},
+		</if>
+		<if test="dbfamt!=null">
+			dbfamt=#{dbfamt},
+		</if>
+		<if test="daycount!=null">
+			daycount=#{daycount},
+		</if>
+		<if test="zcfx!=null">
+			zcfx=#{zcfx},
+		</if>
+		<if test="zlsfwz!=null">
+			zlsfwz=#{zlsfwz},
+		</if>
+		
+		<if test="qysqje!=null ">
+			qysqje=#{qysqje},
+		</if>
+		
+		<if test="xtjsje!=null">
+			xtjsje=#{xtjsje},
+		</if>
+
+		lastchgtime=getdate()
+
+		where id=#{id} and userid=#{userid}
+	</update>
+	
+	<select id="front.interestcore.selectList" parameterType="com.winpow.services.manage.interestcore.bean.Interestcore" resultType="com.winpow.services.manage.interestcore.bean.Interestcore">
+			SELECT  
+											 	id,
+				 											 	rele_id,
+				 											 	dkyy,
+				 											 	dkje,
+				 											 	dkll,
+				 											 	zflx,
+				 											 	dbfl,
+				 											 	dbf,
+				 											 	fksj,
+				 											 	dqsj,policy_loan_flag,policy_loan_name,
+				 											 	lurushijian,
+				 											 	inputuser,inteamt,Systemmemo,dbfamt,daycount,
+				 											  lastchgtime
+				 					 from  tb_interest_core   t  where 1=1  
+			<if test="rele_id!=null and rele_id!=''">
+				and t.rele_id=#{rele_id}
+			</if>
+			order by policy_loan_flag desc
+	</select>
+	
+	
+	
+<insert id="front.interestcore.insert" parameterType="com.winpow.services.manage.interestcore.bean.Interestcore" useGeneratedKeys="true" 
+		keyProperty="id">
+	 		insert into tb_interest_core ( 
+														rele_id,
+													 	dkyy,
+													 	dkje,
+													 	dkll,
+													 	zflx,
+													 	dbfl,
+													 	dbf,
+													 	fksj,
+													 	dqsj,policy_loan_flag,policy_loan_name,
+													 	lurushijian,
+													 	inputuser,
+													  lastchgtime
+			 						) values ( 
+				 										 	#{rele_id},
+				 										 	#{dkyy},
+				 										 	#{dkje},
+				 										 	#{dkll},
+				 										 	#{zflx},
+				 										 	#{dbfl},
+				 										 	#{dbf},
+				 										 	#{fksj},
+				 										 	#{dqsj},#{policy_loan_flag},#{policy_loan_name},
+				 										 	getdate(),
+				 										 	#{inputuser},
+				 											getdate()
+				 						)
+	</insert>
+	<delete id="front.interestcore.delete"
+		parameterType="com.winpow.services.manage.interestcore.bean.Interestcore">
+		delete from tb_Interest_core where 1=1 and rele_id=#{rele_id}
+	</delete>
+	
+	
+	 <update id="front.interestcore.update" parameterType="com.winpow.services.manage.interestcore.bean.Interestcore">
+		update tb_interest_core set 
+                      
+				 			                <if test=" rele_id !=null and  rele_id !=''">
+                        rele_id=#{rele_id},
+                        </if>
+		
+				 			                <if test=" dkyy !=null and  dkyy !=''">
+                        dkyy=#{dkyy},
+                        </if>
+		
+				 			                <if test=" dkje !=null">
+                        dkje=#{dkje},
+                        </if>
+		
+				 			                <if test=" dkll !=null and  dkll !=''">
+                        dkll=#{dkll},
+                        </if>
+		
+				 			                <if test=" zflx !=null and  zflx !=''">
+                        zflx=#{zflx},
+                        </if>
+		
+				 			                <if test=" dbfl !=null ">
+                        dbfl=#{dbfl},
+                        </if>
+		
+				 			                <if test=" dbf !=null ">
+                        dbf=#{dbf},
+                        </if>
+		
+				 			                <if test=" fksj !=null and  fksj !=''">
+                        fksj=#{fksj},
+                        </if>
+		
+				 			                <if test=" dqsj !=null and  dqsj !=''">
+                        dqsj=#{dqsj},
+                        </if>
+                        
+                        
+				 			                <if test=" policy_loan_flag !=null and  policy_loan_flag !=''">
+                        policy_loan_flag=#{policy_loan_flag},
+                        </if>
+                        
+                        
+				 			                <if test=" policy_loan_name !=null and  policy_loan_name !=''">
+                        policy_loan_name=#{policy_loan_name},
+                        </if>
+				 			           
+				 			                <if test=" inteamt !=null ">
+                        inteamt=#{inteamt},
+                        </if>
+		
+				 			                <if test=" systemmemo !=null and  systemmemo !=''">
+                        systemmemo=#{systemmemo},
+                        </if>
+		
+				 			                <if test=" dbfamt !=null ">
+                        dbfamt=#{dbfamt},
+                        </if>
+		
+				 			                <if test="daycount!=null and daycount !=''">
+                        daycount=#{daycount},
+                        </if>
+                        
+                             lastchgtime=getdate()
+         						 
+		where id=#{id}
+	</update>
+</mapper>  

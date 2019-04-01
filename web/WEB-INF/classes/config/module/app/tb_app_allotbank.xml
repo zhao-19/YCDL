@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+"-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="app">
+
+	<select id="app.appallotbank.selectPageList"
+		parameterType="com.winpow.services.app.appallotbank.bean.Appallotbank"
+		resultType="hashMap">
+		select * from (
+		SELECT ROW_NUMBER() over(order by updatedate
+		desc) as rownumber ,
+		pkid,
+		chno,
+		applyid,
+		userid,
+		username,
+		agencyId,
+		agencyname,
+		chstatus,
+		loanamount,
+		remark,
+		isread,
+		createdate,
+		createby,
+		updatedate
+		from
+		tb_app_allotbank )t where rownumber &gt; = #{offset} and rownumber
+		&lt; = #{pageSize}+#{offset}
+	</select>
+	<select id="app.appallotbank.selectPageCount"
+		parameterType="com.winpow.services.app.appallotbank.bean.Appallotbank"
+		resultType="java.lang.Integer">
+
+		select count(*) from (
+		SELECT ROW_NUMBER() over(order by
+		updatedate desc) as rownumber ,
+		pkid,
+		chno,
+		applyid,
+		userid,
+		username,
+		agencyname,
+		agencyId,
+		chstatus,
+		loanamount,
+		remark,
+		isread,
+		createdate,
+		createby,
+		updatedate
+		from tb_app_allotbank )t
+
+	</select>
+
+	<select id="app.appallotbank.selectOne"
+		parameterType="com.winpow.services.app.appallotbank.bean.Appallotbank"
+		resultType="com.winpow.services.app.appallotbank.bean.Appallotbank">
+		SELECT
+		pkid,
+		chno,
+		applyid,
+		userid,
+		username,
+		agencyId,
+		agencyname,
+		chstatus,
+		loanamount,
+		remark,
+		isread,
+		createdate,
+		createby,
+		updatedate
+		from tb_app_allotbank t
+		where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+
+	<select id="app.appallotbank.selectCount"
+		parameterType="com.winpow.services.app.appallotbank.bean.Appallotbank"
+		resultType="int">
+		select count(*)
+		FROM tb_app_allotbank t where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+
+	<select id="app.appallotbank.selectOneByCondition"
+		parameterType="com.winpow.services.app.appallotbank.bean.Appallotbank"
+		resultType="com.winpow.services.app.appallotbank.bean.Appallotbank">
+		SELECT
+		pkid,
+		chno,
+		applyid,
+		userid,
+		username,
+		agencyId,
+		agencyname,
+		chstatus,
+		loanamount,
+		remark,
+		isread,
+		createdate,
+		createby,
+		updatedate
+		from tb_app_allotbank t
+		where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+
+	<select id="app.appallotbank.selectList"
+		parameterType="com.winpow.services.app.appallotbank.bean.Appallotbank"
+		resultType="com.winpow.services.app.appallotbank.bean.Appallotbank">
+		select * from tb_app_allotbank t where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+		<if test="applyid!=null and applyid!=''">
+			and t.applyid=#{applyid}
+		</if>
+		order by createdate
+	</select>
+	
+	<select id="app.appallotbank.selectByAppidAndPkid"
+		parameterType="com.winpow.services.app.appallotbank.bean.Appallotbank"
+		resultType="com.winpow.services.app.appallotbank.bean.Appallotbank">
+		select * from tb_app_allotbank t where 1=1 
+		and (t.applyid=#{applyid} or t.pkid=#{applyid})
+		order by createdate
+	</select>
+	
+	<select id="app.appallotbank.selectDistinctBans" parameterType="list"
+		resultType="com.winpow.services.app.appallotbank.bean.Appallotbank">
+		<foreach item="item" index="index" collection="list" open="" separator=" union all " close="">  
+			select * from tb_app_allotbank  where applyid=#{item.applyid} and userid=#{item.userid}
+		</foreach>
+	</select>
+
+	<insert id="app.appallotbank.insert"
+		parameterType="com.winpow.services.app.appallotbank.bean.Appallotbank"
+		useGeneratedKeys="true" keyProperty="id">
+		declare @cnno int
+        exec @cnno =  getchnoseq
+		insert into tb_app_allotbank (
+		pkid,
+		chno,
+		applyid,
+		userid,
+		username,
+		agencyId,
+		agencyname,
+		chstatus,
+		loanamount,
+		remark,
+		isread,
+		createdate,
+		createby,
+		updatedate
+		) values (
+		#{pkid},
+		(select 'dkfp' + right('0000000000' + cast(@cnno as varchar(10)), 10)),
+		#{applyid},
+		#{userid},
+		#{username},
+		#{agencyid},
+		#{agencyname},
+		#{chstatus},
+		#{loanamount},
+		#{remark},
+		#{isread},
+		getdate(),
+		#{createby},
+		getdate()
+		)
+
+	</insert>
+
+	<update id="app.appallotbank.update"
+		parameterType="com.winpow.services.app.appallotbank.bean.Appallotbank">
+		update tb_app_allotbank set
+		<if test=" applyid !=null and  applyid !=''">
+			applyid=#{applyid},
+		</if>
+
+		<if test=" userid !=null and  userid !=''">
+			userid=#{userid},
+		</if>
+		<if test=" username !=null and  username !=''">
+			username=#{username},
+		</if>
+		<if test=" agencyid !=null and  agencyid !=''">
+			agencyid=#{agencyid},
+		</if>
+		<if test=" agencyname !=null and  agencyname !=''">
+			agencyname=#{agencyname},
+		</if>
+		<if test=" chstatus !=null and  chstatus !=''">
+			chstatus=#{chstatus},
+		</if>
+
+		<if test=" loanamount !=null ">
+			loanamount=#{loanamount},
+		</if>
+
+		<if test=" remark !=null and  remark !=''">
+			remark=#{remark},
+		</if>
+
+		<if test=" isread !=null and  isread !=''">
+			isread=#{isread},
+		</if>
+
+		updatedate=getdate()
+
+		where pkid=#{pkid}
+	</update>
+
+	<select id="app.appallotbank.selectWithApp" parameterType="com.winpow.services.app.appallotbank.bean.Appallotbank"
+		resultType="com.winpow.services.app.appallotbank.bean.Appallotbank">
+		select t.*,a.proname,a.userid appuserid 
+		from tb_app_allotbank t left join tb_app_loan_app a on t.applyid=a.pkid where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+</mapper>  

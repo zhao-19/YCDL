@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC 
+"-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="front">
+
+	<!-- 复制贷款基础信息 -->
+	<insert id="front.usercenter.copyproductapp" parameterType="hashMap">
+		insert into Tb_product_app ( USERID , USERNAME , PRODID , PRODNAME ,
+		QIYEMINGCHENG , LOANAMT , LOANUSER , FAREN , CHENGLIRIQI ,
+		ZHUCEZIBEN , GSZCD , HANGYEID , ZHUANLI , LASTSELLINCOME , LASTIMCOME ,
+		LASTLOANAMT , SELLINCOME , IMCOME , LOANAMT2 ,
+		LIANXIREN , LIANXIDIANH , STATUS , CHECKUSER , LURUSHIJIAN , INPUTUSER ,
+		LASTCHGTIME , memo , gszcd_province , gszcd_city ,
+		gszcd_county , BLASTSELLINCOME , BLASTIMCOME , BLASTLOANAMT , loanterm ) SELECT
+		USERID , USERNAME , PRODID , #{daikuanpingz} as PRODNAME ,
+		QIYEMINGCHENG ,#{shenqingjine} as LOANAMT , LOANUSER , FAREN ,
+		CHENGLIRIQI , ZHUCEZIBEN , GSZCD , HANGYEID , ZHUANLI , LASTSELLINCOME
+		,
+		LASTIMCOME , LASTLOANAMT , SELLINCOME , IMCOME , LOANAMT2 , LIANXIREN ,
+		LIANXIDIANH , '14008' , CHECKUSER ,getdate() as LURUSHIJIAN ,
+		INPUTUSER ,getdate() as LASTCHGTIME , memo , gszcd_province , gszcd_city ,
+		gszcd_county , BLASTSELLINCOME , BLASTIMCOME , BLASTLOANAMT ,
+		loanterm FROM Tb_product_app where ID=#{id}
+	</insert>
+
+	<!-- 复制贷款详细信息 -->
+	<insert id="front.usercenter.copyproductbase" parameterType="hashMap">
+		insert into tb_product_czd_base ( userid , username , qiyemingcheng ,
+		chengliriqi , gszcd , bgdz , zhuceziben , scdz , faren ,
+		sfzhm , lianxiren , zhiwu , dianhua , dianzhiyoujian , kehuleixing ,
+		yewulaiyuan , zhuyingyewu , jianyingywu , zhuyingchanpin ,
+		jianyingchanpin , zhizhizhegnshu , zhuanligeshu , hangyeguishu ,
+		qiyexingzhi , yuangongshu , jishurenyuanshu , shuoshirenshu ,
+		guanliyuanrenshu , dazhuanrenshu , benkerenshu , zhonggaojirenshu ,
+		benkeyishangrenshu , shenqingjine , daikuanpingz ,prodid,
+		daikuanqixian , daikuanyinhang , danbaogongsi , daikuanyongtu , xiangmuqingkuang ,
+		huankuanlaiyuan , lianxiren2 ,
+		lianxidianh2 , status , checkuser , lurushijian , inputuser ,lastchgtime ,
+		jinrongxinyong ,
+		gonggongxinyong , memo , gszcd_province , gszcd_city , gszcd_county , zhonghepingjia
+		, releid) SELECT userid , username ,
+		qiyemingcheng , chengliriqi , gszcd , bgdz , zhuceziben , scdz , faren , sfzhm ,
+		lianxiren , zhiwu , dianhua , dianzhiyoujian ,
+		kehuleixing , yewulaiyuan , zhuyingyewu , jianyingywu , zhuyingchanpin ,
+		jianyingchanpin , zhizhizhegnshu , zhuanligeshu ,
+		hangyeguishu , qiyexingzhi , yuangongshu , jishurenyuanshu , shuoshirenshu ,
+		guanliyuanrenshu , dazhuanrenshu ,
+		benkerenshu , zhonggaojirenshu , benkeyishangrenshu ,#{shenqingjine} as
+		shenqingjine , #{daikuanpingz} as daikuanpingz ,prodid, daikuanqixian
+		,#{daikuanyinhang} as daikuanyinhang ,
+		#{danbaogongsi} as danbaogongsi , daikuanyongtu , xiangmuqingkuang , huankuanlaiyuan
+		, lianxiren2 , lianxidianh2 ,20 as status ,
+		checkuser ,getdate() as lurushijian , inputuser ,getdate() as lastchgtime ,
+		jinrongxinyong , gonggongxinyong ,
+		memo , gszcd_province , gszcd_city , gszcd_county , zhonghepingjia
+		,#{appidnew} as releid FROM tb_product_czd_base where
+		id=#{idold}
+	</insert>
+
+	<!-- 复制班子情况 -->
+	<insert id="front.usercenter.copyproductbzqk" parameterType="hashMap">
+		insert into tb_product_czd_bzqk ( releid ,xingming ,zhiwu ,nianling
+		,xueli ,zhicheng ,lurushijian ,inputuser ,lastchgtime ) SELECT
+		#{idnew} as releid ,xingming ,zhiwu ,nianling ,xueli ,zhicheng
+		,getdate() as lurushijian,inputuser ,getdate() as lastchgtime FROM
+		tb_product_czd_bzqk where releid=#{idold}
+	</insert>
+
+	<!-- 复制产品信息 -->
+	<insert id="front.usercenter.copyproductcpxx" parameterType="hashMap">
+		insert into tb_product_czd_cpxx ( releid , zhuyaochanpin ,
+		zhuyaoxiaoshoushichang , jishuxianjinxing , guoneishichagnzhanyoulv ,
+		sichuanshichagnzhanyoulv , shangnianduxiaoshoue , zhanshourubili ,
+		lurushijian , inputuser , lastchgtime ) SELECT #{idnew} as releid ,
+		zhuyaochanpin , zhuyaoxiaoshoushichang , jishuxianjinxing ,
+		guoneishichagnzhanyoulv , sichuanshichagnzhanyoulv ,
+		shangnianduxiaoshoue , zhanshourubili , getdate() as lurushijian,
+		inputuser , getdate() as lastchgtime from tb_product_czd_cpxx where
+		releid=#{idold}
+	</insert>
+
+	<!-- 复制财务信息 -->
+	<insert id="front.usercenter.copyproductcwxx" parameterType="hashMap">
+		insert into tb_product_czd_cwxx ( releid , thirdyear , thirdzongzichan
+		, thirdzongfuzai , thirdsuoyouzequanyi , thirdshishouzhiben ,
+		thirdyinhangjiekuan , thirdxiaoshoushouru , thirdzhuyinyewushouru ,
+		thirdlirunzonge , thirdjinglirun , thirdniandunashui ,
+		secondzongzichan , secondzongfuzai , secondsuoyouzequanyi ,
+		secondshishouzhiben , secondyinhangjiekuan , secondxiaoshoushouru ,
+		secondzhuyinyewushouru , secondlirunzonge , secondjinglirun ,
+		secondniandunashui , firstzongzichan , firstzongfuzai ,
+		firstsuoyouzequanyi , firstshishouzhiben , firstyinhangjiekuan ,
+		firstxiaoshoushouru , firstzhuyinyewushouru , firstlirunzonge ,
+		firstjinglirun , firstniandunashui , maolilv , cunhuozhouzhuanlv ,
+		liudongbilv , yingshouzhangkuanzhouzhuanlv , sudongbilv ,
+		zichanfuzhailv , cudate , cuzongzichan , cuzongfuzai ,
+		cusuoyouzequanyi , cushishouzhiben , cuyinhangjiekuan ,
+		cuxiaoshoushouru , cuzhuyinyewushouru , culirunzonge , cujinglirun ,
+		cuniandunashui , lastzongzichan , lastzongfuzai , lastsuoyouzequanyi ,
+		lastshishouzhiben , lastyinhangjiekuan , lastxiaoshoushouru ,
+		lastzhuyinyewushouru , lastlirunzonge , lastjinglirun ,
+		lastniandunashui , changezongzichan , changezongfuzai ,
+		changesuoyouzequanyi , changeshishouzhiben , changeyinhangjiekuan ,
+		changexiaoshoushouru , changezhuyinyewushouru , changelirunzonge ,
+		changejinglirun , changeniandunashui , lurushijian , inputuser ,
+		lastchgtime , shiwusuo )select #{idnew} as releid , thirdyear ,
+		thirdzongzichan , thirdzongfuzai , thirdsuoyouzequanyi ,
+		thirdshishouzhiben , thirdyinhangjiekuan , thirdxiaoshoushouru ,
+		thirdzhuyinyewushouru , thirdlirunzonge , thirdjinglirun ,
+		thirdniandunashui , secondzongzichan , secondzongfuzai ,
+		secondsuoyouzequanyi , secondshishouzhiben , secondyinhangjiekuan ,
+		secondxiaoshoushouru , secondzhuyinyewushouru , secondlirunzonge ,
+		secondjinglirun , secondniandunashui , firstzongzichan ,
+		firstzongfuzai , firstsuoyouzequanyi , firstshishouzhiben ,
+		firstyinhangjiekuan , firstxiaoshoushouru , firstzhuyinyewushouru ,
+		firstlirunzonge , firstjinglirun , firstniandunashui , maolilv ,
+		cunhuozhouzhuanlv , liudongbilv , yingshouzhangkuanzhouzhuanlv ,
+		sudongbilv , zichanfuzhailv , cudate , cuzongzichan , cuzongfuzai ,
+		cusuoyouzequanyi , cushishouzhiben , cuyinhangjiekuan ,
+		cuxiaoshoushouru , cuzhuyinyewushouru , culirunzonge , cujinglirun ,
+		cuniandunashui , lastzongzichan , lastzongfuzai , lastsuoyouzequanyi ,
+		lastshishouzhiben , lastyinhangjiekuan , lastxiaoshoushouru ,
+		lastzhuyinyewushouru , lastlirunzonge , lastjinglirun ,
+		lastniandunashui , changezongzichan , changezongfuzai ,
+		changesuoyouzequanyi , changeshishouzhiben , changeyinhangjiekuan ,
+		changexiaoshoushouru , changezhuyinyewushouru , changelirunzonge ,
+		changejinglirun , changeniandunashui , getdate() as lurushijian ,
+		inputuser , getdate() as lastchgtime , shiwusuo FROM
+		tb_product_czd_cwxx where releid=#{idold}
+	</insert>
+
+	<!-- 复制财务信息 -->
+	<insert id="front.usercenter.copyproductdwdbqk" parameterType="hashMap">
+		insert into Tb_product_czd_dwdbqk ( releid , beidanbaoren , danbaoyue
+		, danbaofangshi , kaishiriqi , daoqiriqi , lurushijian , inputuser ,
+		lastchgtime ) select #{idnew} as releid , beidanbaoren , danbaoyue ,
+		danbaofangshi , kaishiriqi , daoqiriqi , getdate() as lurushijian ,
+		inputuser , getdate() as lastchgtime FROM Tb_product_czd_dwdbqk where
+		releid=#{idold}
+	</insert>
+
+	<!-- 复制反担保信息 -->
+	<insert id="front.usercenter.copyproductfdbcs" parameterType="hashMap">
+		insert into Tb_product_czd_fdbcs ( releid , baozhegndanbao ,
+		zhiyadanbao , diyadanbao , qitadanbao , lurushijian , inputuser ,
+		lastchgtime ) select #{idnew} as releid , baozhegndanbao , zhiyadanbao
+		, diyadanbao , qitadanbao ,getdate() as lurushijian , inputuser
+		,getdate() as lastchgtime FROM Tb_product_czd_fdbcs where
+		releid=#{idold}
+	</insert>
+
+	<!-- 复制股东情况 -->
+	<insert id="front.usercenter.copyproductgdqq" parameterType="hashMap">
+		insert into Tb_product_czd_gdqq ( releid , gudongmingcheng , chuzijine
+		, zhanbi , lurushijian , inputuser , lastchgtime ) select #{idnew} as
+		releid , gudongmingcheng , chuzijine , zhanbi , getdate() as
+		lurushijian , inputuser , getdate() as lastchgtime FROM
+		Tb_product_czd_gdqq where releid=#{idold}
+	</insert>
+
+	<!-- 复制供应商销售商 -->
+	<insert id="front.usercenter.copyproductgysxssxx" parameterType="hashMap">
+		insert into Tb_product_czd_gysxssxx( releid ,custype ,shichangquyu
+		,gongshingmingcheng ,shagnminmingcheng ,jine ,lurushijian ,inputuser
+		,lastchgtime) select #{idnew} as releid ,custype ,shichangquyu
+		,gongshingmingcheng ,shagnminmingcheng ,jine ,getdate() as lurushijian
+		,inputuser ,getdate() as lastchgtime FROM Tb_product_czd_gysxssxx
+		where releid=#{idold}
+	</insert>
+
+	<!-- 复制其他贷款情况 -->
+	<insert id="front.usercenter.copyproductqtdkqk" parameterType="hashMap">
+		insert into Tb_product_czd_qtdkqk( releid , zhaiquanyinhang ,
+		daikuanyue , daikuanfangshi , jiekuanriqi , daoqiriqi , lurushijian ,
+		inputuser , lastchgtime ) select #{idnew} as releid , zhaiquanyinhang
+		, daikuanyue , daikuanfangshi , jiekuanriqi , daoqiriqi , getdate() as
+		lurushijian , inputuser , getdate() as lastchgtime FROM
+		Tb_product_czd_qtdkqk where releid=#{idold}
+	</insert>
+
+	<!-- 复制其他信息 -->
+	<insert id="front.usercenter.copyproductqtxx" parameterType="hashMap">
+		insert into Tb_product_czd_qtxx( releid , yanfafeiyongbili ,
+		yanfarenyuanbili , zhishichanquan1 , zhishichanquan2 , zhishichanquan3
+		, quanweirending1 , quanweirending2 , quanweirending3 ,
+		shichangqianjing , fazhanqianjing , chanpinjingzhengli ,
+		gaoguantuandui , tuozhanqianjing , lurushijian , inputuser ,
+		lastchgtime , yanfafeiyong , xiaoshoufeiyong , yanfarenyuan ,
+		gongsizongrenshu , zhuyaochanpingjieshao , sannianleijijiekuan ,
+		sannianleijiguihuan , daoqichanghuanlv ) select #{idnew} as releid ,
+		yanfafeiyongbili , yanfarenyuanbili , zhishichanquan1 ,
+		zhishichanquan2 , zhishichanquan3 , quanweirending1 , quanweirending2
+		, quanweirending3 , shichangqianjing , fazhanqianjing ,
+		chanpinjingzhengli , gaoguantuandui , tuozhanqianjing , lurushijian ,
+		inputuser ,getdate() as lastchgtime , yanfafeiyong , xiaoshoufeiyong ,
+		yanfarenyuan , gongsizongrenshu , zhuyaochanpingjieshao ,
+		sannianleijijiekuan , sannianleijiguihuan , daoqichanghuanlv FROM
+		Tb_product_czd_qtxx where releid=#{idold}
+	</insert>
+	<!-- 根据userid 查询该表 该用户最大的id -->
+	<select id="front.usercenter.selectmaxappidbyuser"
+		parameterType="com.winpow.services.manage.productapp.bean.Productapp"
+		resultType="hashMap">
+		select top 1 id as countres from tb_product_app where userid=#{userid} order
+		by lurushijian desc
+	</select>
+	<!-- 根据userid 查询该表 该用户最大的id -->
+	<select id="front.usercenter.selectmaxbaseidbyuser"
+		parameterType="com.winpow.services.manage.productczdbase.bean.Productczdbase"
+		resultType="hashMap">
+		select top 1 id as countres from tb_product_czd_base where userid=#{userid}
+		order by lurushijian desc
+	</select>
+
+
+</mapper>  

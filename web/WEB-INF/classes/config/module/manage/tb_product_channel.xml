@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC 
+"-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="manage">
+
+	<select id="manage.productchannel.selectPageList"
+		parameterType="com.winpow.services.manage.productchannel.bean.Productchannel"
+		resultType="hashMap">
+		select * from (
+		SELECT ROW_NUMBER() over(order by id) as rownumber ,*
+		from tb_product_channel )t where rownumber &gt; = #{offset} and rownumber
+		&lt; = #{pageSize}+#{offset}
+	</select>
+	
+	<select id="manage.productchannel.selectPageCount"
+		parameterType="com.winpow.services.manage.productchannel.bean.Productchannel"
+		resultType="java.lang.Integer">
+		select count(*) from from tb_product_channel
+	</select>
+
+	<select id="manage.productchannel.selectOne"
+		parameterType="com.winpow.services.manage.productchannel.bean.Productchannel"
+		resultType="com.winpow.services.manage.productchannel.bean.Productchannel">
+		select * from tb_product_channel t where 1=1
+		<if test="pkid != null and pkid != ''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+
+	<select id="manage.productchannel.selectCount"
+		parameterType="com.winpow.services.manage.productchannel.bean.Productchannel"
+		resultType="int">
+		select count(*) from tb_product_channel t where 1=1
+		<if test="pkid != null and pkid != ''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+
+	<select id="manage.productchannel.selectOneByCondition"
+		parameterType="com.winpow.services.manage.productchannel.bean.Productchannel"
+		resultType="com.winpow.services.manage.productchannel.bean.Productchannel">
+		select * from tb_product_channel t where 1=1
+		<if test="pkid != null and pkid != ''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+
+	<select id="manage.productchannel.selectList"
+		parameterType="com.winpow.services.manage.productchannel.bean.Productchannel"
+		resultType="com.winpow.services.manage.productchannel.bean.Productchannel">
+		select * from tb_product_channel t where 1=1
+		<if test="pkid != null and pkid != ''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+
+	<insert id="manage.productchannel.insert"
+		parameterType="com.winpow.services.manage.productchannel.bean.Productchannel"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into tb_product_channel (
+		pkid,
+		serno,
+		channel,
+		prodname,
+		company_name,
+		org_no,
+		app_amt,
+		loan_use,
+		representative,
+		establishment_date,
+		capital,
+		registry_area,
+		industry,
+		patent,
+		contact_name,
+		contact_cellphone,
+		approver,
+		status,
+		inputtime,
+		inputuser,
+		lastchgtime
+		) values (
+		#{pkid},
+		#{serno},
+		#{channel},
+		#{prodname},
+		#{company_name},
+		#{org_no},
+		#{app_amt},
+		#{loan_use},
+		#{representative},
+		#{establishment_date},
+		#{capital},
+		#{registry_area},
+		#{industry},
+		#{patent},
+		#{contact_name},
+		#{contact_cellphone},
+		#{approver},
+		#{status},
+		getdate(),
+		#{inputuser},
+		getdate()
+		)
+
+	</insert>
+
+	<update id="manage.productchannel.update"
+		parameterType="com.winpow.services.manage.productchannel.bean.Productchannel">
+		update tb_product_channel set
+		<if test=" serno !=null and  serno !=''">
+			serno=#{serno},
+		</if>
+
+		<if test=" channel !=null and  channel !=''">
+			channel=#{channel},
+		</if>
+
+		<if test=" prodname !=null and  prodname !=''">
+			prodname=#{prodname},
+		</if>
+
+		<if test=" company_name !=null and  company_name !=''">
+			company_name=#{company_name},
+		</if>
+
+		<if test=" org_no !=null and  org_no !=''">
+			org_no=#{org_no},
+		</if>
+
+		<if test=" app_amt !=null and  app_amt !=''">
+			app_amt=#{app_amt},
+		</if>
+
+		<if test=" loan_use !=null and  loan_use !=''">
+			loan_use=#{loan_use},
+		</if>
+
+		<if test=" representative !=null and  representative !=''">
+			representative=#{representative},
+		</if>
+
+		<if test=" establishment_date !=null and  establishment_date !=''">
+			establishment_date=#{establishment_date},
+		</if>
+
+		<if test=" capital !=null and  capital !=''">
+			capital=#{capital},
+		</if>
+
+		<if test=" registry_area !=null and  registry_area !=''">
+			registry_area=#{registry_area},
+		</if>
+
+		<if test=" industry !=null and  industry !=''">
+			industry=#{industry},
+		</if>
+
+		<if test=" patent !=null and  patent !=''">
+			patent=#{patent},
+		</if>
+
+		<if test=" contact_name !=null and  contact_name !=''">
+			contact_name=#{contact_name},
+		</if>
+
+		<if test=" contact_cellphone !=null and  contact_cellphone !=''">
+			contact_cellphone=#{contact_cellphone},
+		</if>
+
+		<if test=" approver !=null and  approver !=''">
+			approver=#{approver},
+		</if>
+
+		<if test=" status !=null and  status !=''">
+			status=#{status},
+		</if>
+		lastchgtime=getdate()
+		where pkid=#{pkid}
+	</update>
+
+</mapper>  

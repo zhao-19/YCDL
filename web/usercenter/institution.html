@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="css/common.css"/>
+    <link rel="stylesheet" href="css/index.css"/>
+    <script src="js/jquery-1.10.2.min.js"></script>
+    <script src="js/index.js"></script>
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/script.js"></script>
+	<script type="text/javascript" src="add.js"></script>
+</head>
+<body>
+
+<div class="zgezhaoceng" style="display: none;width:100%;height:2400px;"></div>
+
+<script>
+	$(function(){
+		$(".zgezhaoceng").width(body).width();
+//		$('.zgezhaoceng').height(body).height();
+		$('.zgezhaoceng').css('left',0);
+		$('.zgezhaoceng').css('top',0);
+	});	
+</script>
+<!-- 网站头部 -->
+<div class="nav widthbox">
+    <div class="logo fl"><img src="image/index/logo.jpg" alt="logo"></div>
+    <div class="nav_right fr">
+        <div class="login_re fr">
+            <li class="fl"><a href="login.html" class="login">登录</a>|<a href="register.html" class="register">注册</a></li>
+            <li class="fl"><input class="inputtext" type="text"  placeholder="请输入关键字" onfocus="if(placeholder=='请输入关键字'){placeholder=''}" onblur="if(placeholder==''){placeholder='请输入关键字'}" /></li>
+            <li class="zhandian fr"><a href="">子站点</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="">&gt;</a></li>
+        </div>
+        <div class="nav_type fr" >
+            <div class="index_cj_nav">
+                <ul>
+                    <li class="yijinav"><a href="index.html" class="navhover">首&nbsp;&nbsp;&nbsp;&nbsp;页</a></li>
+                    <li class="yijinav"><a href="rmation.html">盈创资讯</a>
+                    </li>
+                    <li class="yijinav"><a href="creditor.html">债权融资</a>
+                        <ul class="subnavs" style="display: none;">
+                            <li><a href="">开行统借统还</a></li>
+                            <li><a href="">口行统借统还</a></li>
+                            <li><a href="">成长贷</a></li>
+                            <li><a href="">壮大贷</a></li>
+                            <li><a href="">新创贷</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="yijinav"><a href="equity.html">股权融资</a>
+                        <ul class="subnavs" style="display: none;">
+                            <li><a href="">股权项目</a></li>
+                            <li><a href="">发布项目</a></li>
+                        </ul>
+                    </li>
+                    <li class="yijinav"><a href="increase.html">增值服务</a>
+                        <ul class="subnavs" style="display: none;">
+                            <li><a href="">代理记账</a></li>
+                            <li><a href="">财务审计</a></li>
+                            <li><a href="">信用评估</a></li>
+                            <li><a href="">资产评估</a></li>
+                            <li><a href="">税务策划</a></li>
+                            <li><a href="">法律咨询</a></li>
+                            <li><a href="">合同代写</a></li>
+                            <li><a href="">股权协议</a></li>
+                            <li><a href="">法律顾问</a></li>
+                        </ul>
+                    </li>
+                    <li class="yijinav"><a href="yccollege.html">盈创学院</a></li>
+                    <li class="yijinav"><a href="ycdata.html">盈创数据</a>
+                        <ul class="subnavs" style="display: none;">
+                            <li><a href="">项目</a></li>
+                            <li><a href="enterprise.html">企业</a></li>
+                            <li><a href="">机构</a></li>
+                            <li><a href="ycdata.html">工作室</a></li>
+                        </ul>
+                    </li>
+                    <li class="yijinav"><a href="download.html">资料下载</a></li>
+                    <li class="yijinav"><a href="about.html">关于我们</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- 个人中心 -->
+<div class="background"></div>
+<div class="creditor widthbox">
+	<div class="show fl">
+<div class="operate">
+		<ul id="J_navlist">
+			<li class="selected">
+				<h4 class="gerenzl">个人资料</h4>
+			</li>
+			<li>
+				<h4 class="qitaxx">账户信息</h4>
+				<div class="list-item none">
+					<p><a id="jbxx-a" href="#">基本信息</a></p>
+					<p><a id="qyxx-a" href="#">机构信息</a></p>
+				</div>
+			</li>
+			<li>
+				<h4 class="qitaxx">股权项目</h4>
+				<div class="list-item none">
+					<p><a id="yytdxmxx" href="#">已约谈的项目信息</a></p>
+					<p><a id="pxhd-a" href="#">培训活动</a></p>
+				</div>
+			</li>
+			<li>
+				<h4 class="qitaxx">增值业务</h4>
+				<div class="list-item none">
+					<p><a id="ydyzzfw" href="#">已订阅的增值服务</a></p>
+				</div>
+			</li>
+		</ul>
+	</div>
+		<script type="text/javascript">
+		navList(12);
+		</script>
+	</div>
+
+
+	<div class="list fr">
+		<div class="rightbox">
+			
+			<!-- 基本信息   所有用户显示   -->
+			<div class="vipinfo" id="jibenxinxi" style="display:block">
+				<div class="title"><li>基本信息</li></div>
+				
+				<div class="inputtest">
+					<span class="leftname">帐号：</span> 
+					<span class="rightinfo">123456</span>
+				</div>
+				<div class="inputtest">
+					<span class="leftname">类型：</span> 
+					<span class="rightinfo">企业</span>
+				</div>
+				<div class="inputtest">
+					<span class="leftname">手机号码：</span> 
+					<span class="rightinfo">13666666666</span>
+				</div>	
+				<div class="inputtest">
+					<span class="leftname">EMAIL：</span> 
+					<span class="rightinfo">http://gc@gcdl.163.com</span>
+				</div>
+				<div class="inputtest">
+					<span class="leftname">客户经理：</span> 
+					<span class="rightinfo">张三</span>
+				</div>
+
+			</div>
+			
+			
+			<!-- 机构信息  企业机构显示   --> 	<!-- &nbsp;&nbsp;&nbsp;&nbsp;<span class="zhuozhong">*</span> -->
+			<div class="vipinfo" id="qiyexinxi" style="display:block">
+				<div class="title"><li>机构信息<span id="qyxx-update" class="update">机构信息修改</span></li></div>
+				
+				<div class="inputtest">
+					<span class="leftname">用户ID：</span> 
+					<span class="rightinfo">666666</span>
+				</div>	
+				<div class="inputtest">
+					<span class="leftname">机构名称：</span> 
+					<span class="rightinfo">赢创动力科技金融服务平台</span> 
+				</div>	
+				<div class="inputtest">
+					<span class="leftname">机构类型：</span> 
+					<span class="rightinfo">金融服务</span> 
+				</div>	
+				<div class="inputtest">
+					<span class="leftname">组织机构代码：</span> 
+					<span class="rightinfo">123456</span> 
+				</div>	
+				<div class="inputtest">
+					<span class="leftname">注册时间：</span> 
+					<span class="rightinfo">1995-08-22</span> 
+				</div>	
+				<div class="inputtest">
+					<span class="leftname">注册资本(万元)：</span> 
+					<span class="rightinfo">10000万</span> 
+				</div>	
+				<div class="inputtest">
+					<span class="leftname">工商注册地：</span> 
+					<span class="rightinfo">成都市</span> 
+				</div>	
+				<div class="inputtest">
+					<span class="leftname">工商注册地-省：</span>
+					<span class="rightinfo">四川省</span> 
+				</div>	
+				<div class="inputtest">
+					<span class="leftname">工商注册地-市：</span>
+					<span class="rightinfo">成都市</span> 
+				</div>	
+				<div class="inputtest">
+					<span class="leftname">工商注册地-县/区：</span>
+					<span class="rightinfo">高新区</span> 
+				</div>	
+				<div class="inputtest">
+					<span class="leftname">机构服务内容：</span> 
+					<span class="rightinfo">机构服务内容</span> 
+				</div>	
+				<div class="inputtest">
+					<span class="leftname">机构服务案例：</span>
+					<span class="rightinfo">机构服务案例</span> 
+				</div>	
+				<div class="inputtest">
+					<span class="leftname">办公地址：</span>
+					<span class="rightinfo">办公地址</span> 
+				</div>	
+				<div class="inputtest">
+					<span class="leftname">机构简介：</span>
+					<span class="rightinfo">机构简介</span> 
+				</div>	
+				<div class="inputtest">
+					<span class="leftname">机构Logo：</span> 
+					<span class="rightinfo">机构Logo</span> 
+				</div>	
+				<div class="inputtest">
+					<span class="leftname">网址：</span> 
+					<span class="rightinfo">网址</span> 
+				</div>	
+				<div class="inputtest">
+					<span class="leftname">基金性质：</span> 
+					<span class="rightinfo">基金性质</span>
+				</div>		
+				<div class="inputtest">
+					<span class="leftname">管理资本金：</span> 
+					<span class="rightinfo">管理资本金</span>
+				</div>	
+				<div class="inputtest">
+					<span class="leftname">投资行业：</span> 
+					<span class="rightinfo">投资行业</span>
+				</div>
+				<div class="inputtest">
+					<span class="leftname">投资阶段：</span> 
+					<span class="rightinfo">投资阶段</span> 
+				</div>	
+				<div class="inputtest">
+					<span class="leftname">投资额度：</span> 
+					<span class="rightinfo">投资额度</span> 
+				</div>	
+				<div class="inputtest">
+					<span class="leftname">联系人姓名：</span> 
+					<span class="rightinfo">联系人姓名</span> 
+				</div>	
+				<div class="inputtest">
+					<span class="leftname">职务：</span>
+					<span class="rightinfo">职务</span> 
+				</div>	
+				<div class="inputtest">
+					<span class="leftname">移动电话：</span> 
+					<span class="rightinfo">移动电话</span> 
+				</div>	
+				<div class="inputtest">
+					<span class="leftname">固定电话：</span> 
+					<span class="rightinfo">固定电话</span> 
+				</div>
+				<div class="inputtest">
+					<span class="leftname">Email：</span> 
+					<span class="rightinfo">Email</span> 
+				</div>	
+				<div class="inputtest">
+					<span class="leftname">是否推荐：</span> 
+					<span class="rightinfo">是否推荐</span> 
+				</div>	
+				<div class="inputtest">
+					<span class="leftname">重点推荐需要的图片：</span> 
+					<span class="rightinfo">重点推荐需要的图片</span> 
+				</div>		
+				<div class="inputtest">
+					<span class="leftname">录入时间：</span> 
+					<span class="rightinfo">录入时间</span> 
+				</div>	
+				<div class="inputtest">
+					<span class="leftname">录入人：</span> 
+					<span class="rightinfo">录入人</span> 
+				</div>
+			</div>
+			<!-- 机构信息修改  企业机构显示   --> 	<!-- &nbsp;&nbsp;&nbsp;&nbsp;<span class="zhuozhong">*</span> -->
+			<div class="vipinfo" id="qiyexinxi-update" style="display:block">
+				<div class="title"><li>机构信息修改</li></div>
+
+				<div class="inputtest">
+					<span class="leftname">用户ID：</span>
+					<span class="rightinfo"><input class="input"  type="text"  value="666666"></span>
+				</div>
+				<div class="inputtest">
+					<span class="leftname">机构名称：</span>
+					<span class="rightinfo"><input class="input"  type="text"  value="赢创动力科技金融服务平台"></span>
+				</div>
+				<div class="inputtest">
+					<span class="leftname">机构类型：</span>
+					<span class="rightinfo"><input class="input"  type="text"  value="金融服务"></span>
+				</div>
+				<div class="inputtest">
+					<span class="leftname">组织机构代码：</span>
+					<span class="rightinfo"><input class="input"  type="text" value="123456"></span>
+				</div>
+				<div class="inputtest">
+					<span class="leftname">注册时间：</span>
+					<span class="rightinfo"><input class="input"  type="text" value="123456"></span>
+				</div>
+				<div class="inputtest">
+					<span class="leftname">注册资本(万元)：</span>
+					<span class="rightinfo"><input class="input"  type="text" value="1000万"></span>
+				</div>
+				<div class="inputtest">
+					<span class="leftname">工商注册地：</span>
+					<span class="rightinfo">
+						<select class="select" name="" id="qwee1">
+							<option value="">--  请选择  --</option>
+							<option value="">北京市</option>
+							<option value="">上海市</option>
+							<option value="">广州市</option>
+							<option value="">深圳市</option>
+						</select>
+					</span>
+				</div>
+				<div class="inputtest">
+					<span class="leftname">工商注册地-省：</span>
+					<span class="rightinfo">
+						<select class="select" name="" id="qasdfw1">
+							<option value="">--  请选择  --</option>
+							<option value="">北京市</option>
+							<option value="">上海市</option>
+							<option value="">广州市</option>
+							<option value="">深圳市</option>
+						</select>						
+					</span>
+				</div>
+				<div class="inputtest">
+					<span class="leftname">工商注册地-市：</span>
+					<span class="rightinfo">
+						<select class="select" name="" id="qaw1">
+							<option value="">--  请选择  --</option>
+							<option value="">北京市</option>
+							<option value="">上海市</option>
+							<option value="">广州市</option>
+							<option value="">深圳市</option>
+						</select>						
+					</span>
+				</div>
+				<div class="inputtest">
+					<span class="leftname">工商注册地-县/区：</span>
+					<span class="rightinfo">
+						<select class="select" name="" id="qadw1">
+							<option value="">--  请选择  --</option>
+							<option value="">北京市</option>
+							<option value="">上海市</option>
+							<option value="">广州市</option>
+							<option value="">深圳市</option>
+						</select>						
+					</span>
+				</div>
+				<div class="inputtest">
+					<span class="leftname">机构服务内容：</span>
+					<span class="rightinfo"><input class="input"  type="text" value="机构服务内容"></span>
+				</div>
+				<div class="inputtest">
+					<span class="leftname">机构服务案例：</span>
+					<span class="rightinfo"><input class="input"  type="text" value="机构服务案例"></span>
+				</div>
+				<div class="inputtest">
+					<span class="leftname">办公地址：</span>
+					<span class="rightinfo"><input class="input"  type="text" value="办公地址"></span>
+				</div>
+				<div class="inputtest">
+					<span class="leftname">机构简介：</span>
+					<span class="rightinfo"><input class="input"  type="text" value="机构简介"></span>
+				</div>
+				<div class="inputtest">
+					<span class="leftname">机构Logo：</span>
+					<span class="rightinfo"><input class="input"  type="text" value="机构Logo"></span>
+				</div>
+				<div class="inputtest">
+					<span class="leftname">网址：</span>
+					<span class="rightinfo"><input class="input"  type="text" value="网址"></span>
+				</div>
+				<div class="inputtest">
+					<span class="leftname">基金性质：</span>
+					<span class="rightinfo"><input class="input"  type="text" value="基金性质"></span>
+				</div>
+				<div class="inputtest">
+					<span class="leftname">管理资本金：</span>
+					<span class="rightinfo"><input class="input"  type="text" value="管理资本金"></span>
+				</div>
+				<div class="inputtest">
+					<span class="leftname">投资行业：</span>
+					<span class="rightinfo"><input class="input"  type="text" value="投资行业"></span>
+				</div>
+				<div class="inputtest">
+					<span class="leftname">投资阶段：</span>
+					<span class="rightinfo"><input class="input"  type="text" value="投资阶段"></span>
+				</div>
+				<div class="inputtest">
+					<span class="leftname">投资额度：</span>
+					<span class="rightinfo"><input class="input"  type="text" value="投资额度"></span>
+				</div>
+				<div class="inputtest">
+					<span class="leftname">联系人姓名：</span>
+					<span class="rightinfo"><input class="input"  type="text" value="联系人姓名"></span>
+				</div>
+				<div class="inputtest">
+					<span class="leftname">职务：</span>
+					<span class="rightinfo"><input class="input"  type="text" value="职务"></span>
+				</div>
+				<div class="inputtest">
+					<span class="leftname">移动电话：</span>
+					<span class="rightinfo"><input class="input"  type="text" value="移动电话"></span>
+				</div>
+				<div class="inputtest">
+					<span class="leftname">固定电话：</span>
+					<span class="rightinfo"><input class="input"  type="text" value="固定电话"></span>
+				</div>
+				<div class="inputtest">
+					<span class="leftname">Email：</span>
+					<span class="rightinfo"><input class="input"  type="text" value="Email"></span>
+				</div>
+				<div class="inputtest">
+					<span class="leftname">是否推荐：</span>
+					<span class="rightinfo">
+						是：&nbsp;<input type="radio" checked="checked" name="Sex" value="yes" />&nbsp;&nbsp;
+						&nbsp;&nbsp;否：&nbsp;<input type="radio" name="Sex" value="no" />
+					</span>
+				</div>
+				<div class="inputtest">
+					<span class="leftname">重点推荐需要的图片：</span>
+					<span class="rightinfo">
+						是：&nbsp;<input type="radio" checked="checked" name="Sex" value="yes" />&nbsp;&nbsp;
+						&nbsp;&nbsp;否：&nbsp;<input type="radio" name="Sex" value="no" />
+					</span>
+				</div>
+				<div class="inputtest">
+					<span class="leftname">录入时间：</span>
+					<span class="rightinfo"><input class="input"  type="text" value="录入时间"></span>
+				</div>
+				<div class="inputtest">
+					<span class="leftname">录入人：</span>
+					<span class="rightinfo"><input class="input"  type="text" value="录入人"></span>
+				</div>
+				<div class="revise"><a href="">确认修改</a></div>
+			</div>
+			
+			<!-- 已约谈的项目信息 -->
+			<div class="vipinfo" id="xiagnmuxinxiyuetan" style="display:block">
+				<div class="title"><li>已约谈的项目信息</li></div>
+
+				<div class="inputtest">
+					<span class="leftname">股权融资项目编号：</span>
+					<span class="rightinfo">123456</span>
+				</div>
+				<div class="inputtest">
+					<span class="leftname">用户编号：</span>
+					<span class="rightinfo">654321</span>
+				</div>
+				<div class="inputtest">
+					<span class="leftname">用户名称：</span>
+					<span class="rightinfo">用户名称</span>
+				</div>
+				<div class="inputtest">
+					<span class="leftname">投资金额：</span>
+					<span class="rightinfo">投资金额</span>
+				</div>
+				<div class="inputtest">
+					<span class="leftname">申请状态：</span>
+					<span class="rightinfo">已申请</span>
+				</div>
+				<div class="inputtest">
+					<span class="leftname">处理人：</span>
+					<span class="rightinfo">处理人</span>
+				</div>
+				<div class="inputtest">
+					<span class="leftname">处理结果：</span>
+					<span class="rightinfo">处理结果</span>
+				</div>
+				<div class="inputtest">
+					<span class="leftname">录入时间：</span>
+					<span class="rightinfo">录入时间</span>
+				</div>
+
+			</div>
+			
+			 <!--培训活动   所有用户显示    -->
+			<div id="peixunhuodong" class="vipinfo" style="display:block">
+				<div class="title"><li>培训活动</li></div>
+
+				<table id="TBpxhd" align="center" border="0" cellpadding="0" cellspacing="1">
+					<tr class="TT">
+						<td width="30"><input type="checkbox" onclick="chk('all',this)" /></td>
+						<td width="50">名字</td>
+						<td width="70">电话</td>
+						<td width="50">岗位</td>
+						<td width="20">操作</td>
+					</tr>
+					<tr><td><input type="checkbox" name="ck"></td><td><div>name</div><center><input type="text" style="display:none; width:85%; height:22px; text-align:center;"></center></td><td><div>178888888888</div><center><input type="text" style="display:none; width:85%; height:22px; text-align:center;"></center></td><td><div>info</div><center><input type="text" style="display:none; width:85%; height:22px; text-align:center;"></center></td><td><input type="button" value="修改" class="pxhdjs"><input type="button" value="删除" onclick="delpxhd(this)"></td></tr>
+					<tr><td><input type="checkbox" name="ck"></td><td><div>name</div><center><input type="text" style="display:none; width:85%; height:22px; text-align:center;"></center></td><td><div>178888888888</div><center><input type="text" style="display:none; width:85%; height:22px; text-align:center;"></center></td><td><div>info</div><center><input type="text" style="display:none; width:85%; height:22px; text-align:center;"></center></td><td><input type="button" value="修改" class="pxhdjs"><input type="button" value="删除" onclick="delpxhd(this)"></td></tr>
+					<tr><td><input type="checkbox" name="ck"></td><td><div>name</div><center><input type="text" style="display:none; width:85%; height:22px; text-align:center;"></center></td><td><div>178888888888</div><center><input type="text" style="display:none; width:85%; height:22px; text-align:center;"></center></td><td><div>info</div><center><input type="text" style="display:none; width:85%; height:22px; text-align:center;"></center></td><td><input type="button" value="修改" class="pxhdjs"><input type="button" value="删除" onclick="delpxhd(this)"></td></tr>
+
+				</table>
+				<table width="980" id="TBpxhd1" align="center" border="0" cellpadding="0" cellspacing="0" style="margin-left: 475px;">
+					<tr height="30">
+						<td>
+							<input type="button" id="CreateTBpxhd" value="添加" />
+							<input type="button" onclick="chkFunpxhd()" value="反选" />
+							<input type="button" onclick="delpxhd('chkpxhd')" value="多选删除" />
+						</td>
+					</tr>
+				</table>
+				<script type="text/javascript">
+
+
+					function CreateTBpxhd(){
+						var oTBpxhd = document.getElementById("TBpxhd");
+						i++;
+					}
+
+					//Delete TR
+					function delpxhd(opxhd){
+						var oTBpxhd = document.getElementById("TBpxhd");
+						var oInptpxhd = oTBpxhd.getElementsByTagName("input");
+						if (opxhd == 'chkpxhd')
+						{
+							if (confirm("删除的数据将无法被恢复，请您谨慎操作...")) {
+								for (var i=1; i<oInptpxhd.length ; i++)
+								{
+									if (oInptpxhd[i].type == 'checkbox' && oInptpxhd[i].checked)
+									{
+										var oRowpxhd = oInptpxhd[i].parentNode.parentNode.sectionRowIndex;
+										oTBpxhd.deleteRow(oRowpxhd);
+										i--;
+									}
+								}
+							}
+							else {
+								return false;
+							}
+							
+						}else{
+							if (confirm("删除的数据将无法被恢复，请您谨慎操作...")) {
+								var oDelpxhd = opxhd.parentNode.parentNode.sectionRowIndex;
+								oTBpxhd.deleteRow(oDelpxhd);
+							}
+							else {
+								return false;
+							}
+							
+						}
+					}
+
+					//Check All
+					function chkpxhd(type,opxhd){
+						var oInptpxhd = document.getElementsByTagName("input");
+						for (var i=0; i<oInptpxhd.length; i++){
+							if (oInptpxhd[i].type == "checkbox"){
+								oInptpxhd[i].checked = opxhd.checked;
+							}
+						}
+					}
+
+					//Check Fanpxhd
+					function chkFunpxhd(){
+						var oTBpxhd = document.getElementById("TBpxhd");
+						var oInptpxhd = oTBpxhd.getElementsByTagName("input");
+						for (var i=1; i<oInptpxhd.length; i++){
+							if (oInptpxhd[i].type == "checkbox"){
+								if (oInptpxhd[i].checked)
+								{
+									oInptpxhd[i].checked = false;
+								}else{
+									oInptpxhd[i].checked = true;
+								}
+							}
+						}
+					}
+
+				</script>
+			</div>
+			<!-- 培训活动信息修改   用户为机构时显示    -->
+			<div class="tabletanchuangpxhd" style="display: none" id="pxhdxg">
+				<div class="title"><li>培训活动信息修改</li></div>
+				<form action="">
+					<div class="inputtest">
+						<span class="leftname">名字：</span>
+						<span class="rightinfo"><input type="text" class="input" value="小东"></span>
+					</div>
+					<div class="inputtest">
+						<span class="leftname">电话：</span>
+						<span class="rightinfo file"><input type="text" class="input" value="17888888888"/></span>
+					</div>
+					<div class="inputtest">
+						<span class="leftname">岗位：</span>
+						<span class="rightinfo"><input type="text" class="input" value="技术部门"/></span>
+					</div>
+					<div class="revise"><a href="">确认修改</a></div>
+				</form>
+			</div>
+			<!-- 培训活动信息添加   用户为机构时显示    -->
+			<div class="tabletanchuangpxhd" style="display: none" id="pxhdtj">
+				<div class="title"><li>培训活动信息添加</li></div>
+				<form action="">
+					<div class="inputtest">
+						<span class="leftname">名字：</span>
+						<span class="rightinfo"><input type="text" class="input" value="小东"></span>
+					</div>
+					<div class="inputtest">
+						<span class="leftname">电话：</span>
+						<span class="rightinfo file"><input type="text" class="input" value="17888888888"/></span>
+					</div>
+					<div class="inputtest">
+						<span class="leftname">岗位：</span>
+						<span class="rightinfo"><input type="text" class="input" value="技术部门"/></span>
+					</div>
+					<div class="revise"><a href="">确认添加</a></div>
+				</form>
+			</div>
+
+
+			<!-- 已订阅的增值服务  企业用户显示   --> 	<!-- &nbsp;&nbsp;&nbsp;&nbsp;<span class="zhuozhong">*</span> -->
+			<div class="vipinfo" id="zengzhifuwu" style="display:block">
+				<div class="title"><li>已订阅的增值服务</li></div>
+
+				<div class="inputtest">
+					<span class="leftname">增值业务产品编号：</span>
+					<span class="rightinfo">888888</span>
+				</div>
+				<div class="inputtest">
+					<span class="leftname">用户编号：</span>
+					<span class="rightinfo">666666</span>
+				</div>
+				<div class="inputtest">
+					<span class="leftname">用户名称：</span>
+					<span class="rightinfo">赢创动力科技金融服务平台</span>
+				</div>
+				<div class="inputtest">
+					<span class="leftname">申请状态：</span>
+					<span class="rightinfo">已申请</span>
+				</div>
+				<div class="inputtest">
+					<span class="leftname">审核人：</span>
+					<span class="rightinfo">小东</span>
+				</div>
+				<div class="inputtest">
+					<span class="leftname">录入时间：</span>
+					<span class="rightinfo">2016-05-05</span>
+				</div>
+			</div>
+			
+			
+	</div>
+</div>
+
+
+
+
+
+</div>
+
+<!-- 网站尾部 -->
+<div class="footer">
+	<div class="footer_box widthbox"> 
+		<div class="footer_box_left fl">
+			<div class="footer_box_left_info fl">
+				<ul>
+					<li class="title"><a href="">关于我们</a></li>
+					<li><a href="">公司介绍</a></li>
+					<li><a href="">股东介绍</a></li>
+					<li><a href="">媒体报道</a></li>
+					<li><a href="">最新动态</a></li>
+				</ul>
+			</div>
+			<div class="footer_box_left_info fl">
+				<ul>
+					<li class="title"><a href="">新闻资讯</a></li>
+					<li><a href="">放款信息</a></li>
+					<li><a href="">行业新闻</a></li>
+					<li><a href="">盈创动态</a></li>
+					<li><a href="">今日要闻</a></li>
+				</ul>
+			</div>
+			<div class="footer_box_left_info fl">
+				<ul>
+					<li class="title"><a href="">盈创数据</a></li>
+					<li><a href="">机构</a></li>
+					<li><a href="">企业</a></li>
+					<li><a href="">项目</a></li>
+					<li><a href="">工作室</a></li>
+				</ul>
+			</div>
+			<div class="footer_box_left_info fl">
+				<ul>
+					<li class="title"><a href="">盈创学院</a></li>
+					<li><a href="">学校培训</a></li>
+				</ul>
+			</div>
+
+			<div class="footer_box_center_info fr">
+				<ul>
+					<li class="title"><a href="">客服热线</a></li>
+					<div class="phone">028-83159999</div>
+					<li class="title"><a href="">在线咨询</a></li>
+					<div class="qq">在线咨询: 08:00 - 22 :00</div>
+				</ul>
+			</div>
+
+		</div>
+		
+		<div class="footer_box_right fr">
+			<div class="code fl">
+				<img src="image/index/code.jpg" alt="二维码">
+				<li>扫一扫关注我们</li>
+			</div>
+			<div class="footer_box_right_test fr">
+				<li>扫描二维码</li>
+				<li>关注到我们</li>
+				<li>随时随地投资</li>
+				<li>让理财变得更简单</li>
+			</div>
+		</div>
+	</div>
+	<div class="border widthbox"></div> <!-- 水平线 -->
+
+	<!-- 版权信息 -->
+ <div class="booter_bottominfo widthbox">
+		<li><span>Copyright © 2011-2016</span><span>版权所有 : 成都高投盈创动力投资发展有限公司</span>
+		<span>蜀ICP备18022655号-1</span><span>免责声明</span>
+		<span>地址：成都高新区锦城大道539号盈创动力大楼A座5楼 610041</span></li>
+		<li><span>电话：028-83159999</span><span>传真：028-85988444</span><span>Email：winpower@winpow.com</span></li>
+	</div>
+</div>
+

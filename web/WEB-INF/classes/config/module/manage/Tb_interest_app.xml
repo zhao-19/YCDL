@@ -1,0 +1,393 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC 
+"-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="manage">
+
+	<select id="manage.interestapp.selectPageList"
+		parameterType="com.winpow.services.manage.interestapp.bean.Interestapp"
+		resultType="hashMap">
+		select top ${pageSize} * from (
+			select row_number() over(order by pichi desc,lastchgtime) as rownumber , *
+			from tb_interest_app where 1=1
+			<if test="qiyemingcheng!=null and qiyemingcheng!=''">
+				and qiyemingcheng like '%'+#{qiyemingcheng}+'%'
+			</if>
+			<if test="stat!=null and stat!=''">
+				and stat = #{stat}
+			</if>
+	    ) a where rownumber > ${pageSize}*(${offset} - 1)
+	</select>
+	
+	<select id="manage.interestapp.selectPageCount"
+		parameterType="com.winpow.services.manage.interestapp.bean.Interestapp"
+		resultType="java.lang.Integer">
+		select count(*) from tb_interest_app where 1=1
+		<if test="qiyemingcheng!=null and qiyemingcheng!=''">
+			and qiyemingcheng like '%'+#{qiyemingcheng}+'%'
+		</if>
+		<if test="stat!=null and stat!=''">
+			and stat = #{stat}
+		</if>
+	</select>
+
+	<select id="manage.interestapp.selectOne"
+		parameterType="com.winpow.services.manage.interestapp.bean.Interestapp"
+		resultType="com.winpow.services.manage.interestapp.bean.Interestapp">
+		SELECT id,
+		userid,dbfamt,
+		zzjgdm,lxjsksrq,dbf,dbfl,
+		qiyemingcheng,
+		zhuceziben,
+		convert(char(10),chengliriqi,21) as chengliriqi,
+		dizhi,
+		faren,
+		farentele,
+		fzr,
+		fzrtele,
+		lxr,
+		lxrtlle,
+		dkyy,
+		dkje,
+		dkll,
+		zflx,
+		convert(char(10),fksj,21) as fksj,
+		convert(char(10),dqsj,21) as dqsj,
+		convert(char(10),lxjsjzrq,21) as lxjsjzrq,
+		vcpe,
+		dsfxypj,
+		qygm,
+		tjgxqk,
+		sscy,
+		qylx,
+		kykt,
+		zhuyingyewu,
+		tjgxszd,
+		gsjngxszd,
+		dsjngxszd,
+		yhxydj,
+		zcze,
+		fzze,
+		ckchze,
+		cpsczyl,
+		sfgqrzxq,
+		gqrzds,
+		sfzqrzxq,
+		zqrzds,
+		step,
+		stat,pichi,
+		spr,
+		spsj,
+		inputuser,inteamt,Systemmemo,memo,daycount,
+		lurushijian,fzrzhiwu,lxrzhiwu,thirdyear,thirdsell,thirdinte,thirdtax,secondsell,secondinte,secondtax,firstsell,firstinte,firsttax,
+		lastchgtime,zcfx,zlsfwz,qysqje,xtjsje
+
+		from Tb_interest_app t where 1=1
+
+		and t.id=#{id}
+		<if test="pichi != null  and pichi != ''">
+			and t.pichi = #{pichi}
+		</if>
+
+	</select>
+
+	<select id="manage.interestapp.selectCount"
+		parameterType="com.winpow.services.manage.interestapp.bean.Interestapp"
+		resultType="int">
+		select count(*)
+		FROM Tb_interest_app t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+	</select>
+
+	<select id="manage.interestapp.selectOneByCondition"
+		parameterType="com.winpow.services.manage.interestapp.bean.Interestapp"
+		resultType="com.winpow.services.manage.interestapp.bean.Interestapp">
+		SELECT
+		id,
+		userid,lxjsksrq,dbf,dbfl,dbfamt,
+		zzjgdm,
+		qiyemingcheng,
+		zhuceziben,
+		chengliriqi,
+		dizhi,
+		faren,
+		farentele,
+		fzr,
+		fzrtele,
+		lxr,
+		lxrtlle,
+		dkyy,
+		dkje,
+		dkll,
+		zflx,
+		fksj,
+		dqsj,
+		lxjsjzrq,
+		vcpe,
+		dsfxypj,
+		qygm,
+		tjgxqk,
+		sscy,
+		qylx,
+		kykt,
+		zhuyingyewu,
+		tjgxszd,
+		gsjngxszd,
+		dsjngxszd,
+		yhxydj,
+		zcze,
+		fzze,
+		ckchze,
+		cpsczyl,
+		sfgqrzxq,
+		gqrzds,
+		sfzqrzxq,
+		zqrzds,
+		step,
+		stat,pichi,
+		spr,
+		spsj,
+		inputuser,
+		lurushijian,inteamt,Systemmemo,memo,
+		lastchgtime,zcfx,zlsfwz,qysqje,xtjsje
+		from Tb_interest_app t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+	</select>
+
+
+
+	<select id="manage.interestapp.selectList"
+		parameterType="com.winpow.services.manage.interestapp.bean.Interestapp"
+		resultType="com.winpow.services.manage.interestapp.bean.Interestapp">
+		SELECT
+		id,
+		userid,lxjsksrq,dbf,dbfl,dbfamt,
+		zzjgdm,
+		qiyemingcheng,
+		zhuceziben,
+		chengliriqi,
+		dizhi,
+		faren,
+		farentele,
+		fzr,
+		fzrtele,
+		lxr,
+		lxrtlle,
+		dkyy,
+		dkje,
+		dkll,
+		zflx,
+		fksj,
+		dqsj,
+		lxjsjzrq,
+		vcpe,
+		dsfxypj,
+		qygm,
+		tjgxqk,
+		sscy,
+		qylx,
+		kykt,
+		zhuyingyewu,
+		tjgxszd,
+		gsjngxszd,
+		dsjngxszd,
+		yhxydj,
+		zcze,
+		fzze,
+		ckchze,
+		cpsczyl,
+		sfgqrzxq,
+		gqrzds,
+		sfzqrzxq,
+		zqrzds,
+		step,
+		stat,pichi,
+		spr,
+		spsj,
+		inputuser,
+		lurushijian,inteamt,Systemmemo,memo,fzrzhiwu,lxrzhiwu,
+		lastchgtime,zcfx,zlsfwz,qysqje,xtjsje
+		from Tb_interest_app t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+		<if test="userid != null and userid !=''">
+            and userid = #{userid}
+        </if>
+        <if test="pichi != null">
+            and pichi = #{pichi}
+        </if>
+	</select>
+
+
+
+
+	<insert id="manage.interestapp.insert"
+		parameterType="com.winpow.services.manage.interestapp.bean.Interestapp"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into Tb_interest_app (
+
+		userid,lxjsksrq,dbf,dbfl,dbfamt,
+		zzjgdm,
+		qiyemingcheng,
+		zhuceziben,
+		chengliriqi,
+		dizhi,
+		faren,
+		farentele,
+		fzr,
+		fzrtele,
+		lxr,
+		lxrtlle,
+		dkyy,
+		dkje,
+		dkll,
+		zflx,
+		fksj,
+		dqsj,
+		lxjsjzrq,
+		vcpe,
+		dsfxypj,
+		qygm,
+		tjgxqk,
+		sscy,
+		qylx,
+		kykt,
+		zhuyingyewu,
+		tjgxszd,
+		gsjngxszd,
+		dsjngxszd,
+		yhxydj,
+		zcze,
+		fzze,
+		ckchze,
+		cpsczyl,
+		sfgqrzxq,
+		gqrzds,
+		sfzqrzxq,
+		zqrzds,
+		step,
+		stat,pichi,
+		spr,
+		spsj,
+		inputuser,
+		lurushijian,inteamt,Systemmemo,memo,fzrzhiwu,lxrzhiwu,
+		lastchgtime,zcfx,zlsfwz,qysqje,xtjsje
+		) values (
+
+		#{userid},#{lxjsksrq},#{dbf},#{dbfl},#{dbfamt},
+		#{zzjgdm},
+		#{qiyemingcheng},
+		#{zhuceziben},
+		#{chengliriqi},
+		#{dizhi},
+		#{faren},
+		#{farentele},
+		#{fzr},
+		#{fzrtele},
+		#{lxr},
+		#{lxrtlle},
+		#{dkyy},
+		#{dkje},
+		#{dkll},
+		#{zflx},
+		#{fksj},
+		#{dqsj},
+		#{lxjsjzrq},
+		#{vcpe},
+		#{dsfxypj},
+		#{qygm},
+		#{tjgxqk},
+		#{sscy},
+		#{qylx},
+		#{kykt},
+		#{zhuyingyewu},
+		#{tjgxszd},
+		#{gsjngxszd},
+		#{dsjngxszd},
+		#{yhxydj},
+		#{zcze},
+		#{fzze},
+		#{ckchze},
+		#{cpsczyl},
+		#{sfgqrzxq},
+		#{gqrzds},
+		#{sfzqrzxq},
+		#{zqrzds},
+		#{step},
+		#{stat},#{pichi},
+		#{spr},
+		#{spsj},
+		#{inputuser},
+		getdate(),#{inteamt},#{Systemmemo},#{memo} ,#{fzrzhiwu} ,#{lxrzhiwu} ,
+		getdate(),#{zcfx},#{zlsfwz},#{qysqje},#{xtjsje}
+		)
+
+	</insert>
+
+	<update id="manage.interestapp.update"
+		parameterType="com.winpow.services.manage.interestapp.bean.Interestapp">
+		update Tb_interest_app set
+		inteamt=#{inteamt},
+		dbfamt=#{dbfamt},
+		memo=#{memo},
+		stat=#{stat},
+		daycount=#{daycount},
+		lastchgtime=getdate(),
+		zlsfwz=#{zlsfwz},
+		qysqje=#{qysqje},
+		xtjsje=#{xtjsje}
+		where id=#{id}
+	</update>
+
+	<delete id="manage.interestapp.deleteCore">
+		delete tb_interest_core where id=#{id}
+	</delete>
+
+
+
+	<select id="manage.interestapp.selectInterestappList"
+		parameterType="com.winpow.services.manage.interestapp.bean.Interestapp"
+		resultType="com.winpow.services.manage.interestapp.bean.Interestapp">
+
+		SELECT
+
+		ROW_NUMBER() over(order by core.id desc) as id ,
+		app.qiyemingcheng as qiyemingcheng ,
+		core.dkyy as dkyy ,
+		core.dkje as dkje ,
+		core.dkll as dkll ,
+		core.dbfl as dbfl ,
+		convert(char(10),core.fksj,120) as fksj ,
+		convert(char(10),core.dqsj,120) as dqsj ,
+		core.daycount as daycount ,
+		core.inteamt/10000 as inteamt ,
+		core.dbfamt/10000 as dbfamt ,
+
+		app.dsfxypj as dsfxypj ,
+		app.Thirdsell as Thirdsell ,
+		app.thirdinte as thirdinte ,
+		app.thirdtax as thirdtax ,
+		app.secondsell as secondsell ,
+		app.secondinte as secondinte ,
+		app.secondtax as secondtax ,
+		app.lxr as lxr ,
+		app.lxrzhiwu as lxrzhiwu ,
+		app.lxrtlle as lxrtlle ,
+		app.fzr as fzr ,
+		app.fzrzhiwu as fzrzhiwu ,
+		app.fzrtele as fzrtele ,
+		app.zqrzds as zqrzds ,
+		app.gqrzds as gqrzds,
+		app.zlsfwz as zlsfwz
+		from Tb_interest_app app left join tb_interest_core core on
+		app.id=core.rele_id where app.stat='aaaaaaaaaaaaaaaaaaaaaaaaaaaaa081'
+		or app.stat='aaaaaaaaaaaaaaaaaaaaaaaaaaaaa083' order by qiyemingcheng
+		asc
+	</select>
+
+</mapper>  

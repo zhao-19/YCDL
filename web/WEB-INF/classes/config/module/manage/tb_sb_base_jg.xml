@@ -1,0 +1,927 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC 
+"-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="manage">
+
+	<select id="manage.tbsbbasejg.selectPageList"
+		parameterType="com.winpow.services.manage.tbsbbasejg.bean.Tbsbbasejg"
+		resultType="hashMap">
+		select * from (
+		SELECT ROW_NUMBER() over(order by lastchgtime desc) as rownumber ,
+		id,
+		userid,
+		pichi,
+		org_name,
+		business_no,
+		open_date,
+		regist_add,
+		run_add,
+		regist_amt,
+		paid_amt,
+		industry_owned,
+		chargeperson,
+		charge_duty,
+		charge_tele,
+		contacts,
+		contacts_duty,
+		contacts_tele,
+		rela_add,
+		rela_nation_tax_add,
+		rela_local_tax_add,
+		first_year,
+		firstsell,
+		firstinte,
+		first_income_tax,
+		first_added_tax,
+		first_sales_tax,
+		firsttax,
+		first_stuff_count,
+		first_salary_count,
+		first_depreciation_count,
+		secondsell,
+		secondinte,
+		second_income_tax,
+		second_added_tax,
+		second_sales_tax,
+		secondtax,
+		second_stuff_count,
+		second_salary_count,
+		second_depreciation_count,
+		thirdsell,
+		thirdinte,
+		third_income_tax,
+		third_added_tax,
+		third_sales_tax,
+		thirdtax,
+		third_stuff_count,
+		third_salary_count,
+		third_depreciation_count,
+		first_deposit_count,
+		first_deposit_rate,
+		first_loan_count,
+		first_loan_rate,
+		first_stock_count,
+		first_stock_rate,
+		first_guara_count,
+		first_guara_rate,
+		second_deposit_count,
+		second_deposit_rate,
+		second_loan_count,
+		second_loan_rate,
+		second_stock_count,
+		second_stock_rate,
+		second_guara_count,
+		second_guara_rate,
+		third_deposit_count,
+		third_deposit_rate,
+		third_loan_count,
+		third_loan_rate,
+		third_stock_count,
+		third_stock_rate,
+		third_guara_count,
+		third_guara_rate,
+		lurushijian,
+		inputuser,
+		lastchgtime,
+		iscomplete
+		from tb_sb_base_jg 
+		where 1=1
+		<if test=" userid !=null and  userid !=''">
+			and userid=#{userid}
+		</if>
+		
+		<if test=" org_name !=null and  org_name !=''">
+			and org_name like '%'+#{org_name}+'%'
+		</if>
+		
+		)t where rownumber &gt; = #{offset} and rownumber &lt;
+		= #{pageSize}+#{offset}
+	</select>
+	
+	<select id="manage.tbsbbasejg.selectPageCount"
+		parameterType="com.winpow.services.manage.tbsbbasejg.bean.Tbsbbasejg"
+		resultType="java.lang.Integer">
+		select count(*) from (
+		SELECT ROW_NUMBER() over(order by lastchgtime desc) as rownumber ,
+		id,
+		userid,
+		pichi,
+		org_name,
+		business_no,
+		open_date,
+		regist_add,
+		run_add,
+		regist_amt,
+		paid_amt,
+		industry_owned,
+		chargeperson,
+		charge_duty,
+		charge_tele,
+		contacts,
+		contacts_duty,
+		contacts_tele,
+		rela_add,
+		rela_nation_tax_add,
+		rela_local_tax_add,
+		first_year,
+		firstsell,
+		firstinte,
+		first_income_tax,
+		first_added_tax,
+		first_sales_tax,
+		firsttax,
+		first_stuff_count,
+		first_salary_count,
+		first_depreciation_count,
+		secondsell,
+		secondinte,
+		second_income_tax,
+		second_added_tax,
+		second_sales_tax,
+		secondtax,
+		second_stuff_count,
+		second_salary_count,
+		second_depreciation_count,
+		thirdsell,
+		thirdinte,
+		third_income_tax,
+		third_added_tax,
+		third_sales_tax,
+		thirdtax,
+		third_stuff_count,
+		third_salary_count,
+		third_depreciation_count,
+		first_deposit_count,
+		first_deposit_rate,
+		first_loan_count,
+		first_loan_rate,
+		first_stock_count,
+		first_stock_rate,
+		first_guara_count,
+		first_guara_rate,
+		second_deposit_count,
+		second_deposit_rate,
+		second_loan_count,
+		second_loan_rate,
+		second_stock_count,
+		second_stock_rate,
+		second_guara_count,
+		second_guara_rate,
+		third_deposit_count,
+		third_deposit_rate,
+		third_loan_count,
+		third_loan_rate,
+		third_stock_count,
+		third_stock_rate,
+		third_guara_count,
+		third_guara_rate,
+		lurushijian,
+		inputuser,
+		lastchgtime,
+        iscomplete
+		from tb_sb_base_jg 
+		
+		where 1=1
+		<if test=" userid !=null and  userid !=''">
+			and userid=#{userid}
+		</if>
+		
+		<if test=" org_name !=null and  org_name !=''">
+			and org_name like '%'+#{org_name}+'%'
+		</if>
+		
+		)t
+	</select>
+
+	<select id="manage.tbsbbasejg.selectOne"
+		parameterType="com.winpow.services.manage.tbsbbasejg.bean.Tbsbbasejg"
+		resultType="com.winpow.services.manage.tbsbbasejg.bean.Tbsbbasejg">
+		SELECT
+		id,
+		userid,
+		pichi,
+		org_name,
+		business_no,
+		open_date,
+		regist_add,
+		run_add,
+		regist_amt,
+		paid_amt,
+		industry_owned,
+		chargeperson,
+		charge_duty,
+		charge_tele,
+		contacts,
+		contacts_duty,
+		contacts_tele,
+		rela_add,
+		rela_nation_tax_add,
+		rela_local_tax_add,
+		first_year,
+		firstsell,
+		firstinte,
+		first_income_tax,
+		first_added_tax,
+		first_sales_tax,
+		firsttax,
+		first_stuff_count,
+		first_salary_count,
+		first_depreciation_count,
+		secondsell,
+		secondinte,
+		second_income_tax,
+		second_added_tax,
+		second_sales_tax,
+		secondtax,
+		second_stuff_count,
+		second_salary_count,
+		second_depreciation_count,
+		thirdsell,
+		thirdinte,
+		third_income_tax,
+		third_added_tax,
+		third_sales_tax,
+		thirdtax,
+		third_stuff_count,
+		third_salary_count,
+		third_depreciation_count,
+		first_deposit_count,
+		first_deposit_rate,
+		first_loan_count,
+		first_loan_rate,
+		first_stock_count,
+		first_stock_rate,
+		first_guara_count,
+		first_guara_rate,
+		second_deposit_count,
+		second_deposit_rate,
+		second_loan_count,
+		second_loan_rate,
+		second_stock_count,
+		second_stock_rate,
+		second_guara_count,
+		second_guara_rate,
+		third_deposit_count,
+		third_deposit_rate,
+		third_loan_count,
+		third_loan_rate,
+		third_stock_count,
+		third_stock_rate,
+		third_guara_count,
+		third_guara_rate,
+		lurushijian,
+		inputuser,
+		lastchgtime,
+        iscomplete
+		from tb_sb_base_jg t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+		<if test=" userid !=null and  userid !=''">
+			and t.userid=#{userid}
+		</if>
+		<if test=" pichi !=null and  pichi !=''">
+			and t.pichi=#{pichi}
+		</if>
+	</select>
+
+	<select id="manage.tbsbbasejg.selectCount"
+		parameterType="com.winpow.services.manage.tbsbbasejg.bean.Tbsbbasejg"
+		resultType="int">
+		select count(*)
+		FROM tb_sb_base_jg t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+	</select>
+
+	<select id="manage.tbsbbasejg.selectOneByCondition"
+		parameterType="com.winpow.services.manage.tbsbbasejg.bean.Tbsbbasejg"
+		resultType="com.winpow.services.manage.tbsbbasejg.bean.Tbsbbasejg">
+		SELECT
+		id,
+		userid,
+		pichi,
+		org_name,
+		business_no,
+		open_date,
+		regist_add,
+		run_add,
+		regist_amt,
+		paid_amt,
+		industry_owned,
+		chargeperson,
+		charge_duty,
+		charge_tele,
+		contacts,
+		contacts_duty,
+		contacts_tele,
+		rela_add,
+		rela_nation_tax_add,
+		rela_local_tax_add,
+		first_year,
+		firstsell,
+		firstinte,
+		first_income_tax,
+		first_added_tax,
+		first_sales_tax,
+		firsttax,
+		first_stuff_count,
+		first_salary_count,
+		first_depreciation_count,
+		secondsell,
+		secondinte,
+		second_income_tax,
+		second_added_tax,
+		second_sales_tax,
+		secondtax,
+		second_stuff_count,
+		second_salary_count,
+		second_depreciation_count,
+		thirdsell,
+		thirdinte,
+		third_income_tax,
+		third_added_tax,
+		third_sales_tax,
+		thirdtax,
+		third_stuff_count,
+		third_salary_count,
+		third_depreciation_count,
+		first_deposit_count,
+		first_deposit_rate,
+		first_loan_count,
+		first_loan_rate,
+		first_stock_count,
+		first_stock_rate,
+		first_guara_count,
+		first_guara_rate,
+		second_deposit_count,
+		second_deposit_rate,
+		second_loan_count,
+		second_loan_rate,
+		second_stock_count,
+		second_stock_rate,
+		second_guara_count,
+		second_guara_rate,
+		third_deposit_count,
+		third_deposit_rate,
+		third_loan_count,
+		third_loan_rate,
+		third_stock_count,
+		third_stock_rate,
+		third_guara_count,
+		third_guara_rate,
+		lurushijian,
+		inputuser,
+		lastchgtime,
+        iscomplete
+		from tb_sb_base_jg t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+	</select>
+
+	<select id="manage.tbsbbasejg.selectList"
+		parameterType="com.winpow.services.manage.tbsbbasejg.bean.Tbsbbasejg"
+		resultType="com.winpow.services.manage.tbsbbasejg.bean.Tbsbbasejg">
+		SELECT
+		id,
+		userid,
+		pichi,
+		org_name,
+		business_no,
+		open_date,
+		regist_add,
+		run_add,
+		regist_amt,
+		paid_amt,
+		industry_owned,
+		chargeperson,
+		charge_duty,
+		charge_tele,
+		contacts,
+		contacts_duty,
+		contacts_tele,
+		rela_add,
+		rela_nation_tax_add,
+		rela_local_tax_add,
+		first_year,
+		firstsell,
+		firstinte,
+		first_income_tax,
+		first_added_tax,
+		first_sales_tax,
+		firsttax,
+		first_stuff_count,
+		first_salary_count,
+		first_depreciation_count,
+		secondsell,
+		secondinte,
+		second_income_tax,
+		second_added_tax,
+		second_sales_tax,
+		secondtax,
+		second_stuff_count,
+		second_salary_count,
+		second_depreciation_count,
+		thirdsell,
+		thirdinte,
+		third_income_tax,
+		third_added_tax,
+		third_sales_tax,
+		thirdtax,
+		third_stuff_count,
+		third_salary_count,
+		third_depreciation_count,
+		first_deposit_count,
+		first_deposit_rate,
+		first_loan_count,
+		first_loan_rate,
+		first_stock_count,
+		first_stock_rate,
+		first_guara_count,
+		first_guara_rate,
+		second_deposit_count,
+		second_deposit_rate,
+		second_loan_count,
+		second_loan_rate,
+		second_stock_count,
+		second_stock_rate,
+		second_guara_count,
+		second_guara_rate,
+		third_deposit_count,
+		third_deposit_rate,
+		third_loan_count,
+		third_loan_rate,
+		third_stock_count,
+		third_stock_rate,
+		third_guara_count,
+		third_guara_rate,
+		lurushijian,
+		inputuser,
+		lastchgtime,
+        iscomplete
+		from tb_sb_base_jg t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+	</select>
+
+	<insert id="manage.tbsbbasejg.insert"
+		parameterType="com.winpow.services.manage.tbsbbasejg.bean.Tbsbbasejg"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into tb_sb_base_jg (
+		id,
+		userid,
+		pichi,
+		org_name,
+		business_no,
+		open_date,
+		regist_add,
+		run_add,
+		regist_amt,
+		paid_amt,
+		industry_owned,
+		chargeperson,
+		charge_duty,
+		charge_tele,
+		contacts,
+		contacts_duty,
+		contacts_tele,
+		rela_add,
+		rela_nation_tax_add,
+		rela_local_tax_add,
+		first_year,
+		firstsell,
+		firstinte,
+		first_income_tax,
+		first_added_tax,
+		first_sales_tax,
+		firsttax,
+		first_stuff_count,
+		first_salary_count,
+		first_depreciation_count,
+		secondsell,
+		secondinte,
+		second_income_tax,
+		second_added_tax,
+		second_sales_tax,
+		secondtax,
+		second_stuff_count,
+		second_salary_count,
+		second_depreciation_count,
+		thirdsell,
+		thirdinte,
+		third_income_tax,
+		third_added_tax,
+		third_sales_tax,
+		thirdtax,
+		third_stuff_count,
+		third_salary_count,
+		third_depreciation_count,
+		first_deposit_count,
+		first_deposit_rate,
+		first_loan_count,
+		first_loan_rate,
+		first_stock_count,
+		first_stock_rate,
+		first_guara_count,
+		first_guara_rate,
+		second_deposit_count,
+		second_deposit_rate,
+		second_loan_count,
+		second_loan_rate,
+		second_stock_count,
+		second_stock_rate,
+		second_guara_count,
+		second_guara_rate,
+		third_deposit_count,
+		third_deposit_rate,
+		third_loan_count,
+		third_loan_rate,
+		third_stock_count,
+		third_stock_rate,
+		third_guara_count,
+		third_guara_rate,
+		lurushijian,
+		inputuser,
+		lastchgtime,
+        iscomplete
+		) values (
+		#{id},
+		#{userid},
+		#{pichi},
+		#{org_name},
+		#{business_no},
+		#{open_date},
+		#{regist_add},
+		#{run_add},
+		#{regist_amt},
+		#{paid_amt},
+		#{industry_owned},
+		#{chargeperson},
+		#{charge_duty},
+		#{charge_tele},
+		#{contacts},
+		#{contacts_duty},
+		#{contacts_tele},
+		#{rela_add},
+		#{rela_nation_tax_add},
+		#{rela_local_tax_add},
+		#{first_year},
+		#{firstsell},
+		#{firstinte},
+		#{first_income_tax},
+		#{first_added_tax},
+		#{first_sales_tax},
+		#{firsttax},
+		#{first_stuff_count},
+		#{first_salary_count},
+		#{first_depreciation_count},
+		#{secondsell},
+		#{secondinte},
+		#{second_income_tax},
+		#{second_added_tax},
+		#{second_sales_tax},
+		#{secondtax},
+		#{second_stuff_count},
+		#{second_salary_count},
+		#{second_depreciation_count},
+		#{thirdsell},
+		#{thirdinte},
+		#{third_income_tax},
+		#{third_added_tax},
+		#{third_sales_tax},
+		#{thirdtax},
+		#{third_stuff_count},
+		#{third_salary_count},
+		#{third_depreciation_count},
+		#{first_deposit_count},
+		#{first_deposit_rate},
+		#{first_loan_count},
+		#{first_loan_rate},
+		#{first_stock_count},
+		#{first_stock_rate},
+		#{first_guara_count},
+		#{first_guara_rate},
+		#{second_deposit_count},
+		#{second_deposit_rate},
+		#{second_loan_count},
+		#{second_loan_rate},
+		#{second_stock_count},
+		#{second_stock_rate},
+		#{second_guara_count},
+		#{second_guara_rate},
+		#{third_deposit_count},
+		#{third_deposit_rate},
+		#{third_loan_count},
+		#{third_loan_rate},
+		#{third_stock_count},
+		#{third_stock_rate},
+		#{third_guara_count},
+		#{third_guara_rate},
+		getdate(),
+		#{inputuser},
+		getdate(),
+        #{iscomplete}
+		)
+	</insert>
+
+	<update id="manage.tbsbbasejg.update"
+		parameterType="com.winpow.services.manage.tbsbbasejg.bean.Tbsbbasejg">
+		update tb_sb_base_jg set
+		<if test=" userid !=null and  userid !=''">
+			userid=#{userid},
+		</if>
+
+		<if test=" pichi !=null and  pichi !=''">
+			pichi=#{pichi},
+		</if>
+
+		<if test=" org_name !=null and  org_name !=''">
+			org_name=#{org_name},
+		</if>
+
+		<if test=" business_no !=null and  business_no !=''">
+			business_no=#{business_no},
+		</if>
+
+		<if test=" open_date !=null and  open_date !=''">
+			open_date=#{open_date},
+		</if>
+
+		<if test=" regist_add !=null and  regist_add !=''">
+			regist_add=#{regist_add},
+		</if>
+
+		<if test=" run_add !=null and  run_add !=''">
+			run_add=#{run_add},
+		</if>
+
+		<if test=" regist_amt !=null">
+			regist_amt=#{regist_amt},
+		</if>
+
+		<if test=" paid_amt !=null">
+			paid_amt=#{paid_amt},
+		</if>
+
+		<if test=" industry_owned !=null and  industry_owned !=''">
+			industry_owned=#{industry_owned},
+		</if>
+
+		<if test=" chargeperson !=null and  chargeperson !=''">
+			chargeperson=#{chargeperson},
+		</if>
+
+		<if test=" charge_duty !=null and  charge_duty !=''">
+			charge_duty=#{charge_duty},
+		</if>
+
+		<if test=" charge_tele !=null and  charge_tele !=''">
+			charge_tele=#{charge_tele},
+		</if>
+
+		<if test=" contacts !=null and  contacts !=''">
+			contacts=#{contacts},
+		</if>
+
+		<if test=" contacts_duty !=null and  contacts_duty !=''">
+			contacts_duty=#{contacts_duty},
+		</if>
+
+		<if test=" contacts_tele !=null and  contacts_tele !=''">
+			contacts_tele=#{contacts_tele},
+		</if>
+
+		<if test=" rela_add !=null and  rela_add !=''">
+			rela_add=#{rela_add},
+		</if>
+
+		<if test=" rela_nation_tax_add !=null and  rela_nation_tax_add !=''">
+			rela_nation_tax_add=#{rela_nation_tax_add},
+		</if>
+
+		<if test=" rela_local_tax_add !=null and  rela_local_tax_add !=''">
+			rela_local_tax_add=#{rela_local_tax_add},
+		</if>
+
+		<if test=" first_year !=null">
+			first_year=#{first_year},
+		</if>
+
+		<if test=" firstsell !=null">
+			firstsell=#{firstsell},
+		</if>
+
+		<if test=" firstinte !=null">
+			firstinte=#{firstinte},
+		</if>
+
+		<if test=" first_income_tax !=null">
+			first_income_tax=#{first_income_tax},
+		</if>
+
+		<if test=" first_added_tax !=null">
+			first_added_tax=#{first_added_tax},
+		</if>
+
+		<if test=" first_sales_tax !=null">
+			first_sales_tax=#{first_sales_tax},
+		</if>
+
+		<if test=" firsttax !=null">
+			firsttax=#{firsttax},
+		</if>
+
+		<if test=" first_stuff_count !=null">
+			first_stuff_count=#{first_stuff_count},
+		</if>
+
+		<if test=" first_salary_count !=null">
+			first_salary_count=#{first_salary_count},
+		</if>
+
+		<if
+			test=" first_depreciation_count !=null">
+			first_depreciation_count=#{first_depreciation_count},
+		</if>
+
+		<if test=" secondsell !=null">
+			secondsell=#{secondsell},
+		</if>
+
+		<if test=" secondinte !=null">
+			secondinte=#{secondinte},
+		</if>
+
+		<if test=" second_income_tax !=null">
+			second_income_tax=#{second_income_tax},
+		</if>
+
+		<if test=" second_added_tax !=null">
+			second_added_tax=#{second_added_tax},
+		</if>
+
+		<if test=" second_sales_tax !=null">
+			second_sales_tax=#{second_sales_tax},
+		</if>
+
+		<if test=" secondtax !=null">
+			secondtax=#{secondtax},
+		</if>
+
+		<if test=" second_stuff_count !=null">
+			second_stuff_count=#{second_stuff_count},
+		</if>
+
+		<if test=" second_salary_count !=null">
+			second_salary_count=#{second_salary_count},
+		</if>
+
+		<if
+			test=" second_depreciation_count !=null">
+			second_depreciation_count=#{second_depreciation_count},
+		</if>
+
+		<if test=" thirdsell !=null">
+			thirdsell=#{thirdsell},
+		</if>
+
+		<if test=" thirdinte !=null">
+			thirdinte=#{thirdinte},
+		</if>
+
+		<if test=" third_income_tax !=null">
+			third_income_tax=#{third_income_tax},
+		</if>
+
+		<if test=" third_added_tax !=null">
+			third_added_tax=#{third_added_tax},
+		</if>
+
+		<if test=" third_sales_tax !=null">
+			third_sales_tax=#{third_sales_tax},
+		</if>
+
+		<if test=" thirdtax !=null">
+			thirdtax=#{thirdtax},
+		</if>
+
+		<if test=" third_stuff_count !=null">
+			third_stuff_count=#{third_stuff_count},
+		</if>
+
+		<if test=" third_salary_count !=null">
+			third_salary_count=#{third_salary_count},
+		</if>
+
+		<if
+			test=" third_depreciation_count !=null">
+			third_depreciation_count=#{third_depreciation_count},
+		</if>
+
+		<if test=" first_deposit_count !=null">
+			first_deposit_count=#{first_deposit_count},
+		</if>
+
+		<if test=" first_deposit_rate !=null">
+			first_deposit_rate=#{first_deposit_rate},
+		</if>
+
+		<if test=" first_loan_count !=null">
+			first_loan_count=#{first_loan_count},
+		</if>
+
+		<if test=" first_loan_rate !=null">
+			first_loan_rate=#{first_loan_rate},
+		</if>
+
+		<if test=" first_stock_count !=null">
+			first_stock_count=#{first_stock_count},
+		</if>
+
+		<if test=" first_stock_rate !=null">
+			first_stock_rate=#{first_stock_rate},
+		</if>
+
+		<if test=" first_guara_count !=null">
+			first_guara_count=#{first_guara_count},
+		</if>
+
+		<if test=" first_guara_rate !=null">
+			first_guara_rate=#{first_guara_rate},
+		</if>
+
+		<if test=" second_deposit_count !=null">
+			second_deposit_count=#{second_deposit_count},
+		</if>
+
+		<if test=" second_deposit_rate !=null">
+			second_deposit_rate=#{second_deposit_rate},
+		</if>
+
+		<if test=" second_loan_count !=null">
+			second_loan_count=#{second_loan_count},
+		</if>
+
+		<if test=" second_loan_rate !=null">
+			second_loan_rate=#{second_loan_rate},
+		</if>
+
+		<if test=" second_stock_count !=null">
+			second_stock_count=#{second_stock_count},
+		</if>
+
+		<if test=" second_stock_rate !=null">
+			second_stock_rate=#{second_stock_rate},
+		</if>
+
+		<if test=" second_guara_count !=null">
+			second_guara_count=#{second_guara_count},
+		</if>
+
+		<if test=" second_guara_rate !=null">
+			second_guara_rate=#{second_guara_rate},
+		</if>
+
+		<if test=" third_deposit_count !=null">
+			third_deposit_count=#{third_deposit_count},
+		</if>
+
+		<if test=" third_deposit_rate !=null">
+			third_deposit_rate=#{third_deposit_rate},
+		</if>
+
+		<if test=" third_loan_count !=null">
+			third_loan_count=#{third_loan_count},
+		</if>
+
+		<if test=" third_loan_rate !=null">
+			third_loan_rate=#{third_loan_rate},
+		</if>
+
+		<if test=" third_stock_count !=null">
+			third_stock_count=#{third_stock_count},
+		</if>
+
+		<if test=" third_stock_rate !=null">
+			third_stock_rate=#{third_stock_rate},
+		</if>
+
+		<if test=" third_guara_count !=null">
+			third_guara_count=#{third_guara_count},
+		</if>
+
+		<if test=" third_guara_rate !=null">
+			third_guara_rate=#{third_guara_rate},
+		</if>
+		<if test=" iscomplete !=null and iscomplete !=''">
+			iscomplete=#{iscomplete},
+		</if>
+		lastchgtime=getdate()
+		where id=#{id}
+	</update>
+
+</mapper>  

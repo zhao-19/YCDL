@@ -1,0 +1,632 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+"-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="manage">
+
+	<select id="manage.guquan.selectPageList" parameterType="com.winpow.services.manage.guquan.bean.Guquan"
+		resultType="hashMap">
+		select top ${pageSize} * from (
+			select row_number() over(
+					order by case g.shenhezhuangtai when 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaa081' then 1 else 2 end,g.lurushijian desc
+				) as rownumber ,g.*,isnull(q1.qiyemingcheng,'') + isnull(q2.qiyemingcheng,'') qiyename,
+				(select count(*) from tb_guquan_app app where app.increid=g.id) appcount ,
+			( select count (*) from ( select rele_id from tb_email_log group by rele_id, dest_name ) l where l.rele_id = g.id ) emailcount
+			from tb_guquan g
+			left join tb_qiye q1 on q1.pk_qiyeid=g.qiyeid
+			left join tb_cust c on c.userid=g.qiyeid
+			left join tb_qiye q2 on c.f_id=q2.pk_qiyeid
+			where 1=1
+			<if test="inputuser != null and inputuser != ''">
+				and g.inputuser = #{inputuser}
+			</if>
+			<if test="mingcheng!=null and mingcheng!=''">
+				and g.mingcheng like '%'+#{mingcheng}+'%'
+			</if>
+			<if test="shenhezhuangtai!=null and shenhezhuangtai!=''">
+				and g.shenhezhuangtai=#{shenhezhuangtai}
+			</if>
+			<if test="rongzizhuangtai != null and rongzizhuangtai != ''">
+				and g.rongzizhuangtai=#{rongzizhuangtai}
+			</if>
+			<if test="shifoutuijian != null and shifoutuijian != ''">
+				and g.shifoutuijian=#{shifoutuijian}
+			</if>
+			<if test="substation != null and substation != ''">
+				and g.substation=#{substation}
+			</if>
+	    ) a where rownumber > ${pageSize}*(${offset} - 1)
+	</select>
+	
+	<select id="manage.guquan.selectPageList2" parameterType="com.winpow.services.manage.guquan.bean.Guquan"
+		resultType="hashMap">
+		select top ${pageSize} * from (
+			select row_number() over(order by 
+			<if test="substation != null and substation != ''">
+				case substation when #{substation} then 1 else 2 end,
+			</if>
+			lastchgtime desc) as rownumber ,* ,
+			( select count (*) from ( select rele_id from tb_email_log group by rele_id, dest_name ) l where l.rele_id = g.id ) emailcount
+			from tb_guquan g where 1=1
+			<if test="inputuser != null and inputuser != ''">
+				and tb_guquan.inputuser = #{inputuser}
+			</if>
+			<if test="mingcheng!=null and mingcheng!=''">
+				and mingcheng like '%'+#{mingcheng}+'%'
+			</if>
+			<if test="shenhezhuangtai!=null and shenhezhuangtai!=''">
+				and shenhezhuangtai=#{shenhezhuangtai}
+			</if>
+			<if test="rongzizhuangtai != null and rongzizhuangtai != ''">
+				and rongzizhuangtai=#{rongzizhuangtai}
+			</if>
+			<if test="shifoutuijian != null and shifoutuijian != ''">
+				and shifoutuijian=#{shifoutuijian}
+			</if>
+	    ) a where rownumber > ${pageSize}*(${offset} - 1)
+	</select>
+
+	<select id="manage.guquan.select4index" parameterType="com.winpow.services.manage.guquan.bean.Guquan"
+		resultType="com.winpow.services.manage.guquan.bean.Guquan">
+		select top(4) g.*, ( select count (*) from ( select rele_id from tb_email_log group by rele_id, dest_name ) l where l.rele_id = g.id ) emailcount 
+		from tb_guquan g 
+		where g.shenhezhuangtai in ( 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaa083', '14003' ) 
+		order by g.number desc
+	</select>
+
+	<select id="manage.guquan.selectPageCount" parameterType="com.winpow.services.manage.guquan.bean.Guquan"
+		resultType="java.lang.Integer">
+		select count(*) from tb_guquan where 1=1
+		<if test="inputuser != null and inputuser != ''">
+			and inputuser = #{inputuser}
+		</if>
+		<if test="mingcheng!=null and mingcheng!=''">
+			and mingcheng like '%'+#{mingcheng}+'%'
+		</if>
+		<if test="shenhezhuangtai!=null and shenhezhuangtai!=''">
+			and shenhezhuangtai=#{shenhezhuangtai}
+		</if>
+		<if test="rongzizhuangtai != null and rongzizhuangtai != ''">
+			and rongzizhuangtai=#{rongzizhuangtai}
+		</if>
+		<if test="shifoutuijian != null and shifoutuijian != ''">
+			and shifoutuijian=#{shifoutuijian}
+		</if>
+		<if test="substation != null and substation != ''">
+			and substation=#{substation}
+		</if>
+	</select>
+
+	<select id="manage.guquan.selectOne" parameterType="com.winpow.services.manage.guquan.bean.Guquan"
+		resultType="com.winpow.services.manage.guquan.bean.Guquan">
+
+		SELECT t.id,
+		t.mingcheng,
+		t.jianjie,
+		t.hexinjzl,
+		t.picture,
+		t.xiangmujincheng,
+		t.xiangmutuandui,
+		t.jihuashu,
+		t.hangye,
+		t.browsecount,
+		t.markcount,
+		t.rongziedu,
+		t.rongzhijieduan,
+		t.crgqbl,
+		t.qiyeid,
+		t.faburiqi,
+		t.shifoutuijian,
+		t.tuijianpic,
+		t.leftpic ,
+		t.detailpic,
+		t.xiangmuzhuangtai,
+		t.rongzizhuangtai,
+		t.shenhezhuangtai,
+		t.fabuzheleixing,
+		t.biaoqian,
+		t.fujianming,
+		t.fujianlujing,
+		t.sitename,
+		t.xiangmutouzhi,
+		t.lurushijian,
+		t.inputuser,
+		t.lastchgtime,
+		t.mubiaoyonghu,
+		t.shichangfenxi,
+		t.hangyejingzheng,
+		t.weilaifazhanjihua,
+		t.qitaxinxi,
+		app.bookamt,
+		t.number,
+		t.zhijinyongtu,
+		t.yewushuju,
+		t.applistimg,
+		t.appproimg,
+		t.appId,
+		t.data_source,
+		t.releId,
+		t.releUserid,t.lnglat,t.picdeatil,t.substation,t.sourceurl_stand,t.sourceurl_high,t.sourceurl_super
+		from tb_guquan t 
+		left join (SELECT INCREID, case when sum(Incamt)IS NULL then 0 else sum(Incamt) end bookamt from tb_guquan_app where INCREID=#{id} group by INCREID ) app 
+		on t.ID=app.INCREID where 1=1 and t.ID=#{id}
+	</select>
+
+	<select id="manage.guquan.selectrecommend" parameterType="com.winpow.services.manage.guquan.bean.Guquan"
+		resultType="com.winpow.services.manage.guquan.bean.Guquan">
+		SELECT TOP 1
+		id,
+		mingcheng,
+		jianjie,
+		hexinjzl,
+		picture,
+		xiangmujincheng,
+		xiangmutuandui,
+		jihuashu,
+		hangye,
+		browsecount,
+		markcount,
+		rongziedu,
+		rongzhijieduan,
+		crgqbl,
+		qiyeid,
+		faburiqi,
+		shifoutuijian,tuijianpic,leftpic ,detailpic,
+		xiangmuzhuangtai,
+		rongzizhuangtai,
+		shenhezhuangtai,
+		fabuzheleixing,
+		biaoqian,
+		fujianming,
+		fujianlujing,
+		sitename,
+		xiangmutouzhi,
+		lurushijian,
+		inputuser,
+		lastchgtime,
+		number,
+		data_source,
+		appId,
+		releId,
+		releUserid,
+		applistimg,
+		appproimg
+		from tb_guquan t
+		where
+		SHIFOUTUIJIAN='aaaaaaaaaaaaaaaaaaaaaaaaaaaaa004'
+		and LASTCHGTIME
+		=
+		(select max(LASTCHGTIME) as LURUSHIJIAN from
+		tb_guquan where
+		SHIFOUTUIJIAN='aaaaaaaaaaaaaaaaaaaaaaaaaaaaa004')
+	</select>
+
+	<select id="manage.guquan.selectCount" parameterType="com.winpow.services.manage.guquan.bean.Guquan"
+		resultType="int">
+		select count(*) from tb_guquan t where 1=1
+		and qiyeid in (
+		select f_id from tb_cust where userid=#{qiyeid}
+		union
+		select userid from tb_cust where f_id in (select f_id from tb_cust where
+		userid=#{qiyeid})
+		)
+		<if test="shenhezhuangtai!=null and shenhezhuangtai!=''">
+			and t.shenhezhuangtai=#{shenhezhuangtai}
+		</if>
+	</select>
+
+	<select id="manage.guquan.selectOneByCondition" parameterType="com.winpow.services.manage.guquan.bean.Guquan"
+		resultType="com.winpow.services.manage.guquan.bean.Guquan">
+		SELECT
+		id,
+		mingcheng,
+		jianjie,
+		hexinjzl,
+		picture,
+		xiangmujincheng,
+		xiangmutuandui,
+		jihuashu,
+		hangye,
+		browsecount,
+		markcount,
+		rongziedu,
+		rongzhijieduan,
+		crgqbl,
+		qiyeid,
+		faburiqi,
+		shifoutuijian,tuijianpic,leftpic ,detailpic,
+		xiangmuzhuangtai,
+		rongzizhuangtai,
+		shenhezhuangtai,
+		fabuzheleixing,
+		biaoqian,
+		fujianming,
+		fujianlujing,
+		sitename,
+		xiangmutouzhi,
+		lurushijian,
+		inputuser,
+		lastchgtime,
+		number,
+		data_source,
+		appId,
+		releId,
+		releUserid,
+		applistimg,
+		appproimg
+		from tb_guquan t
+		where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+	</select>
+
+	<insert id="manage.guquan.insert" parameterType="com.winpow.services.manage.guquan.bean.Guquan"
+		useGeneratedKeys="true" keyProperty="pkid">
+		insert into tb_guquan (
+		id,
+		mingcheng,
+		jianjie,
+		hexinjzl,
+		picture,
+		xiangmujincheng,
+		xiangmutuandui,
+		jihuashu,
+		hangye,
+		browsecount,
+		markcount,
+		rongziedu,
+		rongzhijieduan,
+		crgqbl,
+		qiyeid,
+		faburiqi,
+		shifoutuijian,
+		xiangmuzhuangtai,
+		rongzizhuangtai,
+		shenhezhuangtai,
+		fabuzheleixing,
+		biaoqian,
+		fujianming,
+		fujianlujing,
+		sitename,
+		xiangmutouzhi,
+		lurushijian,
+		inputuser,
+		lastchgtime,
+		tuijianpic,
+		leftpic,
+		detailpic,
+		number,
+		mubiaoyonghu,
+		zhijinyongtu,
+		yewushuju,
+		weilaifazhanjihua,
+		shichangfenxi,
+		hangyejingzheng,
+		qitaxinxi,
+		data_source,
+		appid,
+		releid,
+		releuserid,
+		appstatus,
+		applistimg,
+		appproimg,
+		lnglat,picdeatil,substation,sourceurl_stand,sourceurl_high,sourceurl_super
+		) values (
+		#{id},
+		#{mingcheng},
+		#{jianjie},
+		#{hexinjzl},
+		#{picture},
+		#{xiangmujincheng},
+		#{xiangmutuandui},
+		#{jihuashu},
+		#{hangye},
+		#{browsecount},
+		#{markcount},
+		#{rongziedu},
+		#{rongzhijieduan},
+		#{crgqbl},
+		#{qiyeid},
+		#{faburiqi},
+		#{shifoutuijian},
+		#{xiangmuzhuangtai},
+		#{rongzizhuangtai},
+		#{shenhezhuangtai},
+		#{fabuzheleixing},
+		#{biaoqian},
+		#{fujianming},
+		#{fujianlujing},
+		#{sitename},
+		#{xiangmutouzhi},
+		getdate(),
+		#{inputuser},
+		getdate(),
+		#{tuijianpic},
+		#{leftpic},
+		#{detailpic},
+		#{number},
+		#{mubiaoyonghu},
+		#{zhijinyongtu},
+		#{yewushuju},
+		#{weilaifazhanjihua},
+		#{shichangfenxi},
+		#{hangyejingzheng},
+		#{qitaxinxi},
+		#{data_source},
+		#{appId},
+		#{releId},
+		#{releUserid},
+		#{appstatus},
+		#{applistimg},
+		#{appproimg},
+		#{lnglat},#{picdeatil}
+		<choose><when test="substation=='all'">,null</when><otherwise>,#{substation}</otherwise></choose>,
+		#{sourceurl_stand},#{sourceurl_high},#{sourceurl_super}
+		)
+	</insert>
+
+	<update id="manage.guquan.updatebrosecount" parameterType="com.winpow.services.manage.guquan.bean.Guquan">
+		update tb_guquan set
+		browsecount=browsecount+1, lastchgtime=getdate()
+		where id=#{id}
+	</update>
+
+	<update id="manage.guquan.update" parameterType="com.winpow.services.manage.guquan.bean.Guquan">
+		update tb_guquan set
+
+
+		<if test="mingcheng!=null and mingcheng!=''">
+			mingcheng=#{mingcheng},
+		</if>
+
+		<if test="jianjie!=null and jianjie!=''">
+			jianjie=#{jianjie},
+		</if>
+
+		<if test="hexinjzl!=null and hexinjzl!=''">
+			hexinjzl=#{hexinjzl},
+		</if>
+
+		<if test="picture!=null and picture!=''">
+			picture=#{picture},
+		</if>
+
+		<if test="xiangmujincheng!=null and xiangmujincheng!=''">
+			xiangmujincheng=#{xiangmujincheng},
+		</if>
+
+		<if test="xiangmutuandui!=null and xiangmutuandui!=''">
+			xiangmutuandui=#{xiangmutuandui},
+		</if>
+
+		<if test="jihuashu!=null and jihuashu!=''">
+			jihuashu=#{jihuashu},
+		</if>
+
+		<if test="hangye!=null and hangye!=''">
+			hangye=#{hangye},
+		</if>
+
+		<if test="browsecount!=null and browsecount!=''">
+			browsecount=#{browsecount},
+		</if>
+
+		<if test="markcount!=null and markcount!=''">
+			markcount=#{markcount},
+		</if>
+
+		<if test="rongziedu!=null and rongziedu!=''">
+			rongziedu=#{rongziedu},
+		</if>
+
+		<if test="rongzhijieduan!=null and rongzhijieduan!=''">
+			rongzhijieduan=#{rongzhijieduan},
+		</if>
+
+		<if test="crgqbl!=null and crgqbl!=''">
+			crgqbl=#{crgqbl},
+		</if>
+
+		<if test="qiyeid!=null and qiyeid!=''">
+			qiyeid=#{qiyeid},
+		</if>
+
+		<if test="faburiqi!=null and faburiqi!=''">
+			faburiqi=#{faburiqi},
+		</if>
+
+		<if test="shifoutuijian!=null and shifoutuijian!=''">
+			shifoutuijian=#{shifoutuijian},
+		</if>
+		<if test="tuijianpic!=null and tuijianpic!=''">
+			tuijianpic=#{tuijianpic},
+		</if>
+		<if test="leftpic!=null and leftpic!=''">
+			leftpic=#{leftpic},
+		</if>
+		<if test="detailpic!=null and detailpic!=''">
+			detailpic=#{detailpic},
+		</if>
+		<if test="xiangmuzhuangtai!=null and xiangmuzhuangtai!=''">
+			xiangmuzhuangtai=#{xiangmuzhuangtai},
+		</if>
+
+		<if test="rongzizhuangtai!=null and rongzizhuangtai!=''">
+			rongzizhuangtai=#{rongzizhuangtai},
+		</if>
+
+		<if test="shenhezhuangtai!=null and shenhezhuangtai!=''">
+			shenhezhuangtai=#{shenhezhuangtai},
+		</if>
+
+		<if test="fabuzheleixing!=null and fabuzheleixing!=''">
+			fabuzheleixing=#{fabuzheleixing},
+		</if>
+
+		<if test="biaoqian!=null and biaoqian!=''">
+			biaoqian=#{biaoqian},
+		</if>
+
+		<if test="fujianming!=null and fujianming!=''">
+			fujianming=#{fujianming},
+		</if>
+
+		<if test="fujianlujing!=null and fujianlujing!=''">
+			fujianlujing=#{fujianlujing},
+		</if>
+
+		<if test="sitename!=null and sitename!=''">
+			sitename=#{sitename},
+		</if>
+
+		<if test="xiangmutouzhi!=null and xiangmutouzhi!=''">
+			xiangmutouzhi=#{xiangmutouzhi},
+		</if>
+
+		<if test="inputuser!=null and inputuser!=''">
+			inputuser=#{inputuser},
+		</if>
+
+		<if test="number!=null">
+			number=#{number},
+		</if>
+
+		<if test="mubiaoyonghu!=null and mubiaoyonghu!=''">
+			mubiaoyonghu = #{mubiaoyonghu},
+		</if>
+
+		<if test="zhijinyongtu!=null and zhijinyongtu!=''">
+			zhijinyongtu = #{zhijinyongtu},
+		</if>
+
+		<if test="yewushuju!=null and yewushuju!=''">
+			yewushuju = #{yewushuju},
+		</if>
+
+		<if test="weilaifazhanjihua!=null and weilaifazhanjihua!=''">
+			weilaifazhanjihua = #{weilaifazhanjihua},
+		</if>
+
+		<if test="shichangfenxi!=null and shichangfenxi!=''">
+			shichangfenxi = #{shichangfenxi},
+		</if>
+
+		<if test="hangyejingzheng!=null and hangyejingzheng!=''">
+			hangyejingzheng = #{hangyejingzheng},
+		</if>
+
+		<if test="qitaxinxi!=null and qitaxinxi!=''">
+			qitaxinxi = #{qitaxinxi},
+		</if>
+		<if test="data_source!=null and data_source!=''">
+			data_source = #{data_source},
+		</if>
+		<if test="appId!=null and appId!=''">
+			appId = #{appId},
+		</if>
+		<if test="releId!=null and releId!=''">
+			releId = #{releId},
+		</if>
+		<if test="releUserid!=null and releUserid!=''">
+			releUserid = #{releUserid},
+		</if>
+		<if test="applistimg !=null and applistimg !=''">
+			applistimg = #{applistimg},
+		</if>
+		<if test="appproimg !=null and appproimg !=''">
+			appproimg = #{appproimg},
+		</if>
+		<if test="lnglat !=null and lnglat !=''">
+			lnglat=#{lnglat},
+		</if>
+		<if test="picdeatil !=null and picdeatil !=''">
+			picdeatil=#{picdeatil},
+		</if>
+		<if test=" substation !=null and  substation !='' and substation != 'all'">
+            substation=#{substation},
+        </if>
+        
+        <if test=" substation !=null and  substation !='' and substation == 'all'">
+            substation = null,
+        </if>
+        <if test="sourceurl_stand !=null and sourceurl_stand !=''">
+			sourceurl_stand=#{sourceurl_stand},
+		</if>
+		<if test="sourceurl_high !=null and sourceurl_high !=''">
+			sourceurl_high=#{sourceurl_high},
+		</if>
+		<if test="sourceurl_super !=null and sourceurl_super !=''">
+			sourceurl_super=#{sourceurl_super},
+		</if>
+		lastchgtime=getdate()
+		where id=#{id}
+	</update>
+	
+	<select id="manage.guquan.selectOneById" parameterType="com.winpow.services.manage.guquan.bean.Guquan"
+		resultType="hashmap">
+		select *,(select count(id) from tb_email_log as la where la.rele_id = #{id}) as recmpno 
+		from tb_guquan where id = #{id}
+	</select>
+	
+	<select id="manage.guquan.selectOneGuQuan" parameterType="com.winpow.services.manage.guquan.bean.Guquan"
+		resultType="com.winpow.services.manage.guquan.bean.Guquan">
+		select * from tb_guquan where id = #{id}
+	</select>
+
+	<select id="manage.guquan.selectAllList" parameterType="com.winpow.services.manage.guquan.bean.Guquan"
+		resultType="com.winpow.services.manage.guquan.bean.Guquan">
+		select t1.*
+		from Tb_guquan t1 left join tb_app_banner t2 on t2.appid = t1.ID where
+		shenhezhuangtai='aaaaaaaaaaaaaaaaaaaaaaaaaaaaa083' and t2.appid is
+		null
+		order by LASTCHGTIME desc
+	</select>
+
+	<select id="manage.guquan.selectList" parameterType="com.winpow.services.manage.guquan.bean.Guquan"
+		resultType="com.winpow.services.manage.guquan.bean.Guquan">
+		select top(50) * from tb_guquan t where 1=1
+		<if test="mingcheng !=null and mingcheng!=''">
+			and mingcheng like '%'+#{mingcheng}+'%'
+		</if>
+		order by lurushijian desc
+	</select>
+	
+	<select id="manage.guquan.selectPageLists" parameterType="com.winpow.services.manage.guquan.bean.Guquan"
+		resultType="com.winpow.services.manage.guquan.bean.Guquan">
+		select top ${pageSize} * from (
+			select row_number() over (order by ${lurushijian} desc) as rownumber,*
+			from tb_guquan where shifoutuijian='aaaaaaaaaaaaaaaaaaaaaaaaaaaaa004'
+			<if test="mingcheng!=null and mingcheng!=''">
+				and mingcheng like '%'+#{mingcheng}+'%'
+			</if>
+			<if test="hangye != null and hangye != ''">
+				and hangye=#{hangye}
+			</if>
+			<if test="rongzhijieduan != null and rongzhijieduan != ''">
+				and rongzhijieduan=#{rongzhijieduan}
+			</if>
+			<if test="sourceurl_super != null and sourceurl_super != '' and sourceurl_super=='10001'">
+				and sourceurl_super is not null and sourceurl_super != ''
+			</if>
+			<if test="substation != null and substation != ''">
+				and substation=#{substation}
+			</if>
+		) a where rownumber > ${pageSize} * (${offset} - 1)
+	</select>
+	
+	<delete id="manage.guquan.deletebyIds" parameterType="list">
+		delete from tb_guquan where id in
+		<foreach item="item" index="index" collection="array" open="(" separator="," close=")">  
+            #{item}  
+        </foreach>
+	</delete>
+	
+	<select id="manage.guquan.selectCacheList" parameterType="com.winpow.services.manage.guquan.bean.Guquan"
+		resultType="com.winpow.services.manage.guquan.bean.Guquan">
+		select * from (select top(20) * from tb_guquan where shifoutuijian='aaaaaaaaaaaaaaaaaaaaaaaaaaaaa004' and sourceurl_super is null order by lastchgtime desc) a
+		union all
+		select * from (select top(20) * from tb_guquan where shifoutuijian='aaaaaaaaaaaaaaaaaaaaaaaaaaaaa004' and sourceurl_super is not null order by lastchgtime desc) b	
+	</select>
+	
+</mapper>  

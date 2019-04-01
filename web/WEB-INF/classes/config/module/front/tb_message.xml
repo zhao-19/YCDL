@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE mapper PUBLIC 
+"-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="front">
+	
+	<select id="front.message.selectPageList" parameterType="com.winpow.services.manage.message.bean.Message" resultType="hashMap">
+	select * from (
+		SELECT  ROW_NUMBER() over(order by id desc) as  rownumber ,
+								 	id,
+			 								 	telnumber,
+			 								 	comtent,
+			 								 	userid,
+			 								 	username,
+			 								 	sendtime,
+			 								 	msgstatus,
+			 								 	lurushijian,
+			 								  inputuser
+			 		   from tb_message  t where 1=1  
+		<if test="telnumber!=null and telnumber!=''">
+			and t.telnumber=#{telnumber}
+		</if>
+		<if test="userid!=null and userid!=''">
+			and t.userid=#{userid}
+		</if>
+		<if test="username!=null and username!=''">
+			and t.username=#{username}
+		</if>
+		)t  where rownumber &gt; = #{offset} and rownumber &lt; = #{pageSize}+#{offset} 
+	</select>
+	<select id="front.message.selectPageCount" parameterType="com.winpow.services.manage.message.bean.Message" resultType="java.lang.Integer">
+		
+			select count(*) from (
+					SELECT  ROW_NUMBER() over(order by id) as  rownumber ,
+																	 	id,
+						 																	 	telnumber,
+						 																	 	comtent,
+						 																	 	userid,
+						 																	 	username,
+						 																	 	sendtime,
+						 																	 	msgstatus,
+						 																	 	lurushijian,
+						 																	  inputuser
+						 								   from tb_message t where 1=1  
+		<if test="telnumber!=null and telnumber!=''">
+			and t.telnumber=#{telnumber}
+		</if>
+		<if test="userid!=null and userid!=''">
+			and t.userid=#{userid}
+		</if>
+		<if test="username!=null and username!=''">
+			and t.username=#{username}
+		</if> )t  
+
+	</select>
+	
+	<select id="front.message.selectOne" parameterType="com.winpow.services.manage.message.bean.Message" resultType="com.winpow.services.manage.message.bean.Message">
+			SELECT  
+											 	id,
+				 											 	telnumber,
+				 											 	comtent,
+				 											 	userid,
+				 											 	username,
+				 											 	sendtime,
+				 											 	msgstatus,
+				 											 	lurushijian,
+				 											  inputuser
+				 						  from tb_message t  where 1=1  
+			<if test="id!=null and id!=''">
+				and t.id=#{id}
+			</if>
+	</select>
+	
+	<select id="front.message.selectCount" parameterType="com.winpow.services.manage.message.bean.Message" resultType="int">
+			select count(*)  
+				 FROM tb_message t  where 1=1  
+				<if test="id!=null and id!=''">
+					and t.id=#{id}
+				</if>
+	</select>
+	
+	<select id="front.message.selectOneByCondition" parameterType="com.winpow.services.manage.message.bean.Message" resultType="com.winpow.services.manage.message.bean.Message">
+			SELECT  
+											 	id,
+				 											 	telnumber,
+				 											 	comtent,
+				 											 	userid,
+				 											 	username,
+				 											 	sendtime,
+				 											 	msgstatus,
+				 											 	lurushijian,
+				 											  inputuser
+				 					 from  tb_message   t  where 1=1  
+			<if test="id!=null and id!=''">
+				and t.id=#{id}
+			</if>
+		<if test="telnumber!=null and telnumber!=''">
+			and t.telnumber=#{telnumber}
+		</if>
+		<if test="userid!=null and userid!=''">
+			and t.userid=#{userid}
+		</if>
+		<if test="username!=null and username!=''">
+			and t.username=#{username}
+		</if>
+	</select>
+	
+	<insert id="front.message.insert" parameterType="com.winpow.services.manage.message.bean.Message" useGeneratedKeys="true" 
+		keyProperty="id">
+	 		insert into tb_message ( 
+	 								 
+													 	telnumber,
+													 	comtent,
+													 	userid,
+													 	username,
+													 	sendtime,
+													 	msgstatus,
+													 	lurushijian,
+													  inputuser
+			 						) values ( 
+										 	 
+				 										 	#{telnumber},
+				 										 	#{comtent},
+				 										 	#{userid},
+				 										 	#{username},
+				 										 	getdate(),
+				 										 	#{msgstatus},
+				 										 	getdate(),
+				 											#{inputuser}
+				 						)
+		 
+	</insert>
+	
+	<update id="front.message.update" parameterType="com.winpow.services.manage.message.bean.Message">
+		update t_message set 
+                        
+		
+				 			                <if test="telnumber!=null and telnumber!=''">
+                        telnumber=#{telnumber},
+                        </if>
+		
+				 			                <if test="comtent!=null and comtent!=''">
+                        comtent=#{comtent},
+                        </if>
+		
+				 			                <if test="userid!=null and userid!=''">
+                        userid=#{userid},
+                        </if>
+		
+				 			                <if test="username!=null and username!=''">
+                        username=#{username},
+                        </if>
+		
+				 			                <if test="sendtime!=null and sendtime!=''">
+                        sendtime=#{sendtime},
+                        </if>
+		
+				 			                <if test="msgstatus!=null and msgstatus!=''">
+                        msgstatus=#{msgstatus},
+                        </if>
+		
+				 			                <if test="lurushijian!=null and lurushijian!=''">
+                        lurushijian=#{lurushijian},
+                        </if>
+		
+				 			                <if test="inputuser!=null and inputuser!=''">
+                        inputuser=#{inputuser}
+                        </if>
+         						 
+		where id=#{id}
+	</update>
+	
+</mapper>  

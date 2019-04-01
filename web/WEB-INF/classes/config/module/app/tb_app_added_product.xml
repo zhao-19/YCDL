@@ -1,0 +1,384 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+"-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="app">
+
+	<select id="app.appaddedproduct.selectPageList"
+		parameterType="com.winpow.services.app.appaddedproduct.bean.Appaddedproduct"
+		resultType="hashMap">
+		select * from (
+		SELECT ROW_NUMBER() over(order by update_at
+		desc) as rownumber ,
+		pkid,
+		chno,
+		genre,
+		userid,
+		initiator,
+		title,
+		bewrite,
+		content,
+		industry,
+		price,
+		chstatus,
+		reviwer_id,
+		review_date,
+		return_reason,
+		create_time,
+		update_at
+		from tb_app_added_product )t where rownumber &gt;
+		= #{offset} and
+		rownumber &lt; = #{pageSize}+#{offset}
+	</select>
+	<select id="app.appaddedproduct.selectPageCount"
+		parameterType="com.winpow.services.app.appaddedproduct.bean.Appaddedproduct"
+		resultType="java.lang.Integer">
+
+		select count(*) from (
+		SELECT ROW_NUMBER() over(order by
+		update_at desc) as rownumber ,
+		pkid,
+		chno,
+		genre,
+		userid,
+		initiator,
+		title,
+		bewrite,
+		content,
+		industry,
+		price,
+		chstatus,
+		reviwer_id,
+		review_date,
+		return_reason,
+		create_time,
+		update_at
+		from tb_app_added_product )t
+
+	</select>
+
+	<select id="app.appaddedproduct.selectOne"
+		parameterType="com.winpow.services.app.appaddedproduct.bean.Appaddedproduct"
+		resultType="com.winpow.services.app.appaddedproduct.bean.Appaddedproduct">
+		SELECT
+		pkid,
+		chno,
+		genre,
+		userid,
+		initiator,
+		title,
+		bewrite,
+		content,
+		industry,
+		price,
+		chstatus,
+		reviwer_id,
+		review_date,
+		return_reason,
+		create_time,
+		update_at
+		from tb_app_added_product t where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+
+	<select id="app.appaddedproduct.selectCount"
+		parameterType="com.winpow.services.app.appaddedproduct.bean.Appaddedproduct"
+		resultType="int">
+		select count(*)
+		FROM tb_app_added_product t where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+
+	<select id="app.appaddedproduct.selectOneByCondition"
+		parameterType="com.winpow.services.app.appaddedproduct.bean.Appaddedproduct"
+		resultType="com.winpow.services.app.appaddedproduct.bean.Appaddedproduct">
+		SELECT
+		pkid,
+		chno,
+		genre,
+		userid,
+		initiator,
+		title,
+		bewrite,
+		content,
+		industry,
+		price,
+		chstatus,
+		reviwer_id,
+		review_date,
+		return_reason,
+		create_time,
+		update_at
+		from tb_app_added_product t where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+
+
+
+	<select id="app.appaddedproduct.selectList"
+		parameterType="com.winpow.services.app.appaddedproduct.bean.Appaddedproduct"
+		resultType="com.winpow.services.app.appaddedproduct.bean.Appaddedproduct">
+		SELECT
+		pkid,
+		chno,
+		genre,
+		userid,
+		initiator,
+		title,
+		bewrite,
+		content,
+		industry,
+		price,
+		chstatus,
+		reviwer_id,
+		review_date,
+		return_reason,
+		create_time,
+		update_at
+		from tb_app_added_product t where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+
+    <select id="app.appaddedproduct.selectLists"
+        parameterType="com.winpow.services.app.appaddedproduct.bean.Appaddedproduct"
+        resultType="com.winpow.services.app.appaddedproduct.bean.Appaddedproduct">
+        SELECT
+        t.pkid,
+        t.chno,
+        t.genre,
+        t.userid,
+        t.initiator,
+        t.title,
+        t.bewrite,
+        t.content,
+        t.industry,
+        t.price,
+        t.chstatus,
+        t.reviwer_id,
+        t.review_date,
+        t.return_reason,
+        t.create_time,
+        t.update_at
+        from tb_app_added_product t left join tb_pc_goods t2 on t.pkid = t2.appid where t2.appid is null 
+        <if test="pkid!=null and pkid!=''">
+            and t.pkid=#{pkid}
+        </if>
+        <if test='querytype == "1"'>
+            and t.genre in ('11204','11205','11206')
+        </if> 
+        <if test='querytype == "2"'>
+            and t.genre = '11201'
+        </if>
+        <if test="title !=null and title !=''">
+            and t.title=#{title}
+        </if>
+        order by t.update_at
+    </select>
+
+	<insert id="app.appaddedproduct.insert"
+		parameterType="com.winpow.services.app.appaddedproduct.bean.Appaddedproduct"
+		useGeneratedKeys="true" keyProperty="id">
+		declare @cnno int
+		exec @cnno = getchnoseq
+		insert into tb_app_added_product (
+		pkid,
+		chno,
+		genre,
+		userid,
+		initiator,
+		title,
+		bewrite,
+		content,
+		industry,
+		price,
+		chstatus,
+		reviwer_id,
+		<if test="review_date != null and review_date !=''">
+		review_date,
+		</if>
+		return_reason,
+		create_time,
+		update_at
+		) values (
+		#{pkid},
+		(select 'fwfb' + right('0000000000' + cast(@cnno as varchar(10)), 10)),
+		#{genre},
+		#{userid},
+		#{initiator},
+		#{title},
+		#{bewrite},
+		#{content},
+		#{industry},
+		#{price},
+		#{chstatus},
+		#{reviwer_id},
+		<if test="review_date != null and review_date !=''">
+        getdate(),
+        </if>
+		#{return_reason},
+		getdate(),
+		getdate()
+		)
+
+	</insert>
+
+	<update id="app.appaddedproduct.update"
+		parameterType="com.winpow.services.app.appaddedproduct.bean.Appaddedproduct">
+		update tb_app_added_product set
+
+		<if test=" genre !=null and  genre !=''">
+			genre=#{genre},
+		</if>
+
+		<if test=" userid !=null and  userid !=''">
+			userid=#{userid},
+		</if>
+
+		<if test=" initiator !=null and  initiator !=''">
+			initiator=#{initiator},
+		</if>
+
+		<if test=" title !=null and  title !=''">
+			title=#{title},
+		</if>
+
+		<if test=" bewrite !=null and  bewrite !=''">
+			bewrite=#{bewrite},
+		</if>
+
+		<if test=" content !=null and  content !=''">
+			content=#{content},
+		</if>
+
+		<if test=" industry !=null and  industry !=''">
+			industry=#{industry},
+		</if>
+
+		<if test=" price !=null">
+			price=#{price},
+		</if>
+
+		<if test=" chstatus !=null and  chstatus !=''">
+			chstatus=#{chstatus},
+		</if>
+
+		<if test=" reviwer_id !=null and  reviwer_id !=''">
+			reviwer_id=#{reviwer_id},
+		</if>
+
+		<if test=" review_date !=null and  review_date !=''">
+			review_date=getdate(),
+		</if>
+
+		<if test=" return_reason !=null and  return_reason !=''">
+			return_reason=#{return_reason},
+		</if>
+
+		update_at=getdate()
+
+		where pkid=#{pkid}
+	</update>
+	
+	<select id="app.appaddedproduct.selectPageByUserid" parameterType="com.winpow.services.app.appaddedproduct.bean.Appaddedproduct"
+		resultType="com.winpow.services.app.appaddedproduct.bean.Appaddedproduct">
+		select top ${pageSize} * from (
+			select row_number() over (order by create_time desc) as rownumber,* from(
+				select * from (
+					select ad.pkid,ad.chno,ad.userid,ad.title,ad.bewrite,ad.price,ad.chstatus,'1' datagener,goo.pkid pcid,
+					goo.prologo imgurl,ad.genre,ad.create_time,ad.return_reason return_reason,'' cmpname,reviwer_id
+					from tb_app_added_product ad left join tb_pc_goods goo on ad.pkid=goo.appid where 1=1 
+					<choose>
+				        <when test=" userid !=null and  userid !=''">
+				            and ad.userid=#{userid}
+				        </when>
+				        <when test=" pkid !=null and  pkid !=''">
+				            and ad.userid in (select userid from tb_cust where f_id=#{pkid})
+				        </when>
+				        <when test=" reviwer_id !=null and  reviwer_id !=''">
+							and (ad.reviwer_id=#{reviwer_id} or ad.userid in (select userid from tb_cust where custmanage=#{reviwer_id}))
+						</when>
+			    	</choose>
+					union all
+					select o.pkid,o.chno,o.userid,o.title,o.bewrite,o.price,o.chstatus,'2' datagener,goo.pkid pcid,
+					goo.prologo imgurl,o.genre,o.createdate create_time,o.reviwer_remark return_reason,o.provider cmpname,reviwer_id
+					from tb_app_order o left join tb_pc_goods goo on o.releid=goo.pkid where 1=1
+					<choose>
+				        <when test=" userid !=null and  userid !=''">
+				            and o.userid=#{userid}
+				        </when>
+				        <when test=" pkid !=null and  pkid !=''">
+				            and o.userid in (select userid from tb_cust where f_id=#{pkid})
+				        </when>
+				        <when test=" reviwer_id !=null and  reviwer_id !=''">
+							and (o.userid in (select userid from tb_cust where custmanage=#{reviwer_id}) or o.reviwer_id=#{reviwer_id})
+						</when>
+			    	</choose>
+					<if test=" pkid !=null and  pkid !=''">
+						union
+						select o.pkid,o.chno,o.userid,o.title,o.bewrite,o.price,o.chstatus,'3' datagener,goo.pkid pcid,
+						goo.prologo imgurl,o.genre,o.createdate create_time,o.reviwer_remark return_reason,o.provider cmpname,reviwer_id
+						from tb_app_order o left join tb_pc_goods goo on o.releid=goo.pkid where 1=1
+						and o.provider_id = #{pkid}
+				    </if>
+				) c where 1=1
+				and c.genre != '11221' and c.genre != '11201'
+			) b
+		) a where rownumber > ${pageSize}*(${offset} - 1)
+	</select>
+	
+	<select id="app.appaddedproduct.selectIncreByUserid" parameterType="com.winpow.services.app.appaddedproduct.bean.Appaddedproduct"
+		resultType="com.winpow.services.app.appaddedproduct.bean.Appaddedproduct">
+		select top ${pageSize} * from (
+			select row_number() over (order by create_time desc) as rownumber,* from(
+				select * from (
+					select ad.pkid,ad.chno,ad.userid,ad.title,ad.bewrite,ad.price,ad.chstatus,'1' datagener,'' provider_id,
+					inc.id pcid,inc.picture imgurl,ad.genre,ad.create_time,ad.return_reason return_reason,'' cmpname,reviwer_id
+					from tb_app_added_product ad left join tb_incre inc on ad.pkid=inc.appId where 1=1 
+					<choose>
+				        <when test=" userid !=null and  userid !=''">
+				            and ad.userid=#{userid}
+				        </when>
+				        <when test=" pkid !=null and  pkid !=''">
+				            and ad.userid in (select userid from tb_cust where f_id=#{pkid})
+				        </when>
+				        <when test=" reviwer_id !=null and  reviwer_id !=''">
+							and (ad.reviwer_id=#{reviwer_id} or ad.userid in (select userid from tb_cust where custmanage=#{reviwer_id}))
+						</when>
+			    	</choose>
+					union all
+					select o.pkid,o.chno,o.userid,o.title,o.bewrite,o.price,o.chstatus,'2' datagener,provider_id,
+					inc.id pcid,inc.picture imgurl,o.genre,o.createdate create_time,o.reviwer_remark return_reason,o.provider cmpname,reviwer_id
+					from tb_app_order o left join tb_incre inc on o.releid=convert(varchar, inc.id) where 1=1
+					<choose>
+				        <when test=" userid !=null and  userid !=''">
+				            and o.userid=#{userid}
+				        </when>
+				        <when test=" pkid !=null and  pkid !=''">
+				            and o.userid in (select userid from tb_cust where f_id=#{pkid})
+				        </when>
+				        <when test=" reviwer_id !=null and  reviwer_id !=''">
+							and (o.userid in (select userid from tb_cust where custmanage=#{reviwer_id}) or o.reviwer_id=#{reviwer_id})
+						</when>
+			    	</choose>
+					<if test=" pkid !=null and  pkid !=''">
+						union
+						select o.pkid,o.chno,o.userid,o.title,o.bewrite,o.price,o.chstatus,'3' datagener,provider_id,
+						inc.id pcid,inc.picture imgurl,o.genre,o.createdate create_time,o.reviwer_remark return_reason,o.provider cmpname,reviwer_id
+						from tb_app_order o left join tb_incre inc on o.releid=convert(varchar, inc.id)  where 1=1
+						and o.provider_id = #{pkid}
+				    </if>
+				) c where 1=1
+				and (c.genre = '11221' or c.genre = '11201')
+			) b
+		) a where rownumber > ${pageSize}*(${offset} - 1)
+	</select>
+
+</mapper>  

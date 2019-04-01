@@ -1,0 +1,1406 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
+	"http://struts.apache.org/dtds/struts-2.5.dtd">
+    
+<struts>
+	<!-- 滚动图片维护 
+	<package name="indexImg" namespace="/manage" extends="struts-winpow-manage">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="indexImg" class="indexImgActionManage">
+			<result name="toList">/manage/indexImg/indexImgList.jsp</result>
+			<result name="toEdit">/manage/indexImg/indexImgEdit.jsp</result>
+			<result name="toAdd">/manage/indexImg/indexImgEdit.jsp</result>
+		</action>
+	</package>
+	-->
+ 
+	
+	
+	<!-- 友情链接  
+	<package name="navigation" namespace="/manage" extends="struts-winpow-manage">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="navigation" class="navigationActionManage">
+			<result name="toList">/manage/navigation/navigationList.jsp</result>
+			<result name="toEdit">/manage/navigation/navigationEdit.jsp</result>
+			<result name="toAdd">/manage/navigation/navigationEdit.jsp</result>
+		</action>
+	</package>-->
+	
+	<!-- 会员等级 -->
+	<package name="accountRank" namespace="/manage" extends="struts-winpow-manage">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="accountRank" class="accountRankActionManage">
+			<result name="toList">/manage/accountRank/accountRankList.jsp</result>
+			<result name="toEdit">/manage/accountRank/accountRankEdit.jsp</result>
+			<result name="toAdd">/manage/accountRank/accountRankEdit.jsp</result>
+		</action>
+	</package>
+	
+	<!-- 会员 -->
+	<package name="account" namespace="/manage" extends="struts-winpow-manage">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="account" class="accountActionManage">
+			<result name="loginSuccess">/toIndex.jsp</result>
+			<result name="loginFaild">/login.jsp</result>
+			<result name="regeistSuccess" type="redirect">/regeist_success.jsp</result>
+			<result name="loginOut">/toIndex.jsp</result>
+			<result name="regFaild">/regeistFalid.jsp</result>
+			<result name="toList">/manage/account/accountList.jsp</result>
+			<result name="toEdit">/manage/account/accountEdit.jsp</result>
+			<result name="freeze">/manage/account/freeze.jsp</result>
+			<result name="show">/manage/account/show.jsp</result>
+		</action>
+	</package>
+	
+	<!-- 分类管理 -->
+	<package name="catalog" namespace="/manage" extends="struts-winpow-manage">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="catalog" class="catalogActionManage">
+			<result name="toList">/manage/catalog/catalogList.jsp</result>
+			<result name="selectAllList" type="redirect">catalog!selectList.action?e.type=${e.type}</result>
+			<result name="toAdd">/manage/catalog/catalogEdit.jsp</result>
+			<result name="toEdit">/manage/catalog/catalogEdit.jsp</result>
+		</action>
+	</package>
+	
+	<!-- 标签管理 
+	<package name="lable" namespace="/manage" extends="struts-winpow-manage">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="lable" class="lableAction">
+			<result name="toAdd">/manage/lable/lableEdit.jsp</result>
+			<result name="toList">/manage/lable/lableList.jsp</result>
+			<result name="toEdit">/manage/lable/lableEdit.jsp</result>
+		</action>
+	</package>-->
+
+	<!-- 访问统计 
+	<package name="sessionCount" namespace="/manage" extends="struts-winpow-manage">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="sessionCount" class="sessionCountAction">
+			<result name="toList">/manage/sessionCount/sessionCountList.jsp</result>
+			<result name="toAdd">/manage/sessionCount/sessionCountEdit.jsp</result>
+			<result name="toEdit">/manage/sessionCount/sessionCountEdit.jsp</result>
+		</action>
+	</package>-->
+
+	<!-- 内部商品信息 -->
+	<package name="productinner" namespace="/manage" extends="struts-winpow-manage">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="productinner" class="productInnerActionManage">
+			<result name="toList">/manage/product/productinnerList.jsp</result>
+			<result name="toAdd">/manage/product/productinnerEdit.jsp</result>
+			<result name="toEdit">/manage/product/productinnerEdit.jsp</result>
+		</action>
+	</package>
+	<!-- 商品信息 -->
+	<package name="product" namespace="/manage" extends="struts-winpow-manage">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="product" class="productActionManage">
+			<result name="toList">/manage/product/productList.jsp</result>
+			<result name="toAdd">/manage/product/productEdit.jsp</result>
+			<result name="toEdit">/manage/product/productEdit.jsp</result>
+		</action>
+	</package>
+	
+	<!-- 订单  
+	<package name="order" namespace="/manage" extends="struts-winpow-manage">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="order" class="orderActionManage">
+			<result name="toList">/manage/order/orderList.jsp</result>
+			<result name="toAdd">/manage/order/orderEdit.jsp</result>
+			<result name="toEdit">/manage/order/orderEdit.jsp</result>
+			<result name="toPrint">/manage/order/orderPrint.jsp</result>
+			<result name="toSendProduct">/manage/order/sendProduct.jsp</result>
+			<result name="selectOrdership">/manage/order/updateOrdership.jsp</result>
+		</action>
+	</package>
+	-->
+	<!-- notice公告
+	<package name="notice" namespace="/manage" extends="struts-winpow-manage">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="notice" class="noticeAction">
+			<result name="toList">/manage/notice/noticeList.jsp</result>
+			<result name="toAdd">/manage/notice/noticeEdit.jsp</result>
+			<result name="toEdit">/manage/notice/noticeEdit.jsp</result>
+		</action>
+	</package>-->
+	
+	<!-- 系统日志管理 -->
+	<package name="systemlog" namespace="/manage" extends="struts-winpow-manage">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="systemlog" class="systemlogActionManage">
+			<result name="toList">/manage/systemlog/systemlogList.jsp</result>
+			<result name="toAdd">/manage/systemlog/systemlogEdit.jsp</result>
+			<result name="toEdit">/manage/systemlog/systemlogEdit.jsp</result>
+			<result name="systemlogListAndDetail">/manage/systemlog/systemlogListAndDetail.jsp</result>
+		</action>
+	</package>
+	
+	<!-- 区域管理 
+	<package name="area" namespace="/manage" extends="struts-winpow-manage">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="area" class="areaActionManage">
+			<result name="toList">/manage/area/areaList.jsp</result>
+			<result name="toAdd">/manage/area/areaEdit.jsp</result>
+			<result name="toEdit">/manage/area/areaEdit.jsp</result>
+			<result name="areaTree">/manage/area/areaTree.jsp</result>
+			<result name="addOrUpdate">/manage/area/addOrUpdate.jsp</result>
+		</action>
+	</package>
+	-->
+	<!-- 系统设置-->
+	<package name="systemSetting" namespace="/manage" extends="struts-winpow-manage">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="systemSetting" class="systemSettingActionManage">
+			<result name="toEdit">/manage/systemSetting/systemSettingEdit.jsp</result>
+		</action>
+	</package>
+	
+	<!-- 评论  
+	<package name="comment" namespace="/manage" extends="struts-winpow-manage">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="comment" class="commentActionManage">
+			<result name="toList">/manage/comment/commentList.jsp</result>
+			<result name="selectAllList" type="redirect">comment!selectList.action</result>
+			<result name="toAdd">/manage/comment/commentEdit.jsp</result>
+			<result name="toEdit">/manage/comment/commentEdit.jsp</result>
+		</action>
+	</package>
+	-->
+	<!-- 键值对 -->
+	<package name="keyvalue" namespace="/manage" extends="struts-winpow-manage">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="keyvalue" class="keyvalueActionManage">
+			<result name="toList">/manage/keyvalue/keyvalueList.jsp</result>
+			<result name="selectAllList" type="redirect">keyvalue!selectList.action</result>
+			<result name="toAdd">/manage/keyvalue/keyvalueEdit.jsp</result>
+			<result name="toEdit">/manage/keyvalue/keyvalueEdit.jsp</result>
+		</action>
+	</package>
+	
+	<!-- 产品属性 -->
+	<package name="attribute" namespace="/manage" extends="struts-winpow-manage">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="attribute" class="attributeActionManage">
+			<result name="toList">/manage/attribute/attributeList.jsp</result>
+			<result name="toAdd">/manage/attribute/attributeEdit.jsp</result>
+			<result name="toEdit">/manage/attribute/attributeEdit.jsp</result>
+		</action>
+	</package>
+	
+	<!-- 广告管理 -->
+	<package name="advert" namespace="/manage" extends="struts-winpow-manage">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="advert" class="advertActionManage">
+			<result name="toList">/manage/advert/advertList.jsp</result>
+			<result name="toAdd">/manage/advert/advertEdit.jsp</result>
+			<result name="toEdit">/manage/advert/advertEdit.jsp</result>
+		</action>
+	</package>
+	
+	<!-- 问卷管理 
+	<package name="questionnaire" namespace="/manage" extends="struts-winpow-manage">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="questionnaire" class="questionnaireActionManage">
+			<result name="toList">/manage/questionnaire/questionnaireList.jsp</result>
+			<result name="toAdd">/manage/questionnaire/questionnaireEdit.jsp</result>
+			<result name="toEdit">/manage/questionnaire/questionnaireEdit.jsp</result>
+		</action>
+	</package>
+	-->
+	<!-- 支付方式管理  
+	<package name="pay" namespace="/manage" extends="struts-winpow-manage">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="pay" class="payActionManage">
+			<result name="toList">/manage/pay/payList.jsp</result>
+			<result name="toAdd">/manage/pay/payEdit.jsp</result>
+			<result name="toEdit">/manage/pay/payEdit.jsp</result>
+		</action>
+	</package>
+	-->
+	<!-- 存储方式管理 -->
+	<package name="oss" namespace="/manage" extends="struts-winpow-manage">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="oss" class="ossActionManage">
+			<result name="toList">/manage/oss/ossList.jsp</result>
+			<result name="toAdd">/manage/oss/ossEdit.jsp</result>
+			<result name="toEdit">/manage/oss/ossEdit.jsp</result>
+		</action>
+	</package>
+	
+	<!-- 评论方式管理 
+	<package name="commentType" namespace="/manage" extends="struts-winpow-manage">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="commentType" class="commentTypeActionManage">
+			<result name="toList">/manage/commentType/commentTypeList.jsp</result>
+			<result name="toAdd">/manage/commentType/commentTypeEdit.jsp</result>
+			<result name="toEdit">/manage/commentType/commentTypeEdit.jsp</result>
+		</action>
+	</package>
+	-->
+	<!-- 评论方式管理 
+	<package name="report" namespace="/manage" extends="struts-winpow-manage">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="report" class="reportActionManage">
+			<result name="orderSales">/manage/report/orderSales.jsp</result>
+			<result name="productSales">/manage/report/productSales.jsp</result>
+		</action>
+	</package>
+	-->
+	<!-- 物流管理 
+	<package name="express" namespace="/manage" extends="struts-winpow-manage">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="express" class="expressActionManage">
+			<result name="toList">/manage/express/expressList.jsp</result>
+			<result name="toAdd">/manage/express/expressEdit.jsp</result>
+			<result name="toEdit">/manage/express/expressEdit.jsp</result>
+		</action>
+	</package>
+	-->
+	<!-- SMS短信管理 
+	<package name="sms" namespace="/manage" extends="struts-winpow-manage">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="sms" class="smsActionManage">
+			<result name="toList">/manage/sms/smsList.jsp</result>
+		</action>
+	</package>
+	-->
+	<!-- 商品到货通知  
+	<package name="emailNotifyProduct" namespace="/manage" extends="struts-winpow-manage">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="emailNotifyProduct" class="emailNotifyProductActionManage">
+			<result name="toList">/manage/emailNotifyProduct/emailNotifyProductList.jsp</result>
+			<result name="toAdd">/manage/emailNotifyProduct/emailNotifyProductEdit.jsp</result>
+			<result name="toEdit">/manage/emailNotifyProduct/emailNotifyProductEdit.jsp</result>
+		</action>
+	</package>
+	-->
+	<!-- 通知模板  
+	<package name="notifyTemplate" namespace="/manage" extends="struts-winpow-manage">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="notifyTemplate" class="notifyTemplateActionManage">
+			<result name="toList">/manage/notifyTemplate/notifyTemplateList.jsp</result>
+			<result name="toEdit">/manage/notifyTemplate/notifyTemplateEdit.jsp</result>
+		</action>
+	</package>
+	-->
+	<!-- 邮件管理 
+	<package name="email" namespace="/manage" extends="struts-winpow-manage">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="email" class="emailActionManage">
+			<result name="toList">/manage/email/emailList.jsp</result>
+			<result name="toAdd">/manage/email/emailEdit.jsp</result>
+			<result name="toEdit">/manage/email/emailEdit.jsp</result>
+		</action>
+	</package>
+	-->
+	<!-- 任务管理 -->
+	<package name="task" namespace="/manage" extends="struts-winpow-manage">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="task" class="taskActionManage">
+			<result name="toList">/manage/task/taskList.jsp</result>
+		</action>
+	</package>
+	
+	<!-- 活动促销管理 -->
+	<package name="activity" namespace="/manage" extends="struts-winpow-manage">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="activity" class="activityActionManage">
+			<result name="toList">/manage/activity/activityList.jsp</result>
+			<result name="toAdd">/manage/activity/activityEdit.jsp</result>
+			<result name="toEdit">/manage/activity/activityEdit.jsp</result>
+		</action>
+	</package>
+	
+	<!-- 商品赠品管理 -->
+	<package name="gift" namespace="/manage" extends="struts-winpow-manage">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="gift" class="giftActionManage">
+			<result name="toList">/manage/gift/giftList.jsp</result>
+			<result name="toAdd">/manage/gift/giftEdit.jsp</result>
+			<result name="toEdit">/manage/gift/giftEdit.jsp</result>
+			<result name="show">/manage/gift/show.jsp</result>
+		</action>
+	</package>
+	
+	<!-- 热门查询管理 -->
+	<package name="hotquery" namespace="/manage" extends="struts-winpow-manage">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="hotquery" class="hotqueryActionManage">
+			<result name="toList">/manage/hotquery/hotqueryList.jsp</result>
+			<result name="toAdd">/manage/hotquery/hotqueryEdit.jsp</result>
+			<result name="toEdit">/manage/hotquery/hotqueryEdit.jsp</result>
+		</action>
+	</package>
+	
+		<!--  历史数据 -->
+	<package name="histdata" namespace="/manage" extends="struts-winpow-manage">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="histdata" class="histdataActionManage">
+			<result name="toList">/manage/histdata/histdataList.jsp</result>
+			<result name="toAdd">/manage/histdata/histdataEdit.jsp</result>
+			<result name="toEdit">/manage/histdata/histdataEdit.jsp</result>
+		</action>
+	</package>
+	<!--客户基础信息管理-->
+	<package name="cust" namespace="/manage" extends="struts-winpow-manage">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="cust" class="custActionManage">
+			<result name="toList">/manage/cust/custList.jsp</result>
+			<result name="toList2">/manage/cust/custList2.jsp</result>
+			<result name="toAdd">/manage/cust/custAdd.jsp</result>
+			<result name="toEdit">/manage/cust/custEdit.jsp</result>
+			<result name="tochild">/manage/cust/custchild.jsp</result>
+			<result name="addqiye">/manage/cust/addqiye.jsp</result>
+			<result name="testcust">/manage/product/testcust.jsp</result>
+			<result name="custMarketeList">/manage/cust/custMarketeList.jsp</result>
+			<result name="custMarketeEdit">/manage/cust/custMarketeEdit.jsp</result>
+		</action>
+	</package>
+		<!--机构信息-->
+	<package name="jigou" namespace="/manage" extends="struts-winpow-manage">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="jigou" class="jigouActionManage">
+			<result name="toList">/manage/jigou/jigouList.jsp</result>
+			<result name="toAdd">/manage/jigou/jigouEdit.jsp</result>
+			<result name="toEdit">/manage/jigou/jigouEdit.jsp</result>
+		</action>
+	</package>
+	<!-- 企业数据 -->
+	<package name="qiye" namespace="/manage" extends="struts-winpow-manage">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="qiye" class="qiyeActionManage">
+			<result name="toList">/manage/qiye/qiyeList.jsp</result>
+			<result name="toAdd">/manage/qiye/qiyeEdit.jsp</result>
+			<result name="toEdit">/manage/qiye/qiyeEdit.jsp</result>
+			<result name="toEdit">/manage/qiye/qiyeEdit.jsp</result>
+			<result name="toPartyList">/manage/qiye/PartyList.jsp</result>
+			<result name="toPartyEdit">/manage/qiye/PartyEdit.jsp</result>
+		</action>
+	</package>
+	<!--个人信息 -->
+	<package name="person" namespace="/manage" extends="struts-winpow-manage">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="person" class="personActionManage">
+			<result name="toList">/manage/person/personList.jsp</result>
+			<result name="toAdd">/manage/person/personEdit.jsp</result>
+			<result name="toEdit">/manage/person/personEdit.jsp</result>
+		</action>
+	</package>
+	
+		<!-- 新闻-->
+	<package name="news" namespace="/manage" extends="struts-winpow-manage">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="news" class="newsActionManage">
+			<result name="toList">/manage/news/newsList.jsp</result>
+			<result name="toAdd">/manage/news/newsEdit.jsp</result>
+			<result name="toEdit">/manage/news/newsEdit.jsp</result>
+		</action>
+	</package>
+		<!-- 文件上传下载 -->
+	<package name="fileinfo" namespace="/manage" extends="struts-winpow-manage">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="fileinfo" class="fileinfoActionManage">
+			<result name="toList">/manage/fileinfo/fileinfoList.jsp</result>
+			<result name="toAdd">/manage/fileinfo/fileinfoEdit.jsp</result>
+			<result name="toEdit">/manage/fileinfo/fileinfoEdit.jsp</result>
+		</action>
+	</package>
+		<!-- 活动报名 -->
+	<package name="activitiesapp" namespace="/manage" extends="struts-winpow-manage">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="activitiesapp" class="activitiesappActionManage">
+			<result name="toList">/manage/activitiesapp/activitiesappList.jsp</result>
+			<result name="toAdd">/manage/activitiesapp/activitiesappEdit.jsp</result>
+			<result name="toEdit">/manage/activitiesapp/activitiesappEdit.jsp</result>
+			<result name="toActiSignin">/manage/activitiesapp/actiSignin.jsp</result>
+		</action>
+	</package>
+		<!-- 盈创学院-->
+	<package name="activities" namespace="/manage" extends="struts-winpow-manage">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="activities" class="activitiesActionManage">
+			<result name="toList">/manage/activities/activitiesList.jsp</result>
+			<result name="toAdd">/manage/activities/activitiesEdit.jsp</result>
+			<result name="toEdit">/manage/activities/activitiesEdit.jsp</result>
+		</action>
+	</package>
+		<!-- 贷款产品表 -->
+	<package name="product" namespace="/manage" extends="struts-winpow-manage">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="product" class="productActionManage">
+			<result name="toList">/manage/product/productList.jsp</result>
+			<result name="toAdd">/manage/product/productEdit.jsp</result>
+			<result name="toEdit">/manage/product/productEdit.jsp</result>
+		</action>
+	</package>
+	
+		<!--贷款产品申请表 -->
+	<package name="productapp" namespace="/manage" extends="struts-winpow-manage">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="productapp" class="productappActionManage">
+			<result name="toList">/manage/productapp/productappList.jsp</result>
+			<result name="toList2">/manage/productapp/productappList2.jsp</result>
+			<result name="toAdd">/manage/productapp/productappEdit.jsp</result>
+			<result name="toEdit">/manage/productapp/productappEdit.jsp</result>
+			<result name="toEdit2">/manage/productapp/productappEdit2.jsp</result>
+		</action>
+	</package>
+		<!-- 增值业务产品表 -->
+	<package name="incre" namespace="/manage" extends="struts-winpow-manage">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="incre" class="increActionManage">
+			<result name="toList">/manage/incre/increList.jsp</result>
+			<result name="toAdd">/manage/incre/increEdit.jsp</result>
+			<result name="toEdit">/manage/incre/increEdit.jsp</result>
+		</action>
+	</package>
+		<!-- 增值业务申请 -->
+	<package name="increapp" namespace="/manage" extends="struts-winpow-manage">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="increapp" class="increappActionManage">
+			<result name="toList">/manage/increapp/increappList.jsp</result>
+			<result name="toAdd">/manage/increapp/increappEdit.jsp</result>
+			<result name="toEdit">/manage/increapp/increappEdit.jsp</result>
+		</action>
+	</package>
+		<!-- 企业财务摘要 -->
+	<package name="caiwuzhaiyao" namespace="/manage" extends="struts-winpow-manage">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="caiwuzhaiyao" class="caiwuzhaiyaoActionManage">
+			<result name="toList">/manage/caiwuzhaiyao/caiwuzhaiyaoList.jsp</result>
+			<result name="toAdd">/manage/caiwuzhaiyao/caiwuzhaiyaoEdit.jsp</result>
+			<result name="toEdit">/manage/caiwuzhaiyao/caiwuzhaiyaoEdit.jsp</result>
+		</action>
+	</package>
+	<!-- 贷款系统 -->
+	<package name="wpcfg" namespace="/manage" extends="struts-winpow-manage">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="wpcfg" class="wpCfgActionManage">
+			<result name="toList">/manage/loan/wpcfgList.jsp</result>
+			<result name="toAdd">/manage/loan/wpcfgEdit.jsp</result>
+			<result name="toEdit">/manage/loan/wpcfgEdit.jsp</result>
+		</action>
+	</package>
+	<package name="wploan" namespace="/manage" extends="struts-winpow-manage">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="wploan" class="wpLoanActionManage">
+			<result name="toList">/manage/loan/wploanList.jsp</result>
+			<result name="toAdd">/manage/loan/wploanEdit.jsp</result>
+			<result name="toEdit">/manage/loan/wploanEdit.jsp</result>
+			<result name="toBrowse">/manage/loan/wploanEdit.jsp</result>
+		</action>
+	</package>
+	<package name="wprecode" namespace="/manage" extends="struts-winpow-manage">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="wprecode" class="wpRecodeActionManage">
+			<result name="toList">/manage/loan/wprecodeList.jsp</result>
+			<result name="toEdit">/manage/loan/wprecodeEdit.jsp</result>
+			<result name="tobatch">/manage/loan/wpbatch.jsp</result>
+		</action>
+	</package>
+	
+		<!-- 短信-->
+	<package name="message" namespace="/manage" extends="struts-winpow-manage">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="message" class="messageActionManage">
+			<result name="toList">/manage/message/messageList.jsp</result>
+			<result name="toAdd">/manage/message/messageEdit.jsp</result>
+			<result name="toEdit">/manage/message/messageEdit.jsp</result>
+		</action>
+	</package>
+		<!-- 股权项目约谈申请 -->
+	<package name="guquanapp" namespace="/manage" extends="struts-winpow-manage">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="guquanapp" class="guquanappActionManage">
+			<result name="toList">/manage/guquanapp/guquanappList.jsp</result>
+			<result name="toAdd">/manage/guquanapp/guquanappEdit.jsp</result>
+			<result name="toEdit">/manage/guquanapp/guquanappEdit.jsp</result>
+		</action>
+	</package>
+			<!--股权项目-->
+	<package name="guquan" namespace="/manage" extends="struts-winpow-manage">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="guquan" class="guquanActionManage">
+			<result name="toList">/manage/guquan/guquanList.jsp</result>
+			<result name="toAdd">/manage/guquan/guquanAdd.jsp</result>
+			<result name="toEdit">/manage/guquan/guquanEdit.jsp</result>
+		</action>
+	</package>
+		<!-- 股权状态-->
+	<package name="guquanhuangtai" namespace="/manage" extends="struts-winpow-manage">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="guquanhuangtai" class="guquanhuangtaiActionManage">
+			<result name="toList">/manage/guquanhuangtai/guquanhuangtaiList.jsp</result>
+			<result name="toAdd">/manage/guquanhuangtai/guquanhuangtaiEdit.jsp</result>
+			<result name="toEdit">/manage/guquanhuangtai/guquanhuangtaiEdit.jsp</result>
+		</action>
+	</package>
+		<!-- 股权项目进程 -->
+	<package name="guquanjingcheng" namespace="/manage" extends="struts-winpow-manage">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="guquanjingcheng" class="guquanjingchengActionManage">
+			<result name="toList">/manage/guquanjingcheng/guquanjingchengList.jsp</result>
+			<result name="toAdd">/manage/guquanjingcheng/guquanjingchengEdit.jsp</result>
+			<result name="toEdit">/manage/guquanjingcheng/guquanjingchengEdit.jsp</result>
+		</action>
+	</package>
+	
+	
+		<!--  股权项目成员 -->
+	<package name="guquanchengyuan" namespace="/manage" extends="struts-winpow-manage">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="guquanchengyuan" class="guquanchengyuanActionManage">
+			<result name="toList">/manage/guquanchengyuan/guquanchengyuanList.jsp</result>
+			<result name="toAdd">/manage/guquanchengyuan/guquanchengyuanEdit.jsp</result>
+			<result name="toEdit">/manage/guquanchengyuan/guquanchengyuanEdit.jsp</result>
+		</action>
+	</package>
+	 
+	<!--  导出excle -->
+	<package name="downloadexcel" namespace="/manage" extends="struts-winpow-manage">
+        <global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="downloadexcel" class="downloadBugExcelAction" method="download">
+            <result name="excel" type="stream">
+                <param name="contentType">application/vnd.ms-excel</param>
+                <param name="contentDisposition">filename="${fileName}.xls"</param>
+                <param name="inputName">excelStream</param>
+            </result>
+        </action>
+	</package>
+ 	<!--  成长贷导出word -->
+	<package name="czddownloadword" namespace="/manage" extends="struts-winpow-manage">
+        <global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="czddownloadword" class="czddownloadwordAction" method="download">
+            <result name="word" type="stream">
+                <param name="contentType">application/msword</param>
+                <param name="contentDisposition">filename="${fileName}.doc"</param>
+                <param name="inputName">excelStream</param>
+            </result>
+        </action>
+	</package>
+	<!--财务报表-->
+	<package name="caiwu" namespace="/manage" extends="struts-winpow-manage">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="caiwu" class="caiwuActionManage">
+			<result name="toList">/manage/caiwu/caiwuList.jsp</result>
+			<result name="toAdd">/manage/caiwu/caiwuEdit.jsp</result>
+			<result name="toEdit">/manage/caiwu/caiwuEdit.jsp</result>
+		</action>
+	</package>
+	
+		<!-- 贴息申请 -->
+	<package name="interestapp" namespace="/manage" extends="struts-winpow-manage">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="interestapp" class="interestappActionManage">
+			<result name="toList">/manage/interestapp/interestappList.jsp</result>
+			<result name="toAdd">/manage/interestapp/interestappEdit.jsp</result>
+			<result name="toEdit">/manage/interestapp/interestappEdit.jsp</result>
+		</action>
+	</package>
+		<!-- 图片 -->
+	<package name="picture" namespace="/manage" extends="struts-winpow-manage">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="picture" class="pictureActionManage">
+			<result name="toList">/manage/picture/pictureList.jsp</result>
+			<result name="toAdd">/manage/picture/pictureEdit.jsp</result>
+			<result name="toEdit">/manage/picture/pictureEdit.jsp</result>
+		</action>
+	</package>
+	<!-- 盈创活动报名联系人-->
+	<package name="activitieslinkuser" namespace="/manage" extends="struts-winpow-manage">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="activitieslinkuser" class="activitieslinkuserActionManage">
+			<result name="toList">/manage/activitieslinkuser/activitieslinkuserList.jsp</result>
+			<result name="toAdd">/manage/activitieslinkuser/activitieslinkuserEdit.jsp</result>
+			<result name="toEdit">/manage/activitieslinkuser/activitieslinkuserEdit.jsp</result>
+		</action>
+	</package>
+	
+		<!-- 成长贷 产品信息-->
+	<package name="productczdcpxx" namespace="/manage" extends="struts-winpow-manage">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="productczdcpxx" class="productczdcpxxActionManage">
+			<result name="toList">/manage/productczdcpxx/productczdcpxxList.jsp</result>
+			<result name="toAdd">/manage/productczdcpxx/productczdcpxxEdit.jsp</result>
+			<result name="toEdit">/manage/productczdcpxx/productczdcpxxEdit.jsp</result>
+		</action>
+	</package>
+		<!--  成长贷 班子情况 -->
+	<package name="productczdbzqk" namespace="/manage" extends="struts-winpow-manage">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="productczdbzqk" class="productczdbzqkActionManage">
+			<result name="toList">/manage/productczdbzqk/productczdbzqkList.jsp</result>
+			<result name="toAdd">/manage/productczdbzqk/productczdbzqkEdit.jsp</result>
+			<result name="toEdit">/manage/productczdbzqk/productczdbzqkEdit.jsp</result>
+		</action>
+	</package>
+		<!-- 成长贷 主表-->
+	<package name="productczdbase" namespace="/manage" extends="struts-winpow-manage">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="productczdbase" class="productczdbaseActionManage">
+			<result name="toList">/manage/productczdbase/productczdbaseList.jsp</result>
+			<result name="toList2">/manage/productczdbase/productczdbaseList2.jsp</result>
+			<result name="toAdd">/manage/productczdbase/productczdbaseEdit.jsp</result>
+			<result name="toEdit">/manage/productczdbase/productczdbaseEdit.jsp</result>
+			<result name="toEdit2">/manage/productczdbase/productczdbaseEdit2.jsp</result>
+			<!-- 工作流 -->
+			<result name="toList3">/manage/productczdbase/productczdbaseList3.jsp</result>
+			<result name="toEdit3">/manage/productczdbase/productczdbaseEdit3.jsp</result>
+			<result name="toEditDetail">/manage/productczdbase/editDetail.jsp</result>
+			
+			<result name="toList4">/manage/productczdbase/productczdbaseList4.jsp</result>
+		</action>
+	</package>
+		<!-- 成长贷 其他信息 -->
+	<package name="productczdqtxx" namespace="/manage" extends="struts-winpow-manage">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="productczdqtxx" class="productczdqtxxActionManage">
+			<result name="toList">/manage/productczdqtxx/productczdqtxxList.jsp</result>
+			<result name="toAdd">/manage/productczdqtxx/productczdqtxxEdit.jsp</result>
+			<result name="toEdit">/manage/productczdqtxx/productczdqtxxEdit.jsp</result>
+		</action>
+	</package>
+	
+		<!-- 成长贷 其他贷款情况 -->
+	<package name="productczdqtdkqk" namespace="/manage" extends="struts-winpow-manage">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="productczdqtdkqk" class="productczdqtdkqkActionManage">
+			<result name="toList">/manage/productczdqtdkqk/productczdqtdkqkList.jsp</result>
+			<result name="toAdd">/manage/productczdqtdkqk/productczdqtdkqkEdit.jsp</result>
+			<result name="toEdit">/manage/productczdqtdkqk/productczdqtdkqkEdit.jsp</result>
+		</action>
+	</package>
+	
+		<!--成长贷  供应商销售商信息-->
+	<package name="productczdgysxssxx" namespace="/manage" extends="struts-winpow-manage">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="productczdgysxssxx" class="productczdgysxssxxActionManage">
+			<result name="toList">/manage/productczdgysxssxx/productczdgysxssxxList.jsp</result>
+			<result name="toAdd">/manage/productczdgysxssxx/productczdgysxssxxEdit.jsp</result>
+			<result name="toEdit">/manage/productczdgysxssxx/productczdgysxssxxEdit.jsp</result>
+		</action>
+	</package>
+		<!-- 成长贷  股东情况 -->
+	<package name="productczdgdqq" namespace="/manage" extends="struts-winpow-manage">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="productczdgdqq" class="productczdgdqqActionManage">
+			<result name="toList">/manage/productczdgdqq/productczdgdqqList.jsp</result>
+			<result name="toAdd">/manage/productczdgdqq/productczdgdqqEdit.jsp</result>
+			<result name="toEdit">/manage/productczdgdqq/productczdgdqqEdit.jsp</result>
+		</action>
+	</package>
+		<!-- 成长贷  反担保措施 -->
+	<package name="productczdfdbcs" namespace="/manage" extends="struts-winpow-manage">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="productczdfdbcs" class="productczdfdbcsActionManage">
+			<result name="toList">/manage/productczdfdbcs/productczdfdbcsList.jsp</result>
+			<result name="toAdd">/manage/productczdfdbcs/productczdfdbcsEdit.jsp</result>
+			<result name="toEdit">/manage/productczdfdbcs/productczdfdbcsEdit.jsp</result>
+		</action>
+	</package>
+		<!-- 成长贷  对外担保情况 -->
+	<package name="productczddwdbqk" namespace="/manage" extends="struts-winpow-manage">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="productczddwdbqk" class="productczddwdbqkActionManage">
+			<result name="toList">/manage/productczddwdbqk/productczddwdbqkList.jsp</result>
+			<result name="toAdd">/manage/productczddwdbqk/productczddwdbqkEdit.jsp</result>
+			<result name="toEdit">/manage/productczddwdbqk/productczddwdbqkEdit.jsp</result>
+		</action>
+	</package>
+		<!-- 成长贷  财务信息 -->
+	<package name="productczdcwxx" namespace="/manage" extends="struts-winpow-manage">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="productczdcwxx" class="productczdcwxxActionManage">
+			<result name="toList">/manage/productczdcwxx/productczdcwxxList.jsp</result>
+			<result name="toAdd">/manage/productczdcwxx/productczdcwxxEdit.jsp</result>
+			<result name="toEdit">/manage/productczdcwxx/productczdcwxxEdit.jsp</result>
+		</action>
+	</package>
+	
+	<!-- 贴息的文件上传 -->
+	<package name="action" namespace="" extends="struts-winpow-front">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="upload" class="uploadInterestappAction" method="execute">
+			<result name="success" type="dispatcher">/WEB-INF/jsp/message.jsp</result>
+		</action>
+	</package>
+	<!--
+		配置上传文件临时保存目录，如果没有配置则会报：提示该 struts.multipart.saveDir属性未设置异常 <constant
+		name="struts.multipart.saveDir" value="/upload" />
+	-->
+	<package name="goodaaa" namespace="" extends="struts-winpow-front">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="goodaaa" class="goodsAction" method="exe">
+ 		<!-- 	<interceptor-ref name="defaultStack">
+				<param name="fileUpload.maximumSize">102400</param>
+				<param name="fileUpload.allowedTypes">
+					image/bmp,image/png,image/gif,image/jpeg,image/jpg,image/pjpeg
+					,image/bmp, image/gif, image/x-png,
+                </param>
+			</interceptor-ref> -->
+		</action>
+	</package>
+	
+		<!-- 首页的融资申请 -->
+	<package name="indexapp" namespace="/manage" extends="struts-winpow-manage">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="indexapp" class="indexappActionManage">
+			<result name="toList">/manage/indexapp/indexappList.jsp</result>
+			<result name="toAdd">/manage/indexapp/indexappEdit.jsp</result>
+			<result name="toEdit">/manage/indexapp/indexappEdit.jsp</result>
+		</action>
+	</package>
+	<!-- 用户反馈 -->
+	<package name="feedback" namespace="/manage" extends="struts-winpow-manage">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="feedback" class="feedbackActionManage">
+			<result name="toList">/manage/feedback/feedbackList.jsp</result>
+			<result name="toAdd">/manage/feedback/feedbackEdit.jsp</result>
+			<result name="toEdit">/manage/feedback/feedbackEdit.jsp</result>
+		</action>
+	</package>
+	
+		<!--基金发放记录 -->
+	<package name="fundapp" namespace="/manage" extends="struts-winpow-manage">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="fundapp" class="fundappActionManage">
+			<result name="toList">/manage/fundapp/fundappList.jsp</result>
+			<result name="toAdd">/manage/fundapp/fundappEdit.jsp</result>
+			<result name="toEdit">/manage/fundapp/fundappEdit.jsp</result>
+		</action>
+	</package>
+	
+	<!-- 标准化数据 -->
+	<package name="biaozhun" namespace="/manage" extends="struts-winpow-manage">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="biaozhun" class="biaozhunActionManage">
+			<result name="toList">/manage/biaozhun/biaozhunList.jsp</result>
+			<result name="toAdd">/manage/biaozhun/biaozhunEdit.jsp</result>
+			<result name="toEdit">/manage/biaozhun/biaozhunEdit.jsp</result>
+		</action>
+	</package>
+	
+		<!-- 企业走访入库 -->
+	<package name="zoufang" namespace="/manage" extends="struts-winpow-manage">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="zoufang" class="zoufangActionManage">
+			<result name="toList">/manage/zoufang/zoufangList.jsp</result>
+			<result name="toAdd">/manage/zoufang/zoufangEdit.jsp</result>
+			<result name="toEdit">/manage/zoufang/zoufangEdit.jsp</result>
+		</action>
+	</package>
+	<!--评审会管理  -->
+	<package name="pingshenhui" namespace="/manage" extends="struts-winpow-manage">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="pingshenhui" class="pingshenhuiActionManage">
+			<result name="toList">/manage/pingshenhui/pingshenhuiList.jsp</result>
+			<result name="toAdd">/manage/pingshenhui/pingshenhuiEdit.jsp</result>
+			<result name="toEdit">/manage/pingshenhui/pingshenhuiEdit.jsp</result>
+		</action>
+	</package>
+	<!--评审会明细  -->
+	<package name="pingshenhuimingxi" namespace="/manage" extends="struts-winpow-manage">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="pingshenhuimingxi" class="pingshenhuimingxiActionManage">
+			<result name="toList">/manage/pingshenhuimingxi/pingshenhuimingxiList.jsp</result>
+			<result name="toAdd">/manage/pingshenhuimingxi/pingshenhuimingxiEdit.jsp</result>
+			<result name="toEdit">/manage/pingshenhuimingxi/pingshenhuimingxiEdit.jsp</result>
+		</action>
+	</package>
+	
+	
+	<!-- 扶持政策 -->
+	<package name="fuchizhengce" namespace="/manage" extends="struts-winpow-manage">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="fuchizhengce" class="fuchizhengceActionManage">
+			<result name="toList">/manage/fuchizhengce/fuchizhengceList.jsp</result>
+			<result name="toAdd">/manage/fuchizhengce/fuchizhengceEdit.jsp</result>
+			<result name="toEdit">/manage/fuchizhengce/fuchizhengceEdit.jsp</result>
+		</action>
+	</package>
+	
+	
+	<!-- 政策申报 -->
+	<package name="zhengceshenbao" namespace="/manage" extends="struts-winpow-manage">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="zhengceshenbao" class="zhengceshenbaoActionManage">
+			<result name="toList">/manage/zhengceshenbao/zhengceshenbaoList.jsp</result>
+			<result name="toAdd">/manage/zhengceshenbao/zhengceshenbaoEdit.jsp</result>
+			<result name="toEdit">/manage/zhengceshenbao/zhengceshenbaoEdit.jsp</result>
+		</action>
+	</package>
+
+	<!--股权融资项目-->
+	<package name="guquanFinancing" namespace="/manage" extends="struts-winpow-manage">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="guquan_financing" class="guquanFinancingActionManage">
+			<result name="toList">/manage/guquanfinancing/guquanfinancingList.jsp</result>
+			<result name="toAdd">/manage/guquanfinancing/guquanfinancingEdit.jsp</result>
+			<result name="toEdit">/manage/guquanfinancing/guquanfinancingEdit.jsp</result>
+		</action>
+	</package>
+
+	<!--开关-->
+	<package name="config" namespace="/manage" extends="struts-winpow-manage">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="config" class="configActionManage">
+			<result name="toList">/manage/config/configList.jsp</result>
+			<result name="toAdd">/manage/config/configEdit.jsp</result>
+			<result name="toEdit">/manage/config/configEdit.jsp</result>
+		</action>
+	</package>
+
+	<!--压缩图片-->
+	<package name="image" namespace="/manage" extends="struts-winpow-manage">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="image" class="imageManage"></action>
+	</package>
+
+	<!--政策申报企业信息主表-->
+	<package name="declareBase" namespace="/manage" extends="struts-winpow-manage">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="declare_base" class="declareBaseAction">
+			<result name="toList">/manage/declare/declareBaseList.jsp</result>
+			<result name="toAdd">/manage/declare/declareBaseEdit.jsp</result>
+			<result name="toEdit">/manage/declare/declareBaseEdit.jsp</result>
+		</action>
+	</package>
+	<!--企业被投资明细-->
+	<package name="declarebasecore" namespace="/manage" extends="struts-winpow-manage">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="declare_base_core" class="declareBaseCoreAction">
+			<result name="toAdd">/manage/declare/declareBaseCoreEdit.jsp</result>
+			<result name="toEdit">/manage/declare/declareBaseCoreEdit.jsp</result>
+		</action>
+	</package>
+	<!--企业被投资补贴申请-->
+	<package name="declarebtz" namespace="/manage" extends="struts-winpow-manage">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="declare_btz" class="declareBTZAction">
+			<result name="toList">/manage/declare/declareBTZList.jsp</result>
+			<result name="toAdd">/manage/declare/declareBTZEdit.jsp</result>
+			<result name="toEdit">/manage/declare/declareBTZEdit.jsp</result>
+		</action>
+	</package>
+	<!--企业被投资补贴申请-->
+	<package name="declarebtzcore" namespace="/manage" extends="struts-winpow-manage">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="declare_btz_core" class="declareBTZCoreAction">
+			<result name="toAdd">/manage/declare/declareBTZCoreEdit.jsp</result>
+			<result name="toEdit">/manage/declare/declareBTZCoreEdit.jsp</result>
+		</action>
+	</package>
+	<!--重组并购申请补贴-->
+	<package name="declareczbg" namespace="/manage" extends="struts-winpow-manage">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="declare_czbg" class="declareCZBGAction">
+			<result name="toList">/manage/declare/declareCZBGList.jsp</result>
+			<result name="toAdd">/manage/declare/declareCZBGEdit.jsp</result>
+			<result name="toEdit">/manage/declare/declareCZBGEdit.jsp</result>
+		</action>
+	</package>
+	<!--股份制改造补贴申请-->
+	<package name="declaregfzgz" namespace="/manage" extends="struts-winpow-manage">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="declare_gfzgz" class="declareGFZGZAction">
+			<result name="toList">/manage/declare/declareGFZGZList.jsp</result>
+			<result name="toAdd">/manage/declare/declareGFZGZEdit.jsp</result>
+			<result name="toEdit">/manage/declare/declareGFZGZEdit.jsp</result>
+		</action>
+	</package>
+	<!--IPO获得证监会受理申请补贴-->
+	<package name="declareipo" namespace="/manage" extends="struts-winpow-manage">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="declare_ipo" class="declareIPOAction">
+			<result name="toList">/manage/declare/declareIPOList.jsp</result>
+			<result name="toAdd">/manage/declare/declareIPOEdit.jsp</result>
+			<result name="toEdit">/manage/declare/declareIPOEdit.jsp</result>
+		</action>
+	</package>
+	<!--境外资本上市成功补贴-->
+	<package name="declarejwzb" namespace="/manage" extends="struts-winpow-manage">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="declare_jwzb" class="declareJWZBAction">
+			<result name="toList">/manage/declare/declareJWZBList.jsp</result>
+			<result name="toAdd">/manage/declare/declareJWZBEdit.jsp</result>
+			<result name="toEdit">/manage/declare/declareJWZBEdit.jsp</result>
+		</action>
+	</package>
+	<!--信用评级补贴申请-->
+	<package name="declarepj" namespace="/manage" extends="struts-winpow-manage">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="declare_pj" class="declarePJAction">
+			<result name="toList">/manage/declare/declarePJList.jsp</result>
+			<result name="toAdd">/manage/declare/declarePJEdit.jsp</result>
+			<result name="toEdit">/manage/declare/declarePJEdit.jsp</result>
+		</action>
+	</package>
+	<!--上市挂牌成功补贴-->
+	<package name="declaressgp" namespace="/manage" extends="struts-winpow-manage">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="declare_ssgp" class="declareSSGPAction">
+			<result name="toList">/manage/declare/declareSSGPList.jsp</result>
+			<result name="toAdd">/manage/declare/declareSSGPEdit.jsp</result>
+			<result name="toEdit">/manage/declare/declareSSGPEdit.jsp</result>
+		</action>
+	</package>
+	<!--员工股权激励补贴-->
+	<package name="declareyggqjl" namespace="/manage" extends="struts-winpow-manage">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="declare_yggqjl" class="declareYGGQJLAction">
+			<result name="toList">/manage/declare/declareYGGQJLList.jsp</result>
+			<result name="toAdd">/manage/declare/declareYGGQJLEdit.jsp</result>
+			<result name="toEdit">/manage/declare/declareYGGQJLEdit.jsp</result>
+		</action>
+	</package>
+	<!--持股平台明细-->
+	<package name="declareyggqjlcore" namespace="/manage" extends="struts-winpow-manage">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="declare_yggqjl_core" class="declareYGGQJLCoreAction">
+			<result name="toAdd">/manage/declare/declareYGGQJLCoreEdit.jsp</result>
+			<result name="toEdit">/manage/declare/declareYGGQJLCoreEdit.jsp</result>
+		</action>
+	</package>
+	<!--转增股本补贴-->
+	<package name="declarezzgb" namespace="/manage" extends="struts-winpow-manage">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="declare_zzgb" class="declareZZGBAction">
+			<result name="toList">/manage/declare/declareZZGBList.jsp</result>
+			<result name="toAdd">/manage/declare/declareZZGBEdit.jsp</result>
+			<result name="toEdit">/manage/declare/declareZZGBEdit.jsp</result>
+		</action>
+	</package>
+			<!--发展历程 -->
+	<package name="fzlc" namespace="/manage" extends="struts-winpow-manage">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="fzlc" class="fzlcActionManage">
+			<result name="toList">/manage/fzlc/fzlcList.jsp</result>
+			<result name="toAdd">/manage/fzlc/fzlcEdit.jsp</result>
+			<result name="toEdit">/manage/fzlc/fzlcEdit.jsp</result>
+		</action>
+	</package>
+	<!--客户经理修改记录-->
+	<package name="custmanagexgjl" namespace="/manage" extends="struts-winpow-manage">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="custmanagexgjl" class="custManageXGJLActionManage">
+			<result name="toList">/manage/custmanagexgjl/custmanagexgjlList.jsp</result>
+		</action>
+	</package>
+	<!--样本管理-->
+	<package name="declareyangben" namespace="/manage" extends="struts-winpow-manage">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="declare_yangben" class="declareYangBenAction">
+			<result name="toList">/manage/declare/declareYangBenList.jsp</result>
+			<result name="toAdd">/manage/declare/declareYangBenEdit.jsp</result>
+			<result name="toEdit">/manage/declare/declareYangBenEdit.jsp</result>
+		</action>
+	</package>
+	<!--融资租赁政策-->
+	<package name="declarerzzn" namespace="/manage" extends="struts-winpow-manage">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="declare_rzzn" class="declareRZZNAction">
+			<result name="toList">/manage/declare/declareRZZNList.jsp</result>
+			<result name="toAdd">/manage/declare/declareRZZNEdit.jsp</result>
+			<result name="toEdit">/manage/declare/declareRZZNEdit.jsp</result>
+		</action>
+	</package>
+	<!--融资租赁明细-->
+	<package name="declarerzzncore" namespace="/manage" extends="struts-winpow-manage">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="declare_rzzn_core" class="declareRZZNCoreAction">
+			<result name="toAdd">/manage/declare/declareRZZNCoreEdit.jsp</result>
+			<result name="toEdit">/manage/declare/declareRZZNCoreEdit.jsp</result>
+		</action>
+	</package>
+	<!--科技保险政策-->
+	<package name="declarekjbx" namespace="/manage" extends="struts-winpow-manage">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="declare_kjbx" class="declareKJBXAction">
+			<result name="toList">/manage/declare/declareKJBXList.jsp</result>
+			<result name="toAdd">/manage/declare/declareKJBXEdit.jsp</result>
+			<result name="toEdit">/manage/declare/declareKJBXEdit.jsp</result>
+		</action>
+	</package>
+	<!--科技保险明细-->
+	<package name="declarekjbxcore" namespace="/manage" extends="struts-winpow-manage">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="declare_kjbx_core" class="declareKJBXCoreAction">
+			<result name="toAdd">/manage/declare/declareKJBXCoreEdit.jsp</result>
+			<result name="toEdit">/manage/declare/declareKJBXCoreEdit.jsp</result>
+		</action>
+	</package>
+	<!--债务类工具直接融资补贴-->
+	<package name="declarezwrz" namespace="/manage" extends="struts-winpow-manage">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="declare_zwrz" class="declareZWRZAction">
+			<result name="toList">/manage/declare/declareZWRZList.jsp</result>
+			<result name="toAdd">/manage/declare/declareZWRZEdit.jsp</result>
+			<result name="toEdit">/manage/declare/declareZWRZEdit.jsp</result>
+		</action>
+	</package>
+	<!--邮件发送记录-->
+	<package name="tbemaillog" namespace="/manage" extends="struts-winpow-manage">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="tbemaillog" class="tbemaillogAction">
+			<result name="toList">/manage/tbemaillog/tbemaillogList.jsp</result>
+			<result name="toAdd">/manage/tbemaillog/tbemaillogEdit.jsp</result>
+			<result name="toEdit">/manage/tbemaillog/tbemaillogEdit.jsp</result>
+		</action>
+	</package>
+	
+	<!-- 其它机构 -->
+	<package name="tbotherorg" namespace="/manage" extends="struts-winpow-manage">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="tbotherorg" class="tbotherorgActionManage">
+			<result name="toList">/manage/tbotherorg/tbotherorgList.jsp</result>
+			<result name="toAdd">/manage/tbotherorg/tbotherorgEdit.jsp</result>
+			<result name="toEdit">/manage/tbotherorg/tbotherorgEdit.jsp</result>
+		</action>
+	</package>
+	
+	<!-- 财务数据 -->
+	<package name="tbfinareport" namespace="/manage" extends="struts-winpow-manage">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="tbfinareport" class="tbfinareportActionManage">
+			<result name="toList">/manage/tbfinareport/tbfinareportList.jsp</result>
+			<result name="toAdd">/manage/tbfinareport/tbfinareportEdit.jsp</result>
+			<result name="toEdit">/manage/tbfinareport/tbfinareportEdit.jsp</result>
+		</action>
+	</package>
+	
+	<!-- 保险公司数据报送 -->
+	<package name="tbjrbx" namespace="/manage" extends="struts-winpow-manage">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="tbjrbx" class="tbjrbxActionManage">
+			<result name="toList">/manage/jr/tbjrbxList.jsp</result>
+			<result name="toAdd">/manage/jr/tbjrbxEdit.jsp</result>
+			<result name="toEdit">/manage/jr/tbjrbxEdit.jsp</result>
+		</action>
+	</package>
+	
+	<!-- 担保数据报送 -->
+	<package name="tbjrdb" namespace="/manage" extends="struts-winpow-manage">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="tbjrdb" class="tbjrdbActionManage">
+			<result name="toList">/manage/jr/tbjrdbList.jsp</result>
+			<result name="toAdd">/manage/jr/tbjrdbEdit.jsp</result>
+			<result name="toEdit">/manage/jr/tbjrdbEdit.jsp</result>
+		</action>
+	</package>
+	
+	<!-- 股权投资金融数据报送 -->
+	<package name="tbjrgqtz" namespace="/manage" extends="struts-winpow-manage">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="tbjrgqtz" class="tbjrgqtzActionManage">
+			<result name="toList">/manage/jr/tbjrgqtzList.jsp</result>
+			<result name="toAdd">/manage/jr/tbjrgqtzEdit.jsp</result>
+			<result name="toEdit">/manage/jr/tbjrgqtzEdit.jsp</result>
+		</action>
+	</package>
+	
+	<!-- 券商期货数据报送 -->
+	<package name="tbjrqsqh" namespace="/manage" extends="struts-winpow-manage">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="tbjrqsqh" class="tbjrqsqhActionManage">
+			<result name="toList">/manage/jr/tbjrqsqhList.jsp</result>
+			<result name="toAdd">/manage/jr/tbjrqsqhEdit.jsp</result>
+			<result name="toEdit">/manage/jr/tbjrqsqhEdit.jsp</result>
+		</action>
+	</package>
+	
+	<!-- 企业数据报送 -->
+	<package name="tbjrqy" namespace="/manage" extends="struts-winpow-manage">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="tbjrqy" class="tbjrqyActionManage">
+			<result name="toList">/manage/jr/tbjrqyList.jsp</result>
+			<result name="toAdd">/manage/jr/tbjrqyEdit.jsp</result>
+			<result name="toEdit">/manage/jr/tbjrqyEdit.jsp</result>
+		</action>
+	</package>
+	
+	<!-- 融资租赁数据报送 -->
+	<package name="tbjrrzzn" namespace="/manage" extends="struts-winpow-manage">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="tbjrrzzn" class="tbjrrzznActionManage">
+			<result name="toList">/manage/jr/tbjrrzznList.jsp</result>
+			<result name="toAdd">/manage/jr/tbjrrzznEdit.jsp</result>
+			<result name="toEdit">/manage/jr/tbjrrzznEdit.jsp</result>
+		</action>
+	</package>
+	
+	<!-- 小贷数据报送 -->
+	<package name="tbjrxd" namespace="/manage" extends="struts-winpow-manage">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="tbjrxd" class="tbjrxdActionManage">
+			<result name="toList">/manage/jr/tbjrxdList.jsp</result>
+			<result name="toAdd">/manage/jr/tbjrxdEdit.jsp</result>
+			<result name="toEdit">/manage/jr/tbjrxdEdit.jsp</result>
+		</action>
+	</package>
+	
+	<!-- 银行数据报送 -->
+	<package name="tbjryh" namespace="/manage" extends="struts-winpow-manage">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="tbjryh" class="tbjryhActionManage">
+			<result name="toList">/manage/jr/tbjryhList.jsp</result>
+			<result name="toAdd">/manage/jr/tbjryhEdit.jsp</result>
+			<result name="toEdit">/manage/jr/tbjryhEdit.jsp</result>
+		</action>
+	</package>
+	
+	<!-- 要素市场类金融数据报送 -->
+	<package name="tbjryssc" namespace="/manage" extends="struts-winpow-manage">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="tbjryssc" class="tbjrysscActionManage">
+			<result name="toList">/manage/jr/tbjrysscList.jsp</result>
+			<result name="toAdd">/manage/jr/tbjrysscEdit.jsp</result>
+			<result name="toEdit">/manage/jr/tbjrysscEdit.jsp</result>
+		</action>
+	</package>
+	
+	<!-- 新经济企业入库 -->
+	<package name="tbneweco" namespace="/manage" extends="struts-winpow-manage">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="tbneweco" class="tbnewecoActionManage">
+			<result name="toList">/manage/tbneweco/tbnewecoList.jsp</result>
+			<result name="toAdd">/manage/tbneweco/tbnewecoEdit.jsp</result>
+			<result name="toEdit">/manage/tbneweco/tbnewecoEdit.jsp</result>
+		</action>
+	</package>
+	
+	<!-- 政策管理 -->
+	<package name="tbsbpolicy" namespace="/manage" extends="struts-winpow-manage">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="tbsbpolicy" class="tbsbpolicyActionManage">
+			<result name="toList">/manage/declare/tbsbpolicyList.jsp</result>
+			<result name="toNewList">/manage/declare/tbsbpolicyList2.jsp</result>
+			<result name="toAdd">/manage/declare/tbsbpolicyEdit.jsp</result>
+			<result name="toEdit">/manage/declare/tbsbpolicyEdit.jsp</result>
+		</action>
+	</package>
+	
+	<!-- 政策申报通用 -->
+	<package name="tbsbcommon" namespace="/manage" extends="struts-winpow-manage">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="tbsbcommon" class="tbsbcommonActionManage">
+			<result name="toList">/manage/tbsbcommon/tbsbcommonList.jsp</result>
+			<result name="toAdd">/manage/tbsbcommon/tbsbcommonEdit.jsp</result>
+			<result name="toEdit">/manage/tbsbcommon/tbsbcommonEdit.jsp</result>
+		</action>
+	</package>
+	
+	<!-- 跨境结算 -->
+	<package name="tbsbborder" namespace="/manage" extends="struts-winpow-manage">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="tbsbborder" class="tbsbborderActionManage">
+			<result name="toList">/manage/tbsbborder/tbsbborderList.jsp</result>
+			<result name="toAdd">/manage/tbsbborder/tbsbborderEdit.jsp</result>
+			<result name="toEdit">/manage/tbsbborder/tbsbborderEdit.jsp</result>
+		</action>
+	</package>
+	
+	<!-- 挂牌奖励 -->
+	<package name="tbsbgp" namespace="/manage" extends="struts-winpow-manage">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="tbsbgp" class="tbsbgpActionManage">
+			<result name="toList">/manage/tbsbgp/tbsbgpList.jsp</result>
+			<result name="toAdd">/manage/tbsbgp/tbsbgpEdit.jsp</result>
+			<result name="toEdit">/manage/tbsbgp/tbsbgpEdit.jsp</result>
+		</action>
+	</package>
+	
+	<!-- 机构基本情况表 -->
+	<package name="tbsbbasejg" namespace="/manage" extends="struts-winpow-manage">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="tbsbbasejg" class="tbsbbasejgActionManage">
+			<result name="toList">/manage/tbsbbasejg/tbsbbasejgList.jsp</result>
+			<result name="toAdd">/manage/tbsbbasejg/tbsbbasejgEdit.jsp</result>
+			<result name="toEdit">/manage/tbsbbasejg/tbsbbasejgEdit.jsp</result>
+		</action>
+	</package>
+	
+	<!-- app需求项目列表 -->
+    <package name="appDemand" namespace="/manage" extends="struts-winpow-manage">
+        <global-allowed-methods>regex:.*</global-allowed-methods>
+        <action name="appDemand" class="appDemandActionManage">
+            <result name="toList">/manage/app/appDemandList.jsp</result>
+            <result name="toAdd">/</result>
+            <result name="toEdit">/</result>
+            <result name="toPostDemandDetail">/manage/app/postDemandDetail.jsp</result>
+            <result name="toAddedProductDetail">/manage/app/addedPorductDetail.jsp</result>
+            <result name="toLoanAppDetail">/manage/app/loanAppDetail.jsp</result>
+            <result name="toActivitiesApplyDetail">/manage/app/activitiesApplyDetail.jsp</result>
+            <result name="toAppTopicDetail">/manage/app/appTopicDetail.jsp</result>
+            <result name="toReviewLogList">/manage/app/reviewLogList.jsp</result>
+        </action>
+    </package>
+    
+    <!-- app供应项目列表 -->
+    <package name="appAccommdate" namespace="/manage" extends="struts-winpow-manage">
+        <global-allowed-methods>regex:.*</global-allowed-methods>
+        <action name="appAccommdate" class="appAccommdateActionManage">
+            <result name="toList">/manage/app/appAccommdateList.jsp</result>
+            <result name="toAdd">/</result>
+            <result name="toEdit">/</result>
+            <result name="toLoanProductDetail">/manage/app/loanProductDetail.jsp</result>
+            <result name="toAddedProductDetail">/manage/app/addedPorductDetail.jsp</result>
+            <result name="toPostEquityProjectsDetail">/manage/app/postEquityProjectsDetail.jsp</result>
+            <result name="toActivitiesDemandsDetail">/manage/app/activitiesDemandsDetail.jsp</result>
+            <result name="toReviewLogList">/manage/app/reviewLogList.jsp</result>
+        </action>
+    </package>
+    
+    <!-- 银行管理 -->
+    <package name="productBank" namespace="/manage" extends="struts-winpow-manage">
+        <global-allowed-methods>regex:.*</global-allowed-methods>
+        <action name="productBank" class="productBankActionManage">
+            <result name="toList">/manage/bank/bankList.jsp</result>
+            <result name="toAdd">/manage/bank/bankEdit.jsp</result>
+            <result name="toEdit">/manage/bank/bankEdit.jsp</result>
+        </action>
+    </package>
+    <!-- appBanner管理 -->
+    <package name="appBanner" namespace="/manage" extends="struts-winpow-manage">
+        <global-allowed-methods>regex:.*</global-allowed-methods>
+        <action name="appBanner" class="appBannerActionManage">
+            <result name="toList">/manage/app/bannerList.jsp</result>
+            <result name="toAdd">/manage/app/bannerEdit.jsp</result>
+            <result name="toEdit">/manage/app/bannerEdit.jsp</result>
+        </action>
+    </package>
+    
+    <!-- 入驻园区 -->
+    <package name="enterPark" namespace="/manage" extends="struts-winpow-manage">
+        <global-allowed-methods>regex:.*</global-allowed-methods>
+        <action name="enterPark" class="enterParkActionManage">
+            <result name="toList">/manage/app/enterParkList.jsp</result>
+            <result name="toDetail">/manage/app/enterParkDetail.jsp</result>
+            <result name="toReviewLogList">/manage/app/reviewLogList.jsp</result>
+            <result name="toAdd">/</result>
+            <result name="toEdit">/</result>
+        </action>
+    </package>
+    
+    <!-- 企业圈 -->
+    <package name="appGoods" namespace="/manage" extends="struts-winpow-manage">
+        <global-allowed-methods>regex:.*</global-allowed-methods>
+        <action name="appGoods" class="appGoodsActionManage">
+            <result name="toList">/manage/app/pcGoodsList.jsp</result>
+            <result name="toReviewLogList">/manage/app/reviewLogList.jsp</result>
+            <result name="toAdd">/manage/app/productEdit.jsp</result>
+            <result name="toEdit">/manage/app/productEdit.jsp</result>
+        </action>
+    </package>
+    
+    <!-- 企业圈 -->
+    <package name="appTopic" namespace="/manage" extends="struts-winpow-manage">
+        <global-allowed-methods>regex:.*</global-allowed-methods>
+        <action name="appTopic" class="appTopicActionManage">
+            <result name="toList">/manage/app/pcTopicList.jsp</result>
+            <result name="toReviewLogList">/manage/app/reviewLogList.jsp</result>
+            <result name="toAdd">/manage/app/pcTopicEdit.jsp</result>
+            <result name="toEdit">/manage/app/pcTopicEdit.jsp</result>
+        </action>
+    </package>
+    
+     <!-- 企业圈 -->
+    <package name="pushMessage" namespace="/manage" extends="struts-winpow-manage">
+        <global-allowed-methods>regex:.*</global-allowed-methods>
+        <action name="pushMessage" class="pushMessageActionManage">
+            <result name="toList">/manage/app/commentsList.jsp</result>
+            <result name="toPushList">/manage/app/pushList.jsp</result>
+            <result name="toEdit">/manage/message/pushMessage.jsp</result>
+        </action>
+    </package>
+    
+    <!-- 评论管理 -->
+    <package name="comments" namespace="/manage" extends="struts-winpow-manage">
+        <global-allowed-methods>regex:.*</global-allowed-methods>
+        <action name="comments" class="commentsActionManage">
+            <result name="toList">/manage/app/commentsList.jsp</result>
+            <result name="toEdit">/</result>
+        </action>
+    </package>
+    
+    <!-- 活动合作 -->
+    <package name="actCooApply" namespace="/manage" extends="struts-winpow-manage">
+        <global-allowed-methods>regex:.*</global-allowed-methods>
+        <action name="actCooApply" class="actcooapplyActionManage">
+            <result name="toList">/manage/app/actCooApplyList.jsp</result>
+            <result name="toDetail">/manage/app/actCooApplyDetail.jsp</result>
+            <result name="toEdit">/</result>
+        </action>
+    </package>
+    
+    <!-- 政策申报 -->
+    <package name="policyApply" namespace="/manage" extends="struts-winpow-manage">
+        <global-allowed-methods>regex:.*</global-allowed-methods>
+        <action name="policyApply" class="appPolicyApplyManage">
+            <result name="toList">/manage/app/appPolicyApplyList.jsp</result>
+            <result name="toDetail">/manage/app/appPolicyApplyDetail.jsp</result>
+            <result name="toEdit">/</result>
+        </action>
+    </package>
+  
+    <!-- app通用后台 -->
+    <package name="appCommon" namespace="/manage" extends="struts-winpow-manage">
+    	<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="appCommon" class="appCommonActionManage">
+			<result name="toList">/manage/app/versionList.jsp</result>
+            <result name="toEdit">/manage/app/versionEdit.jsp</result>
+            <result name="toAdd">/manage/app/versionEdit.jsp</result>
+            <result name="toOrderList">/manage/app/appOrderList.jsp</result>
+            <result name="toOrderEdit">/manage/app/appOrderEdit.jsp</result>
+            <result name="toNewsList">/manage/app/appnewsList.jsp</result>
+            <result name="toNewsEdit">/manage/app/appnewsEdit.jsp</result>
+            <result name="toLogList">/manage/app/appuserlogList.jsp</result>
+            <result name="toLogEdit">/manage/app/appuserlogEdit.jsp</result>
+            <result name="toParkList">/manage/app/appparkserveList.jsp</result>
+            <result name="toParkEdit">/manage/app/appparkserveEdit.jsp</result>
+            <result name="toSchoolList">/manage/app/appschoolList.jsp</result>
+            <result name="toSchoolEdit">/manage/app/appschoolEdit.jsp</result>
+            <result name="tofundList">/manage/app/appfundList.jsp</result>
+            <result name="tofundEdit">/manage/app/appfundEdit.jsp</result>
+            <result name="tovisitList">/manage/app/appvisitList.jsp</result>
+            <result name="tovisitEdit">/manage/app/appvisitEdit.jsp</result>
+            <result name="toAreaList">/manage/app/appareaList.jsp</result>
+            <result name="toAreaEdit">/manage/app/appareaEdit.jsp</result>
+            <result name="toaboutusList">/manage/app/pcaboutusList.jsp</result>
+            <result name="toaboutusEdit">/manage/app/pcaboutusEdit.jsp</result>
+            <result name="topolicyList">/manage/app/spiderpolicyList.jsp</result>
+            <result name="topolicyEdit">/manage/app/spiderpolicyEdit.jsp</result>
+		</action>
+	</package>
+    
+    <!-- 政策申报汇总 -->
+    <package name="allPolicyApply" namespace="/manage" extends="struts-winpow-manage">
+        <global-allowed-methods>regex:.*</global-allowed-methods>
+        <action name="allPolicyApply" class="allPolicyApplyManage">
+            <result name="toList">/manage/declare/allPolicyApplyList.jsp</result>
+            <result name="toDetail">/</result>
+            <result name="toEdit">/</result>
+        </action>
+    </package>
+        
+    <!-- 转增股本子表 -->
+	<package name="sbzzgbcore" namespace="/manage" extends="struts-winpow-manage">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="sbzzgbcore" class="sbzzgbcoreActionManage">
+			<result name="toList">/manage/sbzzgbcore/sbzzgbcoreList.jsp</result>
+			<result name="toAdd">/manage/sbzzgbcore/sbzzgbcoreEdit.jsp</result>
+			<result name="toEdit">/manage/sbzzgbcore/sbzzgbcoreEdit.jsp</result>
+		</action>
+	</package>
+	
+	<!-- 限售股减持子表 -->
+	<package name="sbxsgjccore" namespace="/manage" extends="struts-winpow-manage">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="sbxsgjccore" class="sbxsgjccoreActionManage">
+			<result name="toList">/manage/sbxsgjccore/sbxsgjccoreList.jsp</result>
+			<result name="toAdd">/manage/sbxsgjccore/sbxsgjccoreEdit.jsp</result>
+			<result name="toEdit">/manage/sbxsgjccore/sbxsgjccoreEdit.jsp</result>
+		</action>
+	</package>
+</struts>

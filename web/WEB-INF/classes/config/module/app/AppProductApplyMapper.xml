@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.winpow.services.app.appproductapply.mapper.AppProductApplyMapper">
+
+
+    
+    <resultMap id="AppProductApplyMap" type="com.winpow.services.app.appproductapply.bean.AppProductApply">
+        <!--private String branchname;// BRANCHNAME	VARCHAR(128)	经办分支行名称	文本框-->
+                <id column="id" property="id" javaType="string"/>
+            <result column="productname" property="productname"/>
+            <result column="linkman" property="linkman"/>
+            <result column="cellphone" property="cellphone"/>
+            <result column="companyname" property="companyname"/>
+            <result column="job" property="job"/>
+            <result column="email" property="email"/>
+            <result column="createtime" property="createtime"/>
+            <result column="updatetime" property="updatetime"/>
+
+    </resultMap>
+
+
+
+
+    <insert id="add" parameterType="com.winpow.services.app.appproductapply.bean.AppProductApply">
+        INSERT  INTO  tb_app_product_apply
+        (id
+            <if test="productname!=null   and productname!=''">
+                , productname
+            </if>
+            <if test="linkman!=null   and linkman!=''">
+                , linkman
+            </if>
+            <if test="cellphone!=null   and cellphone!=''">
+                , cellphone
+            </if>
+            <if test="companyname!=null   and companyname!=''">
+                , companyname
+            </if>
+            <if test="job!=null   and job!=''">
+                , job
+            </if>
+            <if test="email!=null   and email!=''">
+                , email
+            </if>
+                , createtime
+            <if test="updatetime!=null   and updatetime!=''">
+                , updatetime
+            </if>
+
+
+        ) VALUES
+        (#{id}
+
+                <if test="productname!=null  and productname!=''">
+                    ,#{productname}
+                </if>
+                <if test="linkman!=null  and linkman!=''">
+                    ,#{linkman}
+                </if>
+                <if test="cellphone!=null  and cellphone!=''">
+                    ,#{cellphone}
+                </if>
+                <if test="companyname!=null  and companyname!=''">
+                    ,#{companyname}
+                </if>
+                <if test="job!=null  and job!=''">
+                    ,#{job}
+                </if>
+                <if test="email!=null  and email!=''">
+                    ,#{email}
+                </if>
+                    ,getdate()
+                <if test="updatetime!=null  and updatetime!=''">
+                    ,#{updatetime}
+                </if>
+
+        )
+    </insert>
+    <update id="update" parameterType="com.winpow.services.app.appproductapply.bean.AppProductApply">
+        UPDATE  tb_app_product_apply
+        SET
+        id=id
+                <if test="productname!=null  and productname!=''">
+                    ,productname = #{productname}
+                </if>
+                <if test="linkman!=null  and linkman!=''">
+                    ,linkman = #{linkman}
+                </if>
+                <if test="cellphone!=null  and cellphone!=''">
+                    ,cellphone = #{cellphone}
+                </if>
+                <if test="companyname!=null  and companyname!=''">
+                    ,companyname = #{companyname}
+                </if>
+                <if test="job!=null  and job!=''">
+                    ,job = #{job}
+                </if>
+                <if test="email!=null  and email!=''">
+                    ,email = #{email}
+                </if>
+                <if test="createtime!=null  and createtime!=''">
+                    ,createtime = #{createtime}
+                </if>
+                    ,updatetime = getdate()
+
+        <where>
+            and id = #{id}
+        </where>
+
+
+
+    </update>
+    <delete id="delete" parameterType="com.winpow.services.app.appproductapply.bean.AppProductApply">
+        DELETE tbk  from tb_app_product_apply tbk
+        <where>
+           <include refid="whereSql"/>
+        </where>
+    </delete>
+    <select id="getEnt" parameterType="com.winpow.services.app.appproductapply.bean.AppProductApply" resultMap="AppProductApplyMap">
+        SELECT tbk.*
+        FROM  tb_app_product_apply tbk
+
+        <where>
+            <include refid="whereSql"/>
+        </where>
+    </select>
+
+    <select id="getList" parameterType="com.winpow.services.app.appproductapply.bean.AppProductApply" resultMap="AppProductApplyMap">
+       SELECT * FROM (
+        SELECT ROW_NUMBER() over(order by tbk.id desc) as  rownumber , tbk.*
+        FROM  tb_app_product_apply tbk
+        <where>
+            <include refid="whereSql"/>
+        </where>
+        ) tu
+        <where>
+            tu.rownumber &gt;  #{offset} and tu.rownumber &lt; =#{pageSize}+#{offset}
+        </where>
+
+    </select>
+    <select id="getCount" parameterType="com.winpow.services.app.appproductapply.bean.AppProductApply" resultType="long">
+        SELECT  COUNT(*) FROM tb_app_product_apply tbk
+        <where>
+            <include refid="whereSql"/>
+        </where>
+    </select>
+
+    <!--通用sql条件语句-->
+
+    <sql  id="whereSql">
+
+        <if test="id!=null  and id!=''">
+            and tbk.id = #{ id}
+        </if>
+
+
+        <if test="productname!=null  and productname!=''">
+            and tbk.productname = #{ productname}
+        </if>
+
+
+        <if test="linkman!=null  and linkman!=''">
+            and tbk.linkman = #{ linkman}
+        </if>
+
+
+        <if test="cellphone!=null  and cellphone!=''">
+            and tbk.cellphone = #{ cellphone}
+        </if>
+
+
+        <if test="companyname!=null  and companyname!=''">
+            and tbk.companyname = #{ companyname}
+        </if>
+
+
+        <if test="job!=null  and job!=''">
+            and tbk.job = #{ job}
+        </if>
+
+
+        <if test="email!=null  and email!=''">
+            and tbk.email = #{ email}
+        </if>
+
+
+        <if test="createtime!=null  and createtime!=''">
+            and tbk.createtime = #{ createtime}
+        </if>
+
+
+        <if test="updatetime!=null  and updatetime!=''">
+            and tbk.updatetime = #{ updatetime}
+        </if>
+
+    </sql>
+
+</mapper>

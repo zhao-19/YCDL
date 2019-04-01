@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC 
+"-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="app">
+
+	<select id="app.appfundmanager.selectPageList"
+		parameterType="com.winpow.services.app.appfundmanager.bean.Appfundmanager"
+		resultType="hashMap">
+		select top ${pageSize} * from (
+			select row_number() over(order by c.lastchgtime desc) as rownumber ,c.* 
+			from tb_app_fundmanager c where 1=1
+			<if test=" qiyename !=null and  qiyename !=''">
+				and c.qiyename like '%'+#{qiyename}+'%'
+			</if>
+	    ) a where rownumber > ${pageSize}*(${offset} - 1)
+	</select>
+	
+	<select id="app.appfundmanager.selectPageCount"
+		parameterType="com.winpow.services.app.appfundmanager.bean.Appfundmanager"
+		resultType="java.lang.Integer">
+		select count(*) from tb_app_fundmanager where 1=1
+		<if test=" qiyename !=null and  qiyename !=''">
+			and qiyename like '%'+#{qiyename}+'%'
+		</if>
+	</select>
+
+	<select id="app.appfundmanager.selectOne"
+		parameterType="com.winpow.services.app.appfundmanager.bean.Appfundmanager"
+		resultType="com.winpow.services.app.appfundmanager.bean.Appfundmanager">
+		select top(1) * from tb_app_fundmanager t where 1=1
+		<if test="pkid != null and pkid != ''">
+			and t.pkid=#{pkid}
+		</if>
+		<if test="creditid != null and creditid != ''">
+			and t.creditid=#{creditid}
+		</if>
+		<if test="releid != null and releid != ''">
+			and t.releid=#{releid}
+		</if>
+	</select>
+
+	<select id="app.appfundmanager.selectCount"
+		parameterType="com.winpow.services.app.appfundmanager.bean.Appfundmanager"
+		resultType="int">
+		select count(*) from tb_app_fundmanager t where 1=1
+		<if test="pkid != null and pkid != ''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+
+	<select id="app.appfundmanager.selectOneByCondition"
+		parameterType="com.winpow.services.app.appfundmanager.bean.Appfundmanager"
+		resultType="com.winpow.services.app.appfundmanager.bean.Appfundmanager">
+		select * from tb_app_fundmanager t where 1=1
+		<if test="pkid != null and pkid != ''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+
+	<select id="app.appfundmanager.selectList"
+		parameterType="com.winpow.services.app.appfundmanager.bean.Appfundmanager"
+		resultType="com.winpow.services.app.appfundmanager.bean.Appfundmanager">
+		select * from tb_app_fundmanager t where 1=1
+		<if test="pkid != null and pkid != ''">
+			and t.pkid=#{pkid}
+		</if>
+		<if test="releid != null and releid != ''">
+			and t.releid=#{releid}
+		</if>
+		<if test="creditid != null and creditid != ''">
+			and t.creditid=#{creditid}
+		</if>
+	</select>
+
+	<insert id="app.appfundmanager.insert"
+		parameterType="com.winpow.services.app.appfundmanager.bean.Appfundmanager"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into tb_app_fundmanager (
+		pkid,
+		releid,
+		qiyename,
+		regdate,
+		operatetime,
+		qiyetype,
+		qiyequality,
+		regfunds,
+		shareholder,
+		filetype,
+		address,
+		acreage,
+		linkman,
+		linktel,
+		creditid,
+		corp,
+		lnglat,
+		lnglatname,
+		scenepic,
+		qiyestatus,
+		chstatus,
+		checkid,
+		checkdate,
+		checkremark,
+		lurushijian,
+		lastchgtime
+		,inamount,techinamount,qiyenum,techqiyenum,exitrate,techexitnum,userid
+		) values (
+		#{pkid},
+		#{releid},
+		#{qiyename},
+		#{regdate},
+		#{operatetime},
+		#{qiyetype},
+		#{qiyequality},
+		#{regfunds},
+		#{shareholder},
+		#{filetype},
+		#{address},
+		#{acreage},
+		#{linkman},
+		#{linktel},
+		#{creditid},
+		#{corp},
+		#{lnglat},
+		#{lnglatname},
+		#{scenepic},
+		#{qiyestatus},
+		#{chstatus},
+		#{checkid},
+		#{checkdate},
+		#{checkremark},
+		getdate(),
+		getdate()
+		,#{inamount},#{techinamount},#{qiyenum},#{techqiyenum},#{exitrate},#{techexitnum},#{userid}
+		)
+
+	</insert>
+
+	<update id="app.appfundmanager.update"
+		parameterType="com.winpow.services.app.appfundmanager.bean.Appfundmanager">
+		update tb_app_fundmanager set
+		<if test=" releid !=null and  releid !=''">
+			releid=#{releid},
+		</if>
+
+		<if test=" qiyename !=null and  qiyename !=''">
+			qiyename=#{qiyename},
+		</if>
+
+		<if test=" regdate !=null and  regdate !=''">
+			regdate=#{regdate},
+		</if>
+
+		<if test=" operatetime !=null and  operatetime !=''">
+			operatetime=#{operatetime},
+		</if>
+
+		<if test=" qiyetype !=null and  qiyetype !=''">
+			qiyetype=#{qiyetype},
+		</if>
+
+		<if test=" qiyequality !=null and  qiyequality !=''">
+			qiyequality=#{qiyequality},
+		</if>
+
+		<if test=" regfunds !=null and  regfunds !=''">
+			regfunds=#{regfunds},
+		</if>
+
+		<if test=" shareholder !=null and  shareholder !=''">
+			shareholder=#{shareholder},
+		</if>
+
+		<if test=" filetype !=null and  filetype !=''">
+			filetype=#{filetype},
+		</if>
+
+		<if test=" address !=null and  address !=''">
+			address=#{address},
+		</if>
+
+		<if test=" acreage !=null and  acreage !=''">
+			acreage=#{acreage},
+		</if>
+
+		<if test=" linkman !=null and  linkman !=''">
+			linkman=#{linkman},
+		</if>
+
+		<if test=" linktel !=null and  linktel !=''">
+			linktel=#{linktel},
+		</if>
+
+		<if test=" creditid !=null and  creditid !=''">
+			creditid=#{creditid},
+		</if>
+
+		<if test=" corp !=null and  corp !=''">
+			corp=#{corp},
+		</if>
+
+		<if test=" lnglat !=null and  lnglat !=''">
+			lnglat=#{lnglat},
+		</if>
+
+		<if test=" lnglatname !=null and  lnglatname !=''">
+			lnglatname=#{lnglatname},
+		</if>
+
+		<if test=" scenepic !=null and  scenepic !=''">
+			scenepic=#{scenepic},
+		</if>
+
+		<if test=" qiyestatus !=null and  qiyestatus !=''">
+			qiyestatus=#{qiyestatus},
+		</if>
+
+		<if test=" chstatus !=null and  chstatus !=''">
+			chstatus=#{chstatus},
+		</if>
+
+		<if test=" checkid !=null and  checkid !=''">
+			checkid=#{checkid},
+		</if>
+
+		<if test=" checkdate !=null and  checkdate =='date'">
+			checkdate=getdate(),
+		</if>
+
+		<if test=" checkremark !=null and  checkremark !=''">
+			checkremark=#{checkremark},
+		</if>
+		
+		<if test=" inamount !=null and  inamount !=''">
+			inamount=#{inamount},
+		</if>
+		
+		<if test=" techinamount !=null and  techinamount !=''">
+			techinamount=#{techinamount},
+		</if>
+
+		<if test=" qiyenum !=null and  qiyenum !=''">
+			qiyenum=#{qiyenum},
+		</if>
+		
+		<if test=" techqiyenum !=null and  techqiyenum !=''">
+			techqiyenum=#{techqiyenum},
+		</if>
+		
+		<if test=" exitrate !=null and  exitrate !=''">
+			exitrate=#{exitrate},
+		</if>
+		
+		<if test=" techexitnum !=null and  techexitnum !=''">
+			techexitnum=#{techexitnum},
+		</if>
+		
+		<if test=" userid !=null and  userid !=''">
+			userid=#{userid},
+		</if>
+		lastchgtime=getdate()
+		where pkid=#{pkid}
+	</update>
+
+	<select id="app.appfundmanager.selectListByUserid"
+		parameterType="com.winpow.services.app.appfundmanager.bean.Appfundmanager"
+		resultType="com.winpow.services.app.appfundmanager.bean.Appfundmanager">
+		select * from(
+		select * from tb_app_fundmanager t where userid=#{userid}
+		union
+		select * from tb_app_fundmanager t where creditid in (select zzjgdm from tb_jigou where id in (select f_id from tb_cust where userid=#{userid}))
+		union
+		select * from tb_app_fundmanager t where releid in (select f_id from tb_cust where userid=#{userid})
+		) a  order by lurushijian desc
+	</select>
+
+</mapper>  

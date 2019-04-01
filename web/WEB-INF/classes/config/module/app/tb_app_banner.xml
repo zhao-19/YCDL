@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+"-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="app">
+
+	<select id="app.appbanner.selectPageList" parameterType="com.winpow.services.app.appbanner.bean.Appbanner"
+		resultType="hashMap">
+		select top ${pageSize} * from (
+			select row_number() over(order by updatedate desc) as rownum ,* 
+			from tb_app_banner where 1=1
+			<if test=" location !=null and  location !=''">
+	          and  location=#{location}
+	        </if>
+	        <if test=" title !=null and  title !=''">
+	          and  title like '%'+#{title}+'%'
+	        </if>
+	        <if test=" substation !=null and  substation !=''">
+	          and  substation=#{substation}
+	        </if>
+	    ) a where rownum > ${pageSize} * (${offset} - 1)
+	</select>
+	
+	<select id="app.appbanner.selectPageCount" parameterType="com.winpow.services.app.appbanner.bean.Appbanner"
+		resultType="java.lang.Integer">
+		select count(*) from tb_app_banner where 1=1
+		<if test=" location !=null and  location !=''">
+          and  location=#{location}
+        </if>
+        <if test=" title !=null and  title !=''">
+          and  title like '%'+#{title}+'%'
+        </if>
+        <if test=" substation !=null and  substation !=''">
+          and  substation=#{substation}
+        </if>
+	</select>
+
+	<select id="app.appbanner.selectOne" parameterType="com.winpow.services.app.appbanner.bean.Appbanner"
+		resultType="com.winpow.services.app.appbanner.bean.Appbanner">
+		select * from tb_app_banner t where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+
+	<select id="app.appbanner.selectCount" parameterType="com.winpow.services.app.appbanner.bean.Appbanner"
+		resultType="int">
+		select count(*) from tb_app_banner t where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+
+	<select id="app.appbanner.selectOneByCondition" parameterType="com.winpow.services.app.appbanner.bean.Appbanner"
+		resultType="com.winpow.services.app.appbanner.bean.Appbanner">
+		select * from tb_app_banner t where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+
+	<select id="app.appbanner.selectList" parameterType="com.winpow.services.app.appbanner.bean.Appbanner"
+		resultType="com.winpow.services.app.appbanner.bean.Appbanner">
+		select * from tb_app_banner t where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+	
+	<select id="app.appbanner.selectLists" parameterType="com.winpow.services.app.appbanner.bean.Appbanner"
+        resultType="com.winpow.services.app.appbanner.bean.Appbanner">
+        select * from tb_app_banner t where iseffective ='10001'
+        <if test=" datatype !=null and  datatype !=''">
+           and datatype=#{datatype}
+        </if>
+        <if test=" location !=null and  location !=''">
+           and location=#{location}
+        </if>
+        <if test=" substation !=null and  substation !=''">
+          and  substation=#{substation}
+        </if>
+        <if test=" locations !=null">
+           and location in
+           <foreach collection="locations" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        	</foreach>
+        </if>
+        order by sort desc,updatedate desc
+    </select>
+
+	<insert id="app.appbanner.insert" parameterType="com.winpow.services.app.appbanner.bean.Appbanner"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into tb_app_banner (
+		pkid,
+		title,
+		iseffective,
+		image,
+		jumptype,
+		datatype,
+		url,
+		appid,
+		createdate,
+		sort,
+		createby,
+		updatedate,
+        location,intro,showdevice,substation
+		) values (
+		#{pkid},
+		#{title},
+		#{iseffective},
+		#{image},
+		#{jumptype},
+		#{datatype},
+		#{url},
+		#{appid},
+		getdate(),
+		#{sort},
+		#{createby},
+		getdate(),
+        #{location},#{intro},#{showdevice}
+        <choose><when test="substation=='all'">,null</when><otherwise>,#{substation}</otherwise></choose>
+		)
+
+	</insert>
+
+	<update id="app.appbanner.update" parameterType="com.winpow.services.app.appbanner.bean.Appbanner">
+		update tb_app_banner set
+		<if test=" title !=null and  title !=''">
+			title=#{title},
+		</if>
+
+		<if test=" iseffective !=null and  iseffective !=''">
+			iseffective=#{iseffective},
+		</if>
+
+		<if test=" image !=null and  image !=''">
+			image=#{image},
+		</if>
+
+		<if test=" jumptype !=null and  jumptype !=''">
+			jumptype=#{jumptype},
+		</if>
+
+		<if test=" datatype !=null and  datatype !=''">
+			datatype=#{datatype},
+		</if>
+
+		<if test=" url !=null and  url !=''">
+			url=#{url},
+		</if>
+		
+		<if test="url ==''">
+            url=null,
+        </if>
+
+		<if test=" appid !=null and  appid !=''">
+			appid=#{appid},
+		</if>
+
+		<if test=" sort !=null">
+			sort=#{sort},
+		</if>
+
+		<if test=" createby !=null and  createby !=''">
+			createby=#{createby},
+		</if>
+
+        <if test=" location !=null and  location !=''">
+            location=#{location},
+        </if>
+        <if test=" intro !=null and  intro !=''">
+            intro=#{intro},
+        </if>
+        
+        <if test=" showdevice !=null and  showdevice !=''">
+            showdevice=#{showdevice},
+        </if>
+        
+        <if test=" substation !=null and  substation !='' and substation != 'all'">
+            substation=#{substation},
+        </if>
+        
+        <if test=" substation !=null and  substation !='' and substation == 'all'">
+            substation = null,
+        </if>
+		updatedate=getdate()
+		where pkid=#{pkid}
+	</update>
+	
+	<delete id="app.appbanner.delete" parameterType="com.winpow.services.app.appbanner.bean.Appbanner">
+        delete from tb_app_banner where pkid=#{pkid}
+    </delete>
+</mapper>  

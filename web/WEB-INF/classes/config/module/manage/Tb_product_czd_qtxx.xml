@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC 
+"-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="manage">
+
+	<select id="manage.productczdqtxx.selectPageList"
+		parameterType="com.winpow.services.manage.productczdqtxx.bean.Productczdqtxx"
+		resultType="hashMap">
+		select * from (
+		SELECT ROW_NUMBER() over(order by id) as rownumber ,
+		id,
+		releid,
+		yanfafeiyongbili,
+		yanfarenyuanbili,
+		Replace(zhishichanquan1,' ','') zhishichanquan1,
+		zhishichanquan2,
+		zhishichanquan3,
+		Replace(quanweirending1,' ','') quanweirending1,
+		quanweirending2,
+		quanweirending3,
+		shichangqianjing,
+		fazhanqianjing,
+		chanpinjingzhengli,
+		gaoguantuandui,
+		tuozhanqianjing,
+		lurushijian,zhuyaochanpingjieshao,sannianleijijiekuan,sannianleijiguihuan,daoqichanghuanlv,
+		inputuser,yanfafeiyong,xiaoshoufeiyong,yanfarenyuan,gongsizongrenshu,
+		lastchgtime
+		from Tb_product_czd_qtxx )t where rownumber &gt; = #{offset} and rownumber
+		&lt; = #{pageSize}+#{offset}
+	</select>
+	<select id="manage.productczdqtxx.selectPageCount"
+		parameterType="com.winpow.services.manage.productczdqtxx.bean.Productczdqtxx"
+		resultType="java.lang.Integer">
+
+		select count(*) from (
+		SELECT ROW_NUMBER() over(order by id) as rownumber ,
+		id,
+		releid,
+		yanfafeiyongbili,
+		yanfarenyuanbili,
+		zhishichanquan1,
+		zhishichanquan2,
+		zhishichanquan3,
+		quanweirending1,
+		quanweirending2,
+		quanweirending3,
+		shichangqianjing,
+		fazhanqianjing,
+		chanpinjingzhengli,
+		gaoguantuandui,
+		tuozhanqianjing,
+		lurushijian,zhuyaochanpingjieshao,sannianleijijiekuan,sannianleijiguihuan,daoqichanghuanlv,
+		inputuser,yanfafeiyong,xiaoshoufeiyong,yanfarenyuan,gongsizongrenshu,
+		lastchgtime
+		from Tb_product_czd_qtxx )t
+
+	</select>
+
+	<select id="manage.productczdqtxx.selectOne"
+		parameterType="com.winpow.services.manage.productczdqtxx.bean.Productczdqtxx"
+		resultType="com.winpow.services.manage.productczdqtxx.bean.Productczdqtxx">
+		SELECT
+		id,
+		releid,
+		yanfafeiyongbili,
+		yanfarenyuanbili,
+		Replace(zhishichanquan1,' ','') zhishichanquan1,
+		zhishichanquan2,
+		zhishichanquan3,
+		Replace(quanweirending1,' ','') quanweirending1,
+		quanweirending2,
+		quanweirending3,
+		shichangqianjing,
+		fazhanqianjing,
+		chanpinjingzhengli,
+		gaoguantuandui,
+		tuozhanqianjing,
+		lurushijian,zhuyaochanpingjieshao,sannianleijijiekuan,sannianleijiguihuan,daoqichanghuanlv,
+		inputuser,yanfafeiyong,xiaoshoufeiyong,yanfarenyuan,gongsizongrenshu,
+		lastchgtime
+		from Tb_product_czd_qtxx t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+		<if test="releid!=null and releid!=''">
+			and t.releid=#{releid}
+		</if>
+	</select>
+
+	<select id="manage.productczdqtxx.selectCount"
+		parameterType="com.winpow.services.manage.productczdqtxx.bean.Productczdqtxx"
+		resultType="int">
+		select count(*)
+		FROM Tb_product_czd_qtxx t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+	</select>
+
+	<select id="manage.productczdqtxx.selectOneByCondition"
+		parameterType="com.winpow.services.manage.productczdqtxx.bean.Productczdqtxx"
+		resultType="com.winpow.services.manage.productczdqtxx.bean.Productczdqtxx">
+		SELECT
+		id,
+		releid,
+		yanfafeiyongbili,
+		yanfarenyuanbili,
+		Replace(zhishichanquan1,' ','') zhishichanquan1,
+		zhishichanquan2,
+		zhishichanquan3,
+		Replace(quanweirending1,' ','') quanweirending1,
+		quanweirending2,
+		quanweirending3,
+		shichangqianjing,
+		fazhanqianjing,
+		chanpinjingzhengli,
+		gaoguantuandui,
+		tuozhanqianjing,
+		lurushijian,zhuyaochanpingjieshao,sannianleijijiekuan,sannianleijiguihuan,daoqichanghuanlv,
+		inputuser,yanfafeiyong,xiaoshoufeiyong,yanfarenyuan,gongsizongrenshu,
+		lastchgtime
+		from Tb_product_czd_qtxx t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+	</select>
+
+
+
+	<select id="manage.productczdqtxx.selectList"
+		parameterType="com.winpow.services.manage.productczdqtxx.bean.Productczdqtxx"
+		resultType="com.winpow.services.manage.productczdqtxx.bean.Productczdqtxx">
+		SELECT
+		id,
+		releid,
+		yanfafeiyongbili,
+		yanfarenyuanbili,
+		Replace(zhishichanquan1,' ','') zhishichanquan1,
+		zhishichanquan2,
+		zhishichanquan3,
+		Replace(quanweirending1,' ','') quanweirending1,
+		quanweirending2,
+		quanweirending3,
+		shichangqianjing,
+		fazhanqianjing,
+		chanpinjingzhengli,
+		gaoguantuandui,
+		tuozhanqianjing,
+		lurushijian,zhuyaochanpingjieshao,sannianleijijiekuan,sannianleijiguihuan,daoqichanghuanlv,
+		inputuser,yanfafeiyong,xiaoshoufeiyong,yanfarenyuan,gongsizongrenshu,
+		lastchgtime
+		from Tb_product_czd_qtxx t where 1=1
+		and t.releid=#{releid}
+	</select>
+
+
+
+
+	<insert id="manage.productczdqtxx.insert"
+		parameterType="com.winpow.services.manage.productczdqtxx.bean.Productczdqtxx"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into Tb_product_czd_qtxx (
+
+		releid,
+		yanfafeiyongbili,
+		yanfarenyuanbili,
+		zhishichanquan1,
+		zhishichanquan2,
+		zhishichanquan3,
+		quanweirending1,
+		quanweirending2,
+		quanweirending3,
+		shichangqianjing,
+		fazhanqianjing,
+		chanpinjingzhengli,
+		gaoguantuandui,
+		tuozhanqianjing,
+		lurushijian,zhuyaochanpingjieshao,sannianleijijiekuan,sannianleijiguihuan,daoqichanghuanlv,
+		inputuser,yanfafeiyong,xiaoshoufeiyong,yanfarenyuan,gongsizongrenshu,
+		lastchgtime
+		) values (
+
+		#{releid},
+		#{yanfafeiyongbili},
+		#{yanfarenyuanbili},
+		#{zhishichanquan1},
+		#{zhishichanquan2},
+		#{zhishichanquan3},
+		#{quanweirending1},
+		#{quanweirending2},
+		#{quanweirending3},
+		#{shichangqianjing},
+		#{fazhanqianjing},
+		#{chanpinjingzhengli},
+		#{gaoguantuandui},
+		#{tuozhanqianjing},
+		getdate(),#{zhuyaochanpingjieshao},#{sannianleijijiekuan},#{sannianleijiguihuan},#{daoqichanghuanlv},
+		#{inputuser},#{yanfafeiyong},#{xiaoshoufeiyong},#{yanfarenyuan},#{gongsizongrenshu},
+		getdate()
+		)
+
+	</insert>
+
+	<update id="manage.productczdqtxx.update"
+		parameterType="com.winpow.services.manage.productczdqtxx.bean.Productczdqtxx">
+		update Tb_product_czd_qtxx set
+		<if test=" yanfafeiyongbili !=null and  yanfafeiyongbili !=''">
+			yanfafeiyongbili=#{yanfafeiyongbili},
+		</if>
+
+		<if test=" yanfarenyuanbili !=null and  yanfarenyuanbili !=''">
+			yanfarenyuanbili=#{yanfarenyuanbili},
+		</if>
+
+		<if test=" zhishichanquan1 !=null and  zhishichanquan1 !=''">
+			zhishichanquan1=#{zhishichanquan1},
+		</if>
+
+		<if test=" zhishichanquan2 !=null and  zhishichanquan2 !=''">
+			zhishichanquan2=#{zhishichanquan2},
+		</if>
+
+		<if test=" zhishichanquan3 !=null and  zhishichanquan3 !=''">
+			zhishichanquan3=#{zhishichanquan3},
+		</if>
+
+		<if test=" quanweirending1 !=null and  quanweirending1 !=''">
+			quanweirending1=#{quanweirending1},
+		</if>
+
+		<if test=" quanweirending2 !=null and  quanweirending2 !=''">
+			quanweirending2=#{quanweirending2},
+		</if>
+
+		<if test=" quanweirending3 !=null and  quanweirending3 !=''">
+			quanweirending3=#{quanweirending3},
+		</if>
+
+		<if test=" shichangqianjing !=null and  shichangqianjing !=''">
+			shichangqianjing=#{shichangqianjing},
+		</if>
+
+		<if test=" fazhanqianjing !=null and  fazhanqianjing !=''">
+			fazhanqianjing=#{fazhanqianjing},
+		</if>
+
+		<if test=" chanpinjingzhengli !=null and  chanpinjingzhengli !=''">
+			chanpinjingzhengli=#{chanpinjingzhengli},
+		</if>
+
+		<if test=" gaoguantuandui !=null and  gaoguantuandui !=''">
+			gaoguantuandui=#{gaoguantuandui},
+		</if>
+
+		<if test=" tuozhanqianjing !=null and  tuozhanqianjing !=''">
+			tuozhanqianjing=#{tuozhanqianjing},
+		</if>
+
+		<if test=" lurushijian !=null and  lurushijian !=''">
+			lurushijian=#{lurushijian},
+		</if>
+		<if test=" inputuser !=null and  inputuser !=''">
+			inputuser=#{inputuser},
+		</if>
+		<if test=" yanfafeiyong !=null">
+			yanfafeiyong=#{yanfafeiyong},
+		</if>
+		<if test=" xiaoshoufeiyong !=null and  xiaoshoufeiyong !=''">
+			xiaoshoufeiyong=#{xiaoshoufeiyong},
+		</if>
+		<if test=" yanfarenyuan !=null and  yanfarenyuan !=''">
+			yanfarenyuan=#{yanfarenyuan},
+		</if>
+		<if test=" gongsizongrenshu !=null and  gongsizongrenshu !=''">
+			gongsizongrenshu=#{gongsizongrenshu},
+		</if>
+
+		<if test=" zhuyaochanpingjieshao !=null and  zhuyaochanpingjieshao !=''">
+			zhuyaochanpingjieshao=#{zhuyaochanpingjieshao},
+		</if>
+		<if test=" sannianleijijiekuan !=null and  sannianleijijiekuan !=''">
+			sannianleijijiekuan=#{sannianleijijiekuan},
+		</if>
+		<if test=" sannianleijiguihuan !=null and  sannianleijiguihuan !=''">
+			sannianleijiguihuan=#{sannianleijiguihuan},
+		</if>
+		<if test=" daoqichanghuanlv !=null and  daoqichanghuanlv !=''">
+			daoqichanghuanlv=#{daoqichanghuanlv},
+		</if>
+		lastchgtime=getdate() where id=#{id} and releid=#{releid}
+	</update>
+
+</mapper>  

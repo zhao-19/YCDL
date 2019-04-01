@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC 
+"-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="pc">
+
+	<select id="pc.pcaboutus.selectPageList" parameterType="com.winpow.services.app.pcaboutus.bean.Pcaboutus"
+		resultType="hashMap">
+		select top ${pageSize} * from (
+			select row_number() over(order by lastchgtime desc) as rownumber ,* 
+			from tb_pc_aboutus where 1=1
+			<if test=" title !=null and  title !=''">
+				and title like '%'+#{title}+'%'
+			</if>
+	    ) a where rownumber > ${pageSize}*(${offset} - 1)
+	</select>
+	
+	<select id="pc.pcaboutus.selectPageCount" parameterType="com.winpow.services.app.pcaboutus.bean.Pcaboutus"
+		resultType="java.lang.Integer">
+		select count(*) from tb_pc_aboutus
+	</select>
+
+	<select id="pc.pcaboutus.selectOne" parameterType="com.winpow.services.app.pcaboutus.bean.Pcaboutus"
+		resultType="com.winpow.services.app.pcaboutus.bean.Pcaboutus">
+		select top(1) * from tb_pc_aboutus where 1=1
+		<if test="pkid != null and pkid != ''">
+			and pkid=#{pkid}
+		</if>
+		<if test="substation != null and substation != ''">
+			and substation=#{substation}
+		</if>
+	</select>
+
+	<select id="pc.pcaboutus.selectCount" parameterType="com.winpow.services.app.pcaboutus.bean.Pcaboutus"
+		resultType="int">
+		select count(*) from tb_pc_aboutus t where 1=1
+		<if test="pkid != null and pkid != ''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+
+	<select id="pc.pcaboutus.selectOneByCondition" parameterType="com.winpow.services.app.pcaboutus.bean.Pcaboutus"
+		resultType="com.winpow.services.app.pcaboutus.bean.Pcaboutus">
+		select * from tb_pc_aboutus t where 1=1
+		<if test="pkid != null and pkid != ''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+
+	<select id="pc.pcaboutus.selectList" parameterType="com.winpow.services.app.pcaboutus.bean.Pcaboutus"
+		resultType="com.winpow.services.app.pcaboutus.bean.Pcaboutus">
+		select * from tb_pc_aboutus t where 1=1
+		<if test="pkid != null and pkid != ''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+
+	<insert id="pc.pcaboutus.insert" parameterType="com.winpow.services.app.pcaboutus.bean.Pcaboutus"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into tb_pc_aboutus (
+		pkid,
+		substation,
+		title,
+		content,
+		lurushijian,
+		inputuser,
+		lastchgtime
+		) values (
+		#{pkid},
+		#{substation},
+		#{title},
+		#{content},
+		getdate(),
+		#{inputuser},
+		getdate()
+		)
+	</insert>
+
+	<update id="pc.pcaboutus.update" parameterType="com.winpow.services.app.pcaboutus.bean.Pcaboutus">
+		update tb_pc_aboutus set
+		<if test=" substation !=null and  substation !=''">
+			substation=#{substation},
+		</if>
+
+		<if test=" title !=null and  title !=''">
+			title=#{title},
+		</if>
+
+		<if test=" content !=null and  content !=''">
+			content=#{content},
+		</if>
+		lastchgtime=getdate()
+		where pkid=#{pkid}
+	</update>
+	
+	<!-- 分站统计数据 -->
+	<select id="pc.pcaboutus.substat" parameterType="com.winpow.services.app.pcaboutus.bean.Pcaboutus"
+		resultType="com.winpow.services.manage.histdata.bean.Histdata">
+		select 
+		(
+			 select count (*) from tb_qiye q where 1=1
+			 <if test="substation != null and substation != ''">
+				and substring (q.zzjgdm, 3, 6)=#{substation}
+			</if>
+		) as histcomp, 
+		(
+		    select sum (amount) from(
+				select sum(a.amount) amount
+				from tb_app_loan_app a
+				left join tb_product p on a.proid=p.id
+				where 1=1
+				<if test="substation != null and substation != ''">
+					and p.substation=#{substation}
+				</if>
+				union all
+				select sum(a.loanamt) amount
+				from tb_product_app a
+				left join tb_product p on a.prodid=p.flowno
+				where 1=1
+				<if test="substation != null and substation != ''">
+					and p.substation=#{substation}
+				</if>
+			) loan
+		 ) as histloanamt, 
+		 ( 
+			select sum (count) from (
+				select count(a.amount) count
+				from tb_app_loan_app a
+				left join tb_product p on a.proid=p.id
+				where 1=1
+				<if test="substation != null and substation != ''">
+					and p.substation=#{substation}
+				</if>
+				union all
+				select count(a.loanamt) count
+				from tb_product_app a
+				left join tb_product p on a.prodid=p.flowno
+				where 1=1
+				<if test="substation != null and substation != ''">
+					and p.substation=#{substation}
+				</if>
+			) loanc
+		) as histloancount 
+		from t_histdata t
+	</select>
+	
+	<!-- 1.分站首页盈创资讯 -->
+	<select id="pc.pcaboutus.getNews" parameterType="com.winpow.services.manage.news.bean.News"
+		resultType="com.winpow.services.manage.news.bean.News">
+		select * from (
+			select top(3) id,cover,title,cataid,contents,lurushijian from tb_news
+			where showlocation!='12703' 
+			<if test="substation != null and substation != ''">
+				and substation=#{substation}
+			</if>
+			order by id desc
+			union all
+			select top(3) id,activities_image cover,activities_name title,'活动' cataid,activities_detail contents,lurushijian from tb_activities a 
+			where 1=1
+			<if test="substation != null and substation != ''">
+				and substation=#{substation}
+			</if>
+			order by lurushijian desc
+		) a order by lurushijian desc
+	</select>
+	
+	<!-- 2.分站首页融资交易动态 -->
+	<select id="pc.pcaboutus.getDynamic" parameterType="com.winpow.core.oscache.Dynamic"
+		resultType="com.winpow.core.oscache.Dynamic">
+		select top(12) * from (
+			select top(12)
+				pkid as columkey,
+				'申请' as dytype,
+				isnull(q.qiyemingcheng,'') + isnull(j.jigoumingcheng,'') + isnull(o.org_name,'')  compname,
+				a.chstatus dystatus,
+				a.createdate as dytime,
+				a.amount as amt,
+				a.proname as dytypedetail
+			from tb_app_loan_app a
+			left join tb_cust c on c.userid=a.userid
+			left join tb_qiye q on c.f_id=q.pk_qiyeid
+			left join tb_jigou j on c.f_id=j.id
+			left join tb_other_org o on c.f_id=o.id 
+			left join tb_product p on a.proid=p.id
+			where 1=1
+			<if test="substation != null and substation != ''">
+				and p.substation=#{substation}
+			</if>
+			order by a.createdate desc
+			union all
+			select top(12)
+				convert(varchar,a.id) columkey,
+				'申请' as dytype,
+				a.qiyemingcheng compname,
+				a.status dystatus,
+				a.lurushijian as dytime,
+				a.loanamt as amt,
+				a.prodname as dytypedetail
+			from tb_product_app a
+			left join tb_product p on a.prodid=p.flowno
+			where 1=1
+			<if test="substation != null and substation != ''">
+				and p.substation=#{substation}
+			</if>
+			order by a.lurushijian desc
+			union all
+			select top(12)
+				convert(varchar,g.id) columkey,
+				'订购增值业务' dytype,
+				isnull(q.qiyemingcheng,'') + isnull(j.jigoumingcheng,'') + isnull(o.org_name,'')  compname,
+				g.status dystatus,
+				g.lurushijian dytime,
+				g.incamt amt,
+				g.increname dytypedetail
+			from
+			tb_guquan_app g 
+			left join tb_guquan gu on g.increid=gu.id
+			left join tb_cust c on c.userid=g.userid
+			left join tb_qiye q on c.f_id=q.pk_qiyeid
+			left join tb_jigou j on c.f_id=j.id
+			left join tb_other_org o on c.f_id=o.id 
+			where 1=1
+			<if test="substation != null and substation != ''">
+				and gu.substation=#{substation}
+			</if>
+			order by g.lurushijian desc
+			union all
+			select top(12)
+				o.pkid columkey,
+				'订购增值业务' dytype,
+				isnull(q.qiyemingcheng,'') + isnull(j.jigoumingcheng,'') + isnull(org.org_name,'') compname,
+				o.chstatus dystatus,
+				o.createdate dytime,
+				o.total_price amt,
+				o.title dytypedetail
+			from tb_app_order o
+			left join tb_cust c on c.userid=o.userid
+			left join tb_qiye q on c.f_id=q.pk_qiyeid
+			left join tb_jigou j on c.f_id=j.id
+			left join tb_other_org org on c.f_id=org.id 
+			left join tb_incre i on o.releid=i.id
+			where 1=1
+			and o.genre='11201'
+			<if test="substation != null and substation != ''">
+				and i.substation=#{substation}
+			</if>
+			order by o.createdate desc
+		) dys order by dytime desc
+	</select>
+	
+	<!-- 3.分站首页债权融资 -->
+	<select id="pc.pcaboutus.getProduct" parameterType="com.winpow.services.manage.product.bean.Product"
+		resultType="com.winpow.services.manage.product.bean.Product">
+		select * from tb_product where openstat='10001'
+		<if test="substation != null and substation != ''">
+			and substation=#{substation}
+		</if>
+		order by sort desc
+	</select>
+	
+	<!-- 4.分站首页股权融资 -->
+	<select id="pc.pcaboutus.getGuquan" parameterType="com.winpow.services.manage.guquan.bean.Guquan"
+		resultType="com.winpow.services.manage.guquan.bean.Guquan">
+		select top(4) g.*, ( select count (*) from ( select rele_id from tb_email_log group by rele_id, dest_name ) l where l.rele_id = g.id ) emailcount 
+		from tb_guquan g where g.shenhezhuangtai in ( 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaa083', '14003') 
+		order by 
+		<if test="substation != null and substation != ''">
+			case substation when #{substation} then 1 else 2 end,
+		</if>
+		g.number desc
+	</select>
+	
+	<!-- 5.分站首页中介服务 -->
+	<select id="pc.pcaboutus.getIncre" parameterType="com.winpow.services.manage.incre.bean.Incre"
+		resultType="com.winpow.services.manage.incre.bean.Incre">
+		select top 8 * from tb_incre where shifoutuijian='10001'
+		order by 
+		<if test="substation != null and substation != ''">
+			case substation when #{substation} then 1 else 2 end,
+		</if>
+		lastchgtime desc
+	</select>
+	
+	<!-- 分站大屏统计 product:债权融资申请笔数;loanamt:债权融资金额;loancount:债券融资笔数;activity:培训活动数；activityapp：培训活动申请数 -->
+	<select id="pc.pcaboutus.getsubstat" resultType="hashMap">
+		select 'product' name, substation,count(*) count from tb_product where 1=1 and (shifoutuijian='10001' or openstat='10001') group by substation
+		union all
+		select 'loanamt' name, substation, sum (amount) count from ( select p.substation, a.amount amount from tb_app_loan_app a left join tb_product p on a.proid = p.id union all select p.substation, a.loanamt amount from tb_product_app a left join tb_product p on a.prodid = p.flowno ) b group by substation
+		union all
+		select 'loancount' name, substation, count (amount) count from ( select p.substation, a.amount amount from tb_app_loan_app a left join tb_product p on a.proid = p.id union all select p.substation, a.loanamt amount from tb_product_app a left join tb_product p on a.prodid = p.flowno ) b group by substation
+		union all
+		select 'activity' name,substation,count(*) count from tb_activities group by substation
+		union all
+		select 'activityapp' name, a.substation, count (*) count from tb_activities_app p left join tb_activities a on p.activitiid = a.id group by a.substation
+	</select>
+
+</mapper>  

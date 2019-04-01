@@ -1,0 +1,497 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+"-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="manage">
+
+	<select id="manage.incre.selectPageList" parameterType="com.winpow.services.manage.incre.bean.Incre"
+		resultType="hashMap">
+		select * from (
+		SELECT
+		ROW_NUMBER() over(order by lastchgtime
+		desc) as
+		rownumber , * from (
+		select
+		tp.id id,
+		tp.increid increid,
+		tp.increname
+		increname,
+		tp.browsecount browsecount,
+		tp.markcount markcount,
+		tp.incretype incretype,
+		tp.incredescrip incredescrip,
+		tp.increprice
+		increprice,
+		tp.increcomtent increcomtent,
+		tp.increcontenttext
+		increcontenttext,
+		tp.openstat openstat,
+		tp.lurushijian lurushijian,
+		tp.inputuser inputuser,
+		tp.picture picture,
+		tp.lastchgtime lastchgtime,
+		tp.SHIFOUTUIJIAN SHIFOUTUIJIAN,
+		tp.TUIJIANPIC TUIJIANPIC,
+		tp.datasource
+		datasource,
+		tp.appid appid,
+		tp.releid releid,
+		tp.releuserid releuserid,
+		tp.imgdetail imgdetail,
+		tp.sort sort,
+		case when tq.qiyemingcheng is not
+		null then tq.qiyemingcheng
+		when tj.JIGOUMINGCHENG IS not null then
+		tj.JIGOUMINGCHENG when
+		too.org_name IS not null then too.org_name else
+		'' end as cmpname
+		from tb_incre tp left join tb_Qiye tq on tp.releid =
+		tq.PK_QIYEID left
+		join Tb_jigou tj on tp.releid = tj.id left join
+		tb_other_org too on
+		tp.releid = too.id
+		)t1 where 1=1
+		<if test="increname!=null and increname!=''">
+			and increname like '%'+#{increname}+'%'
+		</if>
+		<if test="cmpname !=null and cmpname !=''">
+			and cmpname like '%'+#{cmpname}+'%'
+		</if>
+		)t where 1=1
+
+		and rownumber &gt; #{offset} and rownumber &lt; =
+		#{pageSize}+#{offset}
+	</select>
+	
+	<select id="manage.incre.selectPageList2" parameterType="com.winpow.services.manage.incre.bean.Incre"
+		resultType="hashMap">
+		select top ${pageSize} * from (
+			select row_number() over(order by lastchgtime desc) as rownumber ,* from (
+				select i.*,isnull(q.qiyemingcheng,'') + isnull(j.jigoumingcheng,'') + isnull(o.org_name,'') cmpname 
+				from tb_incre i
+				left join tb_qiye q on i.releid = q.pk_qiyeid 
+				left join tb_jigou j on i.releid = j.id 
+				left join tb_other_org o on i.releid = o.id
+				where 1=1
+				<if test="increname!=null and increname!=''">
+					and i.increname like '%'+#{increname}+'%'
+				</if>
+				<if test="substation != null and substation != ''">
+					and i.substation =#{substation}
+				</if>
+			) b where 1=1
+			<if test="cmpname !=null and cmpname !=''">
+				and b.cmpname like '%'+#{cmpname}+'%'
+			</if>
+	    ) a where rownumber > ${pageSize}*(${offset} - 1)
+	</select>
+
+	<select id="manage.incre.selectPageCount" parameterType="com.winpow.services.manage.incre.bean.Incre"
+		resultType="java.lang.Integer">
+		select count(*) from (
+			select i.*,isnull(q.qiyemingcheng,'') + isnull(j.jigoumingcheng,'') + isnull(o.org_name,'') cmpname 
+			from tb_incre i
+			left join tb_qiye q on i.releid = q.pk_qiyeid 
+			left join tb_jigou j on i.releid = j.id 
+			left join tb_other_org o on i.releid = o.id
+			where 1=1
+			<if test="increname!=null and increname!=''">
+				and i.increname like '%'+#{increname}+'%'
+			</if>
+			<if test="substation != null and substation != ''">
+				and i.substation =#{substation}
+			</if>
+		) b where 1=1
+		<if test="cmpname !=null and cmpname !=''">
+			and b.cmpname like '%'+#{cmpname}+'%'
+		</if>
+	</select>
+
+	<select id="manage.incre.selectOne" parameterType="com.winpow.services.manage.incre.bean.Incre"
+		resultType="com.winpow.services.manage.incre.bean.Incre">
+		SELECT
+		t.*,
+		(select SUM(num) from tb_app_order where releid =#{id}) as
+		sellcount
+		from tb_incre t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+		<if test="increname!=null and increname!=''">
+			and increname like '%'+#{increname}+'%'
+		</if>
+	</select>
+
+	<select id="manage.incre.selectrecommend" parameterType="com.winpow.services.manage.incre.bean.Incre"
+		resultType="com.winpow.services.manage.incre.bean.Incre">
+		select top 1 * from tb_incre where shifoutuijian='10001'
+		order by lastchgtime desc
+	</select>
+
+	<select id="manage.incre.selectCount" parameterType="com.winpow.services.manage.incre.bean.Incre"
+		resultType="int">
+		select count(*)
+		FROM tb_incre t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+		<if test="increname!=null and increname!=''">
+			and increname like '%'+#{increname}+'%'
+		</if>
+	</select>
+
+	<select id="manage.incre.selectOneByCondition" parameterType="com.winpow.services.manage.incre.bean.Incre"
+		resultType="com.winpow.services.manage.incre.bean.Incre">
+		SELECT
+		id,
+		increid,
+		increname,
+		browsecount,
+		markcount,
+		incretype,
+		incredescrip,
+		increprice,
+		increcomtent,increcontenttext,
+		openstat,
+		lurushijian,
+		inputuser,picture,
+		lastchgtime ,SHIFOUTUIJIAN,TUIJIANPIC,
+		datasource,
+		appid,
+		releid,
+		releuserid,
+		imgdetail,sort
+		from tb_incre t where
+		1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+		<if test="increname!=null and increname!=''">
+			and increname like '%'+#{increname}+'%'
+		</if>
+	</select>
+
+	<select id="manage.incre.select4index" parameterType="com.winpow.services.manage.incre.bean.Incre"
+		resultType="com.winpow.services.manage.incre.bean.Incre">
+		select top 8 * from tb_incre where shifoutuijian='10001'
+		order by lastchgtime desc
+	</select>
+
+	<insert id="manage.incre.insert" parameterType="com.winpow.services.manage.incre.bean.Incre"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into tb_incre (
+		increid,
+		increname,
+		browsecount,
+		markcount,
+		incretype,
+		incredescrip,
+		increprice,
+		increcomtent,
+		openstat,
+		lurushijian,
+		inputuser,
+		lastchgtime,
+		picture,
+		shifoutuijian,
+		tuijianpic,
+		increcontenttext,
+		appid,
+		releid,
+		releuserid,
+		imgdetail,
+		datasource,
+		sort,
+		label,
+		cretype,
+		subclass,
+		verifier,
+		flowno,
+		substation,
+		longitude,
+		latitude,
+		joinactivity,
+		activityprice
+		) values (
+		#{increid},
+		#{increname},
+		#{browsecount},
+		#{markcount},
+		#{incretype},
+		#{incredescrip},
+		#{increprice},
+		#{increcomtent},
+		#{openstat},
+		getdate(),
+		#{inputuser},
+		getdate(),
+		#{picture},
+		#{shifoutuijian},
+		#{tuijianpic},
+		#{increcontenttext},
+		#{appid},
+		#{releid},
+		#{releuserid},
+		#{imgdetail},
+		#{datasource},
+		#{sort},
+		#{label},
+		#{cretype},
+		#{subclass},
+		#{verifier},
+		#{flowno},
+		<choose><when test="substation=='all'">null,</when><otherwise>#{substation},</otherwise></choose>
+		#{longitude},
+		#{latitude},
+		#{joinactivity},
+		#{activityprice}
+		)
+	</insert>
+
+	<update id="manage.incre.update" parameterType="com.winpow.services.manage.incre.bean.Incre">
+		update tb_incre set
+
+
+		<if test="increid!=null and increid!=''">
+			increid=#{increid},
+		</if>
+
+		<if test="increname!=null and increname!=''">
+			increname=#{increname},
+		</if>
+
+		<if test="browsecount!=null and browsecount!=''">
+			browsecount=#{browsecount},
+		</if>
+
+		<if test="markcount!=null and markcount!=''">
+			markcount=#{markcount},
+		</if>
+
+		<if test="incretype!=null and incretype!=''">
+			incretype=#{incretype},
+		</if>
+
+		<if test="incredescrip!=null and incredescrip!=''">
+			incredescrip=#{incredescrip},
+		</if>
+
+		<if test="increprice!=null and increprice!=''">
+			increprice=#{increprice},
+		</if>
+
+		<if test="increcomtent!=null and increcomtent!=''">
+			increcomtent=#{increcomtent},
+		</if>
+
+		<if test="openstat!=null and openstat!=''">
+			openstat=#{openstat},
+		</if>
+
+		<if test="inputuser!=null and inputuser!=''">
+			inputuser=#{inputuser},
+		</if>
+		<if test="picture!=null and picture!=''">
+			picture=#{picture},
+		</if>
+
+		<if test="shifoutuijian!=null and shifoutuijian!=''">
+			shifoutuijian=#{shifoutuijian},
+		</if>
+		<if test="tuijianpic!=null and tuijianpic!=''">
+			tuijianpic=#{tuijianpic},
+		</if>
+		<if test="increcontenttext!=null and increcontenttext!=''">
+			increcontenttext=#{increcontenttext},
+		</if>
+		<if test="appid!=null and appid!=''">
+			appid=#{appid},
+		</if>
+		<if test="releid!=null and releid!=''">
+			releid=#{releid},
+		</if>
+		<if test="releuserid!=null and releuserid!=''">
+			releuserid=#{releuserid},
+		</if>
+		<if test="imgdetail!=null and imgdetail!=''">
+			imgdetail=#{imgdetail},
+		</if>
+		<if test="datasource !=null and datasource !=''">
+			datasource=#{datasource},
+		</if>
+		<if test="sort !=null">
+			sort=#{sort},
+		</if>
+		<if test="label!=null and label!=''">
+			label=#{label},
+		</if>
+		<if test="cretype!=null and cretype!=''">
+			cretype=#{cretype},
+		</if>
+
+		<if test="subclass !=null and subclass !=''">
+			subclass=#{subclass},
+		</if>
+		<if test="verifier !=null and verifier !=''">
+			verifier=#{verifier},
+		</if>
+		<if test="flowno !=null and flowno !=''">
+			flowno=#{flowno},
+		</if>
+
+		<if test=" substation !=null and  substation !='' and substation != 'all'">
+			substation=#{substation},
+		</if>
+
+		<if test=" substation !=null and  substation !='' and substation == 'all'">
+			substation = null,
+		</if>
+
+		<if test="longitude !=null and longitude !=''">
+			longitude=#{longitude},
+		</if>
+
+		<if test="latitude !=null and latitude !=''">
+			latitude=#{latitude},
+		</if>
+
+		<if test="joinactivity !=null and joinactivity !=''">
+			joinactivity=#{joinactivity},
+		</if>
+
+		<if test="activityprice !=null ">
+			activityprice=#{activityprice},
+		</if>
+		lastchgtime=getdate()
+		where id=#{id}
+	</update>
+
+	<delete id="manage.incre.delete" parameterType="String">
+		delete from
+		tb_incre where id=#{id}
+	</delete>
+
+	<select id="manage.incre.selectLists" parameterType="com.winpow.services.manage.incre.bean.Incre"
+		resultType="com.winpow.services.manage.incre.bean.Incre">
+		select top ${pageSize} * from (
+			select row_number() over (order by ${lurushijian}) as rownumber,
+			t1.*,isnull(t2.qiyemingcheng,'') + isnull(t3.jigoumingcheng,'') + isnull(t4.org_name,'') cmpname
+			from tb_incre t1
+			left join tb_qiye t2 on t1.releid = t2.pk_qiyeid
+			left join tb_jigou t3 on t1.releid =t3.id
+			left join tb_other_org t4 on t1.releid = t4.id
+			where 1 = 1
+			<if test="cretype!=null and cretype!=''">
+				and t1.cretype = #{cretype}
+			</if>
+			<if test="subclass!=null and subclass!=''">
+				and t1.subclass = #{subclass}
+			</if>
+			<if test="substation !=null and substation !=''">
+				and t1.substation = #{substation}
+			</if>
+		) a where rownumber > ${pageSize}*(${offset} - 1)
+	</select>
+
+	<select id="manage.incre.selectAllList" parameterType="com.winpow.services.manage.incre.bean.Incre"
+		resultType="com.winpow.services.manage.incre.bean.Incre">
+		select * from tb_incre where convert(varchar,id) not in (select appid from
+		tb_app_banner) order by lastchgtime desc
+	</select>
+
+	<select id="manage.incre.selectList" parameterType="com.winpow.services.manage.incre.bean.Incre"
+		resultType="com.winpow.services.manage.incre.bean.Incre">
+		select top(50) * from tb_incre t where 1=1
+		<if test="increname !=null and increname!=''">
+			and increname like '%'+#{increname}+'%'
+		</if>
+		order by lurushijian desc
+	</select>
+
+	<update id="manage.incre.updatereadtimes" parameterType="string">
+		update
+		tb_incre set browsecount = browsecount + 1 where id=#{id}
+	</update>
+
+	<select id="manage.incre.selectListAll" parameterType="com.winpow.services.manage.incre.bean.Incre"
+		resultType="com.winpow.services.manage.incre.bean.Incre">
+		select i.*, isnull(q.qiyemingcheng,'') + isnull(j.jigoumingcheng,'') +
+		isnull(o.org_name,'') cmpname
+		from tb_incre i
+		left join tb_qiye q on
+		i.releid = q.pk_qiyeid
+		left join tb_jigou j on i.releid = j.id
+		left join tb_other_org o on i.releid = o.id
+		where 1=1
+		<if test="joinactivity != null and joinactivity != ''">
+			and i.joinactivity = #{joinactivity}
+		</if>
+		order by i.cretype, i.lastchgtime desc
+	</select>
+
+	<select id="manage.incre.selectPagesList" parameterType="com.winpow.services.manage.incre.bean.Incre"
+		resultType="hashMap">
+		select top ${pageSize} * from (
+		select row_number() over(order by c.lastchgtime desc) as rownumber ,c.*
+		from tb_incre c where 1=1
+		<if test="cretype!=null and cretype!=''">
+			and c.cretype = #{cretype}
+		</if>
+		<if test="increname !=null and increname!=''">
+			and c.increname like '%'+#{increname}+'%'
+		</if>
+		) a where rownumber > ${pageSize}*(${offset} - 1)
+	</select>
+
+	<select id="manage.incre.selectByCretype" parameterType="com.winpow.services.manage.incre.bean.Incre"
+		resultType="com.winpow.services.manage.incre.bean.Incre">
+		select * from (select top(4) * from tb_incre where cretype='12501' order by 
+		<if test=" substation !=null and  substation !='' ">
+			case when substation=#{substation} then 1 else 2 end,
+		</if>
+		lastchgtime desc) a
+		union all
+		select * from (select top(4) * from tb_incre where cretype='12502' order by 
+		<if test=" substation !=null and  substation !='' ">
+			case when substation=#{substation} then 1 else 2 end,
+		</if>
+		lastchgtime desc) b
+		union all
+		select * from (select top(4) * from tb_incre where cretype='12503' order by 
+		<if test=" substation !=null and  substation !='' ">
+			case when substation=#{substation} then 1 else 2 end,
+		</if>
+		lastchgtime desc) c
+		union all
+		select * from (select top(4) * from tb_incre where cretype='12504' order by 
+		<if test=" substation !=null and  substation !='' ">
+			case when substation=#{substation} then 1 else 2 end,
+		</if>
+		lastchgtime desc) d
+		union all
+		select * from (select top(4) * from tb_incre where cretype='12505' order by 
+		<if test=" substation !=null and  substation !='' ">
+			case when substation=#{substation} then 1 else 2 end,
+		</if>
+		lastchgtime desc) e
+		union all
+		select * from (select top(4) * from tb_incre where cretype='12506' order by 
+		<if test=" substation !=null and  substation !='' ">
+			case when substation=#{substation} then 1 else 2 end,
+		</if>
+		lastchgtime desc) f
+		union all
+		select * from (select top(4) * from tb_incre where cretype='12507' order by 
+		<if test=" substation !=null and  substation !='' ">
+			case when substation=#{substation} then 1 else 2 end,
+		</if>
+		lastchgtime desc) g
+		union all
+		select * from (select top(4) * from tb_incre where cretype='12508' order by 
+		<if test=" substation !=null and  substation !='' ">
+			case when substation=#{substation} then 1 else 2 end,
+		</if>
+		lastchgtime desc) h
+	</select>
+
+</mapper>  

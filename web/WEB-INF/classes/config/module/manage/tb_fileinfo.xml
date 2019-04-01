@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC 
+"-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="manage">
+
+	<select id="manage.fileinfo.selectPageList" parameterType="com.winpow.services.manage.fileinfo.bean.Fileinfo"
+		resultType="hashMap">
+		select * from (
+		SELECT
+		ROW_NUMBER() over(order by sort desc, lastchgtime desc) as rownumber , id,
+		activitiesid,
+		title,
+		contents,
+		fileurl,
+		downcount,
+		lurushijian,
+		inputuser,
+		lastchgtime,
+		filetype,
+		sort
+		from tb_fileinfo where 1=1
+		<if test="title!=null and title!=''">
+			and title like '%'+#{title}+'%'
+		</if>
+		<if test="filetype !=null and filetype !=''">
+            and filetype = #{filetype}
+        </if>
+		)t where 1=1
+
+		and rownumber &gt;  #{offset} and rownumber &lt; = #{pageSize}+#{offset}
+	</select>
+	
+	<select id="manage.fileinfo.selectPageList2" parameterType="com.winpow.services.manage.fileinfo.bean.Fileinfo"
+		resultType="hashMap">
+		select top ${pageSize} * from (
+			select row_number() over(order by sort desc,lastchgtime desc) as rownumber ,* 
+			from tb_fileinfo where 1=1
+			<if test="title!=null and title!=''">
+	            and title like '%'+#{title}+'%'
+	        </if>
+	        <if test="filetype !=null and filetype !=''">
+	            and filetype = #{filetype}
+	        </if>
+	        <if test="substation != null and substation != ''">
+				and substation =#{substation}
+			</if>
+	    ) a where rownumber > ${pageSize}*(${offset} - 1)
+	</select>
+	
+	<select id="manage.fileinfo.selectPageCount" parameterType="com.winpow.services.manage.fileinfo.bean.Fileinfo"
+		resultType="java.lang.Integer">
+		select count(*) from tb_fileinfo where 1=1 
+		<if test="title!=null and title!=''">
+            and title like '%'+#{title}+'%'
+        </if>
+        <if test="filetype !=null and filetype !=''">
+            and filetype = #{filetype}
+        </if>
+        <if test="substation != null and substation != ''">
+			and substation =#{substation}
+		</if>
+	</select>
+
+	<select id="manage.fileinfo.selectOne" parameterType="com.winpow.services.manage.fileinfo.bean.Fileinfo"
+		resultType="com.winpow.services.manage.fileinfo.bean.Fileinfo">
+		select * from tb_fileinfo t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+		<if test="activitiesid!=null and activitiesid!=''">
+			and t.activitiesid=#{activitiesid}
+		</if>
+	</select>
+
+	<select id="manage.fileinfo.selectCount" parameterType="com.winpow.services.manage.fileinfo.bean.Fileinfo"
+		resultType="int">
+		select count(*) from tb_fileinfo t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+	</select>
+
+	<select id="manage.fileinfo.selectList" parameterType="com.winpow.services.manage.fileinfo.bean.Fileinfo"
+		resultType="com.winpow.services.manage.fileinfo.bean.Fileinfo">
+		select * from tb_fileinfo t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+		<if test="activitiesid!=null and activitiesid!=''">
+			and t.activitiesid=#{activitiesid}
+		</if>
+	</select>
+
+	<insert id="manage.fileinfo.insert" parameterType="com.winpow.services.manage.fileinfo.bean.Fileinfo"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into tb_fileinfo (
+
+		activitiesid,
+		title,
+		contents,
+		fileurl,
+		downcount,
+		lurushijian,
+		inputuser,
+		lastchgtime,
+        filetype,
+        sort,substation
+		) values (
+
+		#{activitiesid},
+		#{title},
+		#{contents},
+		#{fileurl},
+		#{downcount},
+		getdate(),
+		#{inputuser},
+		getdate(),
+        #{filetype},
+        #{sort}
+        <choose><when test="substation=='all'">,null</when><otherwise>,#{substation}</otherwise></choose>
+		)
+	</insert>
+
+	<update id="manage.fileinfo.update" parameterType="com.winpow.services.manage.fileinfo.bean.Fileinfo">
+		update tb_fileinfo set
+
+		<if test="activitiesid!=null and activitiesid!=''">
+			activitiesid=#{activitiesid},
+		</if>
+
+		<if test="title!=null and title!=''">
+			title=#{title},
+		</if>
+
+		<if test="contents!=null and contents!=''">
+			contents=#{contents},
+		</if>
+
+		<if test="fileurl!=null and fileurl!=''">
+			fileurl=#{fileurl},
+		</if>
+
+		<if test="downcount!=null and downcount!=''">
+			downcount=#{downcount},
+		</if>
+		<if test="inputuser!=null and inputuser!=''">
+			inputuser=#{inputuser},
+		</if>
+		<if test="filetype !=null and filetype !=''">
+            filetype=#{filetype},
+        </if>
+        <if test="sort !=null">
+            sort=#{sort},
+        </if>
+         <if test=" substation !=null and  substation !='' and substation != 'all'">
+            substation=#{substation},
+        </if>
+        
+        <if test=" substation !=null and  substation !='' and substation == 'all'">
+            substation = null,
+        </if>
+		lastchgtime=getdate()
+
+		where 1=1
+		<if test="id!=null and id!=''">
+			and id=#{id}
+		</if>
+		<if test="activitiesid!=null and activitiesid!=''">
+			and activitiesid=#{activitiesid}
+		</if>
+	</update>
+
+	<update id="manage.fileinfo.updateBroseCount" parameterType="com.winpow.services.manage.fileinfo.bean.Fileinfo">
+		update tb_fileinfo set
+		DOWNCOUNT=DOWNCOUNT+1, lastchgtime=getdate()
+		where id=#{id}
+	</update>
+
+	<update id="manage.fileinfo.delete" parameterType="com.winpow.services.manage.fileinfo.bean.Fileinfo">
+		delete from
+		tb_fileinfo
+
+		where 1=1
+		and activitiesid=#{activitiesid}
+	</update>
+
+</mapper>  

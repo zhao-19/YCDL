@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+"-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="app">
+
+	<select id="app.productbank.selectPageList"
+		parameterType="com.winpow.services.app.productbank.bean.Productbank"
+		resultType="hashMap">
+		select * from (
+		SELECT ROW_NUMBER() over(order by id) as rownumber ,
+		id,
+		bankname,
+		logo_pc,
+		logo_app,
+		lurushijian,
+		inputuser,
+		lastchgtime
+		from
+		tb_product_bank where 1=1
+		<if test="bankname !=null and bankname !=''">
+			and bankname like '%'+#{bankname}+'%'
+		</if>
+		)t where rownumber &gt; #{offset} and rownumber
+		&lt; =
+		#{pageSize}+#{offset}
+	</select>
+	<select id="app.productbank.selectPageCount"
+		parameterType="com.winpow.services.app.productbank.bean.Productbank"
+		resultType="java.lang.Integer">
+
+		select count(*) from (
+		SELECT ROW_NUMBER() over(order by id)
+		as rownumber ,
+		id,
+		bankname,
+		logo_pc,
+		logo_app,
+		lurushijian,
+		inputuser,
+		lastchgtime
+		from tb_product_bank )t
+
+	</select>
+
+	<select id="app.productbank.selectOne"
+		parameterType="com.winpow.services.app.productbank.bean.Productbank"
+		resultType="com.winpow.services.app.productbank.bean.Productbank">
+		SELECT
+		id,
+		bankname,
+		logo_pc,
+		logo_app,
+		lurushijian,
+		inputuser,
+		lastchgtime
+		from tb_product_bank t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+	</select>
+
+	<select id="app.productbank.selectCount"
+		parameterType="com.winpow.services.app.productbank.bean.Productbank"
+		resultType="int">
+		select count(*)
+		FROM tb_product_bank t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+	</select>
+
+	<select id="app.productbank.selectOneByCondition"
+		parameterType="com.winpow.services.app.productbank.bean.Productbank"
+		resultType="com.winpow.services.app.productbank.bean.Productbank">
+		SELECT
+		id,
+		bankname,
+		logo_pc,
+		logo_app,
+		lurushijian,
+		inputuser,
+		lastchgtime
+		from tb_product_bank t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+	</select>
+
+	<select id="app.productbank.selectList"
+		parameterType="com.winpow.services.app.productbank.bean.Productbank"
+		resultType="com.winpow.services.app.productbank.bean.Productbank">
+		SELECT
+		id,
+		bankname,
+		logo_pc,
+		logo_app,
+		lurushijian,
+		inputuser,
+		lastchgtime
+		from tb_product_bank t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+		order by bankname asc
+	</select>
+
+	<insert id="app.productbank.insert"
+		parameterType="com.winpow.services.app.productbank.bean.Productbank"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into tb_product_bank (
+		id,
+		bankname,
+		logo_pc,
+		logo_app,
+		lurushijian,
+		inputuser,
+		lastchgtime
+		) values (
+		#{id},
+		#{bankname},
+		#{logo_pc},
+		#{logo_app},
+		getdate(),
+		#{inputuser},
+		getdate()
+		)
+
+	</insert>
+
+	<update id="app.productbank.update"
+		parameterType="com.winpow.services.app.productbank.bean.Productbank">
+		update tb_product_bank set
+
+		<if test=" bankname !=null and  bankname !=''">
+			bankname=#{bankname},
+		</if>
+
+		<if test=" logo_pc !=null and  logo_pc !=''">
+			logo_pc=#{logo_pc},
+		</if>
+
+		<if test=" logo_app !=null and  logo_app !=''">
+			logo_app=#{logo_app},
+		</if>
+
+		lastchgtime=getdate()
+
+		where id=#{id}
+	</update>
+	<delete id="app.productbank.delete" parameterType="String">
+		delete from tb_product_bank where id=#{id}
+	</delete>
+</mapper>  

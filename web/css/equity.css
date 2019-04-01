@@ -1,0 +1,236 @@
+/*股权融资*/
+.equity_cj_menu_box{
+    border-bottom: 1px solid #dcdcdc;
+    margin-bottom: 40px;
+}
+
+/*项目/机构服务流程*/
+.xmjgfwlc_wk{width:100%;margin:0 auto;margin-bottom: 26px;}
+.xmjgfwlc{width:1188px;margin:0 auto;border: 1px solid #dcdcdc;padding: 5px;}
+.xmjgfwlc p.t{background-color: #f9f9f9;padding: 5px;clear:both;}
+.xmjgfwlc li{float:left;padding: 15px 29px;max-width: 142px;}
+.clear{clear:both;}
+.xmjgfwlc p.d{color: #666666;}
+.xmjgfwlc h2{font-size: 18px;margin-bottom: 5px;}
+.xmjgfwlc h2 span{color:#fff;padding: 0px 6px;font-weight: normal;margin-right: 5px;border-radius: 10px;}
+.xmjgfwlc h2 span.s1{background-color:#0b4d7f;}
+.xmjgfwlc h2 span.s2{background-color:#00877f;}
+.xmjgfwlc h2 span.s3{background-color:#db3f0d;}
+.xmjgfwlc h2 span.s4{background-color:#178fe6;}
+.xmjgfwlc h2 span.s5{background-color:#ea5504;}
+.xmjgfwlc h2 span.s6{background-color:#FA9412;}
+.xmjgfwlc a{display:inline-block;color:#8e8e8e;}
+.xmjgfwlc a:hover{text-decoration:underline!important;;}
+.xmjgfwlc p.d span{margin-right:5px;line-height: 24px;}
+.xmjgfwlc h2 span.jt {color:#333;}
+
+.equity_cj_menu_box ul li:first-child{
+    font-size: 17px;
+    border-bottom: 2px solid #ea5504;
+}
+.woshichuangyezhe{}
+.woshitouzizhe{}
+.woshi{
+	float:left;margin-right:30px;margin-top: 20px;margin-bottom: 20px;
+}
+.woshi a{
+	color: #333;
+    display: inline-block;
+    width: 174px;
+    height: 36px;
+    line-height: 36px;
+    border-radius: 2px;
+    font-size: 15px;
+    text-align:center;
+    border: 1px solid #ea5504;
+    font-weight: bold;
+    }
+.woshi a:hover{
+	background-color:#ea5504;
+	color:#fff;
+    }
+.equity_cj_menu_box ul li{
+    font-size: 14px;
+    float: left;
+    margin-right: 44px;
+    height: 52px;
+    line-height: 52px;
+    margin-bottom: 10px;
+}
+.equity_cj_menu_box ul li:nth-child(2) a{
+    color:#ea5504;
+}
+.equity_cj_menu_box ul li a{
+    color:#333333;
+}
+
+.equity_cj_menu_nav_bar{
+    overflow: hidden;
+}
+.equity_cj_menu_nav_left{
+    float: left;
+}
+.equity_cj_menu_nav_right{
+     width: 165px;
+    height: 22px;
+    border: 1px solid #DCDCDC;
+    padding: 7px 0px 6px 12px;
+    margin-top: 0px;
+    position: relative;
+    color: #A0A0A1;
+    border-radius: 5px 0 0 5px;
+    behavior: url(/PIE.htc);
+    margin-bottom: 6px;
+    float:right;
+    margin-top: 20px;
+    margin-right:40px;
+    border-right:0;
+
+}
+.equity_cj_menu_nav_right input{color:#A8A7A7; font-family: "微软雅黑";}
+
+#equity_search{
+    width:200px ;
+    height: 34px;
+    border-radius: 5px;
+    border: 1px solid #dcdcdc;
+    padding-right: 38px;
+    outline: none;
+    padding-left:10px;
+    
+}
+.glyphicon_search{
+    background: url("../image/data/fdj.jpg") no-repeat;
+        background-size: cover;
+    position: relative;
+    top: -1px;
+    display:block;
+    position: absolute;
+    z-index: 2;
+    right:-40px;
+    height: 37px;
+    width: 40px;
+}
+
+/*股权融资列表*/
+.equity_cj_content{
+    background: #f4f5f7;
+    padding-top: 33px;
+    padding-bottom: 54px;
+}
+
+.equity_cj_content_item{
+    height: 340px;
+    margin-bottom: 26px;
+    overflow: hidden;
+    border: 1px solid #dcdcdc;
+    padding:5px;
+}
+.equity_cj_content_item:hover{border-color:#fc5858;}
+.item_cj_left{
+    overflow: hidden;
+    position: relative;
+    width: 835px;
+    float: left;
+    height: 340px;
+}
+.equity_cj_state{
+    width: 120px;
+    height: 40px;
+    background: #178fe6;
+    color:#fff;
+    font-size: 16px;
+    line-height: 40px;
+    text-align: center;
+    position: absolute;
+    top:0px;
+    left:0px;
+}
+.item_cj_left img{
+    width: 832px;
+}
+.item_cj_right{
+    border-left: 1px solid #dcdcdc;
+    float: left;
+    width: 352px;
+    height: 340px;
+    background: #fff;
+}
+
+.item_cj_right_title{
+    font-size: 16px;
+    color: #333333;
+    padding: 8px 0px 8px 18px;
+    background: #f9f9f9;
+    border-bottom: 1px solid #dcdcdc;
+    overflow: hidden;
+    max-height: 48px;
+}
+.item_cj_right_intro{
+    background: #fff;
+    padding: 20px 20px 20px 25px;
+    border-bottom: 1px solid #dcdcdc;
+}
+.item_cj_right_intro h3{
+    font-size: 14px;
+    color:#000000;
+    line-height: 25px;
+}
+.item_cj_right_intro p{
+    font-size: 13px;
+    color:#666666;
+    line-height: 24px;
+    max-height: 49px;
+    overflow: hidden;
+}
+.item_cj_right_price{
+    background: #fff;
+    padding-left: 25px;
+    padding-top: 12px;
+    padding-bottom: 22px;
+    position: relative;
+}
+.item_cj_right_price_1{
+    font-size: 14px;
+    color:#333333;
+    margin-bottom:12px;
+}
+.item_cj_right_price_1 span{
+    font-size: 20px;
+    color: #fc5858;
+}
+
+.item_cj_right_bottom{
+    background: #178fe6;
+    border-radius: 5px;
+    width: 310px;
+    height: 37px;
+    text-align: center;
+    color:#fff;
+    font-size: 16px;
+    line-height: 37px;
+    margin-left: 25px;
+}
+.item_cj_right_bottom a{
+    color:#fff;
+}
+.item_cj_right_bottom:hover{
+    background: #60B3EF;
+}
+.equity_cj_state:hover{
+    background: #399EE7;
+}
+
+.equity_cj_more{
+    width: 100%;
+    height: 50px;
+    background: #dfdfdf;
+    text-align: center;
+    font-size: 14px;
+    color:#333333;
+}
+.equity_cj_more a{
+    font-size: 14px;
+    color:#333333;
+    line-height: 50px;
+}

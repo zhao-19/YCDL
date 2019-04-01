@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+"-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="app">
+
+	<select id="app.appcomments.selectPageList"
+		parameterType="com.winpow.services.app.appcomments.bean.Appcomments"
+		resultType="hashMap">
+		select * from (
+		select row_number() over(order by create_time desc) as rownumber ,*
+		from tb_app_comments where 1=1
+		<if test="pkid!=null and pkid!=''">
+            and pkid = #{pkid}
+        </if>
+        <if test="isexpert !=null and isexpert !=''">
+            and isexpert = #{isexpert}
+        </if>
+        <if test="iscensor !=null and iscensor !=''">
+            and iscensor = #{iscensor}
+        </if>
+        <if test="monitor !=null and monitor !=''">
+            and monitor = #{monitor}
+        </if>
+        <if test="genre !=null and genre !=''">
+            and genre = #{genre}
+        </if>
+        <if test="userid !=null and userid !=''">
+            and userid like '%'+#{userid}+'%'
+        </if>
+        <if test="content !=null and content !=''">
+            and content like '%'+#{content}+'%'
+        </if> )t
+		where 1=1
+		and rownumber &gt;
+		#{offset} and rownumber
+		&lt; = #{pageSize}+#{offset}
+	</select>
+	<select id="app.appcomments.selectPageCount"
+		parameterType="com.winpow.services.app.appcomments.bean.Appcomments"
+		resultType="java.lang.Integer">
+		select count(*) from tb_app_comments where 1=1 
+		<if test="pkid!=null and pkid!=''">
+            and pkid = #{pkid}
+        </if>
+        <if test="isexpert !=null and isexpert !=''">
+            and isexpert = #{isexpert}
+        </if>
+        <if test="iscensor !=null and iscensor !=''">
+            and iscensor = #{iscensor}
+        </if>
+        <if test="monitor !=null and monitor !=''">
+            and monitor = #{monitor}
+        </if>
+        <if test="genre !=null and genre !=''">
+            and genre = #{genre}
+        </if>
+        <if test="userid !=null and userid !=''">
+            and userid like '%'+#{userid}+'%'
+        </if>
+        <if test="content !=null and content !=''">
+            and content like '%'+#{content}+'%'
+        </if>
+	</select>
+
+	<select id="app.appcomments.selectOne"
+		parameterType="com.winpow.services.app.appcomments.bean.Appcomments"
+		resultType="com.winpow.services.app.appcomments.bean.Appcomments">
+		select * from tb_app_comments t where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+
+	<select id="app.appcomments.selectCount"
+		parameterType="com.winpow.services.app.appcomments.bean.Appcomments"
+		resultType="int">
+		select count(*) from tb_app_comments t where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+
+	<select id="app.appcomments.selectOneByCondition"
+		parameterType="com.winpow.services.app.appcomments.bean.Appcomments"
+		resultType="com.winpow.services.app.appcomments.bean.Appcomments">
+		select * from tb_app_comments t where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+
+	<select id="app.appcomments.selectList"
+		parameterType="com.winpow.services.app.appcomments.bean.Appcomments"
+		resultType="com.winpow.services.app.appcomments.bean.Appcomments">
+		select * from tb_app_comments t where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+
+	<insert id="app.appcomments.insert"
+		parameterType="com.winpow.services.app.appcomments.bean.Appcomments"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into tb_app_comments (
+		pkid,
+		parent_id,
+		userid,
+		genre,
+		releid,
+		content,
+		address,
+		device,
+		isexpert,
+		ischeck,
+		iscensor,
+		level,
+		monitor,
+		create_time,
+		updateby,
+		update_at
+		) values
+		(
+		#{pkid},
+		#{parent_id},
+		#{userid},
+		#{genre},
+		#{releid},
+		#{content},
+		#{address},
+		#{device},
+		#{isexpert},
+		#{ischeck},
+		#{iscensor},
+		#{level},
+		#{monitor},
+		getdate(),
+		#{updateby},
+		getdate()
+		)
+
+	</insert>
+
+	<update id="app.appcomments.update"
+		parameterType="com.winpow.services.app.appcomments.bean.Appcomments">
+		update tb_app_comments set
+		<if test=" parent_id !=null and  parent_id !=''">
+			parent_id=#{parent_id},
+		</if>
+
+		<if test=" userid !=null and  userid !=''">
+			userid=#{userid},
+		</if>
+
+		<if test=" genre !=null and  genre !=''">
+			genre=#{genre},
+		</if>
+
+		<if test=" releid !=null and  releid !=''">
+			releid=#{releid},
+		</if>
+
+		<if test=" content !=null and  content !=''">
+			content=#{content},
+		</if>
+
+		<if test=" address !=null and  address !=''">
+			address=#{address},
+		</if>
+
+		<if test=" device !=null and  device !=''">
+			device=#{device},
+		</if>
+
+		<if test=" isexpert !=null and  isexpert !=''">
+			isexpert=#{isexpert},
+		</if>
+
+		<if test=" ischeck !=null and  isexpert !=''">
+			ischeck=#{ischeck},
+		</if>
+
+		<if test=" iscensor !=null and  isexpert !=''">
+			iscensor=#{iscensor},
+		</if>
+		<if test=" level !=null">
+			level=#{level},
+		</if>
+		<if test=" monitor !=null and  monitor !=''">
+			monitor=#{monitor},
+		</if>
+
+		<if test=" updateby !=null and  updateby !=''">
+			updateby=#{updateby},
+		</if>
+		update_at=getdate()
+		where pkid=#{pkid}
+	</update>
+	<select id="app.appcomments.selectListByReleid"
+		parameterType="com.winpow.services.app.appcomments.bean.Appcomments"
+		resultType="com.winpow.services.app.appcomments.bean.Appcomments">
+		select top ${pageSize} * from (
+			select row_number() over (order by create_time desc) as rownumber,p.label tag,c.*
+				from tb_app_comments c left join tb_person p on c.userid=p.userid where 1=1
+				and (c.ischeck=10002 or (c.ischeck=10001 and c.monitor=11402) 
+					<if test="userid != null and userid !='' ">
+					or c.userid=#{userid}
+					</if>
+					)
+				<if test="releid != null and releid !='' ">
+					and c.releid=#{releid}
+				</if>
+				<if test="genre != null and genre !=''">
+					and c.genre=#{genre}
+				</if>
+				<choose>
+					<when test="parent_id != null and parent_id !=''">
+						and c.parent_id=#{parent_id}
+					</when>
+					<otherwise>
+						and c.parent_id is null
+					</otherwise>
+				</choose>
+		) a where rownumber > ${pageSize}*(${offset} - 1)
+	</select>
+	<select id="app.appcomments.selectOneByReleid"
+		parameterType="com.winpow.services.app.appcomments.bean.Appcomments"
+		resultType="com.winpow.services.app.appcomments.bean.Appcomments">
+		select top 1 * from tb_app_comments 
+		where releid = #{releid} and level ='1' 
+		and (ischeck=10002 or (ischeck=10001 and monitor=11402) 
+			<if test="userid != null and userid !='' ">
+				or userid=#{userid}
+			</if>
+		)
+		order by update_at desc
+
+	</select>
+	<select id="app.appcomments.selectCountByReleid"
+		parameterType="com.winpow.services.app.appcomments.bean.Appcomments"
+		resultType="int">
+		select count(pkid) from tb_app_comments where 1=1
+		and (ischeck=10002 or (ischeck=10001 and monitor=11402) 
+			<if test="userid != null and userid !='' ">
+			or userid=#{userid}
+			</if>
+		)
+		<if test="releid != null and releid !='' ">
+			and releid=#{releid}
+		</if>
+		<if test="isexpert != null and isexpert !=''">
+			and isexpert=#{isexpert}
+		</if>
+		<if test="genre != null and genre !=''">
+			and genre=#{genre}
+		</if>
+		<choose>
+			<when test="parent_id != null and parent_id !=''">
+				and parent_id=#{parent_id}
+			</when>
+			<otherwise>
+				and parent_id is null
+			</otherwise>
+		</choose>
+	</select>
+	<select id="app.appcomments.selectSecondList" parameterType="map"
+		resultType="com.winpow.services.app.appcomments.bean.Appcomments">
+		select * from tb_app_comments where parent_id in ${ids}
+		and (ischeck=10002 or (ischeck=10001 and monitor=11402) 
+			<if test="userid != null and userid !='' ">
+				or userid=#{userid}
+			</if>
+		)
+		order by update_at desc
+	</select>
+	<select id="app.appcomments.selectCountByReleidList"
+		parameterType="map" resultType="com.winpow.services.app.appcomments.bean.Appcomments">
+		select releid,COUNT(pkid) as count from tb_app_comments where
+		level='1' and releid in ${ids}
+		and (ischeck=10002 or (ischeck=10001 and monitor=11402) 
+			<if test="userid != null and userid !='' ">
+				or userid=#{userid}
+			</if>
+		)
+		group by releid
+	</select>
+</mapper>  

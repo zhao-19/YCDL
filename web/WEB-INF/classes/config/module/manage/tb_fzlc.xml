@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE mapper PUBLIC 
+"-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="manage">
+	
+	<select id="manage.fzlc.selectPageList" parameterType="com.winpow.services.manage.fzlc.bean.Fzlc" resultType="hashMap">
+	select * from (
+		SELECT  ROW_NUMBER() over(order by id desc) as  rownumber ,
+								 	id,
+			 								 	shijian,
+			 								 	neirong,
+			 								 	pic,
+			 								 	smallpic,
+			 								 	lurushijian,
+			 								 	inputuser,
+			 								  lastchgtime
+			 		   from tb_fzlc )t  where rownumber &gt; = #{offset} and rownumber &lt; = #{pageSize}+#{offset} 
+	</select>
+	<select id="manage.fzlc.selectPageCount" parameterType="com.winpow.services.manage.fzlc.bean.Fzlc" resultType="java.lang.Integer">
+		
+			select count(*) from (
+					SELECT  ROW_NUMBER() over(order by id desc) as  rownumber ,
+																	 	id,
+						 																	 	shijian,
+						 																	 	neirong,
+						 																	 	pic,
+						 																	 	smallpic,
+						 																	 	lurushijian,
+						 																	 	inputuser,
+						 																	  lastchgtime
+						 								   from tb_fzlc )t  
+
+	</select>
+	
+	<select id="manage.fzlc.selectOne" parameterType="com.winpow.services.manage.fzlc.bean.Fzlc" resultType="com.winpow.services.manage.fzlc.bean.Fzlc">
+			SELECT  
+											 	id,
+				 											 	shijian,
+				 											 	neirong,
+				 											 	pic,
+				 											 	smallpic,
+				 											 	lurushijian,
+				 											 	inputuser,
+				 											  lastchgtime
+				 						  from tb_fzlc t  where 1=1  
+			<if test="id!=null and id!=''">
+				and t.id=#{id}
+			</if>
+	</select>
+	
+	<select id="manage.fzlc.selectCount" parameterType="com.winpow.services.manage.fzlc.bean.Fzlc" resultType="int">
+			select count(*)  
+				 FROM tb_fzlc t  where 1=1  
+				<if test="id!=null and id!=''">
+					and t.id=#{id}
+				</if>
+	</select>
+	
+	<select id="manage.fzlc.selectOneByCondition" parameterType="com.winpow.services.manage.fzlc.bean.Fzlc" resultType="com.winpow.services.manage.fzlc.bean.Fzlc">
+			SELECT  
+											 	id,
+				 											 	shijian,
+				 											 	neirong,
+				 											 	pic,
+				 											 	smallpic,
+				 											 	lurushijian,
+				 											 	inputuser,
+				 											  lastchgtime
+				 					 from  tb_fzlc   t  where 1=1  
+			<if test="id!=null and id!=''">
+				and t.id=#{id}
+			</if>
+			order by shijian desc
+	</select>
+	
+	
+	
+		<select id="manage.fzlc.selectList" parameterType="com.winpow.services.manage.fzlc.bean.Fzlc" resultType="com.winpow.services.manage.fzlc.bean.Fzlc">
+			SELECT  
+											 	id,
+				 											 	shijian,
+				 											 	neirong,
+				 											 	pic,
+				 											 	smallpic,
+				 											 	lurushijian,
+				 											 	inputuser,
+				 											  lastchgtime
+				 					 from  tb_fzlc   t  where 1=1  
+			<if test="id!=null and id!=''">
+				and t.id=#{id}
+			</if>
+				order by shijian desc
+	</select>
+	
+	
+	
+	
+	<insert id="manage.fzlc.insert" parameterType="com.winpow.services.manage.fzlc.bean.Fzlc" useGeneratedKeys="true" 
+		keyProperty="id">
+	 		insert into tb_fzlc ( 
+	 								 	 
+													 	shijian,
+													 	neirong,
+													 	pic,
+													 	smallpic,
+													 	lurushijian,
+													 	inputuser,
+													  lastchgtime
+			 						) values ( 
+										  
+				 										 	#{shijian},
+				 										 	#{neirong},
+				 										 	#{pic},
+				 										 	#{smallpic},
+				 										 	getdate(),
+				 										 	#{inputuser},
+				 											getdate()
+				 						)
+		 
+	</insert>
+	
+	<update id="manage.fzlc.update" parameterType="com.winpow.services.manage.fzlc.bean.Fzlc">
+		update tb_fzlc set 
+                        
+		
+				 			                <if test=" shijian !=null and  shijian !=''">
+                        shijian=#{shijian},
+                        </if>
+		
+				 			                <if test=" neirong !=null and  neirong !=''">
+                        neirong=#{neirong},
+                        </if>
+		
+				 			                <if test=" pic !=null and  pic !=''">
+                        pic=#{pic},
+                        </if>
+		
+				 			                <if test=" smallpic !=null and  smallpic !=''">
+                        smallpic=#{smallpic},
+                        </if>
+		
+				 			                <if test=" lurushijian !=null and  lurushijian !=''">
+                        lurushijian=#{lurushijian},
+                        </if>
+		
+				 			                <if test=" inputuser !=null and  inputuser !=''">
+                        inputuser=#{inputuser},
+                        </if>
+		
+				 			                
+                        lastchgtime=getdate()
+                         
+         						 
+		where id=#{id}
+	</update>
+	
+</mapper>  

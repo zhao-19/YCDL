@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC 
+"-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="app">
+
+	<select id="app.appversion.selectPageList"
+		parameterType="com.winpow.services.app.appversion.bean.Appversion"
+		resultType="hashMap">
+		select top ${pageSize} * from (
+			select row_number() over(order by create_time desc) as rownumber ,*
+			from tb_app_version_control where 1=1
+			<if test=" genre !=null and  genre !=''">
+				and genre=#{genre}
+			</if>
+	    ) a where rownumber > ${pageSize}*(${offset} - 1)
+	</select>
+	
+	<select id="app.appversion.selectPageCount"
+		parameterType="com.winpow.services.app.appversion.bean.Appversion"
+		resultType="java.lang.Integer">
+		select count(*) from tb_app_version_control where 1=1
+		<if test=" genre !=null and genre !=''">
+			and genre=#{genre}
+		</if>
+	</select>
+
+	<select id="app.appversion.selectOne"
+		parameterType="com.winpow.services.app.appversion.bean.Appversion"
+		resultType="com.winpow.services.app.appversion.bean.Appversion">
+		SELECT
+		pkid,
+		genre,
+		version,
+		info,
+		chstatus,
+		create_time,
+		update_at,
+		isupdate,
+		publisherid,
+		long_version
+		from tb_app_version_control t where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+
+	<select id="app.appversion.selectCount"
+		parameterType="com.winpow.services.app.appversion.bean.Appversion"
+		resultType="int">
+		select count(*)
+		FROM tb_app_version_control t where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+
+	<select id="app.appversion.selectOneByCondition"
+		parameterType="com.winpow.services.app.appversion.bean.Appversion"
+		resultType="com.winpow.services.app.appversion.bean.Appversion">
+		SELECT
+		pkid,
+		genre,
+		version,
+		info,
+		chstatus,
+		create_time,
+		update_at,
+		isupdate,
+		publisherid,
+		long_version
+		from tb_app_version_control t where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+
+	<select id="app.appversion.selectList"
+		parameterType="com.winpow.services.app.appversion.bean.Appversion"
+		resultType="com.winpow.services.app.appversion.bean.Appversion">
+		SELECT
+		pkid,
+		genre,
+		version,
+		info,
+		chstatus,
+		create_time,
+		update_at,
+		isupdate,
+		publisherid,
+		long_version
+		from tb_app_version_control t where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+	
+	<select id="app.appversion.selectNewList"
+		parameterType="com.winpow.services.app.appversion.bean.Appversion"
+		resultType="com.winpow.services.app.appversion.bean.Appversion">
+		select * from tb_app_version_control where long_version > #{long_version} and genre=#{genre} order by long_version;
+	</select>
+
+	<insert id="app.appversion.insert"
+		parameterType="com.winpow.services.app.appversion.bean.Appversion"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into tb_app_version_control (
+		pkid,
+		genre,
+		version,
+		info,
+		chstatus,
+		create_time,
+		update_at,
+		isupdate,
+		publisherid,
+		long_version
+		) values (
+		#{pkid},
+		#{genre},
+		#{version},
+		#{info},
+		#{chstatus},
+		getdate(),
+		getdate(),
+		#{isupdate},
+		#{publisherid},
+		#{long_version}
+		)
+	</insert>
+
+	<update id="app.appversion.update"
+		parameterType="com.winpow.services.app.appversion.bean.Appversion">
+		update tb_app_version_control set
+		<if test=" genre !=null and  genre !=''">
+			genre=#{genre},
+		</if>
+
+		<if test=" version !=null and  version !=''">
+			version=#{version},
+		</if>
+
+		<if test=" info !=null and  info !=''">
+			info=#{info},
+		</if>
+
+		<if test=" chstatus !=null and  chstatus !=''">
+			chstatus=#{chstatus},
+		</if>
+
+		<if test=" isupdate !=null and  isupdate !=''">
+			isupdate=#{isupdate},
+		</if>
+
+		<if test="publisherid!=null and publisherid !=''">
+			publisherid=#{publisherid},
+		</if>
+		<if test="long_version!=null and long_version !=''">
+			long_version=#{long_version},
+		</if>
+		update_at=getdate()
+		where pkid=#{pkid}
+	</update>
+
+</mapper>  

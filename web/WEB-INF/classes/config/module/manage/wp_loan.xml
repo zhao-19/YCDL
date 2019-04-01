@@ -1,0 +1,417 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC 
+"-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="manage">
+
+	<select id="manage.wploan.selectPageList" parameterType="com.winpow.services.manage.loan.bean.WpLoan"
+		resultType="com.winpow.services.manage.loan.bean.WpLoan">
+		select * from (
+		SELECT ROW_NUMBER() over(order by id desc) as rownumber ,
+		t.id "id",
+		t.paperid "paperid",
+		t.compname "compname",
+		t.industry
+		"industry",
+		t.area "area",
+		t.bank "bank",
+		t.amt "amt",
+		t.base_rate
+		"base_rate",
+		t.rate "rate",
+		t.over_rate "over_rate",
+		t.term "term",
+		t.begindate "begindate",
+		t.enddate "enddate",
+		t.intetype "intetype",
+		t.intechangetype "intechangetype",
+		case t.retutype when '1' then
+		'按季结息到期还本' else '按季结息到期还本' end as retutype,
+		t.guranplant "guranplant",
+		t.contactname "contactname",
+		t.contacttele "contacttele",
+		t.inputuser
+		"inputuser",
+		t.inputdate "inputdate",
+		t.lastchangetime "lastchangetime",
+		t.lastchangeuser "lastchangeuser",
+		t.lastcalc_date "lastcalc_date",
+		t.netxcalc_date "netxcalc_date",
+		t.prodname,
+		t.status,
+		t.floatrate
+		"floatrate"
+		from wp_loan t where 1=1
+		<if test="compname!=null and compname!=''">
+			and compname like '%'+#{compname}+'%'
+		</if>
+		<if test="area!=null and area!=''">
+			and area=#{area}
+		</if>
+		<if test="guranplant!=null and guranplant!=''">
+			and guranplant=#{guranplant}
+		</if>
+		<if test="industry!=null and industry!=''">
+			and industry=#{industry}
+		</if>
+		<if test="prodname!=null and prodname!=''">
+			and prodname=#{prodname}
+		</if>
+		<if test="begindate1!=null and begindate1!=''">
+			and begindate &gt;= #{begindate1}
+		</if>
+		<if test="begindate2!=null and begindate2!=''">
+			and begindate &lt;= #{begindate2}
+		</if>
+		<if test="enddate1!=null and enddate1!=''">
+			and enddate &gt;= #{enddate1}
+		</if>
+		<if test="enddate2!=null and enddate2!=''">
+			and enddate &lt;= #{enddate2}
+		</if>
+		)t where 1=1
+		and rownumber &gt; = #{offset} and rownumber &lt; =
+		#{pageSize}+#{offset}
+	</select>
+
+	<select id="manage.wploan.selectList" parameterType="com.winpow.services.manage.loan.bean.WpLoan"
+		resultType="com.winpow.services.manage.loan.bean.WpLoan">
+		select
+		t.id "id",
+		t.paperid "paperid",
+		t.compname "compname",
+		t.industry
+		"industry",
+		t.area "area",
+		t.floatrate "floatrate",
+		t.bank "bank",
+		t.amt
+		"amt",
+		t.base_rate "base_rate",
+		t.rate "rate",
+		t.over_rate "over_rate",
+		t.term
+		"term",
+		t.begindate "begindate",
+		t.enddate "enddate",
+		t.intetype
+		"intetype",
+		t.intechangetype "intechangetype",
+		t.retutype "retutype",
+		t.guranplant "guranplant",
+		t.contactname "contactname",
+		t.contacttele
+		"contacttele",
+		t.inputuser "inputuser",
+		t.inputdate "inputdate",
+		t.lastchangetime "lastchangetime",
+		t.lastchangeuser "lastchangeuser",
+		t.lastcalc_date "lastcalc_date",
+		t.netxcalc_date "netxcalc_date",
+		t.amt_over "amt_over",
+		t.inte_over "inte_over",
+		t.status "status",
+		t.prodname
+		from wp_loan t where 1=1
+		<if test="enddate!=null and enddate!=''">
+			and enddate=#{enddate}
+		</if>
+		<if test="netxcalc_date!=null and netxcalc_date!=''">
+			and netxcalc_date=#{netxcalc_date}
+		</if>
+		<if test="status!=null and status!=''">
+			and status = #{status}
+		</if>
+
+	</select>
+
+
+	<select id="manage.wploan.selectPageCount" parameterType="com.winpow.services.manage.loan.bean.WpLoan"
+		resultType="java.lang.Integer">
+		select count(*) from wp_loan where 1=1
+		<if test="compname!=null and compname!=''">
+			and compname like '%'+#{compname}+'%'
+		</if>
+		<if test="area!=null and area!=''">
+			and area=#{area}
+		</if>
+		<if test="guranplant!=null and guranplant!=''">
+			and guranplant=#{guranplant}
+		</if>
+		<if test="industry!=null and industry!=''">
+			and industry=#{industry}
+		</if>
+		<if test="prodname!=null and prodname!=''">
+			and prodname=#{prodname}
+		</if>
+		<if test="begindate1!=null and begindate1!=''">
+			and begindate &gt;= #{begindate1}
+		</if>
+		<if test="begindate2!=null and begindate2!=''">
+			and begindate &lt;= #{begindate2}
+		</if>
+		<if test="enddate1!=null and enddate1!=''">
+			and enddate &gt;= #{enddate1}
+		</if>
+		<if test="enddate2!=null and enddate2!=''">
+			and enddate &lt;= #{enddate2}
+		</if>
+	</select>
+
+	<select id="manage.wploan.selectOne" parameterType="com.winpow.services.manage.loan.bean.WpLoan"
+		resultType="com.winpow.services.manage.loan.bean.WpLoan">
+		select * from wp_loan t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+		<if test="rele_id!=null and rele_id!=''">
+			and t.rele_id=#{rele_id}
+		</if>
+		<if test="rele_table!=null and rele_table!=''">
+			and t.rele_table=#{rele_table}
+		</if>
+	</select>
+
+	<select id="manage.wploan.selectCount" parameterType="com.winpow.services.manage.loan.bean.WpLoan"
+		resultType="int">
+		select count(*)
+		FROM wp_loan t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+	</select>
+
+	<select id="manage.wploan.selectOneByCondition" parameterType="com.winpow.services.manage.loan.bean.WpLoan"
+		resultType="com.winpow.services.manage.loan.bean.WpLoan">
+		SELECT
+		id,
+		paperid,
+		compname,
+		industry,
+		area,
+		bank,
+		amt,
+		base_rate,
+		floatrate,
+		rate,
+		over_rate,
+		term,
+		begindate,
+		enddate,
+		intetype,
+		intechangetype,
+		retutype,
+		guranplant,
+		contactname,
+		contacttele,
+		inputuser,
+		inputdate,
+		lastchangetime,
+		lastchangeuser,
+		lastcalc_date,
+		netxcalc_date,
+		amt_over,
+		inte_over,prodname,
+		status
+		from wp_loan t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+	</select>
+
+	<insert id="manage.wploan.insert" parameterType="com.winpow.services.manage.loan.bean.WpLoan"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into wp_loan (
+		paperid,
+		compname,
+		industry,
+		area,
+		bank,
+		amt,
+		base_rate,
+		floatrate,
+		rate,
+		over_rate,
+		term,
+		begindate,
+		enddate,
+		intetype,
+		intechangetype,
+		retutype,
+		guranplant,
+		contactname,
+		contacttele,
+		inputuser,
+		inputdate,
+		lastchangetime,
+		lastchangeuser,
+		lastcalc_date,
+		netxcalc_date,
+		amt_over,
+		inte_over,
+		status,
+		prodname,
+		lastchgtime,
+		rele_id,
+		rele_table
+		) values (
+		#{paperid},
+		#{compname},
+		#{industry},
+		#{area},
+		#{bank},
+		#{amt},
+		#{base_rate},
+		#{floatrate},
+		#{rate},
+		#{over_rate},
+		#{term},
+		#{begindate},
+		#{enddate},
+		#{intetype},
+		#{intechangetype},
+		#{retutype},
+		#{guranplant},
+		#{contactname},
+		#{contacttele},
+		#{inputuser},
+		getdate(),
+		getdate(),
+		#{lastchangeuser},
+		#{lastcalc_date},
+		#{netxcalc_date},
+		#{amt_over},
+		#{inte_over},
+		#{status},
+		#{prodname},
+		getdate(),
+		#{rele_id},
+		#{rele_table}
+		)
+	</insert>
+
+	<update id="manage.wploan.update" parameterType="com.winpow.services.manage.loan.bean.WpLoan">
+		update wp_loan set
+		<if test=" paperid !=null and  paperid !=''">
+			paperid=#{paperid},
+		</if>
+
+		<if test=" compname !=null and  compname !=''">
+			compname=#{compname},
+		</if>
+
+		<if test=" industry !=null and  industry !=''">
+			industry=#{industry},
+		</if>
+
+		<if test=" area !=null">
+			area=#{area},
+		</if>
+
+		<if test=" bank !=null and  bank !=''">
+			bank=#{bank},
+		</if>
+
+		<if test=" amt !=null">
+			amt=#{amt},
+		</if>
+
+		<if test=" base_rate !=null">
+			base_rate=#{base_rate},
+		</if>
+
+		<if test=" floatrate !=null">
+			floatrate=#{floatrate},
+		</if>
+
+		<if test=" rate !=null">
+			rate=#{rate},
+		</if>
+
+		<if test=" over_rate !=null">
+			over_rate=#{over_rate},
+		</if>
+
+		<if test=" term !=null">
+			term=#{term},
+		</if>
+
+		<if test=" begindate !=null and  begindate !=''">
+			begindate=#{begindate},
+		</if>
+
+		<if test=" enddate !=null and  enddate !=''">
+			enddate=#{enddate},
+		</if>
+
+		<if test=" intetype !=null">
+			intetype=#{intetype},
+		</if>
+
+		<if test=" intechangetype !=null">
+			intechangetype=#{intechangetype},
+		</if>
+
+		<if test=" retutype !=null">
+			retutype=#{retutype},
+		</if>
+
+		<if test=" guranplant !=null and  guranplant !=''">
+			guranplant=#{guranplant},
+		</if>
+
+		<if test=" contactname !=null and  contactname !=''">
+			contactname=#{contactname},
+		</if>
+
+		<if test=" contacttele !=null and  contacttele !=''">
+			contacttele=#{contacttele},
+		</if>
+		
+		lastchangetime=getdate(),
+		
+		<if test=" lastchangeuser !=null and  lastchangeuser !=''">
+			lastchangeuser=#{lastchangeuser},
+		</if>
+
+		<if test=" lastcalc_date !=null and  lastcalc_date !=''">
+			lastcalc_date=#{lastcalc_date},
+		</if>
+
+		<if test=" netxcalc_date !=null and  netxcalc_date !=''">
+			netxcalc_date=#{netxcalc_date},
+		</if>
+
+		<if test=" amt_over !=null">
+			amt_over=#{amt_over},
+		</if>
+
+		<if test=" inte_over !=null">
+			inte_over=#{inte_over},
+		</if>
+
+		<if test=" status !=null and  status !=''">
+			status=#{status},
+		</if>
+
+		<if test=" prodname !=null and  prodname !=''">
+			prodname=#{prodname},
+		</if>
+
+		<if test=" rele_id !=null">
+			rele_id=#{rele_id},
+		</if>
+
+		<if test="rele_table!=null and rele_table !=''">
+			rele_table=#{rele_table},
+		</if>
+		lastchgtime=getdate()
+		where id=#{id}
+	</update>
+
+	<select id="manage.wpcfg.selectbaserate" parameterType="com.winpow.services.manage.loan.bean.WpCfg"
+		resultType="com.winpow.services.manage.loan.bean.WpCfg">
+		select * from wp_cfg where id = (select max(id) from wp_cfg
+		where eff_day &lt;= getdate())
+	</select>
+</mapper>  

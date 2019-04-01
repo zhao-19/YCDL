@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC 
+"-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="manage">
+
+	<select id="manage.sbxsgjccore.selectPageList"
+		parameterType="com.winpow.services.manage.sbxsgjccore.bean.Sbxsgjccore"
+		resultType="hashMap">
+		select * from (
+			select row_number() over(order by id) as rownumber , *
+			from tb_sb_xsgjc_core 
+		)t where rownumber &gt; = #{offset} and rownumber
+		&lt; = #{pageSize}+#{offset}
+	</select>
+	
+	<select id="manage.sbxsgjccore.selectPageCount"
+		parameterType="com.winpow.services.manage.sbxsgjccore.bean.Sbxsgjccore"
+		resultType="java.lang.Integer">
+		select count(*) from tb_sb_xsgjc_core t
+	</select>
+
+	<select id="manage.sbxsgjccore.selectOne"
+		parameterType="com.winpow.services.manage.sbxsgjccore.bean.Sbxsgjccore"
+		resultType="com.winpow.services.manage.sbxsgjccore.bean.Sbxsgjccore">
+		select * from tb_sb_xsgjc_core t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+	</select>
+
+	<select id="manage.sbxsgjccore.selectCount"
+		parameterType="com.winpow.services.manage.sbxsgjccore.bean.Sbxsgjccore"
+		resultType="int">
+		select count(*)
+		FROM tb_sb_xsgjc_core t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+	</select>
+
+	<select id="manage.sbxsgjccore.selectOneByCondition"
+		parameterType="com.winpow.services.manage.sbxsgjccore.bean.Sbxsgjccore"
+		resultType="com.winpow.services.manage.sbxsgjccore.bean.Sbxsgjccore">
+		select * from tb_sb_xsgjc_core t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+	</select>
+
+	<select id="manage.sbxsgjccore.selectList"
+		parameterType="com.winpow.services.manage.sbxsgjccore.bean.Sbxsgjccore"
+		resultType="com.winpow.services.manage.sbxsgjccore.bean.Sbxsgjccore">
+		select * from tb_sb_xsgjc_core t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+		<if test=" rele_id !=null and  rele_id !=''">
+			and rele_id=#{rele_id}
+		</if>
+	</select>
+
+	<insert id="manage.sbxsgjccore.insert"
+		parameterType="com.winpow.services.manage.sbxsgjccore.bean.Sbxsgjccore"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into tb_sb_xsgjc_core (
+		userid,
+		rele_id,
+		appname,
+		idcard,
+		duty,
+		xsgcount,
+		price,
+		incometax,
+		lurushijian,
+		inputuser,
+		lastchgtime
+		) values (
+		#{userid},
+		#{rele_id},
+		#{appname},
+		#{idcard},
+		#{duty},
+		#{xsgcount},
+		#{price},
+		#{incometax},
+		getdate(),
+		#{inputuser},
+		getdate()
+		)
+	</insert>
+
+	<update id="manage.sbxsgjccore.update"
+		parameterType="com.winpow.services.manage.sbxsgjccore.bean.Sbxsgjccore">
+		update tb_sb_xsgjc_core set
+		<if test=" userid !=null and  userid !=''">
+			userid=#{userid},
+		</if>
+
+		<if test=" rele_id !=null and  rele_id !=''">
+			rele_id=#{rele_id},
+		</if>
+
+		<if test=" appname !=null and  appname !=''">
+			appname=#{appname},
+		</if>
+
+		<if test=" idcard !=null and  idcard !=''">
+			idcard=#{idcard},
+		</if>
+
+		<if test=" duty !=null and  duty !=''">
+			duty=#{duty},
+		</if>
+
+		<if test=" xsgcount !=null">
+			xsgcount=#{xsgcount},
+		</if>
+
+		<if test=" price !=null">
+			price=#{price},
+		</if>
+
+		<if test=" incometax !=null">
+			incometax=#{incometax},
+		</if>
+		lastchgtime=getdate() where id=#{id}
+	</update>
+	
+	<delete id="manage.sbxsgjccore.deleteById" parameterType="string">
+		delete tb_sb_xsgjc_core where id=#{id}
+	</delete>
+
+</mapper>  

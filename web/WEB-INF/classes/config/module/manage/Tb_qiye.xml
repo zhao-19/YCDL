@@ -1,0 +1,679 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC 
+"-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="manage">
+
+	<select id="manage.qiye.selectPageList" parameterType="com.winpow.services.manage.qiye.bean.Qiye"
+		resultType="hashMap">
+		select * from (
+			select row_number() over(order by LASTCHGTIME desc) as
+			rownumber ,* from tb_qiye where 1=1
+			<if test="zzjgdm!=null and zzjgdm!=''">
+				and zzjgdm like '%'+#{zzjgdm}+'%'
+			</if>
+			<if test="qiyemingcheng!=null and qiyemingcheng!=''">
+				and qiyemingcheng like '%'+#{qiyemingcheng}+'%'
+			</if>
+			<if test="custmanage!=null and custmanage!=''">
+				and custmanage like '%'+#{custmanage}+'%'
+			</if>
+			<if test="pingji!=null">
+				and pingji = #{pingji}
+			</if>
+			<if test="is_party_branch != null and is_party_branch != ''">
+				and is_party_branch=#{is_party_branch}
+			</if>
+		)t where 1=1 and rownumber &gt; = #{offset} and rownumber &lt; = #{pageSize}+#{offset}
+	</select>
+	<select id="manage.qiye.selectPageCount" parameterType="com.winpow.services.manage.qiye.bean.Qiye"
+		resultType="java.lang.Integer">
+		select count(*) from Tb_qiye t where 1=1
+		<if test="pk_qiyeid!=null and pk_qiyeid!=''">
+			and t.pk_qiyeid=#{pk_qiyeid}
+		</if>
+		<if test="zzjgdm!=null and zzjgdm!=''">
+			and zzjgdm like '%'+#{zzjgdm}+'%'
+		</if>
+		<if test="qiyemingcheng!=null and qiyemingcheng!=''">
+			and qiyemingcheng like '%'+#{qiyemingcheng}+'%'
+		</if>
+		<if test="custmanage!=null and custmanage!=''">
+			and custmanage like '%'+#{custmanage}+'%'
+		</if>
+		<if test="pingji!=null">
+			and pingji = #{pingji}
+		</if>
+		<if test="is_party_branch != null and is_party_branch != ''">
+			and is_party_branch=#{is_party_branch}
+		</if>
+	</select>
+
+	<select id="manage.qiye.selectOne" parameterType="com.winpow.services.manage.qiye.bean.Qiye"
+		resultType="com.winpow.services.manage.qiye.bean.Qiye">
+		select top 1 * from (
+			select 1 num,q.* from tb_cust c left join tb_qiye q on c.f_id=q.pk_qiyeid
+			where 1=1
+			<if test="pk_qiyeid!=null and pk_qiyeid!=''">
+				and q.pk_qiyeid=#{pk_qiyeid}
+			</if>
+			<if test="userid!=null and userid!=''">
+				and c.userid=#{userid}
+			</if>
+			and q.pk_qiyeid is not null
+			union all
+			select top 1 2 num,* from tb_qiye where 1=1
+			<if test="pk_qiyeid!=null and pk_qiyeid!=''">
+				and pk_qiyeid=#{pk_qiyeid}
+			</if>
+			<if test="userid!=null and userid!=''">
+				and userid=#{userid}
+			</if>
+		) a order by num
+	</select>
+
+	<select id="manage.qiye.selectList" parameterType="com.winpow.services.manage.qiye.bean.Qiye"
+		resultType="com.winpow.services.manage.qiye.bean.Qiye">
+		select * from tb_qiye t where 1=1
+		<if test="zzjgdm!=null and zzjgdm!=''">
+			and t.zzjgdm=#{zzjgdm}
+		</if>
+		<if test="userid!=null and userid!=''">
+			and t.userid=#{userid}
+		</if>
+		<if test="deleted != null and deleted != ''">
+			and t.deleted is null or t.deleted=#{deleted}
+		</if>
+	</select>
+
+	<select id="manage.qiye.selectCount" parameterType="com.winpow.services.manage.qiye.bean.Qiye"
+		resultType="int">
+		select count(*)
+		FROM Tb_qiye t where 1=1
+		<if test="pk_qiyeid!=null and pk_qiyeid!=''">
+			and t.pk_qiyeid=#{pk_qiyeid}
+		</if>
+	</select>
+
+	<select id="manage.qiye.selectOneByCondition" parameterType="com.winpow.services.manage.qiye.bean.Qiye"
+		resultType="com.winpow.services.manage.qiye.bean.Qiye">
+		select * from tb_qiye t where 1=1
+		<if test="pk_qiyeid!=null and pk_qiyeid!=''">
+			and pk_qiyeid=#{pk_qiyeid}
+		</if>
+	</select>
+	<select id="manage.qiye.selectByUserId" parameterType="com.winpow.services.manage.qiye.bean.Qiye"
+		resultType="com.winpow.services.manage.qiye.bean.Qiye">
+		select top 1 * from (
+			select 1 num,q.* from tb_cust c left join tb_qiye q on c.f_id=q.pk_qiyeid
+			where c.userid=#{userid} and q.pk_qiyeid is not null
+			union all
+			select top 1 2 num,* from tb_qiye where userid=#{userid}
+		) a where a.deleted is null or a.deleted='10002' order by num
+	</select>
+
+	<select id="manage.qiye.selectByNameAndCode" parameterType="com.winpow.services.manage.qiye.bean.Qiye"
+		resultType="com.winpow.services.manage.qiye.bean.Qiye">
+		select top 1 * from tb_qiye t where 1=1
+		<if test="qiyemingcheng != null and qiyemingcheng != ''">
+			and qiyemingcheng = #{qiyemingcheng}
+		</if>
+		<if test="zzjgdm != null and zzjgdm != ''">
+			and zzjgdm = #{zzjgdm}
+		</if>
+	</select>
+
+	<insert id="manage.qiye.insert" parameterType="com.winpow.services.manage.qiye.bean.Qiye"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into Tb_qiye (
+		pk_qiyeid,
+		userid,
+		qiyemingcheng,
+		chengliriqi,
+		dizhi,
+		zhuceziben,
+		faren,
+		gszcd,
+		zzjgdm,
+		qiyexingzhiid,
+		hangyeid,
+		suchujieduanid,
+		jingyingfanwei,
+		qiyejieshao,
+		zhuyingyewu,
+		jianyingyewu,
+		qiyerenzheng,
+		yuangongshu,
+		dazhuanrenshu,
+		yanfarenshu,
+		bkzglbl,
+		shangshijihua,
+		logo,
+		wangzhi,
+		xingming,
+		bumenzhiwu,
+		yidongdianhua,
+		gudingdianhua,
+		email,
+		inputuser,
+		lurushijian,
+		lastchgtime,
+		gszcd_city,
+		gszcd_county,
+		gszcd_province,
+		pingji,
+		custmanagesource,
+		custmanage,
+		zczjbz,
+		iscomplete,
+		license,
+		party_num,
+		is_party,
+		lead_num,
+		lead_party_num,
+		is_party_branch,
+		party_branch_time,last_party_cost,will_set_party,party_score,substation
+		) values (
+		#{pk_qiyeid},
+		#{userid},
+		#{qiyemingcheng},
+		#{chengliriqi},
+		#{dizhi},
+		#{zhuceziben},
+		#{faren},
+		#{gszcd},
+		#{zzjgdm},
+		#{qiyexingzhiid},
+		#{hangyeid},
+		#{suchujieduanid},
+		#{jingyingfanwei},
+		#{qiyejieshao},
+		#{zhuyingyewu},
+		#{jianyingyewu},
+		#{qiyerenzheng},
+		#{yuangongshu},
+		#{dazhuanrenshu},
+		#{yanfarenshu},
+		#{bkzglbl},
+		#{shangshijihua},
+		#{logo},
+		#{wangzhi},
+		#{xingming},
+		#{bumenzhiwu},
+		#{yidongdianhua},
+		#{gudingdianhua},
+		#{email},
+		#{inputuser},
+		getdate(),
+		getdate(),
+		#{gszcd_city},
+		#{gszcd_county},
+		#{gszcd_province},
+		#{pingji},
+		#{custmanagesource},
+		#{custmanage},
+		#{zczjbz},
+		#{iscomplete},
+		#{license},
+		#{party_num},
+		#{is_party},
+		#{lead_num},
+		#{lead_party_num},
+		#{is_party_branch},
+		#{party_branch_time},
+		#{last_party_cost},
+		#{will_set_party},
+		#{party_score},#{substation}
+		)
+	</insert>
+
+	<update id="manage.qiye.update" parameterType="com.winpow.services.manage.qiye.bean.Qiye">
+		update tb_qiye set
+		<if test="userid!=null and userid!=''">
+			userid=#{userid},
+		</if>
+
+		<if test="qiyemingcheng!=null and qiyemingcheng!=''">
+			qiyemingcheng=#{qiyemingcheng},
+		</if>
+
+		<if test="chengliriqi!=null and chengliriqi!=''">
+			chengliriqi=#{chengliriqi},
+		</if>
+
+		<if test="dizhi!=null and dizhi!=''">
+			dizhi=#{dizhi},
+		</if>
+
+		<if test="zhuceziben!=null">
+			zhuceziben=#{zhuceziben},
+		</if>
+
+		<if test="faren!=null and faren!=''">
+			faren=#{faren},
+		</if>
+
+		<if test="gszcd!=null and gszcd!=''">
+			gszcd=#{gszcd},
+		</if>
+
+		<if test="zzjgdm!=null and zzjgdm!=''">
+			zzjgdm=#{zzjgdm},
+		</if>
+
+		<if test="qiyexingzhiid!=null and qiyexingzhiid!=''">
+			qiyexingzhiid=#{qiyexingzhiid},
+		</if>
+
+		<if test="hangyeid!=null and hangyeid!=''">
+			hangyeid=#{hangyeid},
+		</if>
+
+		<if test="suchujieduanid!=null and suchujieduanid!=''">
+			suchujieduanid=#{suchujieduanid},
+		</if>
+
+		<if test="jingyingfanwei!=null and jingyingfanwei!=''">
+			jingyingfanwei=#{jingyingfanwei},
+		</if>
+
+		<if test="qiyejieshao!=null and qiyejieshao!=''">
+			qiyejieshao=#{qiyejieshao},
+		</if>
+
+		<if test="zhuyingyewu!=null and zhuyingyewu!=''">
+			zhuyingyewu=#{zhuyingyewu},
+		</if>
+
+		<if test="jianyingyewu!=null and jianyingyewu!=''">
+			jianyingyewu=#{jianyingyewu},
+		</if>
+
+		<if test="qiyerenzheng!=null and qiyerenzheng!=''">
+			qiyerenzheng=#{qiyerenzheng},
+		</if>
+
+		<if test="yuangongshu!=null">
+			yuangongshu=#{yuangongshu},
+		</if>
+
+		<if test="dazhuanrenshu!=null">
+			dazhuanrenshu=#{dazhuanrenshu},
+		</if>
+
+		<if test="yanfarenshu!=null">
+			yanfarenshu=#{yanfarenshu},
+		</if>
+
+		<if test="bkzglbl!=null and bkzglbl!=''">
+			bkzglbl=#{bkzglbl},
+		</if>
+
+		<if test="shangshijihua!=null and shangshijihua!=''">
+			shangshijihua=#{shangshijihua},
+		</if>
+
+		<if test="logo!=null and logo!=''">
+			logo=#{logo},
+		</if>
+
+		<if test="wangzhi!=null and wangzhi!=''">
+			wangzhi=#{wangzhi},
+		</if>
+
+		<if test="xingming!=null and xingming!=''">
+			xingming=#{xingming},
+		</if>
+
+		<if test="bumenzhiwu!=null and bumenzhiwu!=''">
+			bumenzhiwu=#{bumenzhiwu},
+		</if>
+
+		<if test="yidongdianhua!=null and yidongdianhua!=''">
+			yidongdianhua=#{yidongdianhua},
+		</if>
+
+		<if test="gudingdianhua!=null and gudingdianhua!=''">
+			gudingdianhua=#{gudingdianhua},
+		</if>
+
+		<if test="email!=null and email!=''">
+			email=#{email},
+		</if>
+
+		<if test="inputuser!=null and inputuser!=''">
+			inputuser=#{inputuser},
+		</if>
+
+		<if test="gszcd_city!=null and gszcd_city!=''">
+			gszcd_city=#{gszcd_city},
+		</if>
+
+		<if test="gszcd_county!=null and gszcd_county!=''">
+			gszcd_county=#{gszcd_county},
+		</if>
+
+		<if test="gszcd_province!=null and gszcd_province!=''">
+			gszcd_province=#{gszcd_province},
+		</if>
+		<if test="pingji!=null">
+			pingji=#{pingji},
+		</if>
+		<if test="custmanagesource!=null and custmanagesource!=''">
+			custmanagesource=#{custmanagesource},
+		</if>
+		<if test="custmanage!=null and custmanage!=''">
+			custmanage=#{custmanage},
+		</if>
+		<if test="zczjbz!=null and zczjbz!=''">
+			zczjbz=#{zczjbz},
+		</if>
+
+		<if test=" receipt_bank !=null and  receipt_bank !=''">
+			receipt_bank=#{receipt_bank},
+		</if>
+		<if test=" receipt_account !=null and  receipt_account !=''">
+			receipt_account=#{receipt_account},
+		</if>
+		<if test=" receipt_payee !=null and  receipt_payee !=''">
+			receipt_payee=#{receipt_payee},
+		</if>
+		<if test=" receipt_phone !=null and  receipt_phone !=''">
+			receipt_phone=#{receipt_phone},
+		</if>
+		<if test=" iscomplete !=null and  iscomplete !=''">
+			iscomplete=#{iscomplete},
+		</if>
+		<if test=" license !=null and  license !=''">
+			license=#{license},
+		</if>
+		
+		<if test=" party_num !=null">
+			party_num=#{party_num},
+		</if>
+		<if test=" is_party !=null and  is_party !=''">
+			is_party=#{is_party},
+		</if>
+		<if test=" lead_num !=null">
+			lead_num=#{lead_num},
+		</if>
+		<if test=" lead_party_num !=null">
+			lead_party_num=#{lead_party_num},
+		</if>
+		<if test=" is_party_branch !=null and  is_party_branch !=''">
+			is_party_branch=#{is_party_branch},
+		</if>
+		<if test=" party_branch_time !=null and  party_branch_time !=''">
+			party_branch_time=#{party_branch_time},
+		</if>
+		
+		<if test=" last_party_cost !=null  and  last_party_cost !=''">
+			last_party_cost=#{last_party_cost},
+		</if>
+		<if test=" will_set_party !=null and  will_set_party !=''">
+			will_set_party=#{will_set_party},
+		</if>
+		<if test=" party_score !=null and  party_score !=''">
+			party_score=#{party_score},
+		</if>
+		<if test=" deleted !=null and  deleted !=''">
+			deleted=#{deleted},
+		</if>
+		<if test=" substation !=null and  substation !=''">
+			substation=#{substation},
+		</if>
+		lastchgtime=getdate()
+		where pk_qiyeid=#{pk_qiyeid}
+	</update>
+
+	<select id="manage.qiye.selectRelaQiye" parameterType="string"
+		resultType="com.winpow.services.manage.qiye.bean.Qiye">
+		select top 1 * from (
+		select 1 num,q.* from tb_cust c left join tb_qiye q on c.f_id=q.pk_qiyeid
+		where c.userid=#{userid} and q.pk_qiyeid is not null
+		union all
+		select top 1 2 num,* from tb_qiye where userid=#{userid}
+		) a order by num
+	</select>
+
+	<!-- 企业行业分布 -->
+	<select id="manage.qiye.getTrade" resultType="map">
+		select c.code_name
+		NAME,count(*) VALUE from tb_qiye q left join tb_code c on
+		q.hangyeid=c.pk_codeid
+		where c.code_name is not null group by
+		c.code_name order by value desc
+	</select>
+
+	<!-- 企业规模分布 -->
+	<select id="manage.qiye.getScale" resultType="map">
+		select yuangongshu
+		NAME, count(*) VALUE from (
+		select case when (yuangongshu &gt; = 100) then '大于等于100人'
+		when (yuangongshu &gt; = 50 and yuangongshu &lt; 100) then '小于100人'
+		when (yuangongshu &gt; = 20 and yuangongshu &lt; 50) then '小于50人'
+		when (yuangongshu &gt; = 10 and yuangongshu &lt; 20) then '小于20人'
+		when (yuangongshu &gt; = 1 and yuangongshu &lt; 10) then '小于10人'
+		else '' end yuangongshu from tb_qiye where yuangongshu != ''
+		) a group by
+		yuangongshu order by
+		charindex(yuangongshu,'小于10人小于20人小于50人小于100人大于等于100人')
+	</select>
+
+	<!-- 企业总数 -->
+	<select id="manage.qiye.getQiyeCount" resultType="integer">
+		select count(*)
+		num from (select qiyemingcheng from tb_qiye group by qiyemingcheng) t
+	</select>
+
+	<!-- 融资金额统计 -->
+	<select id="manage.qiye.getFinance" resultType="map">
+		select dytime NAME, sum(amt) VALUE from (
+		select datename(year,lurushijian)+'年'+datename(month,lurushijian)+'月'
+		dytime, shenqingjine amt from tb_product_czd_base
+		union all
+		select datename(year,lurushijian)+'年'+datename(month,lurushijian)+'月'
+		dytime, incamt amt from tb_guquan_app
+		union all
+		select datename(year,lurushijian)+'年'+datename(month,lurushijian)+'月'
+		dytime, jine amt from tb_index_app
+		union all
+		select datename(year,lurushijian)+'年'+datename(month,lurushijian)+'月'
+		dytime, loanamt amt from tb_fund_app where lurushijian &gt;
+		dateadd(day ,- 100, getdate())
+		) t where dytime!='2016年09月' group by
+		dytime order by dytime
+	</select>
+
+	<!-- 企业分布图 --><!-- create table tb_qiye_temp(pk_qiyeid varchar(32) primary key,qiyemingcheng varchar(100),zzjgdm varchar(36)); -->
+	<select id="manage.qiye.getQiyeDistribute" resultType="map" statementType="STATEMENT" parameterType="string" timeout="100000">
+		delete from ${_parameter}.tb_qiye_temp;
+		insert into ${_parameter}.tb_qiye_temp select pk_qiyeid,qiyemingcheng,zzjgdm from tb_qiye;
+		select q.pk_qiyeid qiyeid,a.longitude_p longitude,a.latitude_p latitude 
+		from ${_parameter}.tb_qiye_temp q
+		left join ${_parameter}.t_company c on q.zzjgdm=c.credit_code
+		left join ${_parameter}.t_company_attribute a on a.company_id=c.company_id
+		where a.longitude_p is not null
+		union
+		select q.pk_qiyeid qiyeid,a.longitude_p longitude,a.latitude_p latitude 
+		from ${_parameter}.tb_qiye_temp q
+		left join ${_parameter}.t_company c on q.zzjgdm=c.org_code
+		left join ${_parameter}.t_company_attribute a on a.company_id=c.company_id
+		where q.zzjgdm !='0' and a.longitude_p is not null
+		union
+		select q.pk_qiyeid qiyeid,a.longitude_p longitude,a.latitude_p latitude 
+		from ${_parameter}.tb_qiye_temp q
+		left join ${_parameter}.t_company c on q.qiyemingcheng=c.company_name
+		left join ${_parameter}.t_company_attribute a on a.company_id=c.company_id
+		where a.longitude_p is not null;
+	</select>
+	
+	<select id="manage.qiye.getAllUser" resultType="map">
+		select  t1.*, t2.PK_QIYEID ,t2.NAME ,t2.TYPE, t2.LOG from (
+		 	select 
+				cu.id CUSTID,
+				cu.userid USERID,
+				cu.usertype USERTYPE,
+				cu.cellphone CELLPHONE,
+				cu.email EMAIL,
+				cu.status STATUS,
+				cu.f_id F_ID,
+				cu.main_user_stat MAIN_USER_STAT,
+				cu.nikename NIKENAME,
+				cu.headimg HEADIMG,
+				cu.forbidend FORBIDEND,
+				cu.jpushid JPUSHID,
+				pe.id PERSONID,
+				pe.username USERNAME,
+				pe.address ADDRESS,
+				pe.persontype PERSONTYPE,
+				pe.headimg PERHEADIMG
+				from tb_cust cu
+				left join tb_person pe on cu.userid=pe.userid
+				where cu.userid!='' and cu.userid is not null ) t1  
+				left join (
+					select t.userid ,q.PK_QIYEID ,q.qiyemingcheng NAME,'' as TYPE,logo LOG  
+					from tb_cust t inner join tb_qiye q on t.f_id=q.pk_qiyeid where t.usertype='aaaaaaaaaaaaaaaaaaaaaaaaaaaaa001'
+					union all
+					select t.userid ,q.id PK_QIYEID,q.jigoumingcheng NAME ,'' as TYPE,jigoulogo LOG
+					from tb_cust t inner join tb_jigou q on t.f_id=q.id where t.usertype='aaaaaaaaaaaaaaaaaaaaaaaaaaaaa003'
+					union all
+					select t.userid ,q.id PK_QIYEID,q.org_name NAME,q.org_type as TYPE,'' LOG 
+					from tb_cust t inner join tb_other_org  q on t.f_id=q.id where t.usertype='aaaaaaaaaaaaaaaaaaaaaaaaaaaaa008'
+		) t2 on t1.userid=t2.userid
+	</select>
+	
+	<select id="manage.qiye.getAllQiye" parameterType="string" resultType="map">
+		${_parameter}
+	</select>
+	
+	<select id="manage.qiye.getindexcount" resultType="map">
+		select 'servicecmpno' name,count(*) val from tb_qiye
+		union all
+		select 'equityno' name,sum(nums) val from (select count(*) nums from tb_guquan union all select count(*) nums from tb_app_postequityprojects ) c
+		union all
+		select 'bondsno' name,count(*) val from tb_product_app
+		union all
+		select 'cooperatecmpno' name,sum(nums) val from (select count(*) nums from tb_jigou union all select count(*) nums from tb_other_org ) c
+	</select>
+	
+	<select id="manage.qiye.getindexnews" resultType="com.winpow.services.manage.news.bean.News">
+		select top 5 id,title from tb_news order by lurushijian desc
+	</select>
+	
+	<select id="manage.qiye.getindexActivities" resultType="com.winpow.services.manage.activities.bean.Activities">
+		select top 3 id, activities_name, '' activities_detail, activities_theme, begintime, endtime, activities_image, activitiestype, 
+		case when endtime > getdate() and begintime &lt; getdate() then '进行中' when begintime > getdate() then '即将开始' else '已结束' end intstatus
+		from tb_activities order by lurushijian desc
+	</select>
+	
+	<select id="manage.qiye.getindexBanner" resultType="com.winpow.services.app.appbanner.bean.Appbanner">
+		select * from tb_app_banner where iseffective='10001' and location in ('12402', '12406') order by sort desc,createdate desc
+	</select>
+	
+	<select id="manage.qiye.getindexHot" resultType="map">
+		select * from(select top 3 'productapp' tag,id,userid,'申请' + prodname content, convert(varchar,loanamt) + '万元' amount,lurushijian time from tb_product_app order by lurushijian desc) c
+		union all
+		select * from(select top 3 'guquanapp' tag,ap.id,ap.userid,'投资' + gu.mingcheng content, convert(varchar,incamt) + '万元' amount,ap.lurushijian time from tb_guquan_app ap left join tb_guquan gu on ap.increid=gu.id where ap.increname is not null and gu.mingcheng is not null order by ap.lurushijian desc )c
+	</select>
+	
+	<select id="manage.qiye.selectOneById" parameterType="com.winpow.services.manage.qiye.bean.Qiye"
+        resultType="com.winpow.services.manage.qiye.bean.Qiye">
+        select top(1) * from (
+            select 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaa001' hangyeid,pk_qiyeid,qiyemingcheng,userid,zzjgdm ,logo,deleted
+            from tb_qiye
+            union all
+            select 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaa003' hangyeid,id pk_qiyeid,jigoumingcheng qiyemingcheng,userid,zzjgdm ,jigoulogo logo,deleted
+            from tb_jigou
+            union all
+            select 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaa008' hangyeid,id pk_qiyeid,org_name qiyemingcheng,'' userid,org_credit_id zzjgdm,'' logo,deleted
+            from tb_other_org
+        ) a where 1=1
+        <if test="pk_qiyeid != null and pk_qiyeid !=''">
+            and pk_qiyeid=#{pk_qiyeid}
+        </if>
+        <if test="zzjgdm != null and zzjgdm !=''">
+            and zzjgdm=#{zzjgdm}
+        </if>
+        <if test="hangyeid != null and hangyeid !=''">
+            and hangyeid=#{hangyeid}
+        </if>
+        <if test="deleted != null and deleted !=''">
+            and deleted is null or deleted=#{deleted}
+        </if>
+    </select>
+    
+    <select id="manage.qiye.getinfobyuserid" resultType="map" parameterType="string">
+		select * from(
+			select t.userid,t.usertype,t.cellphone,q.qiyemingcheng name,c.code_name hangye,convert(varchar, q.yuangongshu) renshu
+			from tb_cust t left join tb_qiye q on t.f_id=q.pk_qiyeid 
+			left join tb_code c on c.pk_codeid=q.hangyeid where t.usertype='aaaaaaaaaaaaaaaaaaaaaaaaaaaaa001'
+			union all
+			select t.userid,t.usertype,t.cellphone,q.jigoumingcheng name,q.tz_touzihangye hangye,'' renshu
+			from tb_cust t left join tb_jigou q on t.f_id=q.id where t.usertype='aaaaaaaaaaaaaaaaaaaaaaaaaaaaa003'
+			union all
+			select t.userid,t.usertype,t.cellphone,q.org_name name,'' hangye,'' renshu
+			from tb_cust t left join tb_other_org  q on t.f_id=q.id where t.usertype='aaaaaaaaaaaaaaaaaaaaaaaaaaaaa008'
+			union all
+			select t.userid,t.usertype,t.cellphone,'' name,'' hangye,'' renshu
+			from tb_cust t  where t.usertype='aaaaaaaaaaaaaaaaaaaaaaaaaaaaa002'
+		) a where a.userid=#{userid}
+	</select>
+	
+	<select id="manage.qiye.selectPartyPageList" parameterType="map"
+		resultType="map">
+		select top ${pageSize} * from (
+			select row_number() over(order by id desc) as rownumber ,* from (
+				select m.id,q.pk_qiyeid qiyeid,m.chanpingmingcheng,convert (varchar, p.shijian, 23) shijian,m.qiyemingcheng,b.shenqingjine,q.yuangongshu,
+				q.party_num,c1.code_name is_party,q.lead_num,q.lead_party_num,c2.code_name is_party_branch,q.party_branch_time,
+				q.last_party_cost,c3.code_name will_set_party,q.party_score,s.score,
+				l.amt,convert (varchar, l.begindate, 23) begindate,c.xiaoshoushouru16,c.xiaoshoushouru17,c.lirunzonge16,c.lirunzonge17
+				from  tb_pingshenhui_mingxi m
+				left join tb_pingshenhui p on m.rele_pingshenhui=p.id
+				left join tb_product_czd_base b on m.rele_product_base=b.id 
+				left join tb_cust t on t.userid=b.userid
+				left join tb_qiye q on q.pk_qiyeid = t.f_id
+				left join tb_code c1 on c1.pk_codeid=q.is_party
+				left join tb_code c2 on c2.pk_codeid=q.is_party_branch
+				left join tb_code c3 on c3.pk_codeid=q.will_set_party
+				left join wp_loan l on l.rele_id=b.id and rele_table='tb_product_base'
+				left join (select rela_mingxi id,convert(decimal(18,2), sum(total_score)/count(*)) score from tb_exp_score group by rela_mingxi ) s on s.id=m.id
+				left join (select  releid,
+						case when thirdyear=datename(year,getdate()) - 3 then secondxiaoshoushouru when thirdyear=datename(year,getdate()) - 4 then thirdxiaoshoushouru else 0 end xiaoshoushouru16,
+						case when thirdyear=datename(year,getdate()) - 3 then thirdxiaoshoushouru else 0 end xiaoshoushouru17,
+						case when thirdyear=datename(year,getdate()) - 3 then secondlirunzonge when thirdyear=datename(year,getdate()) - 4 then thirdlirunzonge else 0 end lirunzonge16,
+						case when thirdyear=datename(year,getdate()) - 3 then thirdlirunzonge else 0 end lirunzonge17
+						from tb_product_czd_cwxx
+					) c on b.id= c.releid
+				where 1=1
+				<if test="id != null and id !=''">
+		            and m.id=#{id}
+		        </if>
+		        <if test="qiyemingcheng!=null and qiyemingcheng!=''">
+					and m.qiyemingcheng like '%'+#{qiyemingcheng}+'%'
+				</if>
+				<if test="is_party_branch!=null and is_party_branch!=''">
+					and q.is_party_branch=#{is_party_branch}
+				</if>
+			) b 
+	    ) a where rownumber > ${pageSize}*(${offset} - 1)
+	</select>
+	
+	<select id="manage.qiye.selectPartyPageCount" parameterType="map" resultType="java.lang.Integer">
+		select count(*) from tb_pingshenhui_mingxi m 
+		left join tb_product_czd_base b on m.rele_product_base=b.id 
+		left join tb_cust t on t.userid=b.userid
+		left join tb_qiye q on q.pk_qiyeid = t.f_id
+		where 1=1
+		<if test="id != null and id !=''">
+            and m.id=#{id}
+        </if>
+        <if test="qiyemingcheng!=null and qiyemingcheng!=''">
+			and m.qiyemingcheng like '%'+#{qiyemingcheng}+'%'
+		</if>
+		<if test="is_party_branch!=null and is_party_branch!=''">
+			and q.is_party_branch=#{is_party_branch}
+		</if>
+	</select>
+
+</mapper>  

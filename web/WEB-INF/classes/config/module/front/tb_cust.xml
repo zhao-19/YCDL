@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC 
+"-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="front">
+
+	<select id="front.cust.selectOneByUserid" parameterType="com.winpow.services.manage.cust.bean.Cust"
+		resultType="com.winpow.services.manage.cust.bean.Cust">
+		SELECT
+		top 1 id,
+		userid,
+		password,
+		errorcount,
+		usertype,
+		cellphone,
+		email,
+		status,
+		custmanage,
+		status2,
+		adddate,
+		lastlogintime,disable,
+		custmanagesource
+		from tb_cust t where 1=1
+		<if test="id!=null and id!=''">
+			and id=#{id}
+		</if>
+		<if test="userid!=null and userid!=''">
+			and userid=#{userid}
+		</if>
+		<if test="password!=null and password!=''">
+			and password=#{password}
+		</if>
+		<if test="cellphone!=null and cellphone!=''">
+			and cellphone=#{cellphone}
+		</if>
+	</select>
+	<select id="front.cust.selectOneByCellphone" parameterType="com.winpow.services.manage.cust.bean.Cust"
+		resultType="com.winpow.services.manage.cust.bean.Cust">
+		SELECT
+		top 1 id,
+		userid,
+		password,
+		errorcount,
+		usertype,
+		cellphone,
+		email,
+		status,
+		custmanage,
+		status2,
+		adddate,
+		lastlogintime,
+		custmanagesource
+		from tb_cust t where 1=1
+
+		and t.cellphone=#{cellphone} and t.password=#{password}
+
+	</select>
+
+	<insert id="front.cust.insert" parameterType="com.winpow.services.manage.cust.bean.Cust"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into tb_cust (
+		id,
+		userid,
+		password,
+		errorcount,
+		usertype,
+		cellphone,
+		email,
+		status,
+		custmanage,
+		status2,
+		adddate,
+		lastlogintime,
+		custmanagesource
+		) values (
+		#{id},
+		#{userid},
+		#{password},
+		0,
+		#{usertype},
+		#{cellphone},
+		#{email},
+		#{status},
+		#{custmanage},
+		#{status2},
+		getdate(),
+		getdate(),
+		#{custmanagesource}
+		)
+
+	</insert>
+
+	<update id="front.cust.update" parameterType="com.winpow.services.manage.cust.bean.Cust">
+		update tb_cust set
+
+		<if test="password!=null and password!=''">
+			password=#{password},
+		</if>
+		<if test="errorcount!=null and errorcount!=''">
+			errorcount=#{errorcount},
+		</if>
+		<if test="usertype!=null and usertype!=''">
+			usertype=#{usertype},
+		</if>
+
+		<if test="email!=null and email!=''">
+			email=#{email},
+		</if>
+		<if test="status!=null and status!=''">
+			status=#{status},
+		</if>
+		<if test="custmanage!=null and custmanage!=''">
+			custmanage=#{custmanage},
+		</if>
+		<if test="status2!=null and status2!=''">
+			status2=#{status2} ,
+		</if>
+		<if test="custmanagesource!=null and custmanagesource!=''">
+			custmanagesource=#{custmanagesource} ,
+		</if>
+		<if test="userid!=null and userid!=''">
+			userid=#{userid},
+		</if>
+		<if test="cellphone!=null and cellphone!=''">
+			cellphone=#{cellphone},
+		</if>
+
+		lastlogintime=getdate()
+		where id=#{id}
+	</update>
+	<update id="front.cust.updatetime" parameterType="com.winpow.services.manage.cust.bean.Cust">
+		update tb_cust set
+		errorcount=0,
+		lastlogintime=getdate()
+
+		where id=#{id}
+	</update>
+
+
+
+	<insert id="front.account.insert" parameterType="com.winpow.services.manage.cust.bean.Cust"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into tb_cust (
+
+		userid,
+		password,
+		errorcount,
+		usertype,
+		cellphone,
+		email,
+		status,
+		custmanage,
+		status2,
+		adddate,
+		lastlogintime,
+		custmanagesource
+		) values (
+
+		#{userid},
+		#{password},
+		0,
+		#{usertype},
+		#{cellphone},
+		#{email},
+		#{status},
+		#{custmanage},
+		#{status2},
+		getdate(),
+		getdate(),
+		#{custmanagesource}
+		)
+
+	</insert>
+
+	<update id="front.cust.updatecellphone" parameterType="com.winpow.services.manage.cust.bean.Cust">
+		update tb_cust set cellphone=#{cellphone}, lastlogintime=getdate() where id=#{id}
+	</update>
+
+</mapper>  

@@ -1,0 +1,478 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE mapper PUBLIC 
+"-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="front">
+	
+	<select id="front.jigou.selectPageList" parameterType="com.winpow.services.manage.jigou.bean.Jigou" resultType="hashMap">
+	select * from (
+		select  row_number() over(order by id) as  rownumber ,
+								 	id,
+			 								 	userid,
+			 								 	jigoumingcheng,
+			 								 	jigouleixingid,
+			 								 	zzjgdm,
+			 								 	zhuceshijian,
+			 								 	zhuceziben,
+			 								 	zhucediid,
+			 								 	fuwuneirong,
+			 								 	fuwuanli,
+			 								 	bangongdizhi,
+			 								 	jigoujianjie,
+			 								 	jigoulogo,
+			 								 	jgzt,
+			 								 	wangzhi,
+			 								 	tz_jijinxingzhi,
+			 								 	tz_glzbj,
+			 								 	tz_touzihangye,
+			 								 	tz_touzijieduanid,
+			 								 	tz_touziedu,
+			 								 	xingming,
+			 								 	bumenzhiwu,
+			 								 	yidongdianhua,
+			 								 	gudingdianhua,
+			 								 	email,
+			 								 	lurushijian,
+			 								 	inputuser,
+			 								  lastchgtime,	 	
+			 								  gszcd_province ,
+												gszcd_city     ,
+												gszcd_county  ,shifoutuijian,tuijianpic,custmanagesource,custmanage
+			 		   from tb_jigou )t  where rownumber &gt; = #{offset} and rownumber &lt; = #{pageSize}+#{offset} 
+	</select>
+	
+	
+	<select id="front.jigou.select4index" parameterType="com.winpow.services.manage.jigou.bean.Jigou" resultType="com.winpow.services.manage.jigou.bean.Jigou">
+	select * from (
+		select  row_number() over(order by id) as  rownumber ,
+								 	id,
+			 								 	userid,
+			 								 	jigoumingcheng,
+			 								 	jigouleixingid,
+			 								 	zzjgdm,
+			 								 	zhuceshijian,
+			 								 	zhuceziben,
+			 								 	zhucediid,
+			 								 	fuwuneirong,
+			 								 	fuwuanli,
+			 								 	bangongdizhi,
+			 								 	jigoujianjie,
+			 								 	jigoulogo,
+			 								 	jgzt,
+			 								 	wangzhi,
+			 								 	tz_jijinxingzhi,
+			 								 	tz_glzbj,
+			 								 	tz_touzihangye,
+			 								 	tz_touzijieduanid,
+			 								 	tz_touziedu,
+			 								 	xingming,
+			 								 	bumenzhiwu,
+			 								 	yidongdianhua,
+			 								 	gudingdianhua,
+			 								 	email,
+			 								 	lurushijian,
+			 								 	inputuser,
+			 								  lastchgtime,	 	
+			 								  gszcd_province ,
+												gszcd_city     ,
+												gszcd_county ,shifoutuijian,tuijianpic,custmanagesource,custmanage
+			 		   from tb_jigou )t  where rownumber &lt; =4
+	</select>
+	<select id="front.jigou.selectPageCount" parameterType="com.winpow.services.manage.jigou.bean.Jigou" resultType="java.lang.Integer">
+		select count(*) from Tb_jigou t  where 1=1  
+			<if test="id!=null and id!=''">
+				and t.id=#{id}
+			</if>
+	</select>
+	
+	<select id="front.jigou.selectOne" parameterType="com.winpow.services.manage.jigou.bean.Jigou" resultType="com.winpow.services.manage.jigou.bean.Jigou">
+			SELECT  
+											 	id,
+				 											 	userid,
+				 											 	jigoumingcheng,
+				 											 	jigouleixingid,
+				 											 	zzjgdm,
+				 											 	zhuceshijian,
+				 											 	zhuceziben,
+				 											 	zhucediid,
+				 											 	fuwuneirong,
+				 											 	fuwuanli,
+				 											 	bangongdizhi,
+				 											 	jigoujianjie,
+				 											 	jigoulogo,
+				 											 	jgzt,
+				 											 	wangzhi,
+				 											 	tz_jijinxingzhi,
+				 											 	tz_glzbj,
+				 											 	tz_touzihangye,
+				 											 	tz_touzijieduanid,
+				 											 	tz_touziedu,
+				 											 	xingming,
+				 											 	bumenzhiwu,
+				 											 	yidongdianhua,
+				 											 	gudingdianhua,
+				 											 	email,
+				 											 	lurushijian,
+				 											 	inputuser,
+				 											  lastchgtime,
+		 											  	 	gszcd_province ,
+															gszcd_city     ,
+															gszcd_county   ,shifoutuijian,tuijianpic, bcard,custmanagesource,custmanage
+				 						  from tb_jigou t  where 1=1  
+			<if test="id!=null and id!=''">
+				and t.id=#{id}
+			</if>
+	</select>
+	
+	
+	<select id="front.jigou.selectrecommend" parameterType="com.winpow.services.manage.jigou.bean.Jigou" resultType="com.winpow.services.manage.jigou.bean.Jigou">
+			select    top 1 		 	id,
+				 											 	userid,
+				 											 	jigoumingcheng,
+				 											 	jigouleixingid,
+				 											 	zzjgdm,
+				 											 	zhuceshijian,
+				 											 	zhuceziben,
+				 											 	zhucediid,
+				 											 	fuwuneirong,
+				 											 	fuwuanli,
+				 											 	bangongdizhi,
+				 											 	jigoujianjie,
+				 											 	jigoulogo,
+				 											 	jgzt,
+				 											 	wangzhi,
+				 											 	tz_jijinxingzhi,
+				 											 	tz_glzbj,
+				 											 	tz_touzihangye,
+				 											 	tz_touzijieduanid,
+				 											 	tz_touziedu,
+				 											 	xingming,
+				 											 	bumenzhiwu,
+				 											 	yidongdianhua,
+				 											 	gudingdianhua,
+				 											 	email,
+				 											 	lurushijian,
+				 											 	inputuser,
+				 											  lastchgtime,
+		 											  	 	gszcd_province ,
+															gszcd_city     ,
+															gszcd_county     ,shifoutuijian,tuijianpic,bcard,custmanagesource,custmanage
+				 						  from tb_jigou t  where  shifoutuijian='aaaaaaaaaaaaaaaaaaaaaaaaaaaaa004' and  LASTCHGTIME = (select max(LASTCHGTIME) as lurushijian from tb_jigou where shifoutuijian='aaaaaaaaaaaaaaaaaaaaaaaaaaaaa004')
+		 
+	</select>
+	
+	
+	<select id="front.jigou.selectCount" parameterType="com.winpow.services.manage.jigou.bean.Jigou" resultType="int">
+			select count(*)  
+				 FROM Tb_jigou t  where 1=1  
+				<if test="id!=null and id!=''">
+					and t.id=#{id}
+				</if>
+	</select>
+	
+	<select id="front.jigou.selectOneByCondition" parameterType="com.winpow.services.manage.jigou.bean.Jigou" resultType="com.winpow.services.manage.jigou.bean.Jigou">
+			select  
+								 	id,
+				 											 	userid,
+				 											 	jigoumingcheng,
+				 											 	jigouleixingid,
+				 											 	zzjgdm,
+				 											 	zhuceshijian,
+				 											 	zhuceziben,
+				 											 	zhucediid,
+				 											 	fuwuneirong,
+				 											 	fuwuanli,
+				 											 	bangongdizhi,
+				 											 	jigoujianjie,
+				 											 	jigoulogo,
+				 											 	jgzt,
+				 											 	wangzhi,
+				 											 	tz_jijinxingzhi,
+				 											 	tz_glzbj,
+				 											 	tz_touzihangye,
+				 											 	tz_touzijieduanid,
+				 											 	tz_touziedu,
+				 											 	xingming,
+				 											 	bumenzhiwu,
+				 											 	yidongdianhua,
+				 											 	gudingdianhua,
+				 											 	email,
+				 											 	lurushijian,
+				 											 	inputuser,
+				 											 	lastchgtime,
+				 											 	gszcd_province,
+				 											 	gszcd_city,
+				 											 	gszcd_county,
+				 											 	shifoutuijian,
+				 											  tuijianpic,
+																bcard,custmanagesource,custmanage
+				 					 from  tb_jigou   t  where 1=1  
+			<if test="id!=null and id!=''">
+				and t.id=#{id}
+			</if>
+	</select>
+	
+	
+	<select id="front.jigou.selectByUserId" parameterType="com.winpow.services.manage.jigou.bean.Jigou" resultType="com.winpow.services.manage.jigou.bean.Jigou">
+			select  
+						 	id,
+				 											 	userid,
+				 											 	jigoumingcheng,
+				 											 	jigouleixingid,
+				 											 	zzjgdm,
+				 											 	zhuceshijian,
+				 											 	zhuceziben,
+				 											 	zhucediid,
+				 											 	fuwuneirong,
+				 											 	fuwuanli,
+				 											 	bangongdizhi,
+				 											 	jigoujianjie,
+				 											 	jigoulogo,
+				 											 	jgzt,
+				 											 	wangzhi,
+				 											 	tz_jijinxingzhi,
+				 											 	tz_glzbj,
+				 											 	tz_touzihangye,
+				 											 	tz_touzijieduanid,
+				 											 	tz_touziedu,
+				 											 	xingming,
+				 											 	bumenzhiwu,
+				 											 	yidongdianhua,
+				 											 	gudingdianhua,
+				 											 	email,
+				 											 	lurushijian,
+				 											 	inputuser,
+				 											 	lastchgtime,
+				 											 	gszcd_province,
+				 											 	gszcd_city,
+				 											 	gszcd_county,
+				 											 	shifoutuijian,
+				 											  tuijianpic,
+				 											  bcard,custmanagesource,custmanage
+				 					 from  tb_jigou   t  where 1=1  
+				and t.userid=#{userid}
+	</select>
+	
+	
+	
+<insert id="front.jigou.insert" parameterType="com.winpow.services.manage.jigou.bean.Jigou" useGeneratedKeys="true" 
+		keyProperty="id">
+	 		insert into tb_jigou ( 
+	 								 	id,
+													 	userid,
+													 	jigoumingcheng,
+													 	jigouleixingid,
+													 	zzjgdm,
+													 	zhuceshijian,
+													 	zhuceziben,
+													 	zhucediid,
+													 	fuwuneirong,
+													 	fuwuanli,
+													 	bangongdizhi,
+													 	jigoujianjie,
+													 	jigoulogo,
+													 	jgzt,
+													 	wangzhi,
+													 	tz_jijinxingzhi,
+													 	tz_glzbj,
+													 	tz_touzihangye,
+													 	tz_touzijieduanid,
+													 	tz_touziedu,
+													 	xingming,
+													 	bumenzhiwu,
+													 	yidongdianhua,
+													 	gudingdianhua,
+													 	email,
+													 	lurushijian,
+													 	inputuser,
+													 	lastchgtime,
+													 	gszcd_province,
+													 	gszcd_city,
+													 	gszcd_county,
+													 	shifoutuijian,
+													  tuijianpic,
+													  bcard,custmanagesource,custmanage
+			 						) values ( 
+										 	#{id},
+				 										 	#{userid},
+				 										 	#{jigoumingcheng},
+				 										 	#{jigouleixingid},
+				 										 	#{zzjgdm},
+				 										 	#{zhuceshijian},
+				 										 	#{zhuceziben},
+				 										 	#{zhucediid},
+				 										 	#{fuwuneirong},
+				 										 	#{fuwuanli},
+				 										 	#{bangongdizhi},
+				 										 	#{jigoujianjie},
+				 										 	#{jigoulogo},
+				 										 	#{jgzt},
+				 										 	#{wangzhi},
+				 										 	#{tz_jijinxingzhi},
+				 										 	#{tz_glzbj},
+				 										 	#{tz_touzihangye},
+				 										 	#{tz_touzijieduanid},
+				 										 	#{tz_touziedu},
+				 										 	#{xingming},
+				 										 	#{bumenzhiwu},
+				 										 	#{yidongdianhua},
+				 										 	#{gudingdianhua},
+				 										 	#{email},
+				 										 	#{lurushijian},
+				 										 	#{inputuser},
+				 										 	#{lastchgtime},
+				 										 	#{gszcd_province},
+				 										 	#{gszcd_city},
+				 										 	#{gszcd_county},
+				 										 	#{shifoutuijian},
+				 											#{tuijianpic},
+				 											#{bcard},#{custmanagesource},#{custmanage}
+				 						)
+		 
+	</insert>
+	<update id="front.jigou.update" parameterType="com.winpow.services.manage.jigou.bean.Jigou">
+		update tb_jigou set 
+                        
+		
+				 			                <if test=" userid !=null and  userid !=''">
+                        userid=#{userid},
+                        </if>
+		
+				 			                <if test=" jigoumingcheng !=null and  jigoumingcheng !=''">
+                        jigoumingcheng=#{jigoumingcheng},
+                        </if>
+		
+				 			                <if test=" jigouleixingid !=null and  jigouleixingid !=''">
+                        jigouleixingid=#{jigouleixingid},
+                        </if>
+		
+				 			                <if test=" zzjgdm !=null and  zzjgdm !=''">
+                        zzjgdm=#{zzjgdm},
+                        </if>
+		
+				 			                <if test=" zhuceshijian !=null and  zhuceshijian !=''">
+                        zhuceshijian=#{zhuceshijian},
+                        </if>
+		
+				 			                <if test=" zhuceziben !=null and  zhuceziben !=''">
+                        zhuceziben=#{zhuceziben},
+                        </if>
+		
+				 			                <if test=" zhucediid !=null and  zhucediid !=''">
+                        zhucediid=#{zhucediid},
+                        </if>
+		
+				 			                <if test=" fuwuneirong !=null and  fuwuneirong !=''">
+                        fuwuneirong=#{fuwuneirong},
+                        </if>
+		
+				 			                <if test=" fuwuanli !=null and  fuwuanli !=''">
+                        fuwuanli=#{fuwuanli},
+                        </if>
+		
+				 			                <if test=" bangongdizhi !=null and  bangongdizhi !=''">
+                        bangongdizhi=#{bangongdizhi},
+                        </if>
+		
+				 			                <if test=" jigoujianjie !=null and  jigoujianjie !=''">
+                        jigoujianjie=#{jigoujianjie},
+                        </if>
+		
+				 			                <if test=" jigoulogo !=null and  jigoulogo !=''">
+                        jigoulogo=#{jigoulogo},
+                        </if>
+		
+				 			                <if test=" jgzt !=null and  jgzt !=''">
+                        jgzt=#{jgzt},
+                        </if>
+		
+				 			                <if test=" wangzhi !=null and  wangzhi !=''">
+                        wangzhi=#{wangzhi},
+                        </if>
+		
+				 			                <if test=" tz_jijinxingzhi !=null and  tz_jijinxingzhi !=''">
+                        tz_jijinxingzhi=#{tz_jijinxingzhi},
+                        </if>
+		
+				 			                <if test=" tz_glzbj !=null and  tz_glzbj !=''">
+                        tz_glzbj=#{tz_glzbj},
+                        </if>
+		
+				 			                <if test=" tz_touzihangye !=null and  tz_touzihangye !=''">
+                        tz_touzihangye=#{tz_touzihangye},
+                        </if>
+		
+				 			                <if test=" tz_touzijieduanid !=null and  tz_touzijieduanid !=''">
+                        tz_touzijieduanid=#{tz_touzijieduanid},
+                        </if>
+		
+				 			                <if test=" tz_touziedu !=null and  tz_touziedu !=''">
+                        tz_touziedu=#{tz_touziedu},
+                        </if>
+		
+				 			                <if test=" xingming !=null and  xingming !=''">
+                        xingming=#{xingming},
+                        </if>
+		
+				 			                <if test=" bumenzhiwu !=null and  bumenzhiwu !=''">
+                        bumenzhiwu=#{bumenzhiwu},
+                        </if>
+		
+				 			                <if test=" yidongdianhua !=null and  yidongdianhua !=''">
+                        yidongdianhua=#{yidongdianhua},
+                        </if>
+		
+				 			                <if test=" gudingdianhua !=null and  gudingdianhua !=''">
+                        gudingdianhua=#{gudingdianhua},
+                        </if>
+		
+				 			                <if test=" email !=null and  email !=''">
+                        email=#{email},
+                        </if>
+		
+				 			                <if test=" lurushijian !=null and  lurushijian !=''">
+                        lurushijian=#{lurushijian},
+                        </if>
+		
+				 			                <if test=" inputuser !=null and  inputuser !=''">
+                        inputuser=#{inputuser},
+                        </if>
+		
+		
+				 			                <if test=" gszcd_province !=null and  gszcd_province !=''">
+                        gszcd_province=#{gszcd_province},
+                        </if>
+		
+				 			                <if test=" gszcd_city !=null and  gszcd_city !=''">
+                        gszcd_city=#{gszcd_city},
+                        </if>
+		
+				 			                <if test=" gszcd_county !=null and  gszcd_county !=''">
+                        gszcd_county=#{gszcd_county},
+                        </if>
+		
+				 			                <if test=" shifoutuijian !=null and  shifoutuijian !=''">
+                        shifoutuijian=#{shifoutuijian},
+                        </if>
+		
+				 			                <if test="tuijianpic!=null and tuijianpic !=''">
+                        tuijianpic=#{tuijianpic},
+                        </if>
+
+						<if test="bcard != null and bcard !=''">
+							bcard = #{bcard},
+						</if>
+						<if test="custmanagesource!=null and custmanagesource!=''">
+							custmanagesource=#{custmanagesource},
+						</if>
+						<if test="custmanage!=null and custmanage!=''">
+							custmanage=#{custmanage},
+						</if>
+
+                        lastchgtime=getdate()
+         						 
+		where id=#{id}
+	</update>
+	
+	
+</mapper>  

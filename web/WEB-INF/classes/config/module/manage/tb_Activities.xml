@@ -1,0 +1,378 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC 
+"-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="manage">
+
+	<select id="manage.activities.selectPageList"
+		parameterType="com.winpow.services.manage.activities.bean.Activities"
+		resultType="hashMap">
+		select * from ( select row_number() over(order by begintime desc) as
+		rownumber, id
+		,activities_name
+		,activities_detail
+		,activities_theme
+		,address
+		,agenciesname
+		,begintime
+		,endtime
+		,stoptime
+		,maxattend
+		,replace(
+		ADAPTTYPE ,' ' ,'') adapttype
+		,activities_guests
+		,activities_image
+		,lurushijian
+		,activitiestype
+		,inputuser
+		,lastchgtime ,case when
+		t2.attendcount is null then 0 else t2.attendcount end as
+		attendcount
+		from tb_activities t1 left join (select count(*) as attendcount
+		,activitiid from tb_activities_app where
+		STAT='aaaaaaaaaaaaaaaaaaaaaaaaaaaaa060' group by activitiid) t2 on
+		t1.id=t2.activitiid
+		where 1=1
+		<if test="activities_name!=null and activities_name!=''">
+			and activities_name like '%'+#{activities_name}+'%'
+		</if>
+		<if test="id!=null and id!=''">
+			and id =#{id}
+		</if>
+		<if test="activitiestype!=null and activitiestype!=''">
+			and activitiestype =#{activitiestype}
+		</if>
+		<if test="begintime!=null and begintime!=''">
+			and convert(char(10),begintime,21) =#{begintime}
+		</if>
+
+
+		)t where 1=1 and rownumber &gt;  #{offset} and rownumber &lt; =
+		#{pageSize}+#{offset}
+
+	</select>
+	
+	<select id="manage.activities.selectPageList2"
+		parameterType="com.winpow.services.manage.activities.bean.Activities"
+		resultType="hashMap">
+		select top ${pageSize} * from (
+			select row_number() over(order by begintime desc) as rownumber ,*,
+			(select count(*) from tb_activities_app b where b.activitiid=a.id and b.stat='aaaaaaaaaaaaaaaaaaaaaaaaaaaaa060') attendcount
+			from tb_activities a where 1=1
+			<if test="activities_name!=null and activities_name!=''">
+				and a.activities_name like '%'+#{activities_name}+'%'
+			</if>
+			<if test="id!=null and id!=''">
+				and a.id =#{id}
+			</if>
+			<if test="activitiestype!=null and activitiestype!=''">
+				and a.activitiestype =#{activitiestype}
+			</if>
+			<if test="begintime!=null and begintime!=''">
+				and convert(char(10),a.begintime,21) = #{begintime}
+			</if>
+			<if test="substation != null and substation != ''">
+				and substation=#{substation}
+			</if>
+	    ) a where rownumber > ${pageSize}*(${offset} - 1)
+	</select>
+
+	<select id="manage.activities.selectPageCount"
+		parameterType="com.winpow.services.manage.activities.bean.Activities"
+		resultType="java.lang.Integer">
+		select count(*) from tb_activities where 1=1
+		<if test="activities_name!=null and activities_name!=''">
+			and activities_name like '%'+#{activities_name}+'%'
+		</if>
+		<if test="id!=null and id!=''">
+			and id =#{id}
+		</if>
+		<if test="activitiestype!=null and activitiestype!=''">
+			and activitiestype =#{activitiestype}
+		</if>
+		<if test="begintime!=null and begintime!=''">
+			and convert(char(10),begintime,21) =#{begintime}
+		</if>
+		<if test="substation != null and substation != ''">
+			and substation=#{substation}
+		</if>
+	</select>
+
+	<select id="manage.activities.selectOne"
+		parameterType="com.winpow.services.manage.activities.bean.Activities"
+		resultType="com.winpow.services.manage.activities.bean.Activities">
+		SELECT
+		id,(select COUNT(*) from tb_Activities_app where
+		ACTIVITIID=#{id} and
+		STAT='aaaaaaaaaaaaaaaaaaaaaaaaaaaaa060' ) as
+		attendcount ,
+		activities_name,
+		activities_detail,
+		activities_theme,
+		address,
+		agenciesname,
+		begintime,
+		endtime,
+		stoptime,
+		maxattend,
+		replace(
+		ADAPTTYPE ,' ' ,'') adapttype,activitiestype,
+		activities_guests,
+		activities_image,
+		lurushijian,
+		inputuser,
+		lastchgtime,
+		data_source,
+		appid,
+		releuserid,lnglat,substation
+		from tb_Activities t
+		where 1=1
+		and t.id=#{id}
+	</select>
+
+	<select id="manage.activities.selectCount"
+		parameterType="com.winpow.services.manage.activities.bean.Activities"
+		resultType="int">
+		select count(*)
+		FROM tb_Activities t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+	</select>
+
+	<select id="manage.activities.selectOneByCondition"
+		parameterType="com.winpow.services.manage.activities.bean.Activities"
+		resultType="com.winpow.services.manage.activities.bean.Activities">
+		SELECT
+		id,
+		activities_name,
+		activities_detail,
+		activities_theme,
+		address,
+		agenciesname,
+		begintime,
+		endtime,
+		stoptime,
+		maxattend,
+		replace( ADAPTTYPE
+		,' ' ,'') adapttype,activitiestype,
+		activities_guests,
+		activities_image,
+		lurushijian,
+		inputuser,
+		lastchgtime,
+		data_source,
+		appid,
+		releuserid
+		from tb_Activities t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+	</select>
+
+	<insert id="manage.activities.insert"
+		parameterType="com.winpow.services.manage.activities.bean.Activities"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into tb_Activities (
+
+		activities_name,
+		activities_detail,
+		activities_theme,
+		address,
+		agenciesname,
+		begintime,
+		endtime,
+		stoptime,
+		maxattend,
+		adapttype,activitiestype,
+		activities_guests,
+		activities_image,
+		lurushijian,
+		inputuser,
+		lastchgtime,
+		data_source,
+		appid,
+		releuserid,lnglat,substation
+		) values
+		(
+
+		#{activities_name},
+		#{activities_detail},
+		#{activities_theme},
+		#{address},
+		#{agenciesname},
+		CONVERT(datetime,#{begintime}),
+		CONVERT(datetime,#{endtime}),
+		CONVERT(datetime,#{stoptime}),
+		#{maxattend},
+		#{adapttype},#{activitiestype},
+		#{activities_guests},
+		#{activities_image},
+		getdate(),
+		#{inputuser},
+		getdate(),
+		#{data_source},
+		#{appid},
+		#{releuserid},#{lnglat}
+		<choose><when test="substation=='all'">,null</when><otherwise>,#{substation}</otherwise></choose>
+		
+		)
+
+	</insert>
+
+	<update id="manage.activities.update"
+		parameterType="com.winpow.services.manage.activities.bean.Activities">
+		update tb_activities set
+
+
+		<if test="activities_name!=null and activities_name!=''">
+			activities_name=#{activities_name},
+		</if>
+
+		<if test="activities_detail!=null and activities_detail!=''">
+			activities_detail=#{activities_detail},
+		</if>
+
+		<if test="activities_theme!=null and activities_theme!=''">
+			activities_theme=#{activities_theme},
+		</if>
+
+		<if test="address!=null and address!=''">
+			address=#{address},
+		</if>
+
+		<if test="agenciesname!=null and agenciesname!=''">
+			agenciesname=#{agenciesname},
+		</if>
+
+		<if test="begintime!=null and begintime!=''">
+			begintime=#{begintime},
+		</if>
+
+		<if test="endtime!=null and endtime!=''">
+			endtime=#{endtime},
+		</if>
+
+		<if test="stoptime!=null and stoptime!=''">
+			stoptime=#{stoptime},
+		</if>
+
+		<if test="maxattend!=null and maxattend!=''">
+			maxattend=#{maxattend},
+		</if>
+
+		<if test="adapttype!=null and adapttype!=''">
+			adapttype=#{adapttype},
+		</if>
+		<if test="activitiestype!=null and activitiestype!=''">
+			activitiestype=#{activitiestype},
+		</if>
+
+		<if test="activities_guests!=null and activities_guests!=''">
+			activities_guests=#{activities_guests},
+		</if>
+
+		<if test="activities_image!=null and activities_image!=''">
+			activities_image=#{activities_image},
+		</if>
+
+		<if test="lurushijian!=null and lurushijian!=''">
+			lurushijian=#{lurushijian},
+		</if>
+
+		<if test="inputuser!=null and inputuser!=''">
+			inputuser=#{inputuser},
+		</if>
+		<if test="data_source!=null and data_source!=''">
+			data_source=#{data_source},
+		</if>
+		<if test="appid!=null and appid!=''">
+			appid=#{appid},
+		</if>
+		<if test="releuserid!=null and releuserid!=''">
+			releuserid=#{releuserid},
+		</if>
+		<if test="lnglat !=null and lnglat !=''">
+            lnglat=#{lnglat},
+        </if>
+        
+        <if test=" substation !=null and  substation !='' and substation != 'all'">
+            substation=#{substation},
+        </if>
+        
+        <if test=" substation !=null and  substation !='' and substation == 'all'">
+            substation = null,
+        </if>
+        
+		lastchgtime=getdate()
+
+		where id=#{id}
+	</update>
+	<select id="manage.activities.select4index"
+		parameterType="com.winpow.services.manage.activities.bean.Activities"
+		resultType="com.winpow.services.manage.activities.bean.Activities">
+		select * from (
+		SELECT ROW_NUMBER() over(order by id desc)
+		as rownumber ,
+		id,
+		activities_name,
+		activities_detail,
+		activities_theme,
+		address,
+		agenciesname,
+		begintime,
+		endtime,
+		stoptime,
+		maxattend,
+		replace(
+		ADAPTTYPE ,' ' ,'') adapttype,activitiestype,
+		activities_guests,
+		activities_image,
+		lurushijian,
+		inputuser,
+		lastchgtime
+		from tb_Activities
+		)t where rownumber &lt; =5
+	</select>
+
+	<select id="manage.activities.activitiesappcount"
+		parameterType="com.winpow.services.manage.activitiesapp.bean.Activitiesapp"
+		resultType="hashMap">
+		select count(*) as cc from tb_activities_app where
+		activitiid=#{activitiid}
+		and userid = #{userid} and
+		STAT='aaaaaaaaaaaaaaaaaaaaaaaaaaaaa060'
+	</select>
+	<delete id="manage.activities.delete" parameterType="String">
+		delete from
+		tb_activities where id=#{id}
+	</delete>
+	
+	<select id="manage.activities.selectLists" parameterType="com.winpow.services.manage.activities.bean.Activities"
+        resultType="com.winpow.services.manage.activities.bean.Activities">
+        select top ${pageSize} * from (
+	        select row_number() over (order by begintime desc) as rownumber,* 
+	        from tb_activities tp where 1=1 
+	        <if test="activitiestype !=null and activitiestype !=''">
+	            and activitiestype=#{activitiestype}
+	        </if>
+	        <if test="substation !=null and substation !=''">
+	        	and substation=#{substation}
+	        </if>
+        ) a where rownumber > ${pageSize}*(${offset} - 1)
+    </select>
+    
+    <select id="manage.activities.selectAllList" parameterType="com.winpow.services.manage.activities.bean.Activities"
+        resultType="com.winpow.services.manage.activities.bean.Activities">
+        select top 50 t1.* from tb_Activities t1 left join tb_app_banner t2 on t2.appid = CONVERT(varchar(32),t1.ID) where t2.pkid is null order by LASTCHGTIME desc
+    </select>
+    
+    <select id="manage.activities.selectList" parameterType="com.winpow.services.manage.activities.bean.Activities"
+        resultType="com.winpow.services.manage.activities.bean.Activities">
+        select top 50 * from tb_activities where 1=1
+		<if test="activities_name!=null and activities_name!=''">
+			and activities_name like '%'+#{activities_name}+'%'
+		</if>
+		order by lurushijian desc
+    </select>
+</mapper>  

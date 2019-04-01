@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+"-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="manage">
+
+	<select id="manage.tbotherorg.selectPageList"
+		parameterType="com.winpow.services.manage.tbotherorg.bean.Tbotherorg"
+		resultType="hashMap">
+		select * from (
+			select row_number() over(order by lastchgtime desc) as rownumber,*
+			from tb_other_org where 1=1
+			<if test=" org_name !=null and  org_name !=''">
+				and org_name like '%'+#{org_name}+'%'
+			</if>
+			<if test=" org_credit_id !=null and  org_credit_id !=''">
+				and org_credit_id=#{org_credit_id}
+			</if>
+			<if test=" custmanage !=null and  custmanage !=''">
+				and custmanage like '%'+#{custmanage}+'%'
+			</if>
+			
+		)t where rownumber &gt; = #{offset} and rownumber &lt; =
+		#{pageSize}+#{offset}
+	</select>
+	<select id="manage.tbotherorg.selectPageCount"
+		parameterType="com.winpow.services.manage.tbotherorg.bean.Tbotherorg"
+		resultType="java.lang.Integer">
+			select count(*) from tb_other_org where 1=1
+			<if test=" org_name !=null and  org_name !=''">
+				and org_name like '%'+#{org_name}+'%'
+			</if>
+			<if test=" org_credit_id !=null and  org_credit_id !=''">
+				and org_credit_id=#{org_credit_id}
+			</if>
+			<if test=" custmanage !=null and  custmanage !=''">
+				and custmanage like '%'+#{custmanage}+'%'
+			</if>
+	</select>
+
+	<select id="manage.tbotherorg.selectOne"
+		parameterType="com.winpow.services.manage.tbotherorg.bean.Tbotherorg"
+		resultType="com.winpow.services.manage.tbotherorg.bean.Tbotherorg">
+		select top(1) * from tb_other_org t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+		<if test=" org_name !=null and  org_name !=''">
+			and org_name=#{org_name}
+		</if>
+		<if test="deleted != null and deleted != ''">
+			and deleted is null or deleted=#{deleted}
+		</if>
+	</select>
+
+	<select id="manage.tbotherorg.selectCount"
+		parameterType="com.winpow.services.manage.tbotherorg.bean.Tbotherorg"
+		resultType="int">
+		select count(*)
+		FROM tb_other_org t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+	</select>
+
+	<select id="manage.tbotherorg.selectOneByCondition"
+		parameterType="com.winpow.services.manage.tbotherorg.bean.Tbotherorg"
+		resultType="com.winpow.services.manage.tbotherorg.bean.Tbotherorg">
+		select * from tb_other_org t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+	</select>
+	
+	<select id="manage.tbotherorg.selectByRelaUserId" parameterType="string" resultType="com.winpow.services.manage.tbotherorg.bean.Tbotherorg">
+		select o.* from tb_cust c left join tb_other_org o on c.f_id=o.id where c.userId=#{userId} and o.id is not null and o.deleted is null or o.deleted='10002'
+	</select>
+
+	<select id="manage.tbotherorg.selectByUserId" parameterType="string" resultType="com.winpow.services.manage.tbotherorg.bean.Tbotherorg">
+		select o.* from tb_cust c left join tb_other_org o on c.f_id=o.id where c.userId=#{userId} and c.status='aaaaaaaaaaaaaaaaaaaaaaaaaaaaa006' and o.id is not null
+	</select>
+
+	<select id="manage.tbotherorg.selectList"
+		parameterType="com.winpow.services.manage.tbotherorg.bean.Tbotherorg"
+		resultType="com.winpow.services.manage.tbotherorg.bean.Tbotherorg">
+		select * from tb_other_org t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+		<if test=" org_credit_id !=null and  org_credit_id !=''">
+			and org_credit_id=#{org_credit_id}
+		</if>
+		<if test=" org_name !=null and  org_name !=''">
+			and org_name=#{org_name}
+		</if>
+		<if test="deleted != null and deleted != ''">
+			and deleted is null or deleted=#{deleted}
+		</if>
+	</select>
+
+	<insert id="manage.tbotherorg.insert" parameterType="com.winpow.services.manage.tbotherorg.bean.Tbotherorg">
+		insert into tb_other_org (
+		id,
+		org_name,
+		org_type,
+		org_credit_id,
+		gszcd_province,
+		gszcd_city,
+		gszcd_county,
+		regist_amt,
+		org_address,
+		org_info,
+		org_linkman,
+		org_linkduty,
+		org_linkcellphone,
+		org_linkemail,
+		custmanage,
+		inputtime,
+		inputuser,
+		lastchgtime,
+		iscomplete,
+		businessscope,
+		license,
+		yuangongshu,
+		party_num,
+		is_party,
+		lead_num,
+		lead_party_num,
+		is_party_branch,
+		party_branch_time,last_party_cost,will_set_party,party_score,bureau,office,substation
+		) values (
+		#{id},
+		#{org_name},
+		#{org_type},
+		#{org_credit_id},
+		#{gszcd_province},
+		#{gszcd_city},
+		#{gszcd_county},
+		#{regist_amt},
+		#{org_address},
+		#{org_info},
+		#{org_linkman},
+		#{org_linkduty},
+		#{org_linkcellphone},
+		#{org_linkemail},
+		#{custmanage},
+		getdate(),
+		#{inputuser},
+		getdate(),
+		#{iscomplete},
+		#{businessscope},
+		#{license},
+		#{yuangongshu},
+		#{party_num},
+		#{is_party},
+		#{lead_num},
+		#{lead_party_num},
+		#{is_party_branch},
+		#{party_branch_time},
+		#{last_party_cost},
+		#{will_set_party},
+		#{party_score},#{bureau},#{office},#{substation}
+		)
+	</insert>
+
+	<update id="manage.tbotherorg.update"
+		parameterType="com.winpow.services.manage.tbotherorg.bean.Tbotherorg">
+		update tb_other_org set
+		<if test=" org_name !=null and  org_name !=''">
+			org_name=#{org_name},
+		</if>
+		<if test=" org_type !=null and  org_type !=''">
+			org_type=#{org_type},
+		</if>
+		<if test=" org_credit_id !=null and  org_credit_id !=''">
+			org_credit_id=#{org_credit_id},
+		</if>
+		<if test=" gszcd_province !=null and  gszcd_province !=''">
+			gszcd_province=#{gszcd_province},
+		</if>
+		<if test=" gszcd_city !=null and  gszcd_city !=''">
+			gszcd_city=#{gszcd_city},
+		</if>
+		<if test=" gszcd_county !=null and  gszcd_county !=''">
+			gszcd_county=#{gszcd_county},
+		</if>
+		<if test=" regist_amt !=null and  regist_amt !=''">
+			regist_amt=#{regist_amt},
+		</if>
+		<if test=" org_address !=null and  org_address !=''">
+			org_address=#{org_address},
+		</if>
+		<if test=" org_info !=null and  org_info !=''">
+			org_info=#{org_info},
+		</if>
+		<if test=" org_linkman !=null and  org_linkman !=''">
+			org_linkman=#{org_linkman},
+		</if>
+		<if test=" org_linkduty !=null and  org_linkduty !=''">
+			org_linkduty=#{org_linkduty},
+		</if>
+		<if test=" org_linkcellphone !=null and  org_linkcellphone !=''">
+			org_linkcellphone=#{org_linkcellphone},
+		</if>
+		<if test=" org_linkemail !=null and  org_linkemail !=''">
+			org_linkemail=#{org_linkemail},
+		</if>
+		<if test=" custmanage !=null and  custmanage !=''">
+			custmanage=#{custmanage},
+		</if>
+		
+		<if test=" receipt_bank !=null and  receipt_bank !=''">
+			receipt_bank=#{receipt_bank},
+		</if>
+		<if test=" receipt_account !=null and  receipt_account !=''">
+			receipt_account=#{receipt_account},
+		</if>
+		<if test=" receipt_payee !=null and  receipt_payee !=''">
+			receipt_payee=#{receipt_payee},
+		</if>
+		<if test=" receipt_phone !=null and  receipt_phone !=''">
+			receipt_phone=#{receipt_phone},
+		</if>
+		<if test=" iscomplete !=null and  iscomplete !=''">
+			iscomplete=#{iscomplete},
+		</if>
+		<if test=" businessscope !=null and  businessscope !=''">
+			businessscope=#{businessscope},
+		</if>
+		<if test=" license !=null and  license !=''">
+			license=#{license},
+		</if>
+		<if test=" yuangongshu !=null">
+			yuangongshu=#{yuangongshu},
+		</if>
+		<if test=" party_num !=null">
+			party_num=#{party_num},
+		</if>
+		<if test=" is_party !=null and  is_party !=''">
+			is_party=#{is_party},
+		</if>
+		<if test=" lead_num !=null">
+			lead_num=#{lead_num},
+		</if>
+		<if test=" lead_party_num !=null">
+			lead_party_num=#{lead_party_num},
+		</if>
+		<if test=" is_party_branch !=null and  is_party_branch !=''">
+			is_party_branch=#{is_party_branch},
+		</if>
+		<if test=" party_branch_time !=null and  party_branch_time !=''">
+			party_branch_time=#{party_branch_time},
+		</if>
+		<if test=" last_party_cost !=null">
+			last_party_cost=#{last_party_cost},
+		</if>
+		<if test=" will_set_party !=null and  will_set_party !=''">
+			will_set_party=#{will_set_party},
+		</if>
+		<if test=" party_score !=null and  party_score !=''">
+			party_score=#{party_score},
+		</if>
+		<if test=" deleted !=null and  deleted !=''">
+			deleted=#{deleted},
+		</if>
+		<if test=" bureau !=null and  bureau !=''">
+			bureau=#{bureau},
+		</if>
+		<if test=" office !=null and  office !=''">
+			office=#{office},
+		</if>
+		<if test=" substation !=null and  substation !=''">
+			substation=#{substation},
+		</if>
+		lastchgtime=getdate()
+		where id=#{id}
+	</update>
+	
+	<delete id="manage.tbotherorg.deleteById" parameterType="String">
+		delete from tb_other_org where id=#{id}
+	</delete>
+	
+	<select id="manage.tbotherorg.selectListByBurOff" parameterType="java.util.HashMap" resultType="com.winpow.services.manage.cust.bean.Cust">
+		select c.* from tb_other_org o 
+		left join tb_cust c on o.id=c.f_id where c.userid is not null
+		<if test=" burlist.size() != 0">
+			and o.bureau in
+				<foreach collection="burlist" item="item" index="index" separator="," open="(" close=")">  
+			        #{item}
+			    </foreach>
+		</if>
+		<if test=" offlist.size() != 0">
+			and o.office in
+				<foreach collection="offlist" item="item1" index="index" separator="," open="(" close=")">  
+			        #{item1}
+			    </foreach>
+		</if>
+	</select>
+</mapper>  

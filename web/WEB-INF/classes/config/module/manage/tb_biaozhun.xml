@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE mapper PUBLIC 
+"-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="manage">
+	
+	<select id="manage.biaozhun.selectPageList" parameterType="com.winpow.services.manage.biaozhun.bean.Biaozhun" resultType="hashMap">
+	select * from (
+		SELECT  ROW_NUMBER() over(order by id) as  rownumber ,
+								 	id,
+			 								 	qiyemingcheng,
+			 								 	biaozhunmingcheng,
+			 								 	xingzhi,
+			 								 	zhiwu,
+			 								 	shujuleixing,
+			 								 	biaozhunleiing,
+			 								 	zengxinquanzhong,
+			 								 	shouxinedu,
+			 								 	lurushijian,
+			 								 	inputuser,
+			 								  lastchgtime
+			 		   from tb_biaozhun  where 1=1
+			 		    <if test="qiyemingcheng!=null and qiyemingcheng!=''">
+			and  qiyemingcheng like  '%'+#{qiyemingcheng}+'%' 
+			</if>
+			
+			<if test="shujuleixing!=null and shujuleixing!=''">
+		and  shujuleixing  =#{shujuleixing}
+		</if> )t  where rownumber &gt; = #{offset} and rownumber &lt; = #{pageSize}+#{offset} 
+	</select>
+	<select id="manage.biaozhun.selectPageCount" parameterType="com.winpow.services.manage.biaozhun.bean.Biaozhun" resultType="java.lang.Integer">
+		
+			select count(*) from (
+					SELECT  ROW_NUMBER() over(order by id) as  rownumber ,
+																	 	id,
+						 																	 	qiyemingcheng,
+						 																	 	biaozhunmingcheng,
+						 																	 	xingzhi,
+						 																	 	zhiwu,
+						 																	 	shujuleixing,
+						 																	 	biaozhunleiing,
+						 																	 	zengxinquanzhong,
+						 																	 	shouxinedu,
+						 																	 	lurushijian,
+						 																	 	inputuser,
+						 																	  lastchgtime
+						 								   from tb_biaozhun   where 1=1
+			 		    <if test="qiyemingcheng!=null and qiyemingcheng!=''">
+			and  qiyemingcheng like  '%'+#{qiyemingcheng}+'%' 
+			</if>
+			
+			<if test="shujuleixing!=null and shujuleixing!=''">
+		and  shujuleixing  =#{shujuleixing}
+		</if>  )t  
+
+	</select>
+	
+	<select id="manage.biaozhun.selectOne" parameterType="com.winpow.services.manage.biaozhun.bean.Biaozhun" resultType="com.winpow.services.manage.biaozhun.bean.Biaozhun">
+			SELECT  
+											 	id,
+				 											 	qiyemingcheng,
+				 											 	biaozhunmingcheng,
+				 											 	xingzhi,
+				 											 	zhiwu,
+				 											 	shujuleixing,
+				 											 	biaozhunleiing,
+				 											 	zengxinquanzhong,
+				 											 	shouxinedu,
+				 											 	lurushijian,
+				 											 	inputuser,
+				 											  lastchgtime
+				 						  from tb_biaozhun t  where 1=1  
+			<if test="id!=null and id!=''">
+				and t.id=#{id}
+			</if>
+	</select>
+	
+	<select id="manage.biaozhun.selectCount" parameterType="com.winpow.services.manage.biaozhun.bean.Biaozhun" resultType="int">
+			select count(*)  
+				 FROM tb_biaozhun t  where 1=1  
+				<if test="id!=null and id!=''">
+					and t.id=#{id}
+				</if>
+	</select>
+	
+	<select id="manage.biaozhun.selectOneByCondition" parameterType="com.winpow.services.manage.biaozhun.bean.Biaozhun" resultType="com.winpow.services.manage.biaozhun.bean.Biaozhun">
+			SELECT  
+											 	id,
+				 											 	qiyemingcheng,
+				 											 	biaozhunmingcheng,
+				 											 	xingzhi,
+				 											 	zhiwu,
+				 											 	shujuleixing,
+				 											 	biaozhunleiing,
+				 											 	zengxinquanzhong,
+				 											 	shouxinedu,
+				 											 	lurushijian,
+				 											 	inputuser,
+				 											  lastchgtime
+				 					 from  tb_biaozhun   t  where 1=1  
+			<if test="id!=null and id!=''">
+				and t.id=#{id}
+			</if>
+	</select>
+	
+	
+	
+		<select id="manage.biaozhun.selectList" parameterType="com.winpow.services.manage.biaozhun.bean.Biaozhun" resultType="com.winpow.services.manage.biaozhun.bean.Biaozhun">
+			SELECT  
+											 	id,
+				 											 	qiyemingcheng,
+				 											 	biaozhunmingcheng,
+				 											 	xingzhi,
+				 											 	zhiwu,
+				 											 	shujuleixing,
+				 											 	biaozhunleiing,
+				 											 	zengxinquanzhong,
+				 											 	shouxinedu,
+				 											 	lurushijian,
+				 											 	inputuser,
+				 											  lastchgtime
+				 					 from  tb_biaozhun   t  where 1=1  
+			<if test="id!=null and id!=''">
+				and t.id=#{id}
+			</if>
+	</select>
+	
+	
+	
+	
+	<insert id="manage.biaozhun.insert" parameterType="com.winpow.services.manage.biaozhun.bean.Biaozhun" useGeneratedKeys="true" 
+		keyProperty="id">
+	 		insert into tb_biaozhun ( 
+	 								 	id,
+													 	qiyemingcheng,
+													 	biaozhunmingcheng,
+													 	xingzhi,
+													 	zhiwu,
+													 	shujuleixing,
+													 	biaozhunleiing,
+													 	zengxinquanzhong,
+													 	shouxinedu,
+													 	lurushijian,
+													 	inputuser,
+													  lastchgtime
+			 						) values ( 
+										 	#{id},
+				 										 	#{qiyemingcheng},
+				 										 	#{biaozhunmingcheng},
+				 										 	#{xingzhi},
+				 										 	#{zhiwu},
+				 										 	#{shujuleixing},
+				 										 	#{biaozhunleiing},
+				 										 	#{zengxinquanzhong},
+				 										 	#{shouxinedu},
+				 										 	#{lurushijian},
+				 										 	#{inputuser},
+				 											#{lastchgtime}
+				 						)
+		 
+	</insert>
+	
+	<update id="manage.biaozhun.update" parameterType="com.winpow.services.manage.biaozhun.bean.Biaozhun">
+		update tb_biaozhun set 
+                        <if test=" id !=null and  id !=''">
+                        id=#{id},
+                        </if>
+		
+				 			                <if test=" qiyemingcheng !=null and  qiyemingcheng !=''">
+                        qiyemingcheng=#{qiyemingcheng},
+                        </if>
+		
+				 			                <if test=" biaozhunmingcheng !=null and  biaozhunmingcheng !=''">
+                        biaozhunmingcheng=#{biaozhunmingcheng},
+                        </if>
+		
+				 			                <if test=" xingzhi !=null and  xingzhi !=''">
+                        xingzhi=#{xingzhi},
+                        </if>
+		
+				 			                <if test=" zhiwu !=null and  zhiwu !=''">
+                        zhiwu=#{zhiwu},
+                        </if>
+		
+				 			                <if test=" shujuleixing !=null and  shujuleixing !=''">
+                        shujuleixing=#{shujuleixing},
+                        </if>
+		
+				 			                <if test=" biaozhunleiing !=null and  biaozhunleiing !=''">
+                        biaozhunleiing=#{biaozhunleiing},
+                        </if>
+		
+				 			                <if test=" zengxinquanzhong !=null and  zengxinquanzhong !=''">
+                        zengxinquanzhong=#{zengxinquanzhong},
+                        </if>
+		
+				 			                <if test=" shouxinedu !=null and  shouxinedu !=''">
+                        shouxinedu=#{shouxinedu},
+                        </if>
+		
+				 			                <if test=" lurushijian !=null and  lurushijian !=''">
+                        lurushijian=#{lurushijian},
+                        </if>
+		
+				 			                <if test=" inputuser !=null and  inputuser !=''">
+                        inputuser=#{inputuser},
+                        </if>
+		
+				 			                <if test="lastchgtime!=null and lastchgtime !=''">
+                        lastchgtime=#{lastchgtime}
+                        </if>
+         						 
+		where id=#{id}
+	</update>
+	
+</mapper>  

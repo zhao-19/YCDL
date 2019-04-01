@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <link rel="stylesheet" href="css/common.css"/>
+    <link rel="stylesheet" href="css/index.css"/>
+    <script src="js/jquery-1.10.2.min.js"></script>
+    <script src="js/index.js"></script>
+</head>
+<body>
+
+<!-- 网站头部 -->
+<div class="nav widthbox">
+    <div class="logo fl"><img src="image/index/logo.jpg" alt="logo"></div>
+    <div class="nav_right fr">
+        <div class="login_re fr">
+            <li class="fl"><a href="login.html" class="login">登录</a>|<a href="register.html" class="register">注册</a></li>
+            <li class="fl"><input class="inputtext" type="text"  placeholder="请输入关键字" onfocus="if(placeholder=='请输入关键字'){placeholder=''}" onblur="if(placeholder==''){placeholder='请输入关键字'}" /></li>
+            <li class="zhandian fr"><a href="">子站点</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="">&gt;</a></li>
+        </div>
+        <div class="nav_type fr" >
+            <div class="index_cj_nav">
+                <ul>
+                    <li class="yijinav"><a href="index.html" class="yjbgc navhover">首&nbsp;&nbsp;&nbsp;&nbsp;页</a></li>
+                    <li class="yijinav"><a href="rmation.html">盈创资讯</a>
+                    </li>
+                    <li class="yijinav"><a href="creditor.html">债权融资</a>
+                        <ul class="subnavs" style="display: none;">
+                            <li><a href="">开行统借统还</a></li>
+                            <li><a href="">口行统借统还</a></li>
+                            <li><a href="">成长贷</a></li>
+                            <li><a href="">壮大贷</a></li>
+                            <li><a href="">新创贷</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="yijinav"><a href="equity.html">股权融资</a>
+                        <ul class="subnavs" style="display: none;">
+                            <li><a href="">股权项目</a></li>
+                            <li><a href="">发布项目</a></li>
+                        </ul>
+                    </li>
+                    <li class="yijinav"><a href="increase.html">增值服务</a>
+                        <ul class="subnavs" style="display: none;">
+                            <li><a href="">代理记账</a></li>
+                            <li><a href="">财务审计</a></li>
+                            <li><a href="">信用评估</a></li>
+                            <li><a href="">资产评估</a></li>
+                            <li><a href="">税务策划</a></li>
+                            <li><a href="">法律咨询</a></li>
+                            <li><a href="">合同代写</a></li>
+                            <li><a href="">股权协议</a></li>
+                            <li><a href="">法律顾问</a></li>
+                        </ul>
+                    </li>
+                    <li class="yijinav"><a href="yccollege.html">盈创学院</a></li>
+                    <li class="yijinav"><a href="ycdata.html">盈创数据</a>
+                        <ul class="subnavs" style="display: none;">
+                            <li><a href="">项目</a></li>
+                            <li><a href="enterprise.html">企业</a></li>
+                            <li><a href="">机构</a></li>
+                            <li><a href="ycdata.html">工作室</a></li>
+                        </ul>
+                    </li>
+                    <li class="yijinav"><a href="download.html">资料下载</a></li>
+                    <li class="yijinav"><a href="about.html">关于我们</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="index_banner_box">
+    <!--总首页导航-->
+    <div class="index_nav_box categorys">
+        <dl class="all_nav">
+            <dd class="zen_icon">
+                <a href="" class="big_nav">债权融资</a>
+                <a href="">成长贷</a>
+                <a href="">壮大贷</a>
+            </dd>
+            <dd class="gu_icon">
+                <a href="" class="big_nav">股权融资</a>
+                <a href="">股权项目</a>
+                <a href="">发布项目</a>
+            </dd>
+            <dd class="zhai_icon">
+                <a href="" class="big_nav">增值服务</a>
+                <a href="">财务类</a>
+                <a href="">法务类</a>
+            </dd>
+            <dd class="last">
+                <a href="" class="big_nav">投资机构</a>
+                <a href="">高投创业</a>
+                <a href="">兴科基金</a>
+            </dd>
+        </dl>
+        <div class="cate-content-list" style="display: none;">
+            <div class="cate-mc fore1" style="display: none">
+                <div class="title">
+
+                    <span class="text">债权融资</span>
+                    <span class="extra"></span>
+                    <a target="_blank" href="" class="more">更多<i></i></a>
+                </div>
+                <div class="goods-list">
+                    <a target="_blank" href="">开行统借统还</a>
+                    <a target="_blank" href="">口行统借统还</a>
+                    <a target="_blank" href="">成长贷</a>
+                    <a target="_blank" href="">壮大贷</a>
+                    <a target="_blank" href="">新创贷</a>
+                </div>
+                <div class="goods-promotion j_categorysPromotion1"><a target="_blank" href=" " clstag=""><img class="lazyload-img" src="image/index/index_banner.png"></a></div>
+
+                <div class="goods-extra">
+                    <div class="content"></div>
+                </div>
+            </div>
+            <div class="cate-mc fore2" style="display: none">
+                <div class="title">
+
+                    <span class="text">股权融资</span>
+                    <span class="extra"></span>
+                    <a target="_blank" href="" class="more">更多<i></i></a>
+                </div>
+                <div class="goods-list">
+                   <a target="_blank" href="">股权项目</a>
+                   <a target="_blank" href="">发布项目</a>
+                </div>
+                <div class="goods-promotion j_categorysPromotion1"><a target="_blank" href=" " clstag=""><img class="lazyload-img" src="image/index/index_banner1.png"></a></div>
+                <div class="goods-extra">
+                    <div class="content"></div>
+                </div>
+            </div>
+            <div class="cate-mc fore3" style="display: none">
+                <div class="title">
+
+                    <span class="text">财务类</span>
+                    <span class="extra"></span>
+                    <a target="_blank" href="" class="more">更多<i></i></a>
+                </div>
+                <div class="goods-list">
+                   <a target="_blank" href="">代理记账</a>
+                   <a target="_blank" href="">财务审计</a>
+                   <a target="_blank" href="">信用评估</a>
+                   <a target="_blank" href="">资产评估</a>
+                   <a target="_blank" href="">税务评估</a>
+                   <a target="_blank" href="">法律咨询</a>
+                   <a target="_blank" href="">合同代写</a>
+                   <a target="_blank" href="">股权协议</a>
+                   <a target="_blank" href="">法律顾问</a>
+                </div>
+                <div class="goods-promotion j_categorysPromotion1"><a target="_blank" href=" " clstag=""><img class="lazyload-img" src="image/index/index_banner2.png"></a></div>
+                <div class="goods-extra">
+                    <div class="content"></div>
+                </div>
+            </div>
+            <div class="cate-mc fore4" style="display: none">
+                <div class="title">
+
+                    <span class="text">投资机构</span>
+                    <span class="extra"></span>
+                    <a target="_blank" href="" class="more">更多<i></i></a>
+                </div>
+                <div class="goods-list">
+                    <a target="_blank" href="">高投创业</a>
+                    <a target="_blank" href="">兴科基金</a>
+                    <a target="_blank" href="">德宏基金</a>
+                    <a target="_blank" href="">泰富基金</a>
+                </div>
+                <div class="goods-promotion j_categorysPromotion1"><a target="_blank" href=" " clstag=""><img class="lazyload-img" src="image/index/index_banner3.png"></a></div>
+                <div class="goods-extra">
+                    <div class="content"></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!--轮播内容-->
+    <div class="focusBox">
+        <ul class="pic">
+            <li><a href="#" target="_blank"><img src="image/index/index_banner1.jpg"></a></li>
+            <li><a href="#" target="_blank"><img src="image/index/index_banner2.jpg"></a></li>
+            <li><a href="#" target="_blank"><img src="image/index/index_banner3.jpg"></a></li>
+            <li><a href="#" target="_blank"><img src="image/index/index_banner1.jpg"></a></li>
+            <li><a href="#" target="_blank"><img src="image/index/index_banner2.jpg"></a></li>
+            <li><a href="#" target="_blank"><img src="image/index/index_banner3.jpg"></a></li>
+        </ul>
+        <!--<a class="prev" href="javascript:void(0)" style="opacity: 0.2; display: inline;"></a>
+        <a class="next" href="javascript:void(0)" style="opacity: 0.2; display: inline;"></a>-->
+        <ul class="hd"><li class="on"></li><li class=" "></li><li class=" "></li><li class=" "></li><li class=" "></li></ul>
+    </div>
+</div>
+
+<!--banner-->
+<script type="text/javascript" src="js/jquery.SuperSlide.js"></script>
+<script type="text/javascript">
+    jQuery(".focusBox").hover(function(){ jQuery(this).find(".prev,.next").fadeTo("show",0.2) },function(){ jQuery(this).find(".prev,.next").fadeOut() });jQuery(".focusBox").slide({ mainCell:".pic",effect:"fold", autoPlay:true, delayTime:600, trigger:"click"});
+</script>
+
+
+<!-- 内容显示 -->
+<div class="data_show widthbox"><!-- 数据展示 -->
+    <ul>
+        <div class="data_list">
+            <li>服务企业数</li>
+            <li class="data_num"><span class="timer count-title" id="count-number" data-to="5788" data-speed="1500"></span><span class="jia">家</span></li>
+        </div>
+        <div class="data_list">
+            <li>债权融资额</li>
+            <li class="data_num"><span class="timer count-title" id="count-number" data-to="6666" data-speed="1500"></span><span class="jia">亿</span></li>
+        </div>
+        <div class="data_list">
+            <li>股权融资项目数</li>
+            <li class="data_num"><span class="timer count-title" id="count-number" data-to="1034" data-speed="1500"></span><span class="jia">个</span></li>
+        </div>
+        <div class="data_list">
+            <li>合作投资机构数</li>
+            <li class="data_num"><span class="timer count-title" id="count-number" data-to="3254" data-speed="1500"></span><span class="jia">家</span></li>
+        </div>
+        <div class="data_list">
+            <li>合作投资工作室数</li>
+            <li class="data_num"><span class="timer count-title" id="count-number" data-to="2342" data-speed="1500"></span><span class="jia">个</span></li>
+        </div>
+    </ul>
+</div><!-- data_show结束 -->
+
+
+<div class="info_content widthbox"><!-- 信息内容 -->
+    <div class="dynamic fl"><!-- 企业动态 -->
+        <div class="dynamic_title"><!-- 企业动态标题 -->
+            <div class="dynamic_title_left fl">DYNAMIC</div>
+            <div class="dynamic_title_right fr">
+                <div class="dynamic_title_right_text fl">企业动态</div>
+                <div class="dynamic_title_right_img fr"></div>
+                <div class="dynamic_title_right_backgroundimg fr"></div>
+            </div>
+        </div>
+
+
+
+        <div class="dynamic_list" id="scrollDiv"><!-- 企业动态列表-->
+             <ul>
+                 <li>
+                     <div class="dynamic_list_type fl">22</div>
+                     <a href="#" class="dynamic_list_info fl">成都****科技公司需贷款500公司需贷款500公司需贷款500公司需贷款500万500万500万500万</a>
+                     <div class="dynamic_list_timeimg fl"></div>
+                     <span class="dynamic_list_condition fl">进行中</span>
+                     <span class="dynamic_list_date fr">[2016-04-11]</span>
+                 </li>
+                 <li>
+                     <div class="dynamic_list_type fl">股公司</div>
+                     <a href="#" class="dynamic_list_info fl">成都****科技公司</a>
+                     <div class="dynamic_list_timeimg fl"></div>
+                     <span class="dynamic_list_condition fl">进行中</span>
+                     <span class="dynamic_list_date fr">[2016-04-11]</span>
+                 </li>
+                 <li>
+                     <div class="dynamic_list_type fl">债公司需贷款500公司需贷款500</div>
+                     <a href="#" class="dynamic_list_info fl">成都****科技公司需贷</a>
+                     <div class="dynamic_list_timeimg fl"></div>
+                     <span class="dynamic_list_condition fl">进行zhong</span>
+                     <span class="dynamic_list_date fr">[2016-04-11]</span>
+                 </li>
+                 <li>
+                     <div class="dynamic_list_type fl">股公司</div>
+                     <a href="#" class="dynamic_list_info fl">成都****科技公司需贷款500公司需贷款500公司需贷款500公司需贷款500万500万500万500万</a>
+                     <div class="dynamic_list_timeimg fl"></div>
+                     <span class="dynamic_list_condition fl">完成</span>
+                     <span class="dynamic_list_date fr">[2016-04-11]</span>
+                 </li>
+                 <li>
+                     <div class="dynamic_list_type fl">股公司</div>
+                     <a href="#" class="dynamic_list_info fl">成都****科技公司需贷款500公司需贷款500公司需贷款500公司需贷款500万500万500万500万</a>
+                     <div class="dynamic_list_timeimg fl"></div>
+                     <span class="dynamic_list_condition fl">进行中</span>
+                     <span class="dynamic_list_date fr">[2016-04-11]</span>
+                 </li>
+                 <li>
+                     <div class="dynamic_list_type fl">债公司需贷款500公司需贷款500</div>
+                     <a href="#" class="dynamic_list_info fl">成都****科技公司需贷款500公司需贷款500公司需贷款500公司需贷款500万500万500万500万</a>
+                     <div class="dynamic_list_timeimg fl"></div>
+                     <span class="dynamic_list_condition fl">完成</span>
+                     <span class="dynamic_list_date fr">[2016-04-11]</span>
+                 </li>
+                 <li>
+                     <div class="dynamic_list_type fl">股公司</div>
+                     <a href="#" class="dynamic_list_info fl">成都****科技公司需贷款500公司需贷款500公司需贷款500公司需贷款500万500万500万500万</a>
+                     <div class="dynamic_list_timeimg fl"></div>
+                     <span class="dynamic_list_condition fl">进行中</span>
+                     <span class="dynamic_list_date fr">[2016-04-11]</span>
+                 </li>
+                 <li>
+                     <div class="dynamic_list_type fl">债公司需贷款500公司需贷款500</div>
+                     <a href="#" class="dynamic_list_info fl">成都****科技公司需贷款500公司需贷款500公司需贷款500公司需贷款500万500万500万500万</a>
+                     <div class="dynamic_list_timeimg fl"></div>
+                     <span class="dynamic_list_condition fl">完成</span>
+                     <span class="dynamic_list_date fr">[2016-04-11]</span>
+                 </li>
+                 
+              </ul>
+        </div>
+
+            
+
+    </div><!-- dynamic -->
+
+    <div class="information fl"><!-- 盈创资讯 -->
+        <div class="dynamic_title"><!-- 盈创资讯标题 -->
+            <div class="dynamic_title_left fl">NEWS</div>
+            <div class="dynamic_title_right fr">
+                <div class="dynamic_title_right_text fl">盈创资讯</div>
+                <div class="dynamic_title_right_img fr"></div>
+                <div class="dynamic_title_right_backgroundimg fr"></div>
+            </div>
+        </div>
+        <div class="information_list"><!-- 盈创资讯列表 -->
+            <ul>
+                <li>
+                    <div class="information_list_bor"></div>
+                    <a href="#" class="information_list_info">中小企业投融资第五季第六场</a>
+                    <span class="information_list_date fr">[2016-01-10]</span>
+                    </li>
+            </ul>
+            <ul>
+                <li>
+                    <div class="information_list_bor"></div>
+                    <a href="#" class="information_list_info">中小企业投融资第五季第六场</a>
+                    <span class="information_list_date fr">[2016-01-10]</span>
+                    </li>
+            </ul>
+            <ul>
+                <li>
+                    <div class="information_list_bor"></div>
+                    <a href="#" class="information_list_info">中小企业投融资第五季第六场</a>
+                    <span class="information_list_date fr">[2016-01-10]</span>
+                    </li>
+            </ul>
+            <ul>
+                <li>
+                    <div class="information_list_bor"></div>
+                    <a href="#" class="information_list_info">中小企业投融资第五季第六场</a>
+                    <span class="information_list_date fr">[2016-01-10]</span>
+                    </li>
+            </ul>
+            <ul>
+                <li>
+                    <div class="information_list_bor"></div>
+                    <a href="#" class="information_list_info">中小企业投融资第五季第六场</a>
+                    <span class="information_list_date fr">[2016-01-10]</span>
+                    </li>
+            </ul>
+            <ul>
+                <li>
+                    <div class="information_list_bor"></div>
+                    <a href="#" class="information_list_info">中小企业投融资第五季第六场</a>
+                    <span class="information_list_date fr">[2016-01-10]</span>
+                    </li>
+            </ul>
+            <ul>
+                <li>
+                    <div class="information_list_bor"></div>
+                    <a href="#" class="information_list_info">中小企业投融资第五季第六场</a>
+                    <span class="information_list_date fr">[2016-01-10]</span>
+                    </li>
+            </ul>
+            <ul>
+                <li>
+                    <div class="information_list_bor"></div>
+                    <a href="#" class="information_list_info">中小企业投融资第五季第六场</a>
+                    <span class="information_list_date fr">[2016-01-10]</span>
+                    </li>
+            </ul>
+            <ul>
+                <li>
+                    <div class="information_list_bor"></div>
+                    <a href="#" class="information_list_info">中小企业投融资第五季第六场</a>
+                    <span class="information_list_date fr">[2016-01-10]</span>
+                </li>
+            </ul>
+        </div>
+
+
+    </div>
+
+
+
+    <div class="college fl"><!-- 盈创学院 -->
+        <div class="dynamic_title"><!-- 盈创学院标题 -->
+            <div class="dynamic_title_left fl">ACADEMY</div>
+            <div class="dynamic_title_right fl">
+                <div class="dynamic_title_right_text fl">盈创学院</div>
+                <div class="dynamic_title_right_img fr"></div>
+                <div class="dynamic_title_right_backgroundimg fr"></div>
+            </div>
+        </div>
+        <div class="college_info">
+            <a href="college.html"><img src="image/index/gg.jpg" class="college_info_img" alt="广告图片"></a>
+            <div class="college_info_test">
+                <ul>
+                    <li><a href="college.html">中小企业投融资培训第五季第六场：《新三板...</a></li>
+                    <li>时间：2016年03月25日</li>
+                    <li>地址：成都高新区锦城大道539号</li>
+                </ul>
+            </div>
+            <div class="college_info_list">
+                <ul>
+                    <li>
+                        <div class="ollege_info_list_bor"></div>
+                        <a href="#" class="ollege_info_list_info">中小企业投融资第五</a>
+                        <span class="ollege_info_list_date fr">[2016-01-10]</span>
+                    </li>
+                </ul>
+                <ul>
+                    <li>
+                        <div class="ollege_info_list_bor"></div>
+                        <a href="#" class="ollege_info_list_info">中小企业投融资第五</a>
+                        <span class="ollege_info_list_date fr">[2016-01-10]</span>
+                    </li>
+                </ul>
+                <ul>
+                    <li>
+                        <div class="ollege_info_list_bor"></div>
+                        <a href="#" class="ollege_info_list_info">中小企业投融资第五</a>
+                        <span class="ollege_info_list_date fr">[2016-01-10]</span>
+                    </li>
+                </ul>
+                <ul>
+                    <li>
+                        <div class="ollege_info_list_bor"></div>
+                        <a href="#" class="ollege_info_list_info">中小企业投融资第五</a>
+                        <span class="ollege_info_list_date fr">[2016-01-10]</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div><!-- info_content -->
+
+<div class="debt_info widthbox"><!-- 债权融资项目 -->
+    <div class="debt_info_img fl"></div>  <!-- dsafasdfasdfasdf -->
+    <div class="debt_info_right fr"> 
+        <div class="debt_info_right_bor">
+                <a href="#" class="debt_info_right_gd fr">+更多</a><br/>
+                <div class="debt_info_right_date">
+                    <div class="debt_info_right_datea index_cj_flg fl">
+                        <div class="debt_info_right_datea_title">乡村旅游贷款</div>
+                        <ul>
+                            <li class="debt_info_right_datea_info fl">合作银行：
+                                <div class="debt_info_right_datea_img fr">
+                                    <img src="image/index/icbc.jpg" alt="工行" />
+                                    <img src="image/index/bbc.jpg" alt="农行" />
+                                </div>
+                            </li>
+                            <li class="debt_info_right_datea_info">还款方式：<span class="debt_info_right_datea_test">多种多样</span></li>
+                            <li class="debt_info_right_datea_info">贷款额度：<span class="debt_info_right_datea_test">150万以上</span></li>
+                            <li class="debt_info_right_datea_info">贷款期限：<span class="debt_info_right_datea_test">1-12个月</span></li>
+                            <li class="debt_info_right_datea_info">年化利率：<span class="debt_info_right_datea_test">0.15%</span></li>
+                        </ul>
+                        <div class="debt_info_right_datea_bot"><a href="#">立即申请</a></div>
+                    </div>
+                    <div class="debt_info_right_dateb index_cj_flg fl">
+                        <div class="debt_info_right_datea_title">天天e起 手机购物</div>
+                        <ul>
+                            <li class="debt_info_right_datea_info fl">合作银行：
+                                <div class="debt_info_right_datea_img fr">
+                                    <img src="image/index/icbc.jpg" alt="工行" />
+                                    <img src="image/index/bbc.jpg" alt="农行" />
+                                </div>
+                            </li>
+                            <li class="debt_info_right_datea_info">还款方式：<span class="debt_info_right_datea_test">多种多样</span></li>
+                            <li class="debt_info_right_datea_info">贷款额度：<span class="debt_info_right_datea_test">150万以上</span></li>
+                            <li class="debt_info_right_datea_info">贷款期限：<span class="debt_info_right_datea_test">1-12个月</span></li>
+                            <li class="debt_info_right_datea_info">年化利率：<span class="debt_info_right_datea_test">0.15%</span></li>
+                        </ul>
+                        <div class="debt_info_right_datea_bot"><a href="#">立即申请</a></div>
+                    </div>
+                    <div class="debt_info_right_datec index_cj_flg fl">
+                        <div class="debt_info_right_datea_title">互联网新媒体--探</div>
+                        <ul>
+                            <li class="debt_info_right_datea_info fl">合作银行：
+                                <div class="debt_info_right_datea_img fr">
+                                    <img src="image/index/icbc.jpg" alt="工行" />
+                                    <img src="image/index/bbc.jpg" alt="农行" />
+                                </div>
+                            </li>
+                            <li class="debt_info_right_datea_info">还款方式：<span class="debt_info_right_datea_test">多种多样</span></li>
+                            <li class="debt_info_right_datea_info">贷款额度：<span class="debt_info_right_datea_test">150万以上</span></li>
+                            <li class="debt_info_right_datea_info">贷款期限：<span class="debt_info_right_datea_test">1-12个月</span></li>
+                            <li class="debt_info_right_datea_info">年化利率：<span class="debt_info_right_datea_test">0.15%</span></li>
+                        </ul>
+                        <div class="debt_info_right_datea_bot"><a href="#">立即申请</a></div>
+                    </div>
+                    <div class="debt_info_right_dated index_cj_flg fr">
+                        <div class="debt_info_right_datea_title">自然光优化系统</div>
+                        <ul>
+                            <li class="debt_info_right_datea_info fl">合作银行：
+                                <div class="debt_info_right_datea_img fr">
+                                    <img src="image/index/icbc.jpg" alt="工行" />
+                                    <img src="image/index/bbc.jpg" alt="农行" />
+                                </div>
+                            </li>
+                            <li class="debt_info_right_datea_info">还款方式：<span class="debt_info_right_datea_test">多种多样</span></li>
+                            <li class="debt_info_right_datea_info">贷款额度：<span class="debt_info_right_datea_test">150万以上</span></li>
+                            <li class="debt_info_right_datea_info">贷款期限：<span class="debt_info_right_datea_test">1-12个月</span></li>
+                            <li class="debt_info_right_datea_info">年化利率：<span class="debt_info_right_datea_test">0.15%</span></li>
+                        </ul>
+                        <div class="debt_info_right_datea_bot"><a href="#">立即申请</a></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</div><!-- debt_info结束 -->
+
+<div class="thigh_info widthbox"> <!-- 债权融资项目 -->
+    <div class="thigh_info_left_img fl"></div>  <!-- dsafasdfasdfasdf -->
+    <div class="thigh_info_right fr">
+        <div class="thigh_info_right_bor">
+            <div class="thigh_info_right_gd fr"><a href="">+更多</a></div><br/>
+            <div class="thigh_info_right_center">
+                <div class="thigh_info_right_center1 fl">
+
+                    <div class="thigh_info_right_center1_img fl"><img src="image/index/thigh1.jpg" alt=""></div>
+                    <div class="thigh_info_right_center1_test fr">
+                        <div class="thigh_info_right_center1_test_title">项目名称：山里舅舅再造故乡</div>
+                        <div class="thigh_info_right_center1_test_info">
+                            <ul>
+                                <li>融资类别：天使投资</li>
+                                <li>融资对象：投资机构</li>
+                                <li>融资额度（万元）：100万~500万</li>
+                                <li>出让股权比例：10%</li>
+                            </ul>
+                        </div>
+                        <div class="thigh_info_right_center1_test_but">
+                            <li><a href="#">查看详情</a></li>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="thigh_info_right_center2 fr">
+                    <div class="thigh_info_right_center1_img fl"><img src="image/index/thigh2.jpg" alt=""></div>
+                    <div class="thigh_info_right_center1_test fr">
+                        <div class="thigh_info_right_center1_test_title">项目名称：军工电子产品融资600</div>
+                        <div class="thigh_info_right_center1_test_info">
+                            <ul>
+                                <li>融资类别：天使投资</li>
+                                <li>融资对象：投资机构</li>
+                                <li>融资额度（万元）：500万~2000万</li>
+                                <li>出让股权比例：49%</li>
+                            </ul>
+                        </div>
+                        <div class="thigh_info_right_center1_test_but">
+                            <li><a href="#">查看详情</a></li>
+                        </div>
+                    </div>
+                </div>
+                <div class="thigh_info_right_center1 fl">
+                    <div class="thigh_info_right_center1_img fl"><img src="image/index/thigh3.jpg" alt=""></div> 
+                    <div class="thigh_info_right_center1_test fr">
+                        <div class="thigh_info_right_center1_test_title">项目名称：一站式结婚淘喜商城</div>
+                        <div class="thigh_info_right_center1_test_info">
+                            <ul>
+                                <li>融资类别：天使投资</li>
+                                <li>融资对象：投资机构</li>
+                                <li>融资额度（万元）：100万~500万</li>
+                                <li>出让股权比例：10%</li>
+                            </ul>
+                        </div>
+                        <div class="thigh_info_right_center1_test_but">
+                            <li><a href="#">查看详情</a></li>
+                        </div>
+                    </div>
+                </div>
+                <div class="thigh_info_right_center2 fr">
+                    <div class="thigh_info_right_center1_img fl"><img src="image/index/thigh4.jpg" alt=""></div> 
+                    <div class="thigh_info_right_center1_test fr">
+                        <div class="thigh_info_right_center1_test_title">项目名称：餐营业互联网+</div>
+                        <div class="thigh_info_right_center1_test_info">
+                            <ul>
+                                <li>融资类别：天使投资</li>
+                                <li>融资对象：投资机构</li>
+                                <li>融资额度（万元）：100万~500万</li>
+                                <li>出让股权比例：20%</li>
+                            </ul>
+                        </div>
+                        <div class="thigh_info_right_center1_test_but">
+                            <li><a href="#">查看详情</a></li>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div><!-- thigh_info结束 -->
+
+<div class="serve_info widthbox"><!-- 增值服务 -->
+    <div class="serve_info_left_img fl"></div>
+    <div class="serve_info_right fr">
+        <div class="serve_info_right_bor">
+            <div class="serve_info_right_gd fr"><a href="">+更多</a></div><br/>
+            <div class="serve_info_right_content">
+                <div class="serve_info_right_content1"><!-- 水平左边整块二合一 -->
+                    <img src="image/index/severgb.jpg" alt="增值服务背景">  <!-- /*asdfasdfasdfasdfasdf*/ -->
+
+
+
+                        <div class="serve_info_right_content2_bor_left fl">   <!-- 水平右边小块左框 -->
+                            <div class="serve_info_right_content2_img">
+                                <img src="image/index/dljz.jpg" alt="">
+                            </div>
+
+                            <div class="serve_info_right_content2_info">
+                                <ul>
+
+                                    <li class="serve_info_right_content2_info_title">代理记账</li>
+                                    <li class="serve_info_right_content2_info_info">不懂理财？没关系，找盈创动力！</li>
+                                    <li class="serve_info_right_content2_info_vel">￥<span>600</span>起</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="serve_info_right_content2_bor_left fr">   <!-- 水平右边小块左框 -->
+                            <div class="serve_info_right_content2_img">
+                                <img src="image/index/dljz.jpg" alt="">
+                            </div>
+                            <div class="serve_info_right_content2_info">
+                                <ul>
+                                    <li class="serve_info_right_content2_info_title">代理记账</li>
+                                    <li class="serve_info_right_content2_info_info">不懂理财？没关系，找盈创动力！</li>
+                                    <li class="serve_info_right_content2_info_vel">￥<span>1200</span>起</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="serve_info_right_content2_bor_left fr">   <!-- 水平右边小块左框 -->
+                            <div class="serve_info_right_content2_img">
+                                <img src="image/index/dljz.jpg" alt="">
+                            </div>
+                            <div class="serve_info_right_content2_info">
+                                <ul>
+                                    <li class="serve_info_right_content2_info_title">代理记账</li>
+                                    <li class="serve_info_right_content2_info_info">不懂理财？没关系，找盈创动力！</li>
+                                    <li class="serve_info_right_content2_info_vel">￥<span>1200</span>起</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="serve_info_right_content2_bor_left fr">
+                            <div class="serve_info_right_content2_img">
+                                <img src="image/index/dljz.jpg" alt="">
+                            </div>
+                            <div class="serve_info_right_content2_info">
+                                <ul>
+                                    <li class="serve_info_right_content2_info_title">代理记账</li>
+                                    <li class="serve_info_right_content2_info_info">不懂理财？没关系，找盈创动力！</li>
+                                    <li class="serve_info_right_content2_info_vel">￥<span>1200</span>起</li>
+                                </ul>
+                            </div>
+                        </div>
+                    <div class="serve_info_right_content2_bor_left fr">
+                        <div class="serve_info_right_content2_img">
+                            <img src="image/index/dljz.jpg" alt="">
+                        </div>
+                        <div class="serve_info_right_content2_info">
+                            <ul>
+                                <li class="serve_info_right_content2_info_title">代理记账</li>
+                                <li class="serve_info_right_content2_info_info">不懂理财？没关系，找盈创动力！</li>
+                                <li class="serve_info_right_content2_info_vel">￥<span>1200</span>起</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="serve_info_right_content2_bor_left fr">
+                        <div class="serve_info_right_content2_img">
+                            <img src="image/index/dljz.jpg" alt="">
+                        </div>
+                        <div class="serve_info_right_content2_info">
+                            <ul>
+                                <li class="serve_info_right_content2_info_title">代理记账</li>
+                                <li class="serve_info_right_content2_info_info">不懂理财？没关系，找盈创动力！</li>
+                                <li class="serve_info_right_content2_info_vel">￥<span>1200</span>起</li>
+                            </ul>
+                        </div>
+                    </div>
+
+
+            </div>
+
+
+
+            </div>
+        </div>
+    </div>
+</div><!-- serve_info结束 -->
+
+<div class="invest_info widthbox">
+    <div class="invest_info_title">
+        <ul>
+            <li class="invest_info_titletest fl">投资机构</li>
+            <li class="invest_info_titlegd fr"><a href="">+更多</a></li>
+        </ul>
+    </div>
+    <div class="invest_info_list">
+        <div class="invest_info_list1 fl">
+
+            <div class="invest_info_list1_top">
+                <img src="image/index/tx.jpg" alt="">
+                <div class="invest_info_list1_top_info fr">
+                    <div class="invest_info_list1_top_info1">成都高投盈创动力</div>
+                    <div class="invest_info_list1_top_info1_name">
+                        <span class="namemain">刘先生</span><span>戴女士</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="invest_info_list1_bottom1">     
+                <div class="invest_info_list1_bottom_test">
+                <span>简介：光速安振中国创业投资基金是一家领先的风险投资公司，专注于中国互联网、移动互联网、消费服务和...
+                </span>
+                </div>
+            </div>
+        </div>
+
+        <div class="invest_info_list2 fl">
+            <div class="invest_info_list1_top">
+                <img src="image/index/tx.jpg" alt="">
+                <div class="invest_info_list1_top_info fr">
+                    <div class="invest_info_list1_top_info1">成都高投盈创动力</div>
+                    <div class="invest_info_list1_top_info1_name">
+                        <span class="namemain">刘先生</span><span>戴女士</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="invest_info_list1_bottom2">     
+                <div class="invest_info_list1_bottom_test">
+                <span>简介：光速安振中国创业投资基金是一家领先的风险投资公司，专注于中国互联网、移动互联网、消费服务和...
+                </span>
+                </div>
+            </div>
+        </div>
+        <div class="invest_info_list3 fl">
+            <div class="invest_info_list1_top">
+                <img src="image/index/tx.jpg" alt="">
+                <div class="invest_info_list1_top_info fr">
+                    <div class="invest_info_list1_top_info1">成都高投盈创动力</div>
+                    <div class="invest_info_list1_top_info1_name">
+                        <span class="namemain">刘先生</span><span>戴女士</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="invest_info_list1_bottom3">     
+                <div class="invest_info_list1_bottom_test">
+                <span>简介：光速安振中国创业投资基金是一家领先的风险投资公司，专注于中国互联网、移动互联网、消费服务和...
+                </span>
+                </div>
+            </div>
+        </div>
+        <div class="invest_info_list4 fr">
+            <div class="invest_info_list1_top">
+                <img src="image/index/tx.jpg" alt="">
+                <div class="invest_info_list1_top_info fr">
+                    <div class="invest_info_list1_top_info1">成都高投盈创动力</div>
+                    <div class="invest_info_list1_top_info1_name">
+                        <span class="namemain">刘先生</span><span>戴女士</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="invest_info_list1_bottom4">     
+                <div class="invest_info_list1_bottom_test">
+                <span>简介：光速安振中国创业投资基金是一家领先的风险投资公司，专注于中国互联网、移动互联网、消费服务和...
+                </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<hr/>
+
+<div class="partner widthbox">
+    <div class="partner_title fl">合作机构</div>
+    <div class="partner_type">
+         <ul>
+             <li>
+                 <a href="#">
+                     <img src="image/index/temp.jpg"/>
+                 </a>
+             </li>
+             <li>
+                 <a href="#">
+                     <img src="image/index/temp.jpg"/>
+                 </a>
+             </li>
+             <li>
+                 <a href="#">
+                     <img src="image/index/temp.jpg"/>
+                 </a>
+             </li>
+             <li>
+                 <a href="#">
+                     <img src="image/index/temp.jpg"/>
+                 </a>
+             </li>
+             <li>
+                 <a href="#">
+                     <img src="image/index/temp.jpg"/>
+                 </a>
+             </li>
+             <li>
+                 <a href="#">
+                     <img src="image/index/temp.jpg"/>
+                 </a>
+             </li>
+             <li>
+                 <a href="#">
+                     <img src="image/index/temp.jpg"/>
+                 </a>
+             </li>
+             <li>
+                 <a href="#">
+                     <img src="image/index/temp.jpg"/>
+                 </a>
+             </li>
+             <li>
+                 <a href="#">
+                     <img src="image/index/temp.jpg"/>
+                 </a>
+             </li>
+             <li>
+                 <a href="#">
+                     <img src="image/index/temp.jpg"/>
+                 </a>
+             </li>
+             <li>
+                 <a href="#">
+                     <img src="image/index/temp.jpg"/>
+                 </a>
+             </li>
+             <li>
+                 <a href="#">
+                     <img src="image/index/temp.jpg"/>
+                 </a>
+             </li>
+             <li>
+                 <a href="#">
+                     <img src="image/index/temp.jpg"/>
+                 </a>
+             </li>
+             <li>
+                 <a href="#">
+                     <img src="image/index/temp.jpg"/>
+                 </a>
+             </li>
+
+         </ul>
+
+    </div>
+</div>
+
+
+
+
+<!-- 网站尾部 -->
+<div class="footer">
+    <div class="footer_box widthbox"> 
+        <div class="footer_box_left fl">
+            <div class="footer_box_left_info fl">
+                <ul>
+                    <li class="title"><a href="">关于我们</a></li>
+                    <li><a href="">公司介绍</a></li>
+                    <li><a href="">股东介绍</a></li>
+                    <li><a href="">媒体报道</a></li>
+                    <li><a href="">最新动态</a></li>
+                </ul>
+            </div>
+            <div class="footer_box_left_info fl">
+                <ul>
+                    <li class="title"><a href="">新闻资讯</a></li>
+                    <li><a href="">放款信息</a></li>
+                    <li><a href="">行业新闻</a></li>
+                    <li><a href="">盈创动态</a></li>
+                    <li><a href="">今日要闻</a></li>
+                </ul>
+            </div>
+            <div class="footer_box_left_info fl">
+                <ul>
+                    <li class="title"><a href="">盈创数据</a></li>
+                    <li><a href="">机构</a></li>
+                    <li><a href="">企业</a></li>
+                    <li><a href="">项目</a></li>
+                    <li><a href="">工作室</a></li>
+                </ul>
+            </div>
+            <div class="footer_box_left_info fl">
+                <ul>
+                    <li class="title"><a href="">盈创学院</a></li>
+                    <li><a href="">学校培训</a></li>
+                </ul>
+            </div>
+
+            <div class="footer_box_center_info fr">
+                <ul>
+                    <li class="title"><a href="">客服热线</a></li>
+                    <div class="phone">028-83159999</div>
+                    <li class="title"><a href="">在线咨询</a></li>
+                    <div class="qq">在线咨询: 08:00 - 22 :00</div>
+                </ul>
+            </div>
+
+        </div>
+        
+        <div class="footer_box_right fr">
+            <div class="code fl">
+                <img src="image/index/code.jpg" alt="二维码">
+                <li>扫一扫关注我们</li>
+            </div>
+            <div class="footer_box_right_test fr">
+                <li>扫描二维码</li>
+                <li>关注到我们</li>
+                <li>随时随地投资</li>
+                <li>让理财变得更简单</li>
+            </div>
+        </div>
+    </div>
+    <!-- 水平线 -->
+    <div class="border widthbox"></div>
+    <!-- 版权信息 -->
+    <div class="booter_bottominfo widthbox">
+        <li><span>Copyright © 2011-2016</span><span>版权所有 : 成都高投盈创动力投资发展有限公司</span>
+        <span>蜀ICP备18022655号-1</span><span>免责声明</span>
+        <span>地址：成都高新区锦城大道539号盈创动力大楼A座5楼 610041</span></li>
+        <li><span>电话：028-83159999</span><span>传真：028-85988444</span><span>Email：winpower@winpow.com</span></li>
+    </div>
+</div>
+
+
+<div class="fixed" id="totop">
+    <div class="publish">
+        <div class="fixed_img">
+            <a href="#"><img src="image/index/publish.png" alt=""></a>
+        </div>
+        <div class="fixed_test">发布项目</div>
+    </div>
+    <div class="investor">
+        <div class="fixed_img">
+            <a href="#"><img src="image/index/investor.png" alt=""></a>
+        </div>
+        <div class="fixed_test">成为投资人</div>
+    </div>
+    <div class="code">
+        <div class="fixed_img">
+            <img src="image/index/code.jpg" alt="">
+        </div>
+        <div class="fixed_test">二维码</div>
+    </div>
+    <div class="home">
+        <div class="fixed_img">
+            <a href="javascript:$('body,html').animate({scrollTop:0},500)">
+            <a href=""><img src="image/index/home.png" alt="返回顶部"></a>
+            </a>
+        </div>
+    </div>
+</div>
+
+<!--数字动画-->
+<script src="js/digital.js"></script>
+
+</body>
+</html>

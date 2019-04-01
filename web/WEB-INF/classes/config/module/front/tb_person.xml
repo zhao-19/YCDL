@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE mapper PUBLIC 
+"-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="front">
+	
+	<select id="front.person.selectPageList" parameterType="com.winpow.services.manage.person.bean.Person" resultType="hashMap">
+	select * from (
+		SELECT  ROW_NUMBER() over(order by id desc) as  rownumber ,
+								 	id,
+			 								 	userid,
+			 								 	username,
+			 								 	orgid,
+			 								 	sex,
+			 								 	birthday,
+			 								 	address,
+			 								 	education,
+			 								 	graduate,
+			 								 	subject,
+			 								 	introduce,
+			 								 	studio,person_province,person_city,person_county,
+			 								  lurushijian,custmanagesource,custmanage
+			 		   from tb_person )t  where rownumber &gt; = #{offset} and rownumber &lt; = #{pageSize}+#{offset} 
+	</select>
+	<select id="front.person.selectPageCount" parameterType="com.winpow.services.manage.person.bean.Person" resultType="java.lang.Integer">
+		select count(*) from tb_person t  where 1=1  
+			<if test="id!=null and id!=''">
+				and t.id=#{id}
+			</if>
+	</select>
+	
+	<select id="front.person.selectOne" parameterType="com.winpow.services.manage.person.bean.Person" resultType="com.winpow.services.manage.person.bean.Person">
+			SELECT  
+											 	id,
+				 											 	userid,
+				 											 	username,
+				 											 	orgid,
+				 											 	sex,
+				 											 	birthday,
+				 											 	address,
+				 											 	education,
+				 											 	graduate,
+				 											 	subject,
+				 											 	introduce,
+				 											 	studio,person_province,person_city,person_county,
+				 											  lurushijian,custmanagesource,custmanage
+				 						  from tb_person t  where 1=1  
+			<if test="id!=null and id!=''">
+				and t.id=#{id}
+			</if>
+	</select>
+	
+	<select id="front.person.selectCount" parameterType="com.winpow.services.manage.person.bean.Person" resultType="int">
+			select count(*)  
+				 FROM tb_person t  where 1=1  
+				<if test="id!=null and id!=''">
+					and t.id=#{id}
+				</if>
+	</select>
+	
+	<select id="front.person.selectOneByCondition" parameterType="com.winpow.services.manage.person.bean.Person" resultType="com.winpow.services.manage.person.bean.Person">
+			SELECT  
+											 	id,
+				 											 	userid,
+				 											 	username,
+				 											 	orgid,
+				 											 	sex,
+				 											 	birthday,
+				 											 	address,
+				 											 	education,
+				 											 	graduate,
+				 											 	subject,
+				 											 	introduce,
+				 											 	studio,person_province,person_city,person_county,
+				 											  lurushijian,custmanagesource,custmanage
+				 					 from  tb_person   t  where 1=1  
+			<if test="id!=null and id!=''">
+				and t.id=#{id}
+			</if>
+	</select>
+	
+	
+	<select id="front.person.selectByUserId" parameterType="com.winpow.services.manage.person.bean.Person" resultType="com.winpow.services.manage.person.bean.Person">
+			SELECT  
+		 	id,
+		 	userid,
+		 	username,
+		 	orgid,
+		 	sex,
+		 	birthday,
+		 	address,
+		 	education,
+		 	graduate,
+		 	subject,
+		 	introduce,
+		 	studio,person_province,person_city,person_county,
+		  lurushijian,custmanagesource,custmanage
+		 from  tb_person   t  where 1=1  
+				and t.userid=#{userid}
+	</select>
+	
+	<insert id="front.person.insert" parameterType="com.winpow.services.manage.person.bean.Person" useGeneratedKeys="true" 
+		keyProperty="id">
+	 		insert into tb_person ( 
+	 								 
+													 	userid,
+													 	username,
+													 	orgid,
+													 	sex,
+													 	birthday,
+													 	address,
+													 	education,
+													 	graduate,
+													 	subject,
+													 	introduce,
+													 	studio,person_province,person_city,person_county,
+													  lurushijian,custmanagesource,custmanage
+			 						) values ( 
+										 	#{id},
+				 										  
+				 										 	#{username},
+				 										 	#{orgid},
+				 										 	#{sex},
+				 										 	#{birthday},
+				 										 	#{address},
+				 										 	#{education},
+				 										 	#{graduate},
+				 										 	#{subject},
+				 										 	#{introduce},
+				 										 	#{studio},#{person_province},#{person_city},#{person_county},
+				 											getdate(),#{custmanagesource},#{custmanage}
+				 						)
+		 
+	</insert>
+	
+	<update id="front.person.update" parameterType="com.winpow.services.manage.person.bean.Person">
+		update tb_person set 
+		
+				 			                <if test="userid!=null and userid!=''">
+                        userid=#{userid},
+                        </if>
+		
+				 			                <if test="username!=null and username!=''">
+                        username=#{username},
+                        </if>
+		
+				 			                <if test="orgid!=null and orgid!=''">
+                        orgid=#{orgid},
+                        </if>
+		
+				 			                <if test="sex!=null and sex!=''">
+                        sex=#{sex},
+                        </if>
+		
+				 			                <if test="birthday!=null and birthday!=''">
+                        birthday=#{birthday},
+                        </if>
+		
+				 			                <if test="address!=null and address!=''">
+                        address=#{address},
+                        </if>
+		
+				 			                <if test="education!=null and education!=''">
+                        education=#{education},
+                        </if>
+		
+				 			                <if test="graduate!=null and graduate!=''">
+                        graduate=#{graduate},
+                        </if>
+		
+				 			                <if test="subject!=null and subject!=''">
+                        subject=#{subject},
+                        </if>
+		
+				 			                <if test="introduce!=null and introduce!=''">
+                        introduce=#{introduce},
+                        </if>
+		
+				 			                <if test="studio!=null and studio!=''">
+                        studio=#{studio},
+                        </if>
+                                    <if test="person_province!=null and person_province!=''">
+                        person_province=#{person_province},
+                        </if>
+                                    <if test="person_city!=null and person_city!=''">
+                        person_city=#{person_city},
+                        </if>
+                                    <if test="person_county!=null and person_county!=''">
+                        person_county=#{person_county},
+                        </if>
+						<if test="custmanagesource!=null and custmanagesource!=''">
+							custmanagesource=#{custmanagesource},
+						</if>
+						<if test="custmanage!=null and custmanage!=''">
+							custmanage=#{custmanage},
+						</if>
+			getdate()
+         						 
+		where id=#{id}
+	</update>
+	
+</mapper>  

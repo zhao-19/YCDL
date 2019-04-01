@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE mapper PUBLIC 
+"-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="front">
+	
+	<select id="front.product.selectPageList" parameterType="com.winpow.services.manage.product.bean.Product" resultType="hashMap">
+	select * from (
+		SELECT  ROW_NUMBER() over(order by id) as  rownumber ,
+								 	id,
+			 								 	prodid,
+			 								 	prodname,
+			 								 	Replace(loangur,' ','') loangur,
+			 								 	loanterm,
+			 								 	loanamt,
+			 								 	loanbonus,
+			 								 	bonusper,
+			 								 	retutype,
+			 								 	loanrate,
+			 								 	loanarea,
+			 								 	loancondition,
+			 								 	biaoqian,
+			 								 	openstat,
+			 								 	lurushijian,
+			 								 	inputuser,
+			 								 	loantermmax,
+			 								 	loanamtmax,
+			 								 	Replace(banks,' ','') banks,
+			 								 	shifoutuijian,
+			 								 	tuijianpic,
+			 								  lastchgtime
+			 		   from Tb_product )t  where rownumber &gt; = #{offset} and rownumber &lt; = #{pageSize}+#{offset} 
+	</select>
+	
+	
+	<select id="front.product.select4index" parameterType="com.winpow.services.manage.product.bean.Product" resultType="com.winpow.services.manage.product.bean.Product">
+	select * from (
+		SELECT  ROW_NUMBER() over(order by id) as  rownumber ,
+								 	id,
+			 								 	prodid,
+			 								 	prodname,
+			 								 	Replace(loangur,' ','') loangur,
+			 								 	loanterm,
+			 								 	loanamt,
+			 								 	loanbonus,
+			 								 	bonusper,
+			 								 	retutype,
+			 								 	loanrate,
+			 								 	loanarea,
+			 								 	loancondition,
+			 								 	biaoqian,
+			 								 	openstat,
+			 								 	lurushijian,
+			 								 	inputuser,
+			 								 	loantermmax,
+			 								 	loanamtmax,Replace(banks,' ','') banks,
+			 								 	shifoutuijian,
+			 								 	tuijianpic,
+			 								  lastchgtime
+			 		   from Tb_product )t  where rownumber  &lt; = 4
+	</select>
+	
+	<select id="front.product.selectrecommend" parameterType="com.winpow.services.manage.product.bean.Product" resultType="com.winpow.services.manage.product.bean.Product">
+	 	SELECT    TOP 1	 	id,
+				 											 	prodid,
+				 											 	prodname,
+				 											 	Replace(loangur,' ','') loangur,
+				 											 	loanterm,
+				 											 	loanamt,
+				 											 	loanbonus,
+				 											 	bonusper,
+				 											 	retutype,
+				 											 	loanrate,
+				 											 	loanarea,
+				 											 	loancondition,
+				 											 	biaoqian,
+				 											 	openstat,
+				 											 	lurushijian,
+				 											 	inputuser,
+				 											 	loantermmax,loanamtmax,
+				 											 	Replace(banks,' ','') banks,
+				 											 	shifoutuijian,
+				 											 	tuijianpic,
+				 											  lastchgtime
+				 						  from Tb_product t  where  shifoutuijian='aaaaaaaaaaaaaaaaaaaaaaaaaaaaa004' and  LASTCHGTIME = (select max(LASTCHGTIME) as LURUSHIJIAN from Tb_product where SHIFOUTUIJIAN='aaaaaaaaaaaaaaaaaaaaaaaaaaaaa004')
+	</select>
+	
+	<select id="front.product.selectPageCount" parameterType="com.winpow.services.manage.product.bean.Product" resultType="java.lang.Integer">
+		
+			select count(*) from ( SELECT  id   from Tb_product )  t 
+
+	</select>
+	
+	<select id="front.product.selectOne" parameterType="com.winpow.services.manage.product.bean.Product" resultType="com.winpow.services.manage.product.bean.Product">
+			SELECT  
+											 	id,
+				 											 	prodid,
+				 											 	prodname,
+				 											 	Replace(loangur,' ','') loangur,
+				 											 	loanterm,
+				 											 	loanamt,
+				 											 	loanbonus,
+				 											 	bonusper,
+				 											 	retutype,
+				 											 	loanrate,
+				 											 	loanarea,
+				 											 	loancondition,
+				 											 	biaoqian,
+				 											 	openstat,
+				 											 	lurushijian,
+				 											 	inputuser,
+				 											 	loantermmax,loanamtmax,
+				 											 	Replace(banks,' ','') banks,
+				 											 	shifoutuijian,
+				 											 	tuijianpic,
+				 											  lastchgtime
+				 						  from Tb_product t  where 1=1  
+			<if test="id!=null and id!=''">
+				and t.id=#{id}
+			</if>
+	</select>
+	
+	<select id="front.product.selectCount" parameterType="com.winpow.services.manage.product.bean.Product" resultType="int">
+			select count(*)  
+				 FROM Tb_product    where 1=1  
+				<if test="id!=null and id!=''">
+					and  id=#{id}
+				</if>
+	</select>
+	
+	<select id="front.product.selectOneByCondition" parameterType="com.winpow.services.manage.product.bean.Product" resultType="com.winpow.services.manage.product.bean.Product">
+			SELECT  
+											 	id,
+				 											 	prodid,
+				 											 	prodname,
+				 											 	loangur,
+				 											 	loanterm,
+				 											 	loanamt,
+				 											 	loanbonus,
+				 											 	bonusper,
+				 											 	retutype,
+				 											 	loanrate,
+				 											 	loanarea,
+				 											 	loancondition,
+				 											 	biaoqian,
+				 											 	openstat,
+				 											 	lurushijian,
+				 											 	inputuser,
+				 											 	loantermmax,
+				 											 	loanamtmax,Replace(banks,' ','') banks,
+																shifoutuijian,
+																tuijianpic,
+				 											  lastchgtime
+				 					 from  Tb_product   t  where 1=1  
+			<if test="id!=null and id!=''">
+				and t.id=#{id}
+			</if>
+	</select>
+	
+	<insert id="front.product.insert" parameterType="com.winpow.services.manage.product.bean.Product" useGeneratedKeys="true" 
+		keyProperty="id">
+	 		insert into Tb_product ( 
+	 								  
+													 	prodid,
+													 	prodname,
+													 	loangur,
+													 	loanterm,
+													 	loanamt,
+													 	loanbonus,
+													 	bonusper,
+													 	retutype,
+													 	loanrate,
+													 	loanarea,
+													 	loancondition,
+													 	biaoqian,
+													 	openstat,
+													 	lurushijian,
+													 	inputuser,
+													 	loantermmax,
+													 	loanamtmax,
+													 	banks,
+													 	shifoutuijian,
+													 	tuijianpic,
+													    lastchgtime
+			 						) values ( 
+										  
+				 										 	#{prodid},
+				 										 	#{prodname},
+				 										 	#{loangur},
+				 										 	#{loanterm},
+				 										 	#{loanamt},
+				 										 	#{loanbonus},
+				 										 	#{bonusper},
+				 										 	#{retutype},
+				 										 	#{loanrate},
+				 										 	#{loanarea},
+				 										 	#{loancondition},
+				 										 	#{biaoqian},
+				 										 	#{openstat},
+				 										 	getdate(),
+				 										 	#{inputuser},
+ 															#{loantermmax},
+				 										 	#{loanamtmax},
+				 										 	#{banks},
+				 										 	#{shifoutuijian},
+				 											#{tuijianpic},
+				 											getdate()
+				 						)
+		 
+	</insert>
+	
+	<update id="front.product.update" parameterType="com.winpow.services.manage.product.bean.Product">
+		update tb_product set 
+                        
+		
+				 			                <if test="prodid!=null and prodid!=''">
+                        prodid=#{prodid},
+                        </if>
+		
+				 			                <if test="prodname!=null and prodname!=''">
+                        prodname=#{prodname},
+                        </if>
+		
+				 			                <if test="loangur!=null and loangur!=''">
+                        loangur=#{loangur},
+                        </if>
+		
+				 			                <if test="loanterm!=null and loanterm!=''">
+                        loanterm=#{loanterm},
+                        </if>
+		
+				 			                <if test="loanamt!=null and loanamt!=''">
+                        loanamt=#{loanamt},
+                        </if>
+		
+				 			                <if test="loanbonus!=null and loanbonus!=''">
+                        loanbonus=#{loanbonus},
+                        </if>
+		
+				 			                <if test="bonusper!=null and bonusper!=''">
+                        bonusper=#{bonusper},
+                        </if>
+		
+				 			                <if test="retutype!=null and retutype!=''">
+                        retutype=#{retutype},
+                        </if>
+		
+				 			                <if test="loanrate!=null and loanrate!=''">
+                        loanrate=#{loanrate},
+                        </if>
+		
+				 			                <if test="loanarea!=null and loanarea!=''">
+                        loanarea=#{loanarea},
+                        </if>
+		
+				 			                <if test="loancondition!=null and loancondition!=''">
+                        loancondition=#{loancondition},
+                        </if>
+		
+				 			                <if test="biaoqian!=null and biaoqian!=''">
+                        biaoqian=#{biaoqian},
+                        </if>
+		
+				 			                <if test="openstat!=null and openstat!=''">
+                        openstat=#{openstat},
+                        </if>
+				 			                <if test="inputuser!=null and inputuser!=''">
+                        inputuser=#{inputuser},
+                        </if>
+                        
+				 			                <if test=" loantermmax !=null and  loantermmax !=''">
+                        loantermmax=#{loantermmax},
+                        </if>
+		
+				 			                <if test=" loanamtmax !=null and  loanamtmax !=''">
+                        loanamtmax=#{loanamtmax},
+                        </if>
+		
+				 			                <if test=" banks !=null and  banks !=''">
+                        banks=#{banks},
+                        </if>
+		
+				 			                <if test=" shifoutuijian !=null and  shifoutuijian !=''">
+                        shifoutuijian=#{shifoutuijian},
+                        </if>
+		
+				 			                <if test="tuijianpic!=null and tuijianpic !=''">
+                        tuijianpic=#{tuijianpic},
+                        </if>
+                        lastchgtime=getdate()
+         						 
+		where id=#{id}
+	</update>
+	
+</mapper>  

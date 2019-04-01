@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE mapper PUBLIC 
+"-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="manage">
+	
+	<select id="manage.fuchizhengce.selectPageList" parameterType="com.winpow.services.manage.fuchizhengce.bean.Fuchizhengce" resultType="hashMap">
+	select * from (
+		SELECT  ROW_NUMBER() over(order by id) as  rownumber ,
+								 	id,
+			 								 	mingcheng,
+			 								 	leibie,
+			 								 	neirong,
+			 								 	laiyuan,
+			 								 	fujian,
+			 								 	dianjiliang,
+			 								 	lurushijian,
+			 								 	inputuser,
+			 								  lastchangetime
+			 		   from tb_fuchizhengce where 1=1  
+			 		   <if test="mingcheng!=null and mingcheng!=''">
+			and  mingcheng like  '%' + #{mingcheng} + '%'
+			</if>
+			<if test="leibie!=null and leibie!=''">
+			and  leibie = #{leibie}
+			</if>)t  where 1=1 and rownumber &gt; = #{offset} and rownumber &lt; = #{pageSize}+#{offset}
+	</select>
+	<select id="manage.fuchizhengce.selectPageCount" parameterType="com.winpow.services.manage.fuchizhengce.bean.Fuchizhengce" resultType="java.lang.Integer">
+		
+			select count(*) from (
+					SELECT  ROW_NUMBER() over(order by id) as  rownumber ,
+																	 	id,
+						 																	 	mingcheng,
+						 																	 	leibie,
+						 																	 	neirong,
+						 																	 	laiyuan,
+						 																	 	fujian,
+						 																	 	dianjiliang,
+						 																	 	lurushijian,
+						 																	 	inputuser,
+						 																	  lastchangetime
+						 								   from tb_fuchizhengce )t  
+
+	</select>
+	
+	<select id="manage.fuchizhengce.selectOne" parameterType="com.winpow.services.manage.fuchizhengce.bean.Fuchizhengce" resultType="com.winpow.services.manage.fuchizhengce.bean.Fuchizhengce">
+			SELECT  
+											 	id,
+				 											 	mingcheng,
+				 											 	leibie,
+				 											 	neirong,
+				 											 	laiyuan,
+				 											 	fujian,
+				 											 	dianjiliang,
+				 											 	lurushijian,
+				 											 	inputuser,
+				 											  lastchangetime
+				 						  from tb_fuchizhengce t  where 1=1  
+			<if test="id!=null and id!=''">
+				and t.id=#{id}
+			</if>
+	</select>
+	
+	<select id="manage.fuchizhengce.selectCount" parameterType="com.winpow.services.manage.fuchizhengce.bean.Fuchizhengce" resultType="int">
+			select count(*)  
+				 FROM tb_fuchizhengce t  where 1=1  
+				<if test="id!=null and id!=''">
+					and t.id=#{id}
+				</if>
+	</select>
+	
+	<select id="manage.fuchizhengce.selectOneByCondition" parameterType="com.winpow.services.manage.fuchizhengce.bean.Fuchizhengce" resultType="com.winpow.services.manage.fuchizhengce.bean.Fuchizhengce">
+			SELECT  
+											 	id,
+				 											 	mingcheng,
+				 											 	leibie,
+				 											 	neirong,
+				 											 	laiyuan,
+				 											 	fujian,
+				 											 	dianjiliang,
+				 											 	lurushijian,
+				 											 	inputuser,
+				 											  lastchangetime
+				 					 from  tb_fuchizhengce   t  where 1=1  
+			<if test="id!=null and id!=''">
+				and t.id=#{id}
+			</if>
+	</select>
+	
+	
+	
+		<select id="manage.fuchizhengce.selectList" parameterType="com.winpow.services.manage.fuchizhengce.bean.Fuchizhengce" resultType="com.winpow.services.manage.fuchizhengce.bean.Fuchizhengce">
+			SELECT  
+											 	id,
+				 											 	mingcheng,
+				 											 	leibie,
+				 											 	neirong,
+				 											 	laiyuan,
+				 											 	fujian,
+				 											 	dianjiliang,
+				 											 	lurushijian,
+				 											 	inputuser,
+				 											  lastchangetime
+				 					 from  tb_fuchizhengce   t  where 1=1  
+			<if test="id!=null and id!=''">
+				and t.id=#{id}
+			</if>
+	</select>
+	
+	
+	
+	
+	<insert id="manage.fuchizhengce.insert" parameterType="com.winpow.services.manage.fuchizhengce.bean.Fuchizhengce" useGeneratedKeys="true" 
+		keyProperty="id">
+	 		insert into tb_fuchizhengce ( 
+													 	mingcheng,
+													 	leibie,
+													 	neirong,
+													 	laiyuan,
+													 	fujian,
+													 	dianjiliang,
+													 	lurushijian,
+													 	inputuser,
+													  lastchangetime
+			 						) values ( 
+				 										 	#{mingcheng},
+				 										 	#{leibie},
+				 										 	#{neirong},
+				 										 	#{laiyuan},
+				 										 	#{fujian},
+				 										 	#{dianjiliang},
+				 										 	getdate(),
+				 										 	#{inputuser},
+				 											getdate()
+				 						)
+		 
+	</insert>
+	
+	<update id="manage.fuchizhengce.update" parameterType="com.winpow.services.manage.fuchizhengce.bean.Fuchizhengce">
+		update tb_fuchizhengce set 
+                      
+				 			                <if test=" mingcheng !=null and  mingcheng !=''">
+                        mingcheng=#{mingcheng},
+                        </if>
+		
+				 			                <if test=" leibie !=null and  leibie !=''">
+                        leibie=#{leibie},
+                        </if>
+		
+				 			                <if test=" neirong !=null and  neirong !=''">
+                        neirong=#{neirong},
+                        </if>
+		
+				 			                <if test=" laiyuan !=null and  laiyuan !=''">
+                        laiyuan=#{laiyuan},
+                        </if>
+		
+				 			                <if test=" fujian !=null and  fujian !=''">
+                        fujian=#{fujian},
+                        </if>
+		
+				 			                <if test=" dianjiliang !=null and  dianjiliang !=''">
+                        dianjiliang=#{dianjiliang},
+                        </if>
+		
+				 			                <if test=" lurushijian !=null and  lurushijian !=''">
+                        lurushijian=#{lurushijian},
+                        </if>
+		
+				 			                <if test=" inputuser !=null and  inputuser !=''">
+                        inputuser=#{inputuser},
+                        </if>
+		
+                        lastchangetime=getdate()
+         						 
+		where id=#{id}
+	</update>
+	
+</mapper>  

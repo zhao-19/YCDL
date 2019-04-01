@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC 
+"-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="manage">
+
+	<select id="manage.message.selectPageList" parameterType="com.winpow.services.manage.message.bean.Message"
+		resultType="hashMap">
+		select top ${pageSize} * from (
+			select row_number() over(order by id desc) as rownum ,* 
+			from tb_message t where 1=1
+			<if test="telnumber!=null and telnumber!=''">
+				and t.telnumber like '%'+#{telnumber}+'%'
+			</if>
+			<if test="substation != null and substation != ''">
+				and t.substation=#{substation}
+			</if>
+			<if test="inputuser != null and inputuser != ''">
+				and t.inputuser=#{inputuser}
+			</if>
+	    ) a where rownum > ${pageSize} * (${offset} - 1)
+	</select>
+	
+	<select id="manage.message.selectPageCount" parameterType="com.winpow.services.manage.message.bean.Message"
+		resultType="java.lang.Integer">
+		select count(*) from tb_message t where 1=1
+		<if test="telnumber != null and telnumber != ''">
+			and t.telnumber like '%'+#{telnumber}+'%'
+		</if>
+		<if test="substation != null and substation != ''">
+			and t.substation=#{substation}
+		</if>
+		<if test="inputuser != null and inputuser != ''">
+			and t.inputuser=#{inputuser}
+		</if>
+	</select>
+
+	<select id="manage.message.selectOne" parameterType="com.winpow.services.manage.message.bean.Message"
+		resultType="com.winpow.services.manage.message.bean.Message">
+		select * from tb_message t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+	</select>
+
+	<select id="manage.message.selectCount" parameterType="com.winpow.services.manage.message.bean.Message"
+		resultType="int">
+		select count(*) from tb_message t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+	</select>
+
+	<select id="manage.message.selectOneByCondition" parameterType="com.winpow.services.manage.message.bean.Message"
+		resultType="com.winpow.services.manage.message.bean.Message">
+		select * from tb_message t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+		<if test="telnumber!=null and telnumber!=''">
+			and t.telnumber=#{telnumber}
+		</if>
+		<if test="userid!=null and userid!=''">
+			and t.userid=#{userid}
+		</if>
+		<if test="username!=null and username!=''">
+			and t.username=#{username}
+		</if>
+	</select>
+
+	<insert id="manage.message.insert" parameterType="com.winpow.services.manage.message.bean.Message"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into tb_message (
+		telnumber,
+		comtent,
+		userid,
+		username,
+		sendtime,
+		msgstatus,
+		lurushijian,
+		inputuser,
+		substation
+		) values (
+		#{telnumber},
+		#{comtent},
+		#{userid},
+		#{username},
+		getdate(),
+		#{msgstatus},
+		getdate(),
+		#{inputuser},
+		#{substation}
+		)
+	</insert>
+
+	<update id="manage.message.update" parameterType="com.winpow.services.manage.message.bean.Message">
+		update t_message set
+		<if test="telnumber!=null and telnumber!=''">
+			telnumber=#{telnumber},
+		</if>
+
+		<if test="comtent!=null and comtent!=''">
+			comtent=#{comtent},
+		</if>
+
+		<if test="userid!=null and userid!=''">
+			userid=#{userid},
+		</if>
+
+		<if test="username!=null and username!=''">
+			username=#{username},
+		</if>
+
+		<if test="sendtime!=null and sendtime!=''">
+			sendtime=#{sendtime},
+		</if>
+
+		<if test="msgstatus!=null and msgstatus!=''">
+			msgstatus=#{msgstatus},
+		</if>
+		1=1
+		where id=#{id}
+	</update>
+	
+	<insert id="manage.message.inserts" parameterType="java.util.List">
+		insert into tb_message (
+		telnumber,
+		comtent,
+		userid,
+		username,
+		sendtime,
+		msgstatus,
+		lurushijian,
+		inputuser,
+		substation
+		) values 
+		<foreach collection="list" item="item" index="index" separator="," >  
+	        (#{item.telnumber},#{item.comtent},#{item.userid},#{item.username},#{item.sendtime},
+			#{item.msgstatus},getdate(),#{item.inputuser},#{item.substation})  
+   		</foreach>
+	</insert>
+
+</mapper>  

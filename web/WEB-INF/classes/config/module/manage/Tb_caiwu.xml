@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE mapper PUBLIC 
+"-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="manage">
+	
+	<select id="manage.caiwu.selectPageList" parameterType="com.winpow.services.manage.caiwu.bean.Caiwu" resultType="hashMap">
+	select * from (
+		SELECT  ROW_NUMBER() over(order by id) as  rownumber ,
+								 			 	id,
+				 											 	rele_id,
+				 											 	c.code_name as caiwutype,
+				 											 	caiwutype,
+				 											 	nianfen,
+				 											  amt
+				 					 from  Tb_caiwu   tt left join tb_code c on tt.caiwutype=c.pk_codeid   )t  where 1=1 
+			 		   
+			 		   <if test="nianfen!=null and nianfen!=''">
+							and t.nianfen=#{nianfen}
+						</if>
+			 		   rownumber &gt; = #{offset} and rownumber &lt; = #{pageSize}+#{offset}  order by nianfen asc
+	</select>
+	<select id="manage.caiwu.selectPageCount" parameterType="com.winpow.services.manage.caiwu.bean.Caiwu" resultType="java.lang.Integer">
+		
+			select count(*) from (
+					SELECT  ROW_NUMBER() over(order by id) as  rownumber ,
+																	 	id,
+						 																	 	rele_id,
+						 																	 	rele_table,
+						 																	 	caiwutype,
+						 																	 	nianfen,
+						 																	  amt
+						 								   from Tb_caiwu )t  where 1=1 
+						 								   
+					    <if test="nianfen!=null and nianfen!=''">
+							and t.nianfen=#{nianfen}
+						</if>   order by nianfen asc
+
+	</select>
+	
+	<select id="manage.caiwu.selectOne" parameterType="com.winpow.services.manage.caiwu.bean.Caiwu" resultType="com.winpow.services.manage.caiwu.bean.Caiwu">
+			SELECT  
+											 	id,
+				 											 	rele_id,
+				 											 	rele_table,
+				 											 	caiwutype,
+				 											 	nianfen,
+				 											  amt
+				 						  from Tb_caiwu t  where 1=1  
+			<if test="id!=null and id!=''">
+				and t.id=#{id}
+			</if>
+	</select>
+	
+	<select id="manage.caiwu.selectCount" parameterType="com.winpow.services.manage.caiwu.bean.Caiwu" resultType="int">
+			select count(*)  
+				 FROM Tb_caiwu t  where 1=1  
+				<if test="id!=null and id!=''">
+					and t.id=#{id}
+				</if>
+	</select>
+	
+	<select id="manage.caiwu.selectOneByCondition" parameterType="com.winpow.services.manage.caiwu.bean.Caiwu" resultType="com.winpow.services.manage.caiwu.bean.Caiwu">
+			SELECT  
+											 	id,
+				 											 	rele_id,
+				 											 	rele_table,
+				 											 	caiwutype,
+				 											 	nianfen,
+				 											  amt
+				 					 from  Tb_caiwu   t  where 1=1  
+			<if test="id!=null and id!=''">
+				and t.id=#{id}
+			</if>
+	</select>
+	
+	
+	
+		<select id="manage.caiwu.selectList" parameterType="com.winpow.services.manage.caiwu.bean.Caiwu" resultType="com.winpow.services.manage.caiwu.bean.Caiwu">
+			SELECT  
+											 	id,
+				 											 	rele_id,
+				 											 	c.code_name as caiwutype,
+				 											 	caiwutype,
+				 											 	nianfen,
+				 											  amt
+				 					 from  Tb_caiwu   t left join tb_code c on t.caiwutype=c.pk_codeid  where 1=1  
+			<if test="id!=null and id!=''">
+				and t.id=#{id}
+			</if>
+			<if test="rele_id!=null and rele_id!=''">
+				and t.rele_id=#{rele_id}
+			</if>
+			
+			
+	</select>
+	
+	
+	
+	
+	<insert id="manage.caiwu.insert" parameterType="com.winpow.services.manage.caiwu.bean.Caiwu" useGeneratedKeys="true" 
+		keyProperty="id">
+	 		insert into Tb_caiwu ( 
+	 								 	id,
+													 	rele_id,
+													 	rele_table,
+													 	caiwutype,
+													 	nianfen,
+													  amt
+			 						) values ( 
+										 	#{id},
+				 										 	#{rele_id},
+				 										 	#{rele_table},
+				 										 	#{caiwutype},
+				 										 	#{nianfen},
+				 											#{amt}
+				 						)
+		 
+	</insert>
+	
+	<update id="manage.caiwu.update" parameterType="com.winpow.services.manage.caiwu.bean.Caiwu">
+		update Tb_caiwu set 
+                        <if test=" id !=null and  id !=''">
+                        id=#{id},
+                        </if>
+		
+				 			                <if test=" rele_id !=null and  rele_id !=''">
+                        rele_id=#{rele_id},
+                        </if>
+		
+				 			                <if test=" rele_table !=null and  rele_table !=''">
+                        rele_table=#{rele_table},
+                        </if>
+		
+				 			                <if test=" caiwutype !=null and  caiwutype !=''">
+                        caiwutype=#{caiwutype},
+                        </if>
+		
+				 			                <if test=" nianfen !=null and  nianfen !=''">
+                        nianfen=#{nianfen},
+                        </if>
+		
+				 			                <if test="amt!=null and amt !=''">
+                        amt=#{amt}
+                        </if>
+         						 
+		where id=#{id}
+	</update>
+	
+</mapper>  

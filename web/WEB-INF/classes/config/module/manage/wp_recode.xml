@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE mapper PUBLIC 
+"-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="manage">
+	
+	<select id="manage.wprecode.selectPageList" parameterType="com.winpow.services.manage.loan.bean.WpRecode" resultType="com.winpow.services.manage.loan.bean.WpRecode">
+	select * from (
+		SELECT  ROW_NUMBER() over(order by id) as  rownumber ,
+								 	t.id "id",
+		t.loan_serno "loan_serno",
+		t.compname "compname",
+		case t.type when '1' then '本金' when '2' then '利息' end as "type",
+		t.s_money "s_money",
+		t.s_date "s_date",
+		t.r_money "r_money",
+		t.calc_process "calc_process",
+		t.rate "rate",
+		t.lastchangetime "lastchangetime",
+		t.lastchangeuser "lastchangeuser"
+ 		   from wp_recode t)t   where 1=1 
+ 		    <if test="compname!=null and compname!=''">
+	 	and compname like   '%'+#{compname}+'%'  
+	 </if>
+	  and rownumber &gt; = #{offset} and rownumber &lt; = #{pageSize}+#{offset} 
+	</select>
+	<select id="manage.wprecode.selectPageCount" parameterType="com.winpow.services.manage.loan.bean.WpRecode" resultType="java.lang.Integer">
+		
+			select count(*) from (
+					SELECT  ROW_NUMBER() over(order by id) as  rownumber ,
+																	 	id,
+						 																	 	loan_serno,
+						 																	 	compname,
+						 																	 	type,
+						 																	 	s_money,
+						 																	 	s_date,
+						 																	 	r_money,
+						 																	 	calc_process,
+						 																	 	rate,
+						 																	 	lastchangetime,
+						 																	  lastchangeuser
+						 								   from wp_recode )t  
+
+	</select>
+	
+	<select id="manage.wprecode.selectOne" parameterType="com.winpow.services.manage.loan.bean.WpRecode" resultType="com.winpow.services.manage.loan.bean.WpRecode">
+			SELECT  
+											 	id,
+				 											 	loan_serno,
+				 											 	compname,
+				 											 	type,
+				 											 	s_money,
+				 											 	s_date,
+				 											 	r_money,
+				 											 	calc_process,
+				 											 	rate,
+				 											 	lastchangetime,
+				 											  lastchangeuser
+				 						  from wp_recode t  where 1=1  
+			<if test="id!=null and id!=''">
+				and t.id=#{id}
+			</if>
+	</select>
+	
+	<select id="manage.wprecode.selectCount" parameterType="com.winpow.services.manage.loan.bean.WpRecode" resultType="int">
+			select count(*)  
+				 FROM wp_recode t  where 1=1  
+				<if test="id!=null and id!=''">
+					and t.id=#{id}
+				</if>
+	</select>
+	
+	<select id="manage.wprecode.selectOneByCondition" parameterType="com.winpow.services.manage.loan.bean.WpRecode" resultType="com.winpow.services.manage.loan.bean.WpRecode">
+			SELECT  
+											 	id,
+				 											 	loan_serno,
+				 											 	compname,
+				 											 	type,
+				 											 	s_money,
+				 											 	s_date,
+				 											 	r_money,
+				 											 	calc_process,
+				 											 	rate,
+				 											 	lastchangetime,
+				 											  lastchangeuser
+				 					 from  wp_recode   t  where 1=1  
+			<if test="id!=null and id!=''">
+				and t.id=#{id}
+			</if>
+	</select>
+	
+	<insert id="manage.wprecode.insert" parameterType="com.winpow.services.manage.loan.bean.WpRecode" useGeneratedKeys="true" 
+		keyProperty="id">
+	 		insert into wp_recode ( 
+	 								  
+													 	loan_serno,
+													 	compname,
+													 	type,
+													 	s_money,
+													 	s_date,
+													 	r_money,
+													 	calc_process,
+													 	rate,
+													 	lastchangetime,
+													  lastchangeuser
+			 						) values ( 
+										 	 
+				 										 	#{loan_serno},
+				 										 	#{compname},
+				 										 	#{type},
+				 										 	#{s_money},
+				 										 	#{s_date},
+				 										 	#{r_money},
+				 										 	#{calc_process},
+				 										 	#{rate},
+				 										 	#{lastchangetime},
+				 											#{lastchangeuser}
+				 						)
+		 
+	</insert>
+	
+	<update id="manage.wprecode.update" parameterType="com.winpow.services.manage.loan.bean.WpRecode">
+		update wp_recode set 
+                        
+		
+				 			                <if test="#{loan_serno}!=null and #{loan_serno}!=''">
+                        loan_serno=#{loan_serno},
+                        </if>
+		
+				 			                <if test="#{compname}!=null and #{compname}!=''">
+                        compname=#{compname},
+                        </if>
+		
+				 			                <if test="#{type}!=null and #{type}!=''">
+                        type=#{type},
+                        </if>
+		
+				 			                <if test="#{s_money}!=null and #{s_money}!=''">
+                        s_money=#{s_money},
+                        </if>
+		
+				 			                <if test="#{s_date}!=null and #{s_date}!=''">
+                        s_date=#{s_date},
+                        </if>
+		
+				 			                <if test="#{r_money}!=null and #{r_money}!=''">
+                        r_money=#{r_money},
+                        </if>
+		
+				 			                <if test="#{calc_process}!=null and #{calc_process}!=''">
+                        calc_process=#{calc_process},
+                        </if>
+		
+				 			                <if test="#{rate}!=null and #{rate}!=''">
+                        rate=#{rate},
+                        </if>
+		
+				 			                <if test="#{lastchangetime}!=null and #{lastchangetime}!=''">
+                        lastchangetime=#{lastchangetime},
+                        </if>
+		
+				 			                <if test="#{lastchangeuser}!=null and #{lastchangeuser}!=''">
+                        lastchangeuser=#{lastchangeuser}
+                        </if>
+         						 
+		where id=#{id}
+	</update>
+	
+</mapper>  

@@ -1,0 +1,12 @@
+/*custom font*/
+/*@import url(http://fonts.googleapis.com/css?family=Montserrat);*/
+
+/*basic reset*/
+/** {margin: 0; padding: 0;}*/
+
+
+
+body {
+	font-family: montserrat, arial, verdana;
+}
+/*form styles*/

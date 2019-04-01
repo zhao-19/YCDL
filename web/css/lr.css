@@ -1,0 +1,130 @@
+body,ul,ol,dl,dd,h1,h2,h3,h4,h5,h6,p,input,select,textarea,form{margin: 0; padding: 0;}
+body{font-size:14px;font-family: "微软雅黑";background-color: #E1570C;}
+img{border:none;}
+ul,li,ol{list-style:none;}
+input,select,textarea{outline:none;border:none;background:none;}
+textarea{resize:none;}
+a{text-decoration:none;}
+
+/*清浮动*/
+.clearfix:after{content:"";*display:block;clear:both;}
+.clearfix{zoom:1;}
+.fl{float:left;}
+.fr{float:right;}
+
+
+/*登录页  login.html  css样式*/
+
+.login{width:542px;height:566px;background-color: #E5754F;margin:0 auto;margin-top: 30px;margin-bottom: 30px;}
+.login .logo{width:169px;height:43px;background:url("../image/lr/lr_logo.png") center top no-repeat;margin: auto;position: relative;top: 50px;}
+.login .input{width:490px;height: 210px;border: 0px solid #fff;margin:0 auto;margin-top: 100px;margin-bottom: 48px;}
+.login input{padding: 14px 10px;width:456px;margin-left:5px;margin-bottom: 38px;color: #fff;border:1px solid #E5754F;border-radius: 3px;background-color:#FAFFBD;color:#000;}
+.login .yzmwk{padding-left: 7px;}
+.login .yzmwk .ts{color: #fff;line-height: 24px;}
+.login .yzmwk .errorts{color: #FAFFBD;}
+    
+
+.login input:hover{border:1px solid #ffffff;border-radius: 3px;cursor: pointer;}
+.login .submit{width:478px;height: 45px;margin-left: 5px;border:1px solid #fff;background-color: #fff;cursor: pointer;color: #FE3F00;font-size: 16px;margin-bottom: 20px;}
+.login .type,.login .type a{color: #fff;margin-right: 3px;}
+.login .list{width:398px;height: 63px;border: 0px solid #000;margin: auto;font-size: 24px;color: #fff;margin-bottom: 100px;}
+.login .list1{width:60px;height: 60px;border:1px solid #fff;border-radius: 30px;margin-right: 50px;line-height: 60px;text-align: center;cursor: pointer;}
+.login .list2{width:60px;height: 60px;border:1px solid #fff;border-radius: 30px;text-align: center;line-height: 60px;cursor: pointer;}
+.footer{padding-bottom: 25px;width: 100%;overflow: hidden;border: 0px solid #000;text-align: center;color: #fff;font-size: 12px;font-family: "宋体";line-height: 20px;display: block;}
+.login #login-error{border: 0px solid #fff;color: #fff;border-radius: 5px;padding:8px 15px;margin-left: 5px;position: relative;top: 40px;margin-bottom: 10px;background-color: #ea5504;display:none;    width: 449px;
+    display: block;}
+
+/*
+    注册页  register.html  css样式
+*/
+.register{width:540px;background-color: #E5754F;margin:0 auto;overflow: hidden;margin-top: 30px;margin-bottom: 30px;}
+.register .logo{width:169px;height:43px;background: url("../image/lr/lr_logo.png") center top no-repeat;margin:0 auto;margin-top: 50px;}
+.register .progress{width:540px;height: 79px;border:0px solid #fff;margin-top: 95px;background-color: #DE6138}
+.register .img{background: url("../image/lr/lr_progress_img.png")center no-repeat;width: 538px;height: 13px;padding-top: 30px;}
+.register li{float: left;margin-right:-20px;font-size: 17px;line-height: 30px;padding-left: 80px;color: #fff;}
+.register .input{width: 377px;border: 0px solid #000;margin-top: 30px;margin-left: 80px;}
+.register .inputtext{color: #fff;margin-bottom:8px;    clear: both;    overflow: hidden;}
+.register .none{display:none;}
+.register .selectblock{display:block;margin: 12px 0px;}
+.register .selectblock label{
+	margin-bottom: 7px;
+	display: inline-block;
+	font-size: 11px;
+	padding: 10px;
+	background-color: #E1570C;
+	color: #fff;
+	border:1px solid #fff;
+	cursor: pointer;
+	border-radius: 3px 3px 3px 3px;
+	-moz-border-radius: 3px 3px 3px 3px;
+	-webkit-border-radius: 3px 3px 3px 3px;
+	transition: background-color 0.25s;
+	-moz-transition: background-color 0.25s;
+	-webkit-transition: background-color 0.25s;
+	-o-transition: background-color 0.25s;
+	-moz-user-select: none;
+	-khtml-user-select: none;
+	-webkit-user-select: none;
+	-o-user-select: none;
+}
+.register .selectblock label:hover{background-color: #EE6C26;color: #a7a7a7;}
+.register .selectblock label.labelhover{background-color: #DF9C78;color: #ffffff;}
+.register .selectblock label.labelhover:hover{background-color: #E88752;}
+.register .selectblock .bg{display: inline-block;
+	width: 16px;
+	height: 16px;
+	vertical-align: bottom;
+	background-repeat: no-repeat;
+	background-position: left center;
+
+	transition: background-image 0.5s linear;
+	-moz-transition: background-image 0.5s linear;
+	-webkit-transition: background-image 0.5s linear;
+	-o-transition: background-image 0.5s linear;background: url("../image/lr/input-unchecked.png") center left no-repeat;}
+.register .selectblock .bghover{background: url("../image/lr/input-checked.png") center left no-repeat;}
+.register .selectblock .nr{display: inline-block;line-height: 16px;vertical-align: bottom;margin-left: 7px;}
+       
+    
+    
+.register form .tipinfo {float: left;}
+.register form .inputbor{float: left;width: 325px;border: 1px solid #F2BAA7;margin-top: 10px;padding:11px 15px;color: #fff;}
+.register form .inputtext font.error {    margin-top: 5px;background: url("../image/unchecked.jpg") no-repeat left;padding-left: 17px;color: #fff;width: 300px;display: block;}
+.register form .inputtext font.valid {background: url("../image/checked.gif") no-repeat left;width: 14px;height: 13px;overflow: hidden;padding: 0;margin: 23px 0 0 5px;display: inline-block;}
+.register form .inputtext p.error{    margin-top: 5px;background: url("../image/unchecked.jpg") no-repeat left;padding-left: 17px;color: #fff;width: 300px;display: block;}
+.register form .inputbor:hover{border: 1px solid #fff;}
+.register form select{display:inline-block;float:left;width: 357px;;padding: 11px 15px;border: 1px solid #F2BAA7;margin-top: 10px;color: #fff;}
+.register form select:hover{border: 1px solid #fff;}
+.register form select option{background: #E5754F;font-size: 16px;text-align: left;}
+.register .code{color: #fff;overflow: hidden;}
+.register .code .inputcode{float:left;width: 150px;padding: 11px 15px;border: 1px solid #F2BAA7;margin-top: 10px;color: #fff;}
+.register .code .inputcode:hover{border: 1px solid #fff;}
+.register .code .get{width:160px;background: #ccc;margin-top: 10px;text-align: center;}
+.register .code .get input{color: #fff;font-size: 15px;display: inline-block;width: 100%;height: 100%;line-height:40px;}
+.register .submit{width:358px;height: 47px;background-color: #efefef;color: #FC3E00;font-size: 18px;font-family: "微软雅黑";cursor: pointer;border-radius: 5px;margin-top:40px;}
+.register .submit:hover{background-color: #E1570C;color:#fff;}
+.register .input #register-error{color: #fff;border-radius: 5px;padding: 8px 15px;background-color: #ea5504;display:none;}
+.register .input #err{color: #fff;border-radius: 5px;line-height:36px;background-color: #ea5504;text-indent:15px;}
+/* 可点击的input外框样式 */
+.nodisabled{background: #C94E24!important;}
+.nodisabled:hover{background: #E85523!important;}
+/* 可点击的input自身手型 */
+.cursor{cursor:pointer;}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

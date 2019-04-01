@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC 
+"-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="manage">
+
+	<select id="manage.spiderpolicy.selectPageList"
+		parameterType="com.winpow.services.manage.spiderpolicy.bean.Spiderpolicy"
+		resultType="hashMap">
+		select top ${pageSize} * from (
+		select row_number() over(order by publishtime desc) as rownumber ,*
+		from tb_spider_policy where 1=1
+		<if test=" title !=null and  title !=''">
+			and title like '%'+#{title}+'%'
+		</if>
+		<if test=" info_source !=null and  info_source !=''">
+			and info_source like '%'+#{info_source}+'%'
+		</if>
+		<if test=" checkresult !=null and  checkresult !=''">
+			and checkresult = #{checkresult}
+		</if>
+		) a where rownumber > ${pageSize}*(${offset} - 1)
+	</select>
+
+	<select id="manage.spiderpolicy.selectPageCount"
+		parameterType="com.winpow.services.manage.spiderpolicy.bean.Spiderpolicy"
+		resultType="java.lang.Integer">
+		select count(*) from tb_spider_policy where 1=1
+		<if test=" title !=null and  title !=''">
+			and title like '%'+#{title}+'%'
+		</if>
+		<if test=" info_source !=null and  info_source !=''">
+			and info_source like '%'+#{info_source}+'%'
+		</if>
+		<if test=" checkresult !=null and  checkresult !=''">
+			and checkresult = #{checkresult}
+		</if>
+	</select>
+
+	<select id="manage.spiderpolicy.selectOne"
+		parameterType="com.winpow.services.manage.spiderpolicy.bean.Spiderpolicy"
+		resultType="com.winpow.services.manage.spiderpolicy.bean.Spiderpolicy">
+		select * from tb_spider_policy t where 1=1
+		<if test="pkid != null and pkid != ''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+
+	<select id="manage.spiderpolicy.selectCount"
+		parameterType="com.winpow.services.manage.spiderpolicy.bean.Spiderpolicy"
+		resultType="int">
+		select count(*) from tb_spider_policy t where 1=1
+		<if test="pkid != null and pkid != ''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+
+	<select id="manage.spiderpolicy.selectOneByCondition"
+		parameterType="com.winpow.services.manage.spiderpolicy.bean.Spiderpolicy"
+		resultType="com.winpow.services.manage.spiderpolicy.bean.Spiderpolicy">
+		select * from tb_spider_policy t where 1=1
+		<if test="pkid != null and pkid != ''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+
+	<select id="manage.spiderpolicy.selectList"
+		parameterType="com.winpow.services.manage.spiderpolicy.bean.Spiderpolicy"
+		resultType="com.winpow.services.manage.spiderpolicy.bean.Spiderpolicy">
+		select * from tb_spider_policy t where 1=1
+		<if test="pkid != null and pkid != ''">
+			and t.pkid=#{pkid}
+		</if>
+		<if test="relaid != null and relaid != ''">
+			and t.relaid=#{relaid}
+		</if>
+	</select>
+
+	<insert id="manage.spiderpolicy.insert"
+		parameterType="com.winpow.services.manage.spiderpolicy.bean.Spiderpolicy"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into tb_spider_policy (
+		pkid,
+		info_source_id,
+		detail_url,
+		title,
+		publishtime,
+		info_source,
+		infotype,
+		content,
+		locationcode,
+		location,
+		domaintype,
+		infotypes,
+		visitfrequency,
+		istop,
+		checkresult,
+		checkuser,
+		checktime,
+		input_time,
+		inputuser,
+		lastchgtime
+		) values (
+		#{pkid},
+		#{info_source_id},
+		#{detail_url},
+		#{title},
+		#{publishtime},
+		#{info_source},
+		#{infotype},
+		#{content},
+		#{locationcode},
+		#{location},
+		#{domaintype},
+		#{infotypes},
+		#{visitfrequency},
+		#{istop},
+		#{checkresult},
+		#{checkuser},
+		#{checktime},
+		getdate(),
+		#{inputuser},
+		getdate()
+		)
+	</insert>
+
+	<update id="manage.spiderpolicy.update"
+		parameterType="com.winpow.services.manage.spiderpolicy.bean.Spiderpolicy">
+		update tb_spider_policy set
+		<if test=" info_source_id !=null and  info_source_id !=''">
+			info_source_id=#{info_source_id},
+		</if>
+
+		<if test=" detail_url !=null and  detail_url !=''">
+			detail_url=#{detail_url},
+		</if>
+
+		<if test=" title !=null and  title !=''">
+			title=#{title},
+		</if>
+
+		<if test=" publishtime !=null and  publishtime !=''">
+			publishtime=#{publishtime},
+		</if>
+
+		<if test=" info_source !=null and  info_source !=''">
+			info_source=#{info_source},
+		</if>
+
+		<if test=" infotype !=null and  infotype !=''">
+			infotype=#{infotype},
+		</if>
+
+		<if test=" content !=null and  content !=''">
+			content=#{content},
+		</if>
+
+		<if test=" locationcode !=null">
+			locationcode=#{locationcode},
+		</if>
+
+		<if test=" location !=null and  location !=''">
+			location=#{location},
+		</if>
+
+		<if test=" domaintype !=null and  domaintype !=''">
+			domaintype=#{domaintype},
+		</if>
+
+		<if test=" infotypes !=null and  infotypes !=''">
+			infotypes=#{infotypes},
+		</if>
+
+		<if test=" visitfrequency !=null and  visitfrequency !=''">
+			visitfrequency=#{visitfrequency},
+		</if>
+
+		<if test=" istop !=null and  istop !=''">
+			istop=#{istop},
+		</if>
+
+		<if test=" checkresult !=null and  checkresult !=''">
+			checkresult=#{checkresult},
+		</if>
+
+		<if test=" checkuser !=null and  checkuser !=''">
+			checkuser=#{checkuser},
+		</if>
+
+		<if test=" checktime !=null and  checktime !='' and checktime =='checktime'">
+			checktime=getdate(),
+		</if>
+		lastchgtime=getdate()
+		where pkid=#{pkid}
+	</update>
+	
+	<select id="manage.spiderpolicy.selectCacheList"
+		parameterType="com.winpow.services.manage.spiderpolicy.bean.Spiderpolicy"
+		resultType="com.winpow.services.manage.spiderpolicy.bean.Spiderpolicy">
+		select top(50) * from tb_spider_policy t where checkresult='aaaaaaaaaaaaaaaaaaaaaaaaaaaaa083'
+		order by checktime desc,lastchgtime desc
+	</select>
+	
+	<select id="manage.spiderpolicy.selectPageLists" parameterType="com.winpow.services.manage.spiderpolicy.bean.Spiderpolicy"
+		resultType="com.winpow.services.manage.spiderpolicy.bean.Spiderpolicy">
+		select top ${pageSize} * from (
+			select row_number() over (order by istop,lastchgtime desc) as rownumber,s.*,
+			(select count(*) from tb_app_policyapply p where s.pkid=p.policyid) applynum
+			<if test="userid !=null and userid !=''">
+				, case when (select count(*) from tb_app_policyapply o where o.userid=#{userid} and s.pkid=o.policyid) > 0 then 10001 else 10002 end applyed
+			</if>
+			from tb_spider_policy s 
+			where s.checkresult='aaaaaaaaaaaaaaaaaaaaaaaaaaaaa083'
+			<if test="pkid !=null and pkid !=''">
+				and s.pkid=#{pkid}
+			</if>
+			<if test="title !=null and title !=''">
+				and s.title like '%'+#{title}+'%'
+			</if>
+			<if test="domaintype !=null and domaintype !=''">
+				and s.domaintype=#{domaintype}
+			</if>
+			<if test="infotypes !=null and infotypes !=''">
+				and s.infotypes=#{infotypes}
+			</if>
+			<if test="locationcode !=null and locationcode !=''">
+				and s.locationcode=#{locationcode}
+			</if>
+		) a where rownumber > ${pageSize}*(${offset} - 1)
+	</select>
+
+</mapper>  

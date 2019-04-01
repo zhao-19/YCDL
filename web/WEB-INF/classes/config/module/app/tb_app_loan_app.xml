@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+"-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="app">
+
+	<select id="app.apploanapp.selectPageList" parameterType="com.winpow.services.app.apploanapp.bean.Apploanapp"
+		resultType="hashMap">
+		select * from (
+		SELECT ROW_NUMBER() over(order by checkdate
+		desc) as rownumber ,*
+		from tb_app_loan_app )t where rownumber &gt; = #{offset} and rownumber
+		&lt;
+		= #{pageSize}+#{offset}
+	</select>
+	<select id="app.apploanapp.selectPageCount" parameterType="com.winpow.services.app.apploanapp.bean.Apploanapp"
+		resultType="java.lang.Integer">
+		select count(*) from tb_app_loan_app
+	</select>
+
+	<select id="app.apploanapp.selectOne" parameterType="com.winpow.services.app.apploanapp.bean.Apploanapp"
+		resultType="com.winpow.services.app.apploanapp.bean.Apploanapp">
+		select * from tb_app_loan_app t where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+	
+	<select id="app.apploanapp.selectOneWithProduct" parameterType="com.winpow.services.app.apploanapp.bean.Apploanapp"
+		resultType="com.winpow.services.app.apploanapp.bean.Apploanapp">
+		select t.*,p.prodid,p.prodname,p.loanrate,p.loanterm,p.loangur,p.biaoqian
+		from tb_app_loan_app t
+		left join tb_product p on t.proid = p.id 
+		where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+	
+	<select id="app.apploanapp.selectProidCount" parameterType="com.winpow.services.app.apploanapp.bean.Apploanapp"
+		resultType="int">
+		select count(*) from tb_app_loan_app t where t.proid=#{proid}
+	</select>
+
+	<select id="app.apploanapp.selectCount" parameterType="com.winpow.services.app.apploanapp.bean.Apploanapp"
+		resultType="int">
+		select count(*) from tb_app_loan_app t where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+
+	<select id="app.apploanapp.selectOneByCondition" parameterType="com.winpow.services.app.apploanapp.bean.Apploanapp"
+		resultType="com.winpow.services.app.apploanapp.bean.Apploanapp">
+		select * from tb_app_loan_app t where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+
+	<select id="app.apploanapp.selectList" parameterType="com.winpow.services.app.apploanapp.bean.Apploanapp"
+		resultType="com.winpow.services.app.apploanapp.bean.Apploanapp">
+		select * from tb_app_loan_app t where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+
+	<insert id="app.apploanapp.insert" parameterType="com.winpow.services.app.apploanapp.bean.Apploanapp"
+		useGeneratedKeys="true" keyProperty="id">
+		declare @cnno int
+exec @cnno =  getchnoseq
+		insert into tb_app_loan_app (
+		pkid,
+		chno,
+		proid,
+		agencyid,
+		genre,
+		loanusage,
+		amount,
+		guaranty,
+		scale,
+		jobs,
+		income,
+		ishouse,
+		education,
+		userid,
+		chstatus,
+		returnreason,
+		createdate,
+		checkid,
+		checkdate,
+		updatedate,
+        proname,
+        agencyname,applyqiyename
+		) values (
+		#{pkid},
+		(select 'dksq' + right('0000000000' + cast(@cnno as varchar(10)), 10)),
+		#{proid},
+		#{agencyid},
+		#{genre},
+		#{loanusage},
+		#{amount},
+		#{guaranty},
+		#{scale},
+		#{jobs},
+		#{income},
+		#{ishouse},
+		#{education},
+		#{userid},
+		#{chstatus},
+		#{returnreason},
+		getdate(),
+		#{checkid},
+		#{checkdate},
+		getdate(),
+        #{proname},
+        #{agencyname},#{applyqiyename}
+		)
+
+	</insert>
+
+	<update id="app.apploanapp.update" parameterType="com.winpow.services.app.apploanapp.bean.Apploanapp">
+		update tb_app_loan_app set
+		<if test=" proid !=null and  proid !=''">
+			proid=#{proid},
+		</if>
+		<if test=" agencyid !=null and  agencyid !=''">
+			agencyid=#{agencyid},
+		</if>
+		<if test=" genre !=null and  genre !=''">
+			genre=#{genre},
+		</if>
+
+		<if test=" loanusage !=null and  loanusage !=''">
+			loanusage=#{loanusage},
+		</if>
+
+		<if test=" amount !=null ">
+			amount=#{amount},
+		</if>
+
+		<if test=" guaranty !=null and  guaranty !=''">
+			guaranty=#{guaranty},
+		</if>
+
+		<if test=" scale !=null and  scale !=''">
+			scale=#{scale},
+		</if>
+
+		<if test=" jobs !=null and  jobs !=''">
+			jobs=#{jobs},
+		</if>
+
+		<if test=" income !=null and  income !=''">
+			income=#{income},
+		</if>
+
+		<if test=" ishouse !=null and  ishouse !=''">
+			ishouse=#{ishouse},
+		</if>
+
+		<if test=" education !=null and  education !=''">
+			education=#{education},
+		</if>
+
+		<if test=" userid !=null and  userid !=''">
+			userid=#{userid},
+		</if>
+
+		<if test=" chstatus !=null and  chstatus !=''">
+			chstatus=#{chstatus},
+		</if>
+
+		<if test=" returnreason !=null and  returnreason !=''">
+			returnreason=#{returnreason},
+		</if>
+
+		<if test=" checkid !=null and  checkid !=''">
+			checkid=#{checkid},
+		</if>
+
+		<if test="checkdate!=null and checkdate !=''">
+			checkdate=getdate(),
+		</if>
+		<if test="proname !=null and proname !=''">
+            proname=#{proname},
+        </if>
+        <if test="agencyname !=null and agencyname !=''">
+            agencyname=#{agencyname},
+        </if>
+		<if test="applyqiyename !=null and applyqiyename !=''">
+            applyqiyename=#{applyqiyename},
+        </if>
+		updatedate=getdate()
+		where pkid=#{pkid}
+	</update>
+	
+	<select id="app.apploanapp.selectPageByUserid" parameterType="com.winpow.services.app.apploanapp.bean.Apploanapp" 
+		resultType="com.winpow.services.app.apploanapp.bean.Apploanapp">
+		select top ${pageSize} * from (
+	        select row_number() over (order by createdate desc) as rownumber,* from(
+		       select 'loanproduct' datagener,pkid,chno,userid,'' agencyid,pkid prodid,title proname,price amount,genre,
+		       loanusage,createtime createdate,chstatus,'' pcid ,l.reviwer_remark returnreason,cast(l.deadline as varchar) deadline,
+		       reviwer_id checkid,'' banknum
+		       from tb_app_loan_product l where 1=1
+		       and pkid not in (select appid from tb_product where appid is not null)
+			   <choose>
+			        <when test=" userid !=null and  userid !=''">
+			            and l.userid=#{userid}
+			        </when>
+			        <when test=" pkid !=null and  pkid !=''">
+			            and l.userid in (select userid from tb_cust where f_id=#{pkid})
+			        </when>
+			        <when test=" checkid !=null and  checkid !=''">
+			        	and l.reviwer_id=#{checkid}
+			        </when>
+		       </choose>
+		       union all
+		       select 'loanapp' datagener,a.pkid,a.chno,a.userid,a.agencyid,a.proid prodid,a.proname proname,a.amount,a.genre,a.loanusage,
+		       a.createdate,a.chstatus,pr.id pcid ,a.returnreason,
+		       case when pr.loanterm=pr.loantermmax then cast(pr.loanterm as varchar) else cast(pr.loanterm as varchar)+'~'+cast(pr.loantermmax as varchar) end deadline,checkid,
+		       (select count(*) from tb_app_allotbank ban where ban.applyid=a.pkid) banknum
+			   from tb_app_loan_app a left join tb_product pr on a.proid=pr.id where 1=1
+			   <choose>
+			        <when test=" userid !=null and  userid !=''">
+			            and a.userid=#{userid}
+			        </when>
+			        <when test=" pkid !=null and  pkid !=''">
+			            and a.userid in (select userid from tb_cust where f_id=#{pkid})
+			        </when>
+			        <when test=" checkid !=null and  checkid !=''">
+			        	and a.checkid=#{checkid}
+			        </when>
+		       </choose>
+		       
+		       <if test=" checkid == null">
+		       	   union all
+					select 'loanallot' datagener, a.pkid, a.chno, a.userid, a.agencyid, l.proid prodid, l.proname proname, 
+					l.amount amount, l.genre, l.loanusage, l.createdate, a.chstatus, l.proid pcid, a.remark returnreason,'' deadline,'' checkid,'' banknum
+					from tb_app_allotbank a left join tb_app_loan_app l on a.applyid = l.pkid where 1=1
+			       <choose>
+				        <when test=" userid !=null and  userid !=''">
+				            and a.userid=#{userid}
+				        </when>
+				        <when test=" pkid !=null and  pkid !=''">
+				            and a.userid in (select userid from tb_cust where f_id=#{pkid})
+				        </when>
+			       </choose>
+		       	   union all
+				   select 'product' datagener,cast(id as varchar) pkid,'' chno,rele_userid userid,rele_bankid agencyid,cast(id as varchar) prodid,prodname proname,
+				   loanamt amount,product_type genre,'' loanusage,lurushijian createdate,'' chstatus,cast(id as varchar) pcid , '' returnreason,
+		       	   case when loanterm=loantermmax then cast(loanterm as varchar) else cast(loanterm as varchar)+'~'+cast(loantermmax as varchar) end deadline,'' checkid,'' banknum
+			   	   from tb_product where 1=1 
+			   	   <choose>
+				        <when test=" userid !=null and  userid !=''">
+				            and rele_userid=#{userid}
+				        </when>
+				        <when test=" pkid !=null and  pkid !=''">
+				            and rele_userid in (select userid from tb_cust where f_id=#{pkid})
+				        </when>
+			       </choose>
+			   	   union all
+				   select 'productapp' datagener,cast(a.id as varchar) pkid,'' chno,a.userid,'' agencyid,cast(p.id as varchar) prodid,a.prodname proname,a.loanamt amount,
+					p.product_type genre,a.loanuser loanusage,a.lurushijian createdate,
+					case when b.status=80 then '银行放款完成' 
+					when b.status=70 then '金融办审批通过'
+					when b.status=60 then '银行审批通过'
+					when b.status=50 then '担保公司审批通过'
+					when b.status=40 then '项目评审会中通过'
+					when b.status=30 then '资料审查通过'
+					when b.status=21 then '驳回'
+					when b.status=20 then '审查中'
+					when b.status=11 then '驳回'
+					when b.status=10 then '初审中' 
+					when b.status=0 then '未提交' 
+					else a.status end chstatus,cast(p.id as varchar) pcid , '' returnreason,
+		       	    case when p.loanterm=p.loantermmax then cast(p.loanterm as varchar) else cast(p.loanterm as varchar)+'~'+cast(p.loantermmax as varchar) end deadline,
+		       	    '' checkid,'' banknum
+					from tb_product_app a 
+					left join tb_product p on a.prodname=p.prodname left join tb_product_czd_base b on a.id=b.releid
+					where 1=1
+			   	   <choose>
+				        <when test=" userid !=null and  userid !=''">
+				            and a.userid=#{userid}
+				        </when>
+				        <when test=" pkid !=null and  pkid !=''">
+				            and a.userid in (select userid from tb_cust where f_id=#{pkid})
+				        </when>
+			       </choose>
+			   </if>
+			) b  
+	    ) a   where rownumber > ${pageSize}*(${offset} - 1)
+	</select>
+
+    <select id="app.apploanapp.allotbankcount" parameterType="list" resultType="map">
+		<foreach item="item" index="index" collection="list" open="" separator=" union all " close="">  
+  			select '${item}' name,convert(varchar, count(*)) val from tb_app_allotbank where applyid=#{item}
+			union all 
+			select '${item}' + 'succ' name,convert(varchar, count(*)) val from tb_app_allotbank where applyid=#{item} and chstatus in('10502','10503')
+ 		</foreach>
+	</select>
+	
+	<update id="app.apploanapp.setChstatus" parameterType="map">
+        update ${tablename} set ${statusname}=#{status} where ${pkidname}=#{pkid}
+    </update>
+
+</mapper>  

@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE mapper PUBLIC 
+"-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="manage">
+	
+	<select id="manage.systemlog.selectPageList" parameterType="com.winpow.services.manage.systemlog.bean.Systemlog" resultType="hashMap">
+	select * from (
+			SELECT  ROW_NUMBER() over(order by logintime desc ) as  rownumber ,
+									 	id,
+				 								 	title,
+				 								 	content,
+				 								 	type,
+				 								 	account,
+				 								 	loginIP,
+				 								 	logintime,
+				 								 	loginArea,
+				 								  diffAreaLogin,
+				 								  logintype
+				 		   from t_systemlog  where 1=1 
+			 		   <if test="logintype!=null and logintype!=''">
+						and logintype=#{logintype} 
+						</if>
+						<if test="account!=null and account!=''">
+						and account=#{account} 
+						</if>
+						 )t  where rownumber &gt; = #{offset} and rownumber &lt; = #{pageSize}+#{offset} 
+	</select>
+	<select id="manage.systemlog.selectPageCount" parameterType="com.winpow.services.manage.systemlog.bean.Systemlog" resultType="java.lang.Integer">
+		select count(*) from t_systemlog   where 1=1 
+			 		   <if test="logintype!=null and logintype!=''">
+						and logintype=#{logintype} 
+						</if>
+						<if test="account!=null and account!=''">
+						and account=#{account} 
+						</if>
+	</select>
+	
+	<select id="manage.systemlog.selectOne" parameterType="com.winpow.services.manage.systemlog.bean.Systemlog" resultType="com.winpow.services.manage.systemlog.bean.Systemlog">
+			SELECT  
+											 	id,
+				 											 	title,
+				 											 	content,
+				 											 	type,
+				 											 	account,
+				 											 	loginIP,
+				 											 	logintime,
+				 											 	loginArea,
+				 											  diffAreaLogin,
+				 											  logintype
+				 						  from t_systemlog t  where 1=1  
+			<if test="id!=null and id!=''">
+				and t.id=#{id}
+			</if>
+	</select>
+	
+	<select id="manage.systemlog.selectCount" parameterType="com.winpow.services.manage.systemlog.bean.Systemlog" resultType="int">
+			select count(*)  
+				 FROM t_systemlog t  where 1=1  
+				<if test="id!=null and id!=''">
+					and t.id=#{id}
+				</if>
+	</select>
+	
+	<select id="manage.systemlog.selectOneByCondition" parameterType="com.winpow.services.manage.systemlog.bean.Systemlog" resultType="com.winpow.services.manage.systemlog.bean.Systemlog">
+			SELECT  
+											 	id,
+				 											 	title,
+				 											 	content,
+				 											 	type,
+				 											 	account,
+				 											 	loginIP,
+				 											 	logintime,
+				 											 	loginArea,
+				 											  diffAreaLogin,
+				 											  logintype
+				 					 from  systemlog   t  where 1=1  
+			<if test="id!=null and id!=''">
+				and t.id=#{id}
+			</if>
+	</select>
+	
+	<insert id="manage.systemlog.insert" parameterType="com.winpow.services.manage.systemlog.bean.Systemlog" useGeneratedKeys="true" 
+		keyProperty="id">
+	 		insert into t_systemlog ( 
+	 								 	 
+													 	title,
+													 	content,
+													 	type,
+													 	account,
+													 	loginIP,
+													 	logintime,
+													 	loginArea,
+													  diffAreaLogin,
+				 											  logintype
+			 						) values ( 
+										  
+				 										 	#{title},
+				 										 	#{content},
+				 										 	#{type},
+				 										 	#{account},
+				 										 	#{loginIP},
+				 										 	getdate(),
+				 										 	#{loginArea},
+				 											#{diffAreaLogin},
+				 											#{logintype}
+				 						)
+		 
+	</insert>
+	
+	<update id="manage.systemlog.update" parameterType="com.winpow.services.manage.systemlog.bean.Systemlog">
+		update t_systemlog set 
+                        
+		
+				 			                <if test="#{title}!=null and #{title}!=''">
+                        title=#{title},
+                        </if>
+		
+				 			                <if test="#{content}!=null and #{content}!=''">
+                        content=#{content},
+                        </if>
+		
+				 			                <if test="#{type}!=null and #{type}!=''">
+                        type=#{type},
+                        </if>
+		
+				 			                <if test="#{account}!=null and #{account}!=''">
+                        account=#{account},
+                        </if>
+		
+				 			                <if test="#{loginIP}!=null and #{loginIP}!=''">
+                        loginIP=#{loginIP},
+                        </if>
+		
+				 			                <if test="#{logintime}!=null and #{logintime}!=''">
+                        logintime=#{logintime},
+                        </if>
+		
+				 			                <if test="#{loginArea}!=null and #{loginArea}!=''">
+                        loginArea=#{loginArea},
+                        </if>
+		
+				 			                <if test="#{diffAreaLogin}!=null and #{diffAreaLogin}!=''">
+                        diffAreaLogin=#{diffAreaLogin}
+                        </if>
+         						 
+		where id=#{id}
+	</update>
+	
+</mapper>  

@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC 
+"-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="app">
+
+	<select id="app.appticketmark.selectPageList"
+		parameterType="com.winpow.services.app.appticketmark.bean.Appticketmark"
+		resultType="hashMap">
+		select * from (
+		SELECT ROW_NUMBER() over(order by id) as rownumber ,*
+		from tb_app_ticketmark )t where rownumber &gt; = #{offset} and rownumber
+		&lt; = #{pageSize}+#{offset}
+	</select>
+	
+	<select id="app.appticketmark.selectPageCount"
+		parameterType="com.winpow.services.app.appticketmark.bean.Appticketmark"
+		resultType="java.lang.Integer">
+		select count(*) from tb_app_ticketmark
+	</select>
+
+	<select id="app.appticketmark.selectOne"
+		parameterType="com.winpow.services.app.appticketmark.bean.Appticketmark"
+		resultType="com.winpow.services.app.appticketmark.bean.Appticketmark">
+		select * from tb_app_ticketmark t where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+
+	<select id="app.appticketmark.selectCount"
+		parameterType="com.winpow.services.app.appticketmark.bean.Appticketmark"
+		resultType="int">
+		select count(*) from tb_app_ticketmark t where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+
+	<select id="app.appticketmark.selectOneByCondition"
+		parameterType="com.winpow.services.app.appticketmark.bean.Appticketmark"
+		resultType="com.winpow.services.app.appticketmark.bean.Appticketmark">
+		select * from tb_app_ticketmark t where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+
+	<select id="app.appticketmark.selectList"
+		parameterType="com.winpow.services.app.appticketmark.bean.Appticketmark"
+		resultType="com.winpow.services.app.appticketmark.bean.Appticketmark">
+		select * from tb_app_ticketmark t where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+
+	<insert id="app.appticketmark.insert"
+		parameterType="com.winpow.services.app.appticketmark.bean.Appticketmark"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into tb_app_ticketmark (
+		pkid,
+		userid,
+		giventype,
+		phone,
+		ticketgave,
+		ticketnum,
+		tickettime,
+		lurushijian,
+		lastchgtime
+		) values (
+		#{pkid},
+		#{userid},
+		#{giventype},
+		#{phone},
+		#{ticketgave},
+		#{ticketnum},
+		#{tickettime},
+		getdate(),
+		getdate()
+		)
+	</insert>
+
+	<update id="app.appticketmark.update"
+		parameterType="com.winpow.services.app.appticketmark.bean.Appticketmark">
+		update tb_app_ticketmark set
+		<if test=" userid !=null and  userid !=''">
+			userid=#{userid},
+		</if>
+
+		<if test=" giventype !=null and  giventype !=''">
+			giventype=#{giventype},
+		</if>
+
+		<if test=" phone !=null and  phone !=''">
+			phone=#{phone},
+		</if>
+
+		<if test=" ticketgave !=null and  ticketgave !=''">
+			ticketgave=#{ticketgave},
+		</if>
+
+		<if test=" ticketnum !=null and  ticketnum !=''">
+			ticketnum=#{ticketnum},
+		</if>
+
+		<if test=" tickettime !=null and tickettime == 'date'">
+			tickettime=getdate(),
+		</if>
+		lastchgtime=getdate()
+		where pkid=#{pkid}
+	</update>
+	
+	<select id="app.appticketmark.selectExitList"
+		parameterType="list"
+		resultType="com.winpow.services.app.appticketmark.bean.Appticketmark">
+		select * from tb_app_ticketmark t where 1=1
+		and userid in
+        <foreach collection="list" separator="," item="key" open="(" close=")">  
+        #{key}
+    	</foreach>
+	</select>
+
+</mapper>  

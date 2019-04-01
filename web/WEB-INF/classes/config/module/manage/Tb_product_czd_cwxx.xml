@@ -1,0 +1,867 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE mapper PUBLIC 
+"-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="manage">
+	
+	<select id="manage.productczdcwxx.selectPageList" parameterType="com.winpow.services.manage.productczdcwxx.bean.Productczdcwxx" resultType="hashMap">
+	select * from (
+		SELECT  ROW_NUMBER() over(order by id) as  rownumber ,
+								 	id,
+			 								 	releid,
+			 								 	thirdyear,
+			 								 	thirdzongzichan,
+			 								 	thirdzongfuzai,
+			 								 	thirdsuoyouzequanyi,
+			 								 	thirdshishouzhiben,
+			 								 	thirdyinhangjiekuan,
+			 								 	thirdxiaoshoushouru,
+			 								 	thirdzhuyinyewushouru,
+			 								 	thirdlirunzonge,
+			 								 	thirdjinglirun,
+			 								 	thirdniandunashui,
+			 								 	secondzongzichan,
+			 								 	secondzongfuzai,
+			 								 	secondsuoyouzequanyi,
+			 								 	secondshishouzhiben,
+			 								 	secondyinhangjiekuan,
+			 								 	secondxiaoshoushouru,
+			 								 	secondzhuyinyewushouru,
+			 								 	secondlirunzonge,
+			 								 	secondjinglirun,
+			 								 	secondniandunashui,
+			 								 	firstzongzichan,
+			 								 	firstzongfuzai,
+			 								 	firstsuoyouzequanyi,
+			 								 	firstshishouzhiben,
+			 								 	firstyinhangjiekuan,
+			 								 	firstxiaoshoushouru,
+			 								 	firstzhuyinyewushouru,
+			 								 	firstlirunzonge,
+			 								 	firstjinglirun,
+			 								 	firstniandunashui,
+			 								 	maolilv,
+			 								 	cunhuozhouzhuanlv,
+			 								 	liudongbilv,
+			 								 	yingshouzhangkuanzhouzhuanlv,
+			 								 	sudongbilv,
+			 								 	zichanfuzhailv,
+			 								 	cudate,
+			 								 	cuzongzichan,
+			 								 	cuzongfuzai,
+			 								 	cusuoyouzequanyi,
+			 								 	cushishouzhiben,
+			 								 	cuyinhangjiekuan,
+			 								 	cuxiaoshoushouru,
+			 								 	cuzhuyinyewushouru,
+			 								 	culirunzonge,
+			 								 	cujinglirun,
+			 								 	cuniandunashui,
+			 								 	lastzongzichan,
+			 								 	lastzongfuzai,
+			 								 	lastsuoyouzequanyi,
+			 								 	lastshishouzhiben,
+			 								 	lastyinhangjiekuan,
+			 								 	lastxiaoshoushouru,
+			 								 	lastzhuyinyewushouru,
+			 								 	lastlirunzonge,
+			 								 	lastjinglirun,
+			 								 	lastniandunashui,
+			 								 	changezongzichan,
+			 								 	changezongfuzai,
+			 								 	changesuoyouzequanyi,
+			 								 	changeshishouzhiben,
+			 								 	changeyinhangjiekuan,
+			 								 	changexiaoshoushouru,
+			 								 	changezhuyinyewushouru,
+			 								 	changelirunzonge,
+			 								 	changejinglirun,
+			 								 	changeniandunashui,
+			 								 	lurushijian,
+			 								 	inputuser,shiwusuo,
+			 								  lastchgtime
+			 		   from Tb_product_czd_cwxx )t  where rownumber &gt; = #{offset} and rownumber &lt; = #{pageSize}+#{offset} 
+	</select>
+	<select id="manage.productczdcwxx.selectPageCount" parameterType="com.winpow.services.manage.productczdcwxx.bean.Productczdcwxx" resultType="java.lang.Integer">
+		
+			select count(*) from (
+					SELECT  ROW_NUMBER() over(order by id) as  rownumber ,
+																	 	id,
+						 																	 	releid,
+						 																	 	thirdyear,
+						 																	 	thirdzongzichan,
+						 																	 	thirdzongfuzai,
+						 																	 	thirdsuoyouzequanyi,
+						 																	 	thirdshishouzhiben,
+						 																	 	thirdyinhangjiekuan,
+						 																	 	thirdxiaoshoushouru,
+						 																	 	thirdzhuyinyewushouru,
+						 																	 	thirdlirunzonge,
+						 																	 	thirdjinglirun,
+						 																	 	thirdniandunashui,
+						 																	 	secondzongzichan,
+						 																	 	secondzongfuzai,
+						 																	 	secondsuoyouzequanyi,
+						 																	 	secondshishouzhiben,
+						 																	 	secondyinhangjiekuan,
+						 																	 	secondxiaoshoushouru,
+						 																	 	secondzhuyinyewushouru,
+						 																	 	secondlirunzonge,
+						 																	 	secondjinglirun,
+						 																	 	secondniandunashui,
+						 																	 	firstzongzichan,
+						 																	 	firstzongfuzai,
+						 																	 	firstsuoyouzequanyi,
+						 																	 	firstshishouzhiben,
+						 																	 	firstyinhangjiekuan,
+						 																	 	firstxiaoshoushouru,
+						 																	 	firstzhuyinyewushouru,
+						 																	 	firstlirunzonge,
+						 																	 	firstjinglirun,
+						 																	 	firstniandunashui,
+						 																	 	maolilv,
+						 																	 	cunhuozhouzhuanlv,
+						 																	 	liudongbilv,
+						 																	 	yingshouzhangkuanzhouzhuanlv,
+						 																	 	sudongbilv,
+						 																	 	zichanfuzhailv,
+						 																	 	cudate,
+						 																	 	cuzongzichan,
+						 																	 	cuzongfuzai,
+						 																	 	cusuoyouzequanyi,
+						 																	 	cushishouzhiben,
+						 																	 	cuyinhangjiekuan,
+						 																	 	cuxiaoshoushouru,
+						 																	 	cuzhuyinyewushouru,
+						 																	 	culirunzonge,
+						 																	 	cujinglirun,
+						 																	 	cuniandunashui,
+						 																	 	lastzongzichan,
+						 																	 	lastzongfuzai,
+						 																	 	lastsuoyouzequanyi,
+						 																	 	lastshishouzhiben,
+						 																	 	lastyinhangjiekuan,
+						 																	 	lastxiaoshoushouru,
+						 																	 	lastzhuyinyewushouru,
+						 																	 	lastlirunzonge,
+						 																	 	lastjinglirun,
+						 																	 	lastniandunashui,
+						 																	 	changezongzichan,
+						 																	 	changezongfuzai,
+						 																	 	changesuoyouzequanyi,
+						 																	 	changeshishouzhiben,
+						 																	 	changeyinhangjiekuan,
+						 																	 	changexiaoshoushouru,
+						 																	 	changezhuyinyewushouru,
+						 																	 	changelirunzonge,
+						 																	 	changejinglirun,
+						 																	 	changeniandunashui,
+						 																	 	lurushijian,
+						 																	 	inputuser,shiwusuo,
+						 																	  lastchgtime
+						 								   from Tb_product_czd_cwxx )t  
+
+	</select>
+	
+	<select id="manage.productczdcwxx.selectOne" parameterType="com.winpow.services.manage.productczdcwxx.bean.Productczdcwxx" resultType="com.winpow.services.manage.productczdcwxx.bean.Productczdcwxx">
+			SELECT   top 1 	id,
+				 											 	releid,
+				 											 	thirdyear,
+				 											 	thirdzongzichan,
+				 											 	thirdzongfuzai,
+				 											 	thirdsuoyouzequanyi,
+				 											 	thirdshishouzhiben,
+				 											 	thirdyinhangjiekuan,
+				 											 	thirdxiaoshoushouru,
+				 											 	thirdzhuyinyewushouru,
+				 											 	thirdlirunzonge,
+				 											 	thirdjinglirun,
+				 											 	thirdniandunashui,
+				 											 	secondzongzichan,
+				 											 	secondzongfuzai,
+				 											 	secondsuoyouzequanyi,
+				 											 	secondshishouzhiben,
+				 											 	secondyinhangjiekuan,
+				 											 	secondxiaoshoushouru,
+				 											 	secondzhuyinyewushouru,
+				 											 	secondlirunzonge,
+				 											 	secondjinglirun,
+				 											 	secondniandunashui,
+				 											 	firstzongzichan,
+				 											 	firstzongfuzai,
+				 											 	firstsuoyouzequanyi,
+				 											 	firstshishouzhiben,
+				 											 	firstyinhangjiekuan,
+				 											 	firstxiaoshoushouru,
+				 											 	firstzhuyinyewushouru,
+				 											 	firstlirunzonge,
+				 											 	firstjinglirun,
+				 											 	firstniandunashui,
+				 											 	maolilv,
+				 											 	cunhuozhouzhuanlv,
+				 											 	liudongbilv,
+				 											 	yingshouzhangkuanzhouzhuanlv,
+				 											 	sudongbilv,
+				 											 	zichanfuzhailv,
+				 											 	cudate,
+				 											 	cuzongzichan,
+				 											 	cuzongfuzai,
+				 											 	cusuoyouzequanyi,
+				 											 	cushishouzhiben,
+				 											 	cuyinhangjiekuan,
+				 											 	cuxiaoshoushouru,
+				 											 	cuzhuyinyewushouru,
+				 											 	culirunzonge,
+				 											 	cujinglirun,
+				 											 	cuniandunashui,
+				 											 	lastzongzichan,
+				 											 	lastzongfuzai,
+				 											 	lastsuoyouzequanyi,
+				 											 	lastshishouzhiben,
+				 											 	lastyinhangjiekuan,
+				 											 	lastxiaoshoushouru,
+				 											 	lastzhuyinyewushouru,
+				 											 	lastlirunzonge,
+				 											 	lastjinglirun,
+				 											 	lastniandunashui,
+				 											 	changezongzichan,
+				 											 	changezongfuzai,
+				 											 	changesuoyouzequanyi,
+				 											 	changeshishouzhiben,
+				 											 	changeyinhangjiekuan,
+				 											 	changexiaoshoushouru,
+				 											 	changezhuyinyewushouru,
+				 											 	changelirunzonge,
+				 											 	changejinglirun,
+				 											 	changeniandunashui,
+				 											 	lurushijian,
+				 											 	inputuser,shiwusuo,
+				 											  lastchgtime
+				 						  from Tb_product_czd_cwxx t  where 1=1  
+			<if test="id!=null and id!=''">
+				and t.id=#{id}
+			</if>
+			<if test="releid!=null and releid!=''">
+				and t.releid=#{releid}
+			</if>
+	</select>
+	
+	<select id="manage.productczdcwxx.selectCount" parameterType="com.winpow.services.manage.productczdcwxx.bean.Productczdcwxx" resultType="int">
+			select count(*)  
+				 FROM Tb_product_czd_cwxx t  where 1=1  
+				<if test="id!=null and id!=''">
+					and t.id=#{id}
+				</if>
+	</select>
+	
+	<select id="manage.productczdcwxx.selectOneByCondition" parameterType="com.winpow.services.manage.productczdcwxx.bean.Productczdcwxx" resultType="com.winpow.services.manage.productczdcwxx.bean.Productczdcwxx">
+			SELECT  
+											 	id,
+				 											 	releid,
+				 											 	thirdyear,
+				 											 	thirdzongzichan,
+				 											 	thirdzongfuzai,
+				 											 	thirdsuoyouzequanyi,
+				 											 	thirdshishouzhiben,
+				 											 	thirdyinhangjiekuan,
+				 											 	thirdxiaoshoushouru,
+				 											 	thirdzhuyinyewushouru,
+				 											 	thirdlirunzonge,
+				 											 	thirdjinglirun,
+				 											 	thirdniandunashui,
+				 											 	secondzongzichan,
+				 											 	secondzongfuzai,
+				 											 	secondsuoyouzequanyi,
+				 											 	secondshishouzhiben,
+				 											 	secondyinhangjiekuan,
+				 											 	secondxiaoshoushouru,
+				 											 	secondzhuyinyewushouru,
+				 											 	secondlirunzonge,
+				 											 	secondjinglirun,
+				 											 	secondniandunashui,
+				 											 	firstzongzichan,
+				 											 	firstzongfuzai,
+				 											 	firstsuoyouzequanyi,
+				 											 	firstshishouzhiben,
+				 											 	firstyinhangjiekuan,
+				 											 	firstxiaoshoushouru,
+				 											 	firstzhuyinyewushouru,
+				 											 	firstlirunzonge,
+				 											 	firstjinglirun,
+				 											 	firstniandunashui,
+				 											 	maolilv,
+				 											 	cunhuozhouzhuanlv,
+				 											 	liudongbilv,
+				 											 	yingshouzhangkuanzhouzhuanlv,
+				 											 	sudongbilv,
+				 											 	zichanfuzhailv,
+				 											 	cudate,
+				 											 	cuzongzichan,
+				 											 	cuzongfuzai,
+				 											 	cusuoyouzequanyi,
+				 											 	cushishouzhiben,
+				 											 	cuyinhangjiekuan,
+				 											 	cuxiaoshoushouru,
+				 											 	cuzhuyinyewushouru,
+				 											 	culirunzonge,
+				 											 	cujinglirun,
+				 											 	cuniandunashui,
+				 											 	lastzongzichan,
+				 											 	lastzongfuzai,
+				 											 	lastsuoyouzequanyi,
+				 											 	lastshishouzhiben,
+				 											 	lastyinhangjiekuan,
+				 											 	lastxiaoshoushouru,
+				 											 	lastzhuyinyewushouru,
+				 											 	lastlirunzonge,
+				 											 	lastjinglirun,
+				 											 	lastniandunashui,
+				 											 	changezongzichan,
+				 											 	changezongfuzai,
+				 											 	changesuoyouzequanyi,
+				 											 	changeshishouzhiben,
+				 											 	changeyinhangjiekuan,
+				 											 	changexiaoshoushouru,
+				 											 	changezhuyinyewushouru,
+				 											 	changelirunzonge,
+				 											 	changejinglirun,
+				 											 	changeniandunashui,
+				 											 	lurushijian,
+				 											 	inputuser,shiwusuo,
+				 											  lastchgtime
+				 					 from  Tb_product_czd_cwxx   t  where 1=1  
+			<if test="id!=null and id!=''">
+				and t.id=#{id}
+			</if>
+	</select>
+	
+	
+	
+		<select id="manage.productczdcwxx.selectList" parameterType="com.winpow.services.manage.productczdcwxx.bean.Productczdcwxx" resultType="com.winpow.services.manage.productczdcwxx.bean.Productczdcwxx">
+			SELECT  
+											 	id,
+				 											 	releid,
+				 											 	thirdyear,
+				 											 	thirdzongzichan,
+				 											 	thirdzongfuzai,
+				 											 	thirdsuoyouzequanyi,
+				 											 	thirdshishouzhiben,
+				 											 	thirdyinhangjiekuan,
+				 											 	thirdxiaoshoushouru,
+				 											 	thirdzhuyinyewushouru,
+				 											 	thirdlirunzonge,
+				 											 	thirdjinglirun,
+				 											 	thirdniandunashui,
+				 											 	secondzongzichan,
+				 											 	secondzongfuzai,
+				 											 	secondsuoyouzequanyi,
+				 											 	secondshishouzhiben,
+				 											 	secondyinhangjiekuan,
+				 											 	secondxiaoshoushouru,
+				 											 	secondzhuyinyewushouru,
+				 											 	secondlirunzonge,
+				 											 	secondjinglirun,
+				 											 	secondniandunashui,
+				 											 	firstzongzichan,
+				 											 	firstzongfuzai,
+				 											 	firstsuoyouzequanyi,
+				 											 	firstshishouzhiben,
+				 											 	firstyinhangjiekuan,
+				 											 	firstxiaoshoushouru,
+				 											 	firstzhuyinyewushouru,
+				 											 	firstlirunzonge,
+				 											 	firstjinglirun,
+				 											 	firstniandunashui,
+				 											 	maolilv,
+				 											 	cunhuozhouzhuanlv,
+				 											 	liudongbilv,
+				 											 	yingshouzhangkuanzhouzhuanlv,
+				 											 	sudongbilv,
+				 											 	zichanfuzhailv,
+				 											 	cudate,
+				 											 	cuzongzichan,
+				 											 	cuzongfuzai,
+				 											 	cusuoyouzequanyi,
+				 											 	cushishouzhiben,
+				 											 	cuyinhangjiekuan,
+				 											 	cuxiaoshoushouru,
+				 											 	cuzhuyinyewushouru,
+				 											 	culirunzonge,
+				 											 	cujinglirun,
+				 											 	cuniandunashui,
+				 											 	lastzongzichan,
+				 											 	lastzongfuzai,
+				 											 	lastsuoyouzequanyi,
+				 											 	lastshishouzhiben,
+				 											 	lastyinhangjiekuan,
+				 											 	lastxiaoshoushouru,
+				 											 	lastzhuyinyewushouru,
+				 											 	lastlirunzonge,
+				 											 	lastjinglirun,
+				 											 	lastniandunashui,
+				 											 	changezongzichan,
+				 											 	changezongfuzai,
+				 											 	changesuoyouzequanyi,
+				 											 	changeshishouzhiben,
+				 											 	changeyinhangjiekuan,
+				 											 	changexiaoshoushouru,
+				 											 	changezhuyinyewushouru,
+				 											 	changelirunzonge,
+				 											 	changejinglirun,
+				 											 	changeniandunashui,
+				 											 	lurushijian,
+				 											 	inputuser,shiwusuo,
+				 											  lastchgtime
+				 					 from  Tb_product_czd_cwxx   t  where 1=1  
+			and t.releid=#{releid}
+	</select>
+	
+	
+	
+	
+	<insert id="manage.productczdcwxx.insert" parameterType="com.winpow.services.manage.productczdcwxx.bean.Productczdcwxx" useGeneratedKeys="true" 
+		keyProperty="id">
+	 		insert into Tb_product_czd_cwxx ( 
+	 								  
+													 	releid,
+													 	thirdyear,
+													 	thirdzongzichan,
+													 	thirdzongfuzai,
+													 	thirdsuoyouzequanyi,
+													 	thirdshishouzhiben,
+													 	thirdyinhangjiekuan,
+													 	thirdxiaoshoushouru,
+													 	thirdzhuyinyewushouru,
+													 	thirdlirunzonge,
+													 	thirdjinglirun,
+													 	thirdniandunashui,
+													 	secondzongzichan,
+													 	secondzongfuzai,
+													 	secondsuoyouzequanyi,
+													 	secondshishouzhiben,
+													 	secondyinhangjiekuan,
+													 	secondxiaoshoushouru,
+													 	secondzhuyinyewushouru,
+													 	secondlirunzonge,
+													 	secondjinglirun,
+													 	secondniandunashui,
+													 	firstzongzichan,
+													 	firstzongfuzai,
+													 	firstsuoyouzequanyi,
+													 	firstshishouzhiben,
+													 	firstyinhangjiekuan,
+													 	firstxiaoshoushouru,
+													 	firstzhuyinyewushouru,
+													 	firstlirunzonge,
+													 	firstjinglirun,
+													 	firstniandunashui,
+													 	maolilv,
+													 	cunhuozhouzhuanlv,
+													 	liudongbilv,
+													 	yingshouzhangkuanzhouzhuanlv,
+													 	sudongbilv,
+													 	zichanfuzhailv,
+													 	cudate,
+													 	cuzongzichan,
+													 	cuzongfuzai,
+													 	cusuoyouzequanyi,
+													 	cushishouzhiben,
+													 	cuyinhangjiekuan,
+													 	cuxiaoshoushouru,
+													 	cuzhuyinyewushouru,
+													 	culirunzonge,
+													 	cujinglirun,
+													 	cuniandunashui,
+													 	lastzongzichan,
+													 	lastzongfuzai,
+													 	lastsuoyouzequanyi,
+													 	lastshishouzhiben,
+													 	lastyinhangjiekuan,
+													 	lastxiaoshoushouru,
+													 	lastzhuyinyewushouru,
+													 	lastlirunzonge,
+													 	lastjinglirun,
+													 	lastniandunashui,
+													 	changezongzichan,
+													 	changezongfuzai,
+													 	changesuoyouzequanyi,
+													 	changeshishouzhiben,
+													 	changeyinhangjiekuan,
+													 	changexiaoshoushouru,
+													 	changezhuyinyewushouru,
+													 	changelirunzonge,
+													 	changejinglirun,
+													 	changeniandunashui,
+													 	lurushijian,
+													 	inputuser,shiwusuo,
+													  lastchgtime
+			 						) values (  					 	#{releid},
+				 										 	#{thirdyear},
+				 										 	#{thirdzongzichan},
+				 										 	#{thirdzongfuzai},
+				 										 	#{thirdsuoyouzequanyi},
+				 										 	#{thirdshishouzhiben},
+				 										 	#{thirdyinhangjiekuan},
+				 										 	#{thirdxiaoshoushouru},
+				 										 	#{thirdzhuyinyewushouru},
+				 										 	#{thirdlirunzonge},
+				 										 	#{thirdjinglirun},
+				 										 	#{thirdniandunashui},
+				 										 	#{secondzongzichan},
+				 										 	#{secondzongfuzai},
+				 										 	#{secondsuoyouzequanyi},
+				 										 	#{secondshishouzhiben},
+				 										 	#{secondyinhangjiekuan},
+				 										 	#{secondxiaoshoushouru},
+				 										 	#{secondzhuyinyewushouru},
+				 										 	#{secondlirunzonge},
+				 										 	#{secondjinglirun},
+				 										 	#{secondniandunashui},
+				 										 	#{firstzongzichan},
+				 										 	#{firstzongfuzai},
+				 										 	#{firstsuoyouzequanyi},
+				 										 	#{firstshishouzhiben},
+				 										 	#{firstyinhangjiekuan},
+				 										 	#{firstxiaoshoushouru},
+				 										 	#{firstzhuyinyewushouru},
+				 										 	#{firstlirunzonge},
+				 										 	#{firstjinglirun},
+				 										 	#{firstniandunashui},
+				 										 	#{maolilv},
+				 										 	#{cunhuozhouzhuanlv},
+				 										 	#{liudongbilv},
+				 										 	#{yingshouzhangkuanzhouzhuanlv},
+				 										 	#{sudongbilv},
+				 										 	#{zichanfuzhailv},
+				 										 	#{cudate},
+				 										 	#{cuzongzichan},
+				 										 	#{cuzongfuzai},
+				 										 	#{cusuoyouzequanyi},
+				 										 	#{cushishouzhiben},
+				 										 	#{cuyinhangjiekuan},
+				 										 	#{cuxiaoshoushouru},
+				 										 	#{cuzhuyinyewushouru},
+				 										 	#{culirunzonge},
+				 										 	#{cujinglirun},
+				 										 	#{cuniandunashui},
+				 										 	#{lastzongzichan},
+				 										 	#{lastzongfuzai},
+				 										 	#{lastsuoyouzequanyi},
+				 										 	#{lastshishouzhiben},
+				 										 	#{lastyinhangjiekuan},
+				 										 	#{lastxiaoshoushouru},
+				 										 	#{lastzhuyinyewushouru},
+				 										 	#{lastlirunzonge},
+				 										 	#{lastjinglirun},
+				 										 	#{lastniandunashui},
+				 										 	#{changezongzichan},
+				 										 	#{changezongfuzai},
+				 										 	#{changesuoyouzequanyi},
+				 										 	#{changeshishouzhiben},
+				 										 	#{changeyinhangjiekuan},
+				 										 	#{changexiaoshoushouru},
+				 										 	#{changezhuyinyewushouru},
+				 										 	#{changelirunzonge},
+				 										 	#{changejinglirun},
+				 										 	#{changeniandunashui},
+				 										 	getdate(),
+				 										 	#{inputuser},#{shiwusuo},
+				 											getdate()
+				 						)
+		 
+	</insert>
+	
+	<update id="manage.productczdcwxx.update" parameterType="com.winpow.services.manage.productczdcwxx.bean.Productczdcwxx">
+		update Tb_product_czd_cwxx set 
+                        
+		 
+		
+				 			                <if test=" thirdyear !=null and  thirdyear !=''">
+                        thirdyear=#{thirdyear},
+                        </if>
+		
+				 			                <if test=" thirdzongzichan !=null">
+                        thirdzongzichan=#{thirdzongzichan},
+                        </if>
+		
+				 			                <if test=" thirdzongfuzai !=null">
+                        thirdzongfuzai=#{thirdzongfuzai},
+                        </if>
+		
+				 			                <if test=" thirdsuoyouzequanyi !=null">
+                        thirdsuoyouzequanyi=#{thirdsuoyouzequanyi},
+                        </if>
+		
+				 			                <if test=" thirdshishouzhiben !=null ">
+                        thirdshishouzhiben=#{thirdshishouzhiben},
+                        </if>
+		
+				 			                <if test=" thirdyinhangjiekuan !=null ">
+                        thirdyinhangjiekuan=#{thirdyinhangjiekuan},
+                        </if>
+		
+				 			                <if test=" thirdxiaoshoushouru !=null ">
+                        thirdxiaoshoushouru=#{thirdxiaoshoushouru},
+                        </if>
+		
+				 			                <if test=" thirdzhuyinyewushouru !=null ">
+                        thirdzhuyinyewushouru=#{thirdzhuyinyewushouru},
+                        </if>
+		
+				 			                <if test=" thirdlirunzonge !=null ">
+                        thirdlirunzonge=#{thirdlirunzonge},
+                        </if>
+		
+				 			                <if test=" thirdjinglirun !=null">
+                        thirdjinglirun=#{thirdjinglirun},
+                        </if>
+		
+				 			                <if test=" thirdniandunashui !=null ">
+                        thirdniandunashui=#{thirdniandunashui},
+                        </if>
+		
+				 			                <if test=" secondzongzichan !=null ">
+                        secondzongzichan=#{secondzongzichan},
+                        </if>
+		
+				 			                <if test=" secondzongfuzai !=null">
+                        secondzongfuzai=#{secondzongfuzai},
+                        </if>
+		
+				 			                <if test=" secondsuoyouzequanyi !=null ">
+                        secondsuoyouzequanyi=#{secondsuoyouzequanyi},
+                        </if>
+		
+				 			                <if test=" secondshishouzhiben !=null ">
+                        secondshishouzhiben=#{secondshishouzhiben},
+                        </if>
+		
+				 			                <if test=" secondyinhangjiekuan !=null">
+                        secondyinhangjiekuan=#{secondyinhangjiekuan},
+                        </if>
+		
+				 			                <if test=" secondxiaoshoushouru !=null ">
+                        secondxiaoshoushouru=#{secondxiaoshoushouru},
+                        </if>
+		
+				 			                <if test=" secondzhuyinyewushouru !=null">
+                        secondzhuyinyewushouru=#{secondzhuyinyewushouru},
+                        </if>
+		
+				 			                <if test=" secondlirunzonge !=null ">
+                        secondlirunzonge=#{secondlirunzonge},
+                        </if>
+		
+				 			                <if test=" secondjinglirun !=null ">
+                        secondjinglirun=#{secondjinglirun},
+                        </if>
+		
+				 			                <if test=" secondniandunashui !=null">
+                        secondniandunashui=#{secondniandunashui},
+                        </if>
+		
+				 			                <if test=" firstzongzichan !=null">
+                        firstzongzichan=#{firstzongzichan},
+                        </if>
+		
+				 			                <if test=" firstzongfuzai !=null">
+                        firstzongfuzai=#{firstzongfuzai},
+                        </if>
+		
+				 			                <if test=" firstsuoyouzequanyi !=null ">
+                        firstsuoyouzequanyi=#{firstsuoyouzequanyi},
+                        </if>
+		
+				 			                <if test=" firstshishouzhiben !=null">
+                        firstshishouzhiben=#{firstshishouzhiben},
+                        </if>
+		
+				 			                <if test=" firstyinhangjiekuan !=null ">
+                        firstyinhangjiekuan=#{firstyinhangjiekuan},
+                        </if>
+		
+				 			                <if test=" firstxiaoshoushouru !=null ">
+                        firstxiaoshoushouru=#{firstxiaoshoushouru},
+                        </if>
+		
+				 			                <if test=" firstzhuyinyewushouru !=null">
+                        firstzhuyinyewushouru=#{firstzhuyinyewushouru},
+                        </if>
+		
+				 			                <if test=" firstlirunzonge !=null">
+                        firstlirunzonge=#{firstlirunzonge},
+                        </if>
+		
+				 			                <if test=" firstjinglirun !=null ">
+                        firstjinglirun=#{firstjinglirun},
+                        </if>
+		
+				 			                <if test=" firstniandunashui !=null">
+                        firstniandunashui=#{firstniandunashui},
+                        </if>
+		
+				 			                <if test=" maolilv !=null and  maolilv !=''">
+                        maolilv=#{maolilv},
+                        </if>
+		
+				 			                <if test=" cunhuozhouzhuanlv !=null and  cunhuozhouzhuanlv !=''">
+                        cunhuozhouzhuanlv=#{cunhuozhouzhuanlv},
+                        </if>
+		
+				 			                <if test=" liudongbilv !=null and  liudongbilv !=''">
+                        liudongbilv=#{liudongbilv},
+                        </if>
+		
+				 			                <if test=" yingshouzhangkuanzhouzhuanlv !=null and  yingshouzhangkuanzhouzhuanlv !=''">
+                        yingshouzhangkuanzhouzhuanlv=#{yingshouzhangkuanzhouzhuanlv},
+                        </if>
+		
+				 			                <if test=" sudongbilv !=null and  sudongbilv !=''">
+                        sudongbilv=#{sudongbilv},
+                        </if>
+		
+				 			                <if test=" zichanfuzhailv !=null and  zichanfuzhailv !=''">
+                        zichanfuzhailv=#{zichanfuzhailv},
+                        </if>
+		
+				 			                <if test=" cudate !=null and  cudate !=''">
+                        cudate=#{cudate},
+                        </if>
+		
+				 			                <if test=" cuzongzichan !=null and  cuzongzichan !=''">
+                        cuzongzichan=#{cuzongzichan},
+                        </if>
+		
+				 			                <if test=" cuzongfuzai !=null and  cuzongfuzai !=''">
+                        cuzongfuzai=#{cuzongfuzai},
+                        </if>
+		
+				 			                <if test=" cusuoyouzequanyi !=null and  cusuoyouzequanyi !=''">
+                        cusuoyouzequanyi=#{cusuoyouzequanyi},
+                        </if>
+		
+				 			                <if test=" cushishouzhiben !=null and  cushishouzhiben !=''">
+                        cushishouzhiben=#{cushishouzhiben},
+                        </if>
+		
+				 			                <if test=" cuyinhangjiekuan !=null and  cuyinhangjiekuan !=''">
+                        cuyinhangjiekuan=#{cuyinhangjiekuan},
+                        </if>
+		
+				 			                <if test=" cuxiaoshoushouru !=null and  cuxiaoshoushouru !=''">
+                        cuxiaoshoushouru=#{cuxiaoshoushouru},
+                        </if>
+		
+				 			                <if test=" cuzhuyinyewushouru !=null and  cuzhuyinyewushouru !=''">
+                        cuzhuyinyewushouru=#{cuzhuyinyewushouru},
+                        </if>
+		
+				 			                <if test=" culirunzonge !=null and  culirunzonge !=''">
+                        culirunzonge=#{culirunzonge},
+                        </if>
+		
+				 			                <if test=" cujinglirun !=null and  cujinglirun !=''">
+                        cujinglirun=#{cujinglirun},
+                        </if>
+		
+				 			                <if test=" cuniandunashui !=null and  cuniandunashui !=''">
+                        cuniandunashui=#{cuniandunashui},
+                        </if>
+		
+				 			                <if test=" lastzongzichan !=null and  lastzongzichan !=''">
+                        lastzongzichan=#{lastzongzichan},
+                        </if>
+		
+				 			                <if test=" lastzongfuzai !=null and  lastzongfuzai !=''">
+                        lastzongfuzai=#{lastzongfuzai},
+                        </if>
+		
+				 			                <if test=" lastsuoyouzequanyi !=null and  lastsuoyouzequanyi !=''">
+                        lastsuoyouzequanyi=#{lastsuoyouzequanyi},
+                        </if>
+		
+				 			                <if test=" lastshishouzhiben !=null and  lastshishouzhiben !=''">
+                        lastshishouzhiben=#{lastshishouzhiben},
+                        </if>
+		
+				 			                <if test=" lastyinhangjiekuan !=null and  lastyinhangjiekuan !=''">
+                        lastyinhangjiekuan=#{lastyinhangjiekuan},
+                        </if>
+		
+				 			                <if test=" lastxiaoshoushouru !=null and  lastxiaoshoushouru !=''">
+                        lastxiaoshoushouru=#{lastxiaoshoushouru},
+                        </if>
+		
+				 			                <if test=" lastzhuyinyewushouru !=null and  lastzhuyinyewushouru !=''">
+                        lastzhuyinyewushouru=#{lastzhuyinyewushouru},
+                        </if>
+		
+				 			                <if test=" lastlirunzonge !=null and  lastlirunzonge !=''">
+                        lastlirunzonge=#{lastlirunzonge},
+                        </if>
+		
+				 			                <if test=" lastjinglirun !=null and  lastjinglirun !=''">
+                        lastjinglirun=#{lastjinglirun},
+                        </if>
+		
+				 			                <if test=" lastniandunashui !=null and  lastniandunashui !=''">
+                        lastniandunashui=#{lastniandunashui},
+                        </if>
+		
+				 			                <if test=" changezongzichan !=null and  changezongzichan !=''">
+                        changezongzichan=#{changezongzichan},
+                        </if>
+		
+				 			                <if test=" changezongfuzai !=null and  changezongfuzai !=''">
+                        changezongfuzai=#{changezongfuzai},
+                        </if>
+		
+				 			                <if test=" changesuoyouzequanyi !=null and  changesuoyouzequanyi !=''">
+                        changesuoyouzequanyi=#{changesuoyouzequanyi},
+                        </if>
+		
+				 			                <if test=" changeshishouzhiben !=null and  changeshishouzhiben !=''">
+                        changeshishouzhiben=#{changeshishouzhiben},
+                        </if>
+		
+				 			                <if test=" changeyinhangjiekuan !=null and  changeyinhangjiekuan !=''">
+                        changeyinhangjiekuan=#{changeyinhangjiekuan},
+                        </if>
+		
+				 			                <if test=" changexiaoshoushouru !=null and  changexiaoshoushouru !=''">
+                        changexiaoshoushouru=#{changexiaoshoushouru},
+                        </if>
+		
+				 			                <if test=" changezhuyinyewushouru !=null and  changezhuyinyewushouru !=''">
+                        changezhuyinyewushouru=#{changezhuyinyewushouru},
+                        </if>
+		
+				 			                <if test=" changelirunzonge !=null and  changelirunzonge !=''">
+                        changelirunzonge=#{changelirunzonge},
+                        </if>
+		
+				 			                <if test=" changejinglirun !=null and  changejinglirun !=''">
+                        changejinglirun=#{changejinglirun},
+                        </if>
+		
+				 			                <if test=" changeniandunashui !=null and  changeniandunashui !=''">
+                        changeniandunashui=#{changeniandunashui},
+                        </if>
+		
+				 			                <if test=" lurushijian !=null and  lurushijian !=''">
+                        lurushijian=#{lurushijian},
+                        </if>
+		
+				 			                <if test=" inputuser !=null and  inputuser !=''">
+                        inputuser=#{inputuser},
+                        </if>
+                        <if test=" shiwusuo !=null and  shiwusuo !=''">
+                        shiwusuo=#{shiwusuo},
+                        </if>
+		
+				 			              lastchgtime=getdate()
+         						 
+		where id=#{id} and  releid=#{releid}
+	</update>
+	
+</mapper>  

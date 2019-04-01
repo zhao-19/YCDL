@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC 
+"-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="app">
+
+	<select id="app.appvisitqiye.selectPageList"
+		parameterType="com.winpow.services.app.appvisitqiye.bean.Appvisitqiye"
+		resultType="hashMap">
+		select top ${pageSize} * from (
+			select row_number() over(order by c.lastchgtime desc) as rownumber ,c.* 
+			from tb_app_visitqiye c where 1=1
+			<if test=" qiyename !=null and  qiyename !=''">
+				and c.qiyename like '%'+#{qiyename}+'%'
+			</if>
+	    ) a where rownumber > ${pageSize}*(${offset} - 1)
+	</select>
+	
+	<select id="app.appvisitqiye.selectPageCount"
+		parameterType="com.winpow.services.app.appvisitqiye.bean.Appvisitqiye"
+		resultType="java.lang.Integer">
+		select count(*) from tb_app_visitqiye c where 1=1
+		<if test=" qiyename !=null and  qiyename !=''">
+			and c.qiyename like '%'+#{qiyename}+'%'
+		</if>
+	</select>
+
+	<select id="app.appvisitqiye.selectOne"
+		parameterType="com.winpow.services.app.appvisitqiye.bean.Appvisitqiye"
+		resultType="com.winpow.services.app.appvisitqiye.bean.Appvisitqiye">
+		select * from tb_app_visitqiye t where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+
+	<select id="app.appvisitqiye.selectCount"
+		parameterType="com.winpow.services.app.appvisitqiye.bean.Appvisitqiye"
+		resultType="int">
+		select count(*) from tb_app_visitqiye t where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+
+	<select id="app.appvisitqiye.selectOneByCondition"
+		parameterType="com.winpow.services.app.appvisitqiye.bean.Appvisitqiye"
+		resultType="com.winpow.services.app.appvisitqiye.bean.Appvisitqiye">
+		SELECT *from tb_app_visitqiye t where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+
+	<select id="app.appvisitqiye.selectList"
+		parameterType="com.winpow.services.app.appvisitqiye.bean.Appvisitqiye"
+		resultType="com.winpow.services.app.appvisitqiye.bean.Appvisitqiye">
+		select　* from tb_app_visitqiye t where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+
+	<insert id="app.appvisitqiye.insert"
+		parameterType="com.winpow.services.app.appvisitqiye.bean.Appvisitqiye"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into tb_app_visitqiye (
+		pkid,
+		visitdate,
+		username,
+		qiyename,
+		address,
+		mainbusiness,
+		income,
+		netprofit,
+		staffsize,
+		findemand,
+		servedemand,
+		linkman,
+		linktel,
+		pictures,
+		remark,
+		lurushijian,
+		inputuser,
+		lastchgtime
+		) values (
+		#{pkid},
+		#{visitdate},
+		#{username},
+		#{qiyename},
+		#{address},
+		#{mainbusiness},
+		#{income},
+		#{netprofit},
+		#{staffsize},
+		#{findemand},
+		#{servedemand},
+		#{linkman},
+		#{linktel},
+		#{pictures},
+		#{remark},
+		getdate(),
+		#{inputuser},
+		getdate()
+		)
+	</insert>
+
+	<update id="app.appvisitqiye.update"
+		parameterType="com.winpow.services.app.appvisitqiye.bean.Appvisitqiye">
+		update tb_app_visitqiye set
+
+		<if test=" visitdate !=null and  visitdate !=''">
+			visitdate=#{visitdate},
+		</if>
+
+		<if test=" username !=null and  username !=''">
+			username=#{username},
+		</if>
+
+		<if test=" qiyename !=null and  qiyename !=''">
+			qiyename=#{qiyename},
+		</if>
+
+		<if test=" address !=null and  address !=''">
+			address=#{address},
+		</if>
+
+		<if test=" mainbusiness !=null and  mainbusiness !=''">
+			mainbusiness=#{mainbusiness},
+		</if>
+
+		<if test=" income !=null and  income !=''">
+			income=#{income},
+		</if>
+
+		<if test=" netprofit !=null and  netprofit !=''">
+			netprofit=#{netprofit},
+		</if>
+
+		<if test=" staffsize !=null and  staffsize !=''">
+			staffsize=#{staffsize},
+		</if>
+
+		<if test=" findemand !=null and  findemand !=''">
+			findemand=#{findemand},
+		</if>
+
+		<if test=" servedemand !=null and  servedemand !=''">
+			servedemand=#{servedemand},
+		</if>
+
+		<if test=" linkman !=null and  linkman !=''">
+			linkman=#{linkman},
+		</if>
+
+		<if test=" linktel !=null and  linktel !=''">
+			linktel=#{linktel},
+		</if>
+
+		<if test=" pictures !=null and  pictures !=''">
+			pictures=#{pictures},
+		</if>
+
+		<if test=" remark !=null and  remark !=''">
+			remark=#{remark},
+		</if>
+		lastchgtime=getdate()
+		where pkid=#{pkid}
+	</update>
+
+</mapper>  

@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC 
+"-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="app">
+
+	<select id="app.appmarkete.selectPageList"
+		parameterType="com.winpow.services.app.appmarkete.bean.Appmarkete"
+		resultType="hashMap">
+		select top ${pageSize} * from (
+			select row_number() over(order by c.inputtime desc) as rownumber,c.*,q.qiyemingcheng
+			from tb_app_markete c 
+			left join tb_qiye q on c.qiyeid=q.pk_qiyeid
+			where 1=1
+			<if test=" qiyeid !=null and  qiyeid !=''">
+				and c.qiyeid = #{qiyeid}
+			</if>
+			<if test=" visttele !=null and  visttele !=''">
+				and c.visttele = #{visttele}
+			</if>
+			<if test=" inputuser !=null and  inputuser !=''">
+				and c.inputuser = #{inputuser}
+			</if>
+			<if test=" qiyemingcheng !=null and  qiyemingcheng !=''">
+				and q.qiyemingcheng like '%' + #{qiyemingcheng} + '%'
+			</if>
+	    ) a where rownumber > ${pageSize}*(${offset} - 1)
+	</select>
+	
+	<select id="app.appmarkete.selectPageCount"
+		parameterType="com.winpow.services.app.appmarkete.bean.Appmarkete"
+		resultType="java.lang.Integer">
+		select count(*) from tb_app_markete c 
+		left join tb_qiye q on c.qiyeid=q.pk_qiyeid
+		where 1=1
+		<if test=" qiyeid !=null and  qiyeid !=''">
+			and c.qiyeid = #{qiyeid}
+		</if>
+		<if test=" visttele !=null and  visttele !=''">
+			and c.visttele = #{visttele}
+		</if>
+		<if test=" inputuser !=null and  inputuser !=''">
+			and c.inputuser = #{inputuser}
+		</if>
+		<if test=" qiyemingcheng !=null and  qiyemingcheng !=''">
+			and q.qiyemingcheng like '%' + #{qiyemingcheng} + '%'
+		</if>
+	</select>
+
+	<select id="app.appmarkete.selectOne"
+		parameterType="com.winpow.services.app.appmarkete.bean.Appmarkete"
+		resultType="com.winpow.services.app.appmarkete.bean.Appmarkete">
+		select * from tb_app_markete t where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+
+	<select id="app.appmarkete.selectCount"
+		parameterType="com.winpow.services.app.appmarkete.bean.Appmarkete"
+		resultType="int">
+		select count(*) from tb_app_markete t where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+
+	<select id="app.appmarkete.selectOneByCondition"
+		parameterType="com.winpow.services.app.appmarkete.bean.Appmarkete"
+		resultType="com.winpow.services.app.appmarkete.bean.Appmarkete">
+		select * from tb_app_markete t where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+
+	<select id="app.appmarkete.selectList"
+		parameterType="com.winpow.services.app.appmarkete.bean.Appmarkete"
+		resultType="com.winpow.services.app.appmarkete.bean.Appmarkete">
+		select * from tb_app_markete t where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+
+	<insert id="app.appmarkete.insert"
+		parameterType="com.winpow.services.app.appmarkete.bean.Appmarkete"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into tb_app_markete (
+		pkid,
+		qiyeid,
+		commtype,
+		vistperson,
+		visttele,
+		vistposition,
+		commdate,
+		commaddress,
+		longitude,
+		latitude,
+		maincontent,
+		custdemand,
+		commphoto,
+		inputtime,
+		inputuser,
+		lastchgtime
+		) values (
+		#{pkid},
+		#{qiyeid},
+		#{commtype},
+		#{vistperson},
+		#{visttele},
+		#{vistposition},
+		#{commdate},
+		#{commaddress},
+		#{longitude},
+		#{latitude},
+		#{maincontent},
+		#{custdemand},
+		#{commphoto},
+		getdate(),
+		#{inputuser},
+		getdate()
+		)
+
+	</insert>
+
+	<update id="app.appmarkete.update"
+		parameterType="com.winpow.services.app.appmarkete.bean.Appmarkete">
+		update tb_app_markete set
+		<if test=" qiyeid !=null and  qiyeid !=''">
+			qiyeid=#{qiyeid},
+		</if>
+
+		<if test=" commtype !=null and  commtype !=''">
+			commtype=#{commtype},
+		</if>
+
+		<if test=" vistperson !=null and  vistperson !=''">
+			vistperson=#{vistperson},
+		</if>
+
+		<if test=" visttele !=null and  visttele !=''">
+			visttele=#{visttele},
+		</if>
+
+		<if test=" vistposition !=null and  vistposition !=''">
+			vistposition=#{vistposition},
+		</if>
+
+		<if test=" commdate !=null and  commdate !=''">
+			commdate=#{commdate},
+		</if>
+
+		<if test=" commaddress !=null and  commaddress !=''">
+			commaddress=#{commaddress},
+		</if>
+
+		<if test=" longitude !=null and  longitude !=''">
+			longitude=#{longitude},
+		</if>
+
+		<if test=" latitude !=null and  latitude !=''">
+			latitude=#{latitude},
+		</if>
+
+		<if test=" maincontent !=null and  maincontent !=''">
+			maincontent=#{maincontent},
+		</if>
+
+		<if test=" custdemand !=null and  custdemand !=''">
+			custdemand=#{custdemand},
+		</if>
+
+		<if test=" commphoto !=null and  commphoto !=''">
+			commphoto=#{commphoto},
+		</if>
+		lastchgtime=getdate()
+		where pkid=#{pkid}
+	</update>
+
+</mapper>  

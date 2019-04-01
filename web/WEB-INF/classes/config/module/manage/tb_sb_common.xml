@@ -1,0 +1,487 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC 
+"-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="manage">
+
+	<select id="manage.tbsbcommon.selectPageList"
+		parameterType="com.winpow.services.manage.tbsbcommon.bean.Tbsbcommon"
+		resultType="hashMap">
+		select * from (
+			select ROW_NUMBER() over(order by lastchgtime desc) as rownumber,* from (	
+			select pichi,id,userid,policy_name,toptype_name,type_name,status,zlsfwz,lastchgtime,policy_id from tb_sb_common
+			union all
+			select pichi,id,userid,policy_name,toptype_name,type_name,status,zlsfwz,lastchgtime,policy_id from tb_sb_border
+			union all
+			select pichi,id,userid,policy_name,toptype_name,type_name,status,zlsfwz,lastchgtime,policy_id from tb_sb_gp
+		) a where 1=1
+		
+		<if test=" userid !=null and  userid !=''">
+			and userid in (${userid})
+		</if>
+
+		<if test=" policy_name !=null and  policy_name !=''">
+			and policy_name=#{policy_name}
+		</if>
+		
+		<if test=" policy_id !=null and  policy_id !=''">
+			and policy_id=#{policy_id}
+		</if>
+
+		<if test=" status !=null and  status !=''">
+			and status=#{status}
+		</if>
+		
+		<if test=" pichi !=null and  pichi !=''">
+			and pichi=#{pichi}
+		</if>
+		)t where rownumber &gt; = #{offset} and rownumber &lt; =
+		#{pageSize}+#{offset}
+	</select>
+	
+	<select id="manage.tbsbcommon.selectPageCount"
+		parameterType="com.winpow.services.manage.tbsbcommon.bean.Tbsbcommon"
+		resultType="java.lang.Integer">
+		select count(*) from (	
+			select pichi,id,userid,policy_name,toptype_name,type_name,status,lastchgtime from tb_sb_common
+			union all
+			select pichi,id,userid,policy_name,toptype_name,type_name,status,lastchgtime from tb_sb_border
+			union all
+			select pichi,id,userid,policy_name,toptype_name,type_name,status,lastchgtime from tb_sb_gp
+		) a where 1=1
+		
+		<if test=" userid !=null and  userid !=''">
+			and userid in (${userid})
+		</if>
+
+		<if test=" policy_name !=null and  policy_name !=''">
+			and policy_name=#{policy_name}
+		</if>
+		
+		<if test=" policy_id !=null and  policy_id !=''">
+			and policy_id=#{policy_id}
+		</if>
+
+		<if test=" status !=null and  status !=''">
+			and status=#{status}
+		</if>
+		
+		<if test=" pichi !=null and  pichi !=''">
+			and pichi=#{pichi}
+		</if>
+	</select>
+	
+	<select id="manage.tbsbcommon.selectAllOne" parameterType="com.winpow.services.manage.tbsbcommon.bean.Tbsbcommon" resultType="map">
+		select 1 num,id,userid,toptype_name,toptype_code,type_name,type_code,policy_id,policy_name,xtjsje,status,memo,lurushijian,inputuser,lastchgtime,pichi,qysqje,zlsfwz,
+		'' pool_amount,'' settlement_amount,'' stock_code,'' stock_short
+		from tb_sb_common where id=#{id}
+		union all
+		select 2 num,id,userid,toptype_name,toptype_code,type_name,type_code,policy_id,policy_name,xtjsje,status,memo,lurushijian,inputuser,lastchgtime,pichi,qysqje,zlsfwz,
+		convert(varchar,pool_amount) pool_amount,convert(varchar,settlement_amount) settlement_amount,'' stock_code,'' stock_short
+		from tb_sb_border where id=#{id}
+		union all
+		select 3 num,id,userid,toptype_name,toptype_code,type_name,type_code,policy_id,policy_name,xtjsje,status,memo,lurushijian,inputuser,lastchgtime,pichi,qysqje,zlsfwz,
+		convert(varchar(100), pool_amount,23) pool_amount,convert(varchar(32),settlement_amount) settlement_amount,stock_code,stock_short
+		from tb_sb_gp where id=#{id}
+	</select>
+
+	<select id="manage.tbsbcommon.selectOne"
+		parameterType="com.winpow.services.manage.tbsbcommon.bean.Tbsbcommon"
+		resultType="com.winpow.services.manage.tbsbcommon.bean.Tbsbcommon">
+		SELECT
+		id,
+		userid,
+		toptype_name,
+		toptype_code,
+		type_name,
+		type_code,
+		policy_id,
+		policy_name,
+		xtjsje,
+		status,
+		memo,
+		lurushijian,
+		inputuser,
+		lastchgtime,
+		pichi,qysqje,zlsfwz
+		from tb_sb_common t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+		<if test="userid!=null and userid!=''">
+			and t.userid=#{userid}
+		</if>
+		<if test="policy_id!=null and policy_id!=''">
+			and t.policy_id=#{policy_id}
+		</if>
+		<if test="pichi!=null and pichi!=''">
+			and t.pichi=#{pichi}
+		</if>
+	</select>
+
+	<select id="manage.tbsbcommon.selectCount"
+		parameterType="com.winpow.services.manage.tbsbcommon.bean.Tbsbcommon"
+		resultType="int">
+		select count(*)
+		FROM tb_sb_common t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+	</select>
+
+	<select id="manage.tbsbcommon.selectOneByCondition"
+		parameterType="com.winpow.services.manage.tbsbcommon.bean.Tbsbcommon"
+		resultType="com.winpow.services.manage.tbsbcommon.bean.Tbsbcommon">
+		SELECT
+		id,
+		userid,
+		toptype_name,
+		toptype_code,
+		type_name,
+		type_code,
+		policy_id,
+		policy_name,
+		xtjsje,
+		status,
+		memo,
+		lurushijian,
+		inputuser,
+		lastchgtime,
+		pichi,qysqje,zlsfwz
+		from tb_sb_common t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+	</select>
+
+	<select id="manage.tbsbcommon.selectList"
+		parameterType="com.winpow.services.manage.tbsbcommon.bean.Tbsbcommon"
+		resultType="com.winpow.services.manage.tbsbcommon.bean.Tbsbcommon">
+		SELECT
+		id,
+		userid,
+		toptype_name,
+		toptype_code,
+		type_name,
+		type_code,
+		policy_id,
+		policy_name,
+		xtjsje,
+		status,
+		memo,
+		lurushijian,
+		inputuser,
+		lastchgtime,
+		pichi,qysqje,zlsfwz
+		from tb_sb_common t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+	</select>
+
+	<insert id="manage.tbsbcommon.insert"
+		parameterType="com.winpow.services.manage.tbsbcommon.bean.Tbsbcommon"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into tb_sb_common (
+		id,
+		userid,
+		toptype_name,
+		toptype_code,
+		type_name,
+		type_code,
+		policy_id,
+		policy_name,
+		xtjsje,
+		status,
+		memo,
+		lurushijian,
+		inputuser,
+		lastchgtime,
+		pichi,qysqje,zlsfwz
+		) values (
+		#{id},
+		#{userid},
+		#{toptype_name},
+		#{toptype_code},
+		#{type_name},
+		#{type_code},
+		#{policy_id},
+		#{policy_name},
+		#{xtjsje},
+		#{status},
+		#{memo},
+		getdate(),
+		#{inputuser},
+		getdate(),
+		#{pichi},
+		#{qysqje},#{zlsfwz}
+		)
+	</insert>
+
+	<update id="manage.tbsbcommon.update"
+		parameterType="com.winpow.services.manage.tbsbcommon.bean.Tbsbcommon">
+		update tb_sb_common set
+		<if test=" userid !=null and  userid !=''">
+			userid=#{userid},
+		</if>
+
+		<if test=" toptype_name !=null and  toptype_name !=''">
+			toptype_name=#{toptype_name},
+		</if>
+
+		<if test=" toptype_code !=null">
+			toptype_code=#{toptype_code},
+		</if>
+
+		<if test=" type_name !=null and  type_name !=''">
+			type_name=#{type_name},
+		</if>
+
+		<if test=" type_code !=null">
+			type_code=#{type_code},
+		</if>
+
+		<if test=" policy_id !=null and  policy_id !=''">
+			policy_id=#{policy_id},
+		</if>
+
+		<if test=" policy_name !=null and  policy_name !=''">
+			policy_name=#{policy_name},
+		</if>
+
+		<if test=" xtjsje !=null and  xtjsje !=''">
+			xtjsje=#{xtjsje},
+		</if>
+
+		<if test=" status !=null and  status !=''">
+			status=#{status},
+		</if>
+
+		<if test=" memo !=null and  memo !=''">
+			memo=#{memo},
+		</if>
+		
+		<if test=" pichi !=null and  pichi !=''">
+			pichi=#{pichi},
+		</if>
+		
+		<if test=" qysqje !=null">
+			qysqje=#{qysqje},
+		</if>
+		
+		<if test=" zlsfwz !=null and  zlsfwz !=''">
+			zlsfwz=#{zlsfwz},
+		</if>
+		
+		lastchgtime=getdate()
+		where id=#{id}
+	</update>
+	
+	<select id="manage.tbsbcommon.exportSelect" resultType="com.winpow.web.action.manage.declare.vo.Exportvo" parameterType="com.winpow.services.manage.tbsbcommon.bean.Tbsbcommon">
+		select 
+			tt.qiyemingcheng result1,toptype_name result2,type_name result3,policy_name result4,c1.code_name result5,memo result6,
+			a.lastchgtime result7,pichi result8,qysqje result9,pool_amount result10,settlement_amount result11,pool result12,
+			c2.code_name result13,stock_code result14,stock_short result15,tt.lxr result16,tt.lxrzw result17,tt.lxrsj result18,
+			x.appname result19,x.idcard result20,x.duty result21,x.xsgcount result22,x.price result23,x.incometax result24
+		from (
+			select id,userid,toptype_name,type_name,policy_name,xtjsje,status,memo,lastchgtime,pichi,qysqje,
+			'' pool_amount,'' settlement_amount,'' pool,'' settlement,'' stock_code,'' stock_short
+			from tb_sb_common
+			union all
+			select id,userid,toptype_name,type_name,policy_name,xtjsje,status,memo,lastchgtime,pichi,qysqje,
+			convert(varchar,pool_amount) pool_amount,convert(varchar,settlement_amount) settlement_amount,
+			'' pool,'' settlement,'' stock_code,'' stock_short
+			from tb_sb_border
+			union all
+			select id,userid,toptype_name,type_name,policy_name,xtjsje,status,memo,lastchgtime,pichi,qysqje,
+			'' pool_amount,'' settlement_amount,convert(varchar(100), pool_amount,23) pool,convert(varchar(32),settlement_amount) settlement,
+			stock_code,stock_short
+			from tb_sb_gp
+		) a 
+		left join tb_sb_xsgjc_core x on a.id=x.rele_id
+		left join tb_code c1 on a.status=c1.pk_codeid
+		left join tb_code c2 on a.settlement=c2.pk_codeid
+		left join ( 
+			select distinct userid,qiyemingcheng,lxr,lxrzw,lxrsj from (
+				select userid,qiyemingcheng,lxr,lxrzw,lxrsj from tb_sb_base where pichi='201804' 
+				union all 
+				select userid,org_name qiyemingcheng,contacts lxr,contacts_duty lxrzw,contacts_tele lxrsj from tb_sb_base_jg where pichi='201804'
+			) t 
+		) tt on tt.userid=a.userid 
+	 	where a.userid not in ('pjy000','blue860','rrrrrr','mass','crackajack','ceshigongsi','huyishan','crackajack_qt')
+	 	and a.pichi='${pichi}'
+		order by result4 asc
+    </select>
+    
+    <select id="manage.tbsbcommon.selectDeclare" parameterType="map" resultType="map">
+    	select * from ${tablename} where id=#{id}
+    </select>
+    
+    <delete id="manage.tbsbcommon.deleteDeclare" parameterType="map">
+    	delete from ${tablename} where id=#{id}; ${extendtable}
+    </delete>
+    
+    <select id="manage.tbsbcommon.selectName" parameterType="map" resultType="map">
+    	select * from (${sql}) a group by userid,name
+    </select>
+    
+    <update id="manage.tbsbcommon.amtconfirm" parameterType="map">
+    	update ${tablename} set amt_confirm=10001 where id=#{id}
+    </update>
+    
+    <select id="manage.tbsbcommon.selectQiyeName" parameterType="map" resultType="map">
+    	select userid from tb_sb_base where qiyemingcheng like '%'+#{qiyename}+'%'
+    	union  
+    	select userid from tb_sb_base_jg where org_name like '%'+#{qiyename}+'%'
+    </select>
+    
+    <select id="manage.tbsbcommon.selectAllApply"
+        parameterType="com.winpow.services.manage.tbsbcommon.bean.Tbsbcommon"
+        resultType="hashMap">
+        select top ${pageSize} * from (
+			SELECT ROW_NUMBER() over(order by a.passnumber,
+			<if test=" passnumber !=null and  passnumber !='' and passnumber =='10001' ">
+	            a.passnumber,
+	        </if> 
+			a.lurushijian desc) as rownumber,* from (
+		        SELECT t.*,case when tq.PK_QIYEID is not null then tq.QIYEMINGCHENG when tj.ID is not null then tj.JIGOUMINGCHENG when too.id is not null then too.org_name else '--' end as cmpname from (
+		        select passnumber,'btz' tname,lurushijian,'股权融资奖励' as type, status, convert(varchar, id) id,'' as nssjys,'' as zcfx, convert(varchar, leibie) leibie,xtjsje,pichi,userid,(select id from tb_sb_policy where policy_name='股权融资奖励') policyid,amt_confirm from tb_sb_btz
+		        UNION ALL
+		        select passnumber,'czbg' tname,lurushijian,'并购重组奖励' as type, status, convert(varchar, id) id,'' as nssjys,'' as zcfx,'' as leibie,xtjsje,pichi,USERID,(select id from tb_sb_policy where policy_name='并购重组奖励'),amt_confirm from tb_sb_czbg
+		        UNION ALL
+		        select passnumber,'gfzgz' tname,lurushijian,'改制奖励' as type, status, convert(varchar, id) id,'' as nssjys,'' as zcfx,'' as leibie,xtjsje,pichi,USERID,(select id from tb_sb_policy where policy_name='改制奖励'),amt_confirm from tb_sb_gfzgz
+		        UNION ALL
+		        select passnumber,'ipo' tname,lurushijian,'上市受理奖励' as type, status, convert(varchar, id) id,'' as nssjys,'' as zcfx,'' as leibie,xtjsje,pichi,USERID,(select id from tb_sb_policy where policy_name='上市受理奖励'),amt_confirm from tb_sb_ipo 
+		        UNION ALL
+		        select passnumber,'jwzb' tname,lurushijian,'境外上市奖励' as type, status, convert(varchar, id) id,'' as nssjys,'' as zcfx,'' as leibie,xtjsje,pichi,USERID,(select id from tb_sb_policy where policy_name='境外上市奖励'),amt_confirm from tb_sb_jwzb
+		        UNION ALL
+		        select passnumber,'kjbx' tname,lurushijian,'科技保险补贴' as type, status, convert(varchar, id) id,'' as nssjys,'' as zcfx,'' as leibie,xtjsje,pichi,USERID,(select id from tb_sb_policy where policy_name='科技保险补贴'),amt_confirm from tb_sb_kjbx
+		        UNION ALL
+		        select passnumber,'rzzn' tname,lurushijian,'融资租赁补贴' as type, status, convert(varchar, id) id,'' as nssjys,'' as zcfx,'' as leibie,xtjsje,pichi,USERID,(select id from tb_sb_policy where policy_name='融资租赁补贴'),amt_confirm from tb_sb_rzzn
+		        UNION ALL
+		        select passnumber,'yggqjl' tname,lurushijian,'股权激励奖励' as type, status, convert(varchar, id) id,'' as nssjys,'' as zcfx,'' as leibie,xtjsje,pichi,USERID,(select id from tb_sb_policy where policy_name='股权激励奖励'),amt_confirm from tb_sb_yggqjl 
+		        UNION ALL
+		        select passnumber,'zwrz' tname,lurushijian,'发债贴息' as type, status, convert(varchar, id) id,'' as nssjys,'' as zcfx,'' as leibie,xtjsje,pichi,USERID,(select id from tb_sb_policy where policy_name='发债贴息'),amt_confirm from tb_sb_zwrz  
+		        UNION ALL
+		        select passnumber,'zzgb' tname,lurushijian,'转增股本奖励' as type, status, convert(varchar, id) id,'' as nssjys,'' as zcfx,'' as leibie,xtjsje,pichi,USERID,(select id from tb_sb_policy where policy_name='转增股本奖励'),amt_confirm from tb_sb_zzgb  
+		        UNION ALL
+		        select passnumber,'interest' tname,lurushijian,'贷款贴息' as type, stat as status, convert(varchar, id) id,'' as nssjys,'' as zcfx,'' as leibie,xtjsje,pichi,userid,(select id from tb_sb_policy where policy_name='贷款贴息'),amt_confirm from tb_interest_app 
+		        UNION ALL
+		        select passnumber,'ssgp' tname,lurushijian,'上市挂牌奖励' as type, status, convert(varchar, id) id, nssjys,'' as zcfx,'' as leibie,xtjsje,pichi,userid,(select id from tb_sb_policy where policy_name='上市挂牌奖励'),amt_confirm from tb_sb_ssgp 
+		        UNION ALL
+		        select passnumber,'pj' tname,lurushijian,'信用评级补贴' as type, status, convert(varchar, id) id,'' as nssjys, zcfx,'' as leibie,xtjsje,pichi,userid,(select id from tb_sb_policy where policy_name='信用评级补贴'),amt_confirm from tb_sb_pj 
+		        union all
+		        select passnumber,'common' tname,co.lurushijian, po.policy_name type, co.status, co.id, po.policy_name nssjys, po.url zcfx, po.id leibie,xtjsje,pichi,userid,policy_id,amt_confirm from tb_sb_common co 
+		        left join tb_sb_policy po on co.policy_id = po.id 
+		        union all
+		        select passnumber,'gp' tname,gp.lurushijian, po.policy_name type, gp.status, gp.id, po.policy_name nssjys, po.url zcfx, po.id leibie,xtjsje,pichi,userid,policy_id,amt_confirm from tb_sb_gp gp
+		        left join tb_sb_policy po on gp.policy_id = po.id 
+		        union all
+		        select passnumber,'border' tname,bo.lurushijian, po.policy_name type, bo.status, bo.id, po.policy_name nssjys, po.url zcfx, po.id leibie,xtjsje,pichi,userid,policy_id,amt_confirm from tb_sb_border bo
+		        left join tb_sb_policy po on bo.policy_id = po.id 
+		        union all
+		        select '' passnumber,'apppolicy' tname,bo.createdate, bo.name type, bo.chstatus, bo.pkid, bo.name nssjys, '' zcfx, '' leibie,null xtjsje,pichi,userid,policyid,'' amt_confirm 
+				from tb_app_policyapply bo
+		    ) t left join tb_cust t1 on t.userid = t1.USERID left join tb_Qiye tq on t1.f_id = tq.PK_QIYEID left join Tb_jigou tj on t1.f_id = tj.ID left join tb_other_org too on t1.f_id = too.id
+		     ) a where 1=1 
+		        <if test=" policy_name !=null and  policy_name !=''">
+		            and type like '%'+#{policy_name}+'%'
+		        </if>
+		        <if test=" userid !=null and  userid !=''">
+		            and userid=#{userid}
+		        </if>
+		        <if test=" status !=null and  status !=''">
+		            and status=#{status}
+		        </if>
+		        <if test=" cmpname !=null and  cmpname !=''">
+		            and cmpname like '%'+#{cmpname}+'%'
+		        </if>
+		        <if test=" pichi !=null and  pichi !=''">
+		            and pichi = #{pichi}
+		        </if> 
+		        <if test=" passnumber !=null and  passnumber !='' and passnumber =='10001' ">
+		            and passnumber is not null and passnumber != ''
+		        </if> 
+	    ) a where rownumber > ${pageSize}*(${offset} - 1)
+    </select>
+    
+    <select id="manage.tbsbcommon.selectAllApplyCount"
+        parameterType="com.winpow.services.manage.tbsbcommon.bean.Tbsbcommon"
+        resultType="java.lang.Integer">
+        select count(*) from (
+        SELECT ROW_NUMBER() over(order by a.lurushijian desc) as rownumber from (
+        SELECT t.*,case when tq.PK_QIYEID is not null then tq.QIYEMINGCHENG when tj.ID is not null then tj.JIGOUMINGCHENG when too.id is not null then too.org_name else '--' end as cmpname from (
+        select passnumber,lurushijian,'股权融资奖励' as type, status, convert(varchar, id) id,'' as nssjys,'' as zcfx, convert(varchar, leibie) leibie,xtjsje,pichi,userid from tb_sb_btz
+        UNION ALL
+        select passnumber,lurushijian,'并购重组奖励' as type, status, convert(varchar, id) id,'' as nssjys,'' as zcfx,'' as leibie,xtjsje,pichi,USERID from tb_sb_czbg
+        UNION ALL
+        select passnumber,lurushijian,'改制奖励' as type, status, convert(varchar, id) id,'' as nssjys,'' as zcfx,'' as leibie,xtjsje,pichi,USERID from tb_sb_gfzgz
+        UNION ALL
+        select passnumber,lurushijian,'上市受理奖励' as type, status, convert(varchar, id) id,'' as nssjys,'' as zcfx,'' as leibie,xtjsje,pichi,USERID from tb_sb_ipo 
+        UNION ALL
+        select passnumber,lurushijian,'境外上市奖励' as type, status, convert(varchar, id) id,'' as nssjys,'' as zcfx,'' as leibie,xtjsje,pichi,USERID from tb_sb_jwzb
+        UNION ALL
+        select passnumber,lurushijian,'科技保险补贴' as type, status, convert(varchar, id) id,'' as nssjys,'' as zcfx,'' as leibie,xtjsje,pichi,USERID from tb_sb_kjbx
+        UNION ALL
+        select passnumber,lurushijian,'融资租赁补贴' as type, status, convert(varchar, id) id,'' as nssjys,'' as zcfx,'' as leibie,xtjsje,pichi,USERID from tb_sb_rzzn
+        UNION ALL
+        select passnumber,lurushijian,'股权激励奖励' as type, status, convert(varchar, id) id,'' as nssjys,'' as zcfx,'' as leibie,xtjsje,pichi,USERID from tb_sb_yggqjl 
+        UNION ALL
+        select passnumber,lurushijian,'发债贴息' as type, status, convert(varchar, id) id,'' as nssjys,'' as zcfx,'' as leibie,xtjsje,pichi,USERID from tb_sb_zwrz  
+        UNION ALL
+        select passnumber,lurushijian,'转增股本奖励' as type, status, convert(varchar, id) id,'' as nssjys,'' as zcfx,'' as leibie,xtjsje,pichi,USERID from tb_sb_zzgb  
+        UNION ALL
+        select passnumber,lurushijian,'贷款贴息' as type, stat as status, convert(varchar, id) id,'' as nssjys,'' as zcfx,'' as leibie,xtjsje,pichi,userid from tb_interest_app 
+        UNION ALL
+        select passnumber,lurushijian,'上市挂牌奖励' as type, status, convert(varchar, id) id, nssjys,'' as zcfx,'' as leibie,xtjsje,pichi,userid from tb_sb_ssgp 
+        UNION ALL
+        select passnumber,lurushijian,'信用评级补贴' as type, status, convert(varchar, id) id,'' as nssjys, zcfx,'' as leibie,xtjsje,pichi,userid from tb_sb_pj 
+        union all
+        select passnumber,co.lurushijian, po.policy_name type, co.status, co.id, po.policy_name nssjys, po.url zcfx, po.id leibie,xtjsje,pichi,userid from tb_sb_common co 
+        left join tb_sb_policy po on co.policy_id = po.id 
+        union all
+        select passnumber,gp.lurushijian, po.policy_name type, gp.status, gp.id, po.policy_name nssjys, po.url zcfx, po.id leibie,xtjsje,pichi,userid from tb_sb_gp gp
+        left join tb_sb_policy po on gp.policy_id = po.id 
+        union all
+        select passnumber,bo.lurushijian, po.policy_name type, bo.status, bo.id, po.policy_name nssjys, po.url zcfx, po.id leibie,xtjsje,pichi,userid from tb_sb_border bo
+        left join tb_sb_policy po on bo.policy_id = po.id 
+        union all
+        select '' passnumber,bo.createdate lurushijian, bo.name type, bo.chstatus status, bo.pkid id, bo.name nssjys, '' zcfx, '' leibie,null xtjsje,pichi,userid
+		from tb_app_policyapply bo
+    ) t left join tb_cust t1 on t.userid = t1.USERID left join tb_Qiye tq on t1.f_id = tq.PK_QIYEID left join Tb_jigou tj on t1.f_id = tj.ID left join tb_other_org too on t1.f_id = too.id
+     ) a where 1=1 
+        <if test=" policy_name !=null and  policy_name !=''">
+            and type like '%'+#{policy_name}+'%'
+        </if>
+        <if test=" userid !=null and  userid !=''">
+            and userid=#{userid}
+        </if>
+        <if test=" status !=null and  status !=''">
+            and status=#{status}
+        </if>
+        <if test=" cmpname !=null and  cmpname !=''">
+            and cmpname like '%'+#{cmpname}+'%'
+        </if>
+        <if test=" pichi !=null and  pichi !=''">
+            and pichi = #{pichi}
+        </if> 
+        <if test=" passnumber !=null and  passnumber !='' and passnumber =='10001' ">
+            and passnumber is not null and passnumber != ''
+        </if> 
+        )b
+    </select>
+    
+    <select id="manage.tbsbcommon.getQiyeInfo" parameterType="string" resultType="com.winpow.services.manage.qiye.bean.Qiye">
+    	select top(1)
+		isnull(q.qiyemingcheng,'') + isnull(j.jigoumingcheng,'') + isnull(o.org_name,'') qiyemingcheng,
+		isnull(q.receipt_bank,'') + isnull(j.receipt_bank,'') + isnull(o.receipt_bank,'') receipt_bank,
+		isnull(q.receipt_account,'') + isnull(j.receipt_account,'') + isnull(o.receipt_account,'') receipt_account,
+		isnull(q.receipt_payee,'') + isnull(j.receipt_payee,'') + isnull(o.receipt_payee,'') receipt_payee,
+		isnull(q.receipt_phone,'') + isnull(j.receipt_phone,'') + isnull(o.receipt_phone,'') receipt_phone
+		from tb_cust c
+		left join tb_qiye q on c.f_id=q.pk_qiyeid
+		left join tb_jigou j on c.f_id=j.id
+		left join tb_other_org o on c.f_id=o.id 
+    	where c.userid=#{_parameter}
+    </select>
+</mapper>  

@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC 
+"-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="manage">
+
+	<select id="manage.productapp.selectPageList"
+		parameterType="com.winpow.services.manage.productapp.bean.Productapp"
+		resultType="hashMap">
+		select * from (
+		SELECT
+		ROW_NUMBER() over(order by id desc) as rownumber , id,
+		userid,
+		username,
+		prodid,
+		prodname,
+		qiyemingcheng,
+		loanamt,
+		loanuser,
+		faren,
+		chengliriqi,
+		zhuceziben,
+		gszcd,
+		hangyeid,
+		zhuanli,
+		lastsellincome,
+		lastimcome,
+		lastloanamt,
+		sellincome,
+		imcome,
+		loanamt2,
+		lianxiren,
+		lianxidianh,
+		status,
+		checkuser,
+		lurushijian,
+		inputuser,memo,gszcd_province,gszcd_city,gszcd_county,blastsellincome,blastimcome,blastloanamt,
+		lastchgtime
+		from Tb_product_app where 1=1
+		<if test="qiyemingcheng!=null and qiyemingcheng!=''">
+			and qiyemingcheng like '%'+#{qiyemingcheng}+'%'
+		</if>
+		<if test="userid!=null and userid!=''">
+			and userid=#{userid}
+		</if>
+		<if test="status!=null and status!=''">
+			and status=#{status}
+		</if>
+		<if test="prodname!=null and prodname!=''">
+			and prodname like '%'+#{prodname}+'%'
+		</if>
+		)t where 1=1
+		and rownumber &gt; = #{offset} and rownumber &lt; = #{pageSize}+#{offset}
+	</select>
+	
+	<select id="manage.productapp.selectPageCount"
+		parameterType="com.winpow.services.manage.productapp.bean.Productapp"
+		resultType="java.lang.Integer">
+		select count(*) from Tb_product_app where 1=1
+		<if test="qiyemingcheng!=null and qiyemingcheng!=''">
+			and qiyemingcheng like '%'+#{qiyemingcheng}+'%'
+		</if>
+		<if test="userid!=null and userid!=''">
+			and userid=#{userid}
+		</if>
+		<if test="status!=null and status!=''">
+			and status=#{status}
+		</if>
+		<if test="prodname!=null and prodname!=''">
+			and prodname like '%'+#{prodname}+'%'
+		</if>
+	</select>
+
+	<select id="manage.productapp.selectOne"
+		parameterType="com.winpow.services.manage.productapp.bean.Productapp"
+		resultType="com.winpow.services.manage.productapp.bean.Productapp">
+		SELECT
+		id,
+		userid,
+		username,
+		prodid,
+		prodname,
+		qiyemingcheng,
+		loanamt,
+		loanuser,
+		faren,
+		chengliriqi,
+		zhuceziben,
+		gszcd,
+		hangyeid,
+		zhuanli,
+		lastsellincome,
+		lastimcome,
+		lastloanamt,
+		sellincome,
+		imcome,
+		loanamt2,
+		lianxiren,
+		lianxidianh,
+		status,
+		checkuser,
+		lurushijian,
+		inputuser,memo,gszcd_province,gszcd_city,gszcd_county,blastsellincome,blastimcome,blastloanamt,
+		lastchgtime
+		from Tb_product_app t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+	</select>
+
+	<select id="manage.productapp.selectCount"
+		parameterType="com.winpow.services.manage.productapp.bean.Productapp"
+		resultType="int">
+		select count(*)
+		FROM Tb_product_app t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+	</select>
+
+	<select id="manage.productapp.selectOneByCondition"
+		parameterType="com.winpow.services.manage.productapp.bean.Productapp"
+		resultType="com.winpow.services.manage.productapp.bean.Productapp">
+		SELECT
+		id,
+		userid,
+		username,
+		prodid,
+		prodname,
+		qiyemingcheng,
+		loanamt,
+		loanuser,
+		faren,
+		chengliriqi,
+		zhuceziben,
+		gszcd,
+		hangyeid,
+		zhuanli,
+		lastsellincome,
+		lastimcome,
+		lastloanamt,
+		sellincome,
+		imcome,
+		loanamt2,
+		lianxiren,
+		lianxidianh,
+		status,
+		checkuser,
+		lurushijian,
+		inputuser,memo,gszcd_province,gszcd_city,gszcd_county,blastsellincome,blastimcome,blastloanamt,
+		lastchgtime
+		from Tb_product_app t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+	</select>
+
+	<insert id="manage.productapp.insert"
+		parameterType="com.winpow.services.manage.productapp.bean.Productapp"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into Tb_product_app (
+
+		userid,
+		username,
+		prodid,
+		prodname,
+		qiyemingcheng,
+		loanamt,
+		loanuser,
+		faren,
+		chengliriqi,
+		zhuceziben,
+		gszcd,
+		hangyeid,
+		zhuanli,
+		lastsellincome,
+		lastimcome,
+		lastloanamt,
+		sellincome,
+		imcome,
+		loanamt2,
+		lianxiren,
+		lianxidianh,
+		status,
+		checkuser,
+		lurushijian,
+		inputuser,gszcd_province,gszcd_city,gszcd_county,blastsellincome,blastimcome,blastloanamt,
+		lastchgtime
+		) values (
+
+		#{userid},
+		#{username},
+		#{prodid},
+		#{prodname},
+		#{qiyemingcheng},
+		#{loanamt},
+		#{loanuser},
+		#{faren},
+		#{chengliriqi},
+		#{zhuceziben},
+		#{gszcd},
+		#{hangyeid},
+		#{zhuanli},
+		#{lastsellincome},
+		#{lastimcome},
+		#{lastloanamt},
+		#{sellincome},
+		#{imcome},
+		#{loanamt2},
+		#{lianxiren},
+		#{lianxidianh},
+		#{status},
+		#{checkuser},
+		getdate(),
+		#{inputuser},#{gszcd_province},#{gszcd_city},#{gszcd_county},#{blastsellincome},#{blastimcome},#{blastloanamt},
+		getdate()
+		)
+
+	</insert>
+
+	<update id="manage.productapp.update"
+		parameterType="com.winpow.services.manage.productapp.bean.Productapp">
+		update tb_product_app set
+
+
+
+		<if test="prodname!=null and prodname!=''">
+			prodname=#{prodname},
+		</if>
+		
+		<if test="prodid !=null and prodid!=''">
+			prodid=#{prodid},
+		</if>
+
+
+		<if test="status!=null and status!=''">
+			status=#{status},
+		</if>
+
+		<if test="checkuser!=null and checkuser!=''">
+			checkuser=#{checkuser},
+		</if>
+
+
+		<if test="memo!=null and memo!=''">
+			memo=#{memo},
+		</if>
+		lastchgtime=getdate()
+
+		where id=#{id}
+	</update>
+
+	<select id="manage.productapp.selectDynamic"
+		parameterType="com.winpow.services.manage.productapp.bean.Productapp"
+		resultType="com.winpow.core.oscache.Dynamic">
+		select top 12 columkey , dytype , compName , dystatus , dytime ,amt
+		,dytypedetail from
+		(select ID as columkey ,'1' as dytype ,qiyemingcheng as compname,case when
+		status=0 then '未提交' when status=10 then '初审中' when status=1 then '驳回'
+		when status=21 then '驳回' when status=20 then '请填写、提交详细资料' when
+		status=30 then '详细资料已提交待审核' when status=40 then '详细资料审查通过' when
+		status=50 then '项目评审通过' when status=60 then '担保公司审批通过' when status=70
+		then '银行审批通过' when status=80 then '金融办审批通过' when status=90 then
+		'银行放款完毕' else '' end as dystatus ,lurushijian as dytime ,shenqingjine
+		as amt,daikuanpingz as dytypedetail from tb_product_czd_base where
+		LURUSHIJIAN &gt; DATEADD(day,-100,GETDATE()) union all
+		select ID as columkey ,'2' as dytype ,username as compname ,STATUS as
+		dystatus ,LURUSHIJIAN as dytime , 0 as amt ,incename as dytypedetail
+		from tb_incre_app where LURUSHIJIAN &gt; DATEADD(day,-100,GETDATE())
+		union all
+		select ID as columkey ,'3' as dytype ,username as compname ,STATUS as
+		dystatus ,LURUSHIJIAN as dytime ,Incamt as amt ,INCRENAME as
+		dytypedetail from Tb_guquan_app where LURUSHIJIAN &gt;
+		DATEADD(day,-100,GETDATE()) union all
+		select ID as columkey ,'4' as dytype ,'***' as compname ,STATUS as dystatus
+		,LURUSHIJIAN as dytime ,jine as amt ,leixing as dytypedetail from
+		tb_index_app where LURUSHIJIAN &gt; DATEADD(day,-100,GETDATE()) union
+		all
+		select ID as columkey ,'5' as dytype ,qiyemingcheng as compname ,'发放成功' as
+		dystatus ,LURUSHIJIAN as dytime ,loanamt as amt ,prodname as
+		dytypedetail from tb_fund_app where LURUSHIJIAN &gt;
+		DATEADD(day,-100,GETDATE())
+		) t order by dytime desc
+	</select>
+
+	<select id="manage.productapp.selectDynamicList"
+		parameterType="com.winpow.services.manage.productapp.bean.Productapp"
+		resultType="hashMap">
+		select * from (
+		select ROW_NUMBER() over(order by dytime desc) as rownumber , columkey ,
+		dytype , compName , dystatus , dytime ,amt ,dytypedetail from
+		(select ID as columkey ,'1' as dytype ,qiyemingcheng as compname,case when
+		status=0 then '未提交' when status=10 then '初审中' when status=1 then '驳回'
+		when status=21 then '驳回' when status=20 then '请填写、提交详细资料' when
+		status=30 then '详细资料已提交待审核' when status=40 then '详细资料审查通过' when
+		status=50 then '项目评审通过' when status=60 then '担保公司审批通过' when status=70
+		then '银行审批通过' when status=80 then '金融办审批通过' when status=90 then
+		'银行放款完毕' else '' end as dystatus ,lurushijian as dytime ,shenqingjine
+		as amt,daikuanpingz as dytypedetail from tb_product_czd_base union all
+		select ID as columkey ,'2' as dytype ,username as compname ,STATUS as
+		dystatus ,LURUSHIJIAN as dytime , 0 as amt ,incename as dytypedetail
+		from tb_incre_app union all
+		select ID as columkey ,'3' as dytype ,INCRENAME as compname ,STATUS as
+		dystatus ,LURUSHIJIAN as dytime ,Incamt as amt ,'被约谈' as dytypedetail
+		from Tb_guquan_app union all
+		select ID as columkey ,'4' as dytype ,xingming as compname ,STATUS as
+		dystatus ,LURUSHIJIAN as dytime ,jine as amt ,leixing as dytypedetail
+		from tb_index_app union all
+		select ID as columkey ,'5' as dytype ,qiyemingcheng as compname ,'发放成功' as
+		dystatus ,LURUSHIJIAN as dytime ,loanamt as amt ,prodname as
+		dytypedetail from tb_fund_app where LURUSHIJIAN &gt;
+		DATEADD(day,-100,GETDATE())
+		) t ) tt where 1=1
+		and rownumber &gt; = #{offset} and rownumber &lt; = #{pageSize}+#{offset}
+	</select>
+
+	<select id="manage.productapp.selectDynamicCount"
+		parameterType="com.winpow.services.manage.productapp.bean.Productapp"
+		resultType="java.lang.Integer">
+		select count(*) from (
+		select ROW_NUMBER() over(order by dytime desc) as rownumber , columkey ,
+		dytype , compName , dystatus , dytime ,amt ,dytypedetail from
+		(select ID as columkey ,'1' as dytype ,qiyemingcheng as compname,case when
+		status=0 then '未提交' when status=10 then '初审中' when status=1 then '驳回'
+		when status=21 then '驳回' when status=20 then '请填写、提交详细资料' when
+		status=30 then '详细资料已提交待审核' when status=40 then '详细资料审查通过' when
+		status=50 then '项目评审通过' when status=60 then '担保公司审批通过' when status=70
+		then '银行审批通过' when status=80 then '金融办审批通过' when status=90 then
+		'银行放款完毕' else '' end as dystatus ,lurushijian as dytime ,shenqingjine
+		as amt,daikuanpingz as dytypedetail from tb_product_czd_base union all
+		select ID as columkey ,'2' as dytype ,username as compname ,STATUS as
+		dystatus ,LURUSHIJIAN as dytime , 0 as amt ,incename as dytypedetail
+		from tb_incre_app union all
+		select ID as columkey ,'3' as dytype ,username as compname ,STATUS as
+		dystatus ,LURUSHIJIAN as dytime ,Incamt as amt ,INCRENAME as
+		dytypedetail from Tb_guquan_app union all
+		select ID as columkey ,'4' as dytype ,xingming as compname ,STATUS as
+		dystatus ,LURUSHIJIAN as dytime ,jine as amt ,leixing as dytypedetail
+		from tb_index_app union all
+		select ID as columkey ,'5' as dytype ,qiyemingcheng as compname ,'发放成功' as
+		dystatus ,LURUSHIJIAN as dytime ,loanamt as amt ,prodname as
+		dytypedetail from tb_fund_app where LURUSHIJIAN &gt;
+		DATEADD(day,-100,GETDATE())
+		) t ) tt where 1=1
+		and rownumber &gt; = #{offset} and rownumber &lt; = #{pageSize}+#{offset}
+	</select>
+
+<select id="manage.productapp.selectCzdBaseByReleid"
+        parameterType="String"
+        resultType="com.winpow.services.manage.productczdbase.bean.Productczdbase">
+        select t2.* from Tb_product_app t1 left join tb_product_czd_base t2 on t1.ID = t2.releid where t1.ID=#{id} and t2.id is not null; 
+    </select>
+
+</mapper>  

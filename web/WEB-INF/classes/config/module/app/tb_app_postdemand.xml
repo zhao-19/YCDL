@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+"-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="app">
+
+	<select id="app.apppostdemand.selectPageList"
+		parameterType="com.winpow.services.app.apppostdemand.bean.Apppostdemand"
+		resultType="hashMap">
+		select * from (
+		 SELECT ROW_NUMBER() over(order by create_time desc) as rownumber ,t.*,case when tq.PK_QIYEID is not null then tq.QIYEMINGCHENG when tj.ID is not null then tj.JIGOUMINGCHENG when too.id is not null then too.org_name else '--' end as cmpname from (
+        SELECT pkid,userid,bewrite,chstatus,create_time,case when gener = '' then '股权融资需求' else '其他需求' end as type,
+        '-' as ispost,gener,reviwer_id from tb_app_postdemand 
+        union all 
+        select pkid,userid,title,chstatus,create_time,genre as type,'-' as ispost,genre,reviwer_id from tb_app_added_product where genre in ('11221','11224','11225','11226' )
+        union all
+        select pkid,userid,case when (select PRODNAME from Tb_product where ID = t1.proid) is null then '贷款申请' else (select PRODNAME from Tb_product where ID = t1.proid) end,chstatus,createdate,'贷款产品需求','-','11222',checkid from tb_app_loan_app t1
+        union all
+        select pkid,userid,genre,chstatus,createdate,'培训活动需求','-','11227',reviwer_id from tb_app_activities_apply
+        union all
+        select at.pkid,at.userid,at.content,at.chstatus,at.createdate,'融资辅导需求',case when pt.pkid IS null then '10002' else '10001' end,'11228',reviwer_id  from tb_app_topic at left join tb_pc_topic pt on at.pkid=pt.appid
+        )t 
+        left join tb_cust t1 on t.userid = t1.USERID left join tb_Qiye tq on t1.f_id = tq.PK_QIYEID left join Tb_jigou tj on t1.f_id = tj.ID left join tb_other_org too on t1.f_id = too.id
+         where 1=1 
+    
+        <if test=" userid !=null and  userid !=''">
+            and t.userid=#{userid}
+        </if>
+        <if test=" gener !=null and  gener !=''">
+            and t.gener=#{gener}
+        </if>
+        ) a where rownumber &gt;  #{offset} and rownumber
+		&lt; = #{pageSize}+#{offset}
+	</select>
+	<select id="app.apppostdemand.selectPageCount"
+		parameterType="com.winpow.services.app.apppostdemand.bean.Apppostdemand"
+		resultType="java.lang.Integer">
+
+        SELECT count(*) from (
+        SELECT userid,bewrite,chstatus,create_time,case when gener = '' then '股权融资需求' else '其他需求' end as type,
+        '-' as ispost from tb_app_postdemand 
+        union all 
+        select userid,title,chstatus,create_time,case genre when  '11221' then '中介服务需求' when '11224' then '企业服务需求' when '11225' then '企业产品需求' else '技术服务需求' end,'-' as ispost from tb_app_added_product where genre in ('11221','11224','11225','11226' )
+        union all
+        select userid,case when (select PRODNAME from Tb_product where ID = t1.proid) is null then '贷款申请' else (select PRODNAME from Tb_product where ID = t1.proid) end,chstatus,createdate,'贷款产品申请','-' from tb_app_loan_app t1
+        union all
+        select userid,genre,chstatus,createdate,'培训活动需求','-' from tb_app_activities_apply
+        union all
+        select at.userid,at.content,at.chstatus,at.createdate,'融资辅导需求',case when pt.pkid IS null then '否' else '是' end  from tb_app_topic at left join tb_pc_topic pt on at.pkid=pt.appid
+        )t 
+
+	</select>
+
+	<select id="app.apppostdemand.selectOne"
+		parameterType="com.winpow.services.app.apppostdemand.bean.Apppostdemand"
+		resultType="com.winpow.services.app.apppostdemand.bean.Apppostdemand">
+		SELECT
+		pkid,
+		chno,
+		userid,
+		bewrite,
+		chstatus,
+		reviwer_id,
+		review_date,
+		return_reason,
+		gener,
+		create_time,
+		updatedate
+		from tb_app_postdemand t
+		where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+
+	<select id="app.apppostdemand.selectCount"
+		parameterType="com.winpow.services.app.apppostdemand.bean.Apppostdemand"
+		resultType="int">
+		select count(*)
+		FROM tb_app_postdemand t where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+
+	<select id="app.apppostdemand.selectOneByCondition"
+		parameterType="com.winpow.services.app.apppostdemand.bean.Apppostdemand"
+		resultType="com.winpow.services.app.apppostdemand.bean.Apppostdemand">
+		SELECT
+		pkid,
+		chno,
+		userid,
+		bewrite,
+		chstatus,
+		reviwer_id,
+		review_date,
+		return_reason,
+		gener,
+		create_time,
+		updatedate
+		from tb_app_postdemand t
+		where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+
+	<select id="app.apppostdemand.selectList"
+		parameterType="com.winpow.services.app.apppostdemand.bean.Apppostdemand"
+		resultType="com.winpow.services.app.apppostdemand.bean.Apppostdemand">
+		SELECT
+		pkid,
+		chno,
+		userid,
+		bewrite,
+		chstatus,
+		reviwer_id,
+		review_date,
+		return_reason,
+		gener,
+		create_time,
+		updatedate
+		from tb_app_postdemand t
+		where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+
+	<insert id="app.apppostdemand.insert"
+		parameterType="com.winpow.services.app.apppostdemand.bean.Apppostdemand"
+		useGeneratedKeys="true" keyProperty="id">
+		declare @cnno int
+		exec @cnno = getchnoseq
+		insert into tb_app_postdemand (
+		pkid,
+		chno,
+		userid,
+		bewrite,
+		chstatus,
+		reviwer_id,
+		review_date,
+		return_reason,
+		gener,
+		create_time,
+		updatedate
+		) values (
+		#{pkid},
+		(select 'gqxq' +
+		right('0000000000' + cast(@cnno as varchar(10)), 10)),
+		#{userid},
+		#{bewrite},
+		#{chstatus},
+		#{reviwer_id},
+		#{review_date},
+		#{return_reason},
+		#{gener},
+		getdate(),
+		getdate()
+		)
+
+	</insert>
+
+	<update id="app.apppostdemand.update"
+		parameterType="com.winpow.services.app.apppostdemand.bean.Apppostdemand">
+		update tb_app_postdemand set
+		<if test=" userid !=null and  userid !=''">
+			userid=#{userid},
+		</if>
+
+		<if test=" bewrite !=null and  bewrite !=''">
+			bewrite=#{bewrite},
+		</if>
+
+		<if test=" chstatus !=null and  chstatus !=''">
+			chstatus=#{chstatus},
+		</if>
+
+		<if test=" reviwer_id !=null and  reviwer_id !=''">
+			reviwer_id=#{reviwer_id},
+		</if>
+
+		<if test=" review_date !=null and  review_date !=''">
+			review_date=getdate(),
+		</if>
+
+		<if test=" return_reason !=null and  return_reason !=''">
+			return_reason=#{return_reason},
+		</if>
+
+		<if test=" gener !=null and  gener !=''">
+			gener=#{gener},
+		</if>
+
+		updatedate=getdate()
+		where pkid=#{pkid}
+	</update>
+	
+	<select id="app.apppostdemand.getOtherPublish" parameterType="com.winpow.services.app.apppostdemand.bean.Apppostdemand"
+		resultType="com.winpow.services.app.apppostdemand.bean.Apppostdemand">
+		select top ${pageSize} * from (
+			select row_number() over (order by create_time desc) as rownumber,* from(
+				select 'gqxq' type,'其它需求' typename,pkid,chno,userid,bewrite,chstatus,return_reason,gener,create_time,reviwer_id
+				from tb_app_postdemand where 1=1 
+				<choose>
+			        <when test=" userid !=null and  userid !=''">
+			            and userid=#{userid}
+			        </when>
+			        <when test=" pkid !=null and  pkid !=''">
+			            and userid in (select userid from tb_cust where f_id=#{pkid})
+			        </when>
+			         <when test=" reviwer_id !=null and  reviwer_id !=''">
+			            and reviwer_id=#{reviwer_id}
+			        </when>
+		       </choose>
+				union all 
+				select 'pxxq' type,'培训需求（'+ c.code_name +'）' typename,
+				pkid,chno,userid,bewrite,chstatus,reviwer_remark return_reason,genre gener,createdate create_time,reviwer_id
+				from tb_app_activities_apply  ap
+				left join tb_code c on ap.genre=c.pk_codeid 
+				where 1=1
+				<choose>
+			        <when test=" userid !=null and  userid !=''">
+			            and userid=#{userid}
+			        </when>
+			        <when test=" pkid !=null and  pkid !=''">
+			            and userid in (select userid from tb_cust where f_id=#{pkid})
+			        </when>
+			        <when test=" reviwer_id !=null and  reviwer_id !=''">
+			            and reviwer_id=#{reviwer_id}
+			        </when>
+		       </choose>
+			) b
+		) a where rownumber > ${pageSize}*(${offset} - 1)
+	</select>
+
+</mapper>  

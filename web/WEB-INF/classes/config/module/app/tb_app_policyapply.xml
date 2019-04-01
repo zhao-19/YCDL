@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+"-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="app">
+
+	<select id="app.apppolicyapply.selectPageList"
+		parameterType="com.winpow.services.app.apppolicyapply.bean.Apppolicyapply"
+		resultType="hashMap">
+		select top ${pageSize} * from (
+			select * from(
+				select row_number() over(order by updatedate desc) as rownumber ,
+		        t1.*,t2.policy_name policyname,
+		        case when tq.pk_qiyeid is not null then tq.qiyemingcheng 
+		        when tj.id is not null then tj.jigoumingcheng
+		        when too.id is not null then too.org_name else '--' end as cmpname
+		        from tb_app_policyapply t1 
+		        left join tb_sb_policy t2 on t1.policyid = t2.id 
+		        left join tb_cust t3 on t1.userid = t3.userid 
+		        left join tb_qiye tq on t3.f_id = tq.pk_qiyeid 
+		        left join tb_jigou tj on t3.f_id = tj.id 
+		        left join tb_other_org too on t3.f_id = too.id
+	        ) a
+	        where 1=1
+	        <if test=" chstatus !=null and  chstatus !=''">
+				and chstatus=#{chstatus}
+			</if>
+			<if test=" cmpname !=null and  cmpname !=''">
+				and cmpname like '%' + #{cmpname} + '%'
+			</if>
+	    ) a   where rownumber > ${pageSize} *(${offset} - 1)
+		
+	</select>
+	<select id="app.apppolicyapply.selectPageCount"
+		parameterType="com.winpow.services.app.apppolicyapply.bean.Apppolicyapply"
+		resultType="java.lang.Integer">
+		select count(*) from(
+			select t1.chstatus,
+	        case when tq.pk_qiyeid is not null then tq.qiyemingcheng 
+	        when tj.id is not null then tj.jigoumingcheng
+	        when too.id is not null then too.org_name else '--' end as cmpname
+	        from tb_app_policyapply t1 
+	        left join tb_cust t3 on t1.userid = t3.userid 
+	        left join tb_qiye tq on t3.f_id = tq.pk_qiyeid 
+	        left join tb_jigou tj on t3.f_id = tj.id 
+	        left join tb_other_org too on t3.f_id = too.id
+		) a
+		where 1=1
+		<if test=" chstatus !=null and  chstatus !=''">
+			and chstatus=#{chstatus}
+		</if>
+		<if test=" cmpname !=null and  cmpname !=''">
+			and cmpname like '%' + #{cmpname} + '%'
+		</if>
+	</select>
+
+	<select id="app.apppolicyapply.selectOne"
+		parameterType="com.winpow.services.app.apppolicyapply.bean.Apppolicyapply"
+		resultType="com.winpow.services.app.apppolicyapply.bean.Apppolicyapply">
+		select top(1) * from(
+			select t1.*,t2.policy_name policyname,
+	        case when tq.pk_qiyeid is not null then tq.qiyemingcheng 
+	        when tj.id is not null then tj.jigoumingcheng
+	        when too.id is not null then too.org_name else '--' end as cmpname
+	        from tb_app_policyapply t1 
+	        left join tb_sb_policy t2 on t1.policyid = t2.id 
+	        left join tb_cust t3 on t1.userid = t3.userid 
+	        left join tb_qiye tq on t3.f_id = tq.pk_qiyeid 
+	        left join tb_jigou tj on t3.f_id = tj.id 
+	        left join tb_other_org too on t3.f_id = too.id
+		) a
+		where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and pkid=#{pkid}
+		</if>
+	</select>
+
+	<select id="app.apppolicyapply.selectCount"
+		parameterType="com.winpow.services.app.apppolicyapply.bean.Apppolicyapply"
+		resultType="int">
+		select count(*) from tb_app_policyapply t where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+
+	<select id="app.apppolicyapply.selectOneByCondition"
+		parameterType="com.winpow.services.app.apppolicyapply.bean.Apppolicyapply"
+		resultType="com.winpow.services.app.apppolicyapply.bean.Apppolicyapply">
+		select * from tb_app_policyapply t where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+
+	<select id="app.apppolicyapply.selectList"
+		parameterType="com.winpow.services.app.apppolicyapply.bean.Apppolicyapply"
+		resultType="com.winpow.services.app.apppolicyapply.bean.Apppolicyapply">
+		select * from tb_app_policyapply t where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+		<if test="userid!=null and userid!=''">
+			and t.userid=#{userid}
+		</if>
+		<if test="policyid!=null and policyid!=''">
+			and t.policyid=#{policyid}
+		</if>
+	</select>
+
+	<insert id="app.apppolicyapply.insert"
+		parameterType="com.winpow.services.app.apppolicyapply.bean.Apppolicyapply"
+		useGeneratedKeys="true" keyProperty="id">
+		declare @cnno int
+        exec @cnno =  getchnoseq
+		insert into tb_app_policyapply (
+		pkid,
+		chno,
+		userid,
+		policyid,
+		amount,
+		chstatus,
+		pichi,
+		createdate,
+		updateby,
+		updatedate,
+		remark,
+        reviwer_id,
+        reviwer_date,
+        reviwer_remark,name,source
+		) values (
+		#{pkid},
+		(select 'zcsb' + right('0000000000' + cast(@cnno as varchar(10)), 10)),
+		#{userid},
+		#{policyid},
+		#{amount},
+		#{chstatus},
+		#{pichi},
+		getdate(),
+		#{updateby},
+		getdate(),
+		#{remark},
+        #{reviwer_id},
+        #{reviwer_date},
+        #{reviwer_remark},#{name},#{source}
+		)
+
+	</insert>
+
+	<update id="app.apppolicyapply.update"
+		parameterType="com.winpow.services.app.apppolicyapply.bean.Apppolicyapply">
+		update tb_app_policyapply set
+		<if test=" userid !=null and  userid !=''">
+			userid=#{userid},
+		</if>
+
+		<if test=" policyid !=null and  policyid !=''">
+			policyid=#{policyid},
+		</if>
+
+		<if test=" amount !=null">
+			amount=#{amount},
+		</if>
+
+		<if test=" chstatus !=null and  chstatus !=''">
+			chstatus=#{chstatus},
+		</if>
+
+		<if test=" pichi !=null and  pichi !=''">
+			pichi=#{pichi},
+		</if>
+
+		<if test=" updateby !=null and  updateby !=''">
+			updateby=#{updateby},
+		</if>
+
+		<if test="remark!=null and remark !=''">
+			remark=#{remark},
+		</if>
+        <if test=" reviwer_id !=null and  reviwer_id !=''">
+            reviwer_id=#{reviwer_id},
+        </if>
+        <if test=" reviwer_date !=null and  reviwer_date !=''">
+            reviwer_date=getdate(),
+        </if>
+        <if test=" reviwer_remark !=null and  reviwer_remark !=''">
+            reviwer_remark=#{reviwer_remark},
+        </if>
+		<if test=" name !=null and  name !=''">
+            name=#{name},
+        </if>
+        <if test=" source !=null and  source !=''">
+            source=#{source},
+        </if>
+		updatedate=getdate()
+		where pkid=#{pkid}
+	</update>
+	
+<select id="app.apppolicyapply.selectAllBT" resultType="hashMap" parameterType="com.winpow.services.app.apppolicyapply.bean.Apppolicyapply">
+select top ${pageSize} * from (
+	select row_number() over (order by lurushijian desc) as rownumber,* from(
+		select a.*,p.policy_name,p.sub_describe from(
+			select convert(varchar,id) id,'btz' type,userid,status,qysqje,xtjsje,lurushijian,'3eff48cae44a41b1bb570b13b631a5b7' poid,'' remark,'' reviwer_id,pichi from tb_sb_btz
+			union all
+			select convert(varchar,id) id,'czbg' type,userid,status,qysqje,xtjsje,lurushijian,'3b1ae2ef7d714f9aa0d23330aaaecc60' poid,'' remark,'' reviwer_id,pichi from tb_sb_czbg 
+			union all
+			select convert(varchar,id) id,'gfzgz' type,userid,status,qysqje,xtjsje,lurushijian,'5ac1343dc9f44104bd1d35137a2e285f' poid,'' remark,'' reviwer_id,pichi from tb_sb_gfzgz 
+			union all
+			select convert(varchar,id) id,'ipo' type,userid,status,qysqje,xtjsje,lurushijian,'c97d10ee282c4e7492c6dfca2d8a81d8' poid,'' remark,'' reviwer_id,pichi from tb_sb_ipo 
+			union all
+			select convert(varchar,id) id,'jwzb' type,userid,status,qysqje,xtjsje,lurushijian,'19405a8899fa44e1aeb2b2233d9e05f8' poid,'' remark,'' reviwer_id,pichi from tb_sb_jwzb
+			union all
+			select convert(varchar,id) id,'kjbx' type,userid,status,qysqje,xtjsje,lurushijian,'24e4705e37684b52b70cbe9b9f2cf9d0' poid,'' remark,'' reviwer_id,pichi from tb_sb_kjbx
+			union all
+			select convert(varchar,id) id,'rzzn' type,userid,status,qysqje,xtjsje,lurushijian,'217a3a328e9e471f8fb10ec9865fcf07' poid,'' remark,'' reviwer_id,pichi from tb_sb_rzzn
+			union all
+			select convert(varchar,id) id,'yggqjl' type,userid,status,sbje qysqje,xtjsje,lurushijian,'96490c4236bd4672affc6e7a3da5cb58' poid,'' remark,'' reviwer_id,pichi from tb_sb_yggqjl
+			union all
+			select convert(varchar,id) id,'zwrz' type,userid,status,qysqje,xtjsje,lurushijian,'b9f522a9b43f4d2e96e848dfd917921f' poid,'' remark,'' reviwer_id,pichi from tb_sb_zwrz
+			union all
+			select convert(varchar,id) id,'zzgb' type,userid,status,qysqje,xtjsje,lurushijian,'6d00b081869f48bf9824124110b4258a' poid,'' remark,'' reviwer_id,pichi from tb_sb_zzgb
+			union all
+			select convert(varchar,id) id,'interest_app' type,userid,stat,qysqje,xtjsje,lurushijian,'717fe76c435d48dc82557e17ecf7a118' poid,'' remark,'' reviwer_id,pichi from tb_interest_app
+			union all
+			select convert(varchar,id) id,'ssgp' type,userid,status,qysqje,xtjsje,lurushijian,'f17ec4b7496b41a99a8362432c377a97' poid,'' remark,'' reviwer_id,pichi from tb_sb_ssgp
+			union all
+			select convert(varchar,id) id,'pj' type,userid,status,sbje qysqje,xtjsje,lurushijian,'76e15fc2cd464f0c8c193484e1514636' poid,'' remark,'' reviwer_id,pichi from tb_sb_pj
+			union all
+			select convert(varchar,id) id,'gp' type,userid,status,qysqje,xtjsje,lurushijian,policy_id poid,'' remark,'' reviwer_id,pichi from tb_sb_gp
+			union all
+			select convert(varchar,id) id,'border' type,userid,status,qysqje,xtjsje,lurushijian,policy_id poid,'' remark,'' reviwer_id,pichi from tb_sb_border
+			union all
+			select convert(varchar,id) id,'common' type,userid,status,qysqje,xtjsje,lurushijian,policy_id poid,'' remark,'' reviwer_id,pichi from tb_sb_common
+			union all
+			select pkid id,'policyapply' type,userid,chstatus status,amount qysqje,null xtjsje,createdate lurushijian,policyid poid,reviwer_remark remark,reviwer_id,pichi from tb_app_policyapply
+		) a left join tb_sb_policy p on a.poid=p.id
+		where 1=1
+		<if test=" pichi !=null and  pichi !=''">
+			and a.pichi=#{pichi}
+		</if>
+		<choose>
+	        <when test=" userid !=null and  userid !=''">
+	            and a.userid=#{userid}
+	        </when>
+	        <when test=" pkid !=null and  pkid !=''">
+	            and a.userid in (select userid from tb_cust where f_id=#{pkid})
+	        </when>
+	    </choose>
+	) b
+) a where rownumber > ${pageSize}*(${offset} - 1)
+</select>
+	
+	<select id="app.apppolicyapply.getapplytimes" parameterType="list" resultType="map">
+		select policyid name,convert(varchar, count(*)) val from tb_app_policyapply where policyid in
+		<foreach item="item" index="index" collection="list" open="(" separator="," close=")">  
+  			#{item}  
+ 		</foreach>
+		group by policyid;
+	</select>
+	
+	<select id="app.apppolicyapply.getUserApplytimes" parameterType="com.winpow.services.app.apppolicyapply.bean.Apppolicyapply" resultType="map">
+		select 'count' name,convert(varchar, count(*)) val from tb_app_policyapply where policyid=#{policyid}
+		<if test=" userid !=null and  userid !=''">
+			union all
+			select 'apply' name,pkid val from tb_app_policyapply where policyid=#{policyid} and userid=#{userid}
+		</if>
+	</select>
+
+
+</mapper>  

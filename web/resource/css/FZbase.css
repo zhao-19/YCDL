@@ -1,0 +1,77 @@
+/*
+*分站后台定制样式*
+*/
+
+
+/*分站搜索表格*/
+.FZbPageBody .bodyBox{padding:20px;}
+.FZbPageBody .table-search{margin-bottom: 20px;    border: 0;}
+.FZbPageBody .table-search td{border:0;padding:5px;line-height: 36px;}
+.FZbPageBody .table-search input{height:34px;line-height: 34px;}
+.FZbPageBody .table-search .btn{padding: 7px 20px;}
+.FZbPageBody .operbtns{padding:20px 10px;}
+
+.FZbPageBody  thead>tr.table_title{background: #3b8cff;color: #fff;}
+.FZbPageBody  thead th{white-space: nowrap;}
+.FZbPageBody .table-striped th,.FZbPageBody .table-striped td{padding:10px 5px;border:0;}
+.FZbPageBody .table-striped tbody>tr:nth-child(odd)>td, .FZbPageBody .table-striped tbody>tr:nth-child(odd)>th{background: none;}
+.FZbPageBody .table-striped tbody>tr:nth-child(even)>td, .FZbPageBody .table-striped tbody>tr:nth-child(even)>th{background: none;}
+.FZbPageBody .table-striped tbody>tr:nth-child(even){background: #f6faff;}
+.FZbPageBody .table-striped tbody>tr:hover{background:#eff3f8 !important;}
+
+
+.FZbPageBody .btn-info,.FZbPageBody .btn-success{background: #1bcfb4;color: #fff !important;}
+.FZbPageBody .btn-info:hover,.FZbPageBody .btn-info:focus,.FZbPageBody .btn-info:active,.FZbPageBody .btn-info.active,.FZbPageBody .btn-info.disabled,.FZbPageBody .btn-info[disabled]{background: #12bca3;}
+.FZbPageBody .btn-success:hover,.FZbPageBody .btn-success:focus,.FZbPageBody .btn-success:active,.FZbPageBody .btn-success.active,.FZbPageBody .btn-success.disabled,.FZbPageBody .btn-success[disabled]{background: #12bca3;}
+
+.FZbPageBody .btn-warning{background: #fe9213;}
+.FZbPageBody .btn-warning:hover,.FZbPageBody .btn-warning:focus,.FZbPageBody .btn-warning:active,.FZbPageBody .btn-warning.active,.FZbPageBody .btn-warning.disabled,.FZbPageBody .btn-warning[disabled]{background:#f48a0c; }
+.FZbPageBody .btn-danger{background: #fe7c96;}
+.FZbPageBody .btn-danger:hover,.FZbPageBody .btn-danger:focus,.FZbPageBody .btn-danger:active,.FZbPageBody .btn-danger.active,.FZbPageBody .btn-danger.disabled,.FZbPageBody .btn-danger[disabled]{background:#f26d88; }
+
+.FZbPageBody .btn-border{background: none;border:1px solid #1bcfb4;color: #1bcfb4;}
+.FZbPageBody .btn-border:hover{background: none;border:1px solid #12bca3;color: #12bca3;}
+
+.FZbPageBody .moreoper{background-color: transparent;color: #333 !important;}
+
+.FZbPageBody .moreoperlist>li>span,.FZbPageBody  .moreoperlist>li>a{color:#3b8cff;}
+.FZbPageBody .moreoperlist>li:hover{background: #f6faff;}
+.FZbPageBody .moreoperlist{box-shadow:none;border-color: #c0d9fe;}
+
+
+.FZbPageBody .table_title{text-align: left;font-weight: bold;font-size:14px;background-color: #3b8cff;color: #fff;}
+.FZbPageBody .table_title>td{color: #fff !important;}
+
+.FZbPageBody .layui-layer-lan .layui-layer-title {background: none;padding:10px 10px 0;color: #424e67;cursor: pointer;}
+.FZbPageBody .layui-layer-setwin{top:22px;left:0px;    width: 100px;height: 20px;}
+.FZbPageBody  .layui-layer-close{width: 100px;  height: 20px;  background: transparent;cursor: pointer !important;}
+.FZbPageBody  .layui-layer-setwin:hover~.layui-layer-title{text-decoration: underline;}
+
+.FZbPageBody .iframeChild .layui-layer-close {opacity: 1;    width: 16px;height: 16px;background: url(../../js/common/layer/theme/default/icon.png) no-repeat 1px -40px;}
+.FZbPageBody .iframeChild .layui-layer-setwin{    right: 15px;top: 15px;left: auto;width: 20px;}
+.FZbPageBody .table-bordered{border-top: 0;margin-top:20px;}
+.FZbPageBody .table{margin-top:20px;}
+.FZbPageBody input,.FZbPageBody select,.FZbPageBody textarea{margin-bottom:0;}
+.FZbPageBody .table-bordered th, .FZbPageBody .table-bordered td{color: #424e67;font-weight: normal;line-height: 24px;}
+.FZbPageBody .table-bordered th span{font-size: 12px;color: #999;}
+.FZbPageBody .table-bordered th i{color: red;}
+.FZbPageBody .ui-widget-content{border-color: #d8dfea;}
+.FZbPageBody .ui-tabs .ui-tabs-nav{background: #fff;border:0;border-bottom:1px solid #d8dfea;}
+.FZbPageBody .ui-tabs .ui-tabs-nav li{border:0;background: #fff;margin:0 15px;}
+.FZbPageBody .ui-tabs .ui-tabs-nav li.ui-tabs-active a{color:#3b8cff;border-bottom: 4px solid #3b8cff;}
+
+
+label.labelContain,label.labelAll{width: 14px;height: 14px;margin:0 !important;cursor: pointer;
+    background: url("../images/fenzhan/label.png") no-repeat center;
+}
+label.labelContain>input,label.labelAll>input{margin:0 !important;vertical-align:top; opacity: 0;}
+.checkboxLabel{padding-left: 18px;background: url("../images/fenzhan/label.png") no-repeat 0 center;}
+label.labelContain.on,label.labelAll.on,.checkboxLabel.on{background-image: url("../images/fenzhan/labelOn.png");}
+
+
+
+
+
+input[disabled], select[disabled], textarea[disabled], input[readonly], select[readonly], textarea[readonly]{background: #f7f7f7;}
+button, input[type="button"], input[type="reset"], input[type="submit"]{border:1px solid #ccc;background: #f7f7f7;color: #666;}
+button:hover, input[type="button"]:hover, input[type="reset"]:hover, input[type="submit"]:hover{background: #f1f1f1;color: #333;}

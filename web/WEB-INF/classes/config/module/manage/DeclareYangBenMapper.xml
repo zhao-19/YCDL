@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.winpow.services.manage.declare.mapper.DeclareYangBenMapper">
+
+    <select id="selectPageList"
+            parameterType="com.winpow.services.manage.declare.bean.DeclareYangBen" resultType="hashMap">
+        select * from (
+        SELECT  ROW_NUMBER() over(order by id) as  rownumber ,
+        id,
+        pictype,
+        pictypename,
+        picpath,
+        picpathsmall,
+        lurushijian,
+        inputuser,
+        lastchgtime
+        from tb_sb_yangben where 1=1
+        <if test="pictypename != null and pictypename != ''">
+            and pictypename like '%' + #{pictypename} + '%'
+        </if>
+         )t  where rownumber &gt; = #{offset} and rownumber &lt; = #{pageSize}+#{offset}
+    </select>
+    <select id="selectPageCount"
+            parameterType="com.winpow.services.manage.declare.bean.DeclareYangBen"
+            resultType="java.lang.Integer">
+        select count(id) from (
+        SELECT  ROW_NUMBER() over(order by id) as  rownumber ,
+        id,
+        pictype,
+        pictypename,
+        picpath,
+        picpathsmall,
+        lurushijian,
+        inputuser,
+        lastchgtime
+        from tb_sb_yangben where 1=1
+        <if test="pictypename != null and pictypename != ''">
+            and pictypename like '%' + #{pictypename} + '%'
+        </if>
+         )t
+    </select>
+
+    <select id="selectOne"
+            parameterType="com.winpow.services.manage.declare.bean.DeclareYangBen"
+            resultType="com.winpow.services.manage.declare.bean.DeclareYangBen">
+        SELECT TOP 1
+        id,
+        pictype,
+        pictypename,
+        picpath,
+        picpathsmall,
+        lurushijian,
+        inputuser,
+        lastchgtime
+        from tb_sb_yangben t  where t.id=#{id}
+    </select>
+
+    <select id="selectAllList"
+            parameterType="com.winpow.services.manage.declare.bean.DeclareYangBen"
+            resultType="com.winpow.services.manage.declare.bean.DeclareYangBen">
+        SELECT
+        id,
+        pictype,
+        pictypename,
+        picpath,
+        picpathsmall,
+        lurushijian,
+        inputuser,
+        lastchgtime
+        from  tb_sb_yangben t
+    </select>
+
+    <insert id="insert"
+            parameterType="com.winpow.services.manage.declare.bean.DeclareYangBen" useGeneratedKeys="true"
+            keyProperty="id">
+		insert into tb_sb_yangben (
+													 	pictype,
+                                                        pictypename,
+                                                        picpath,
+                                                        picpathsmall,
+													 	lurushijian,
+													 	inputuser,
+													  lastchgtime
+			 						) values (
+				 										 	#{pictype},
+				 										 	#{pictypename},
+				 										 	#{picpath},
+				 										 	#{picpathsmall},
+				 										 	getdate(),
+				 										 	#{inputuser},
+				 											getdate()
+				 						)
+	</insert>
+
+    <update id="update"
+            parameterType="com.winpow.services.manage.declare.bean.DeclareYangBen">
+        update tb_sb_yangben set
+
+        <if test=" pictype !=null and  pictype !=''">
+            pictype=#{pictype},
+        </if>
+
+        <if test=" pictypename !=null and  pictypename !=''">
+            pictypename=#{pictypename},
+        </if>
+
+        <if test=" picpath !=null and  picpath !=''">
+            picpath=#{picpath},
+        </if>
+
+        <if test=" picpathsmall !=null and  picpathsmall !=''">
+            picpathsmall=#{picpathsmall},
+        </if>
+            lastchgtime=getdate()
+
+        where id=#{id}
+    </update>
+    <delete id="delete">
+        delete tb_sb_yangben where id=#{id}
+    </delete>
+</mapper>  

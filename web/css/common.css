@@ -1,0 +1,86 @@
+
+
+body,ul,ol,dl,dd,h1,h2,h3,h4,h5,h6,p,input,select,textarea,form{margin: 0; padding: 0;}
+body{font:14px/1.5 "微软雅黑";}
+img{border:none;    max-width: 100%;}
+ul,li,ol{list-style:none;}
+input,select,textarea{outline:none;border:none;background:none;}
+textarea{resize:none;}
+a{text-decoration:none;}
+a:focus{outline:none;}
+tr,td,th{margin:0;padding:0;text-align:center;cellspacing:0;cellpadding:0;border-spacing:0;}
+a {	color:#000; text-decoration:none;}
+a:link,visited,active { text-decoration: none;}
+a:hover {text-decoration:underline;}
+
+
+a {outline: none;}
+a:active {star:expression(this.onFocus=this.blur());}
+:focus { outline:0; }
+
+/*清浮动*/
+.clearfix:after{content:"";*display:block;clear:both;}
+.clearfix{zoom:1;}
+.fl{float:left;}
+.fr{float:right;}
+#loadmorewordh{margin-bottom: 35px;width:1189px;height:40px;background-color:#ccc;text-align:center;line-height:40px;overflow:hidden;cursor:pointer;float:left;}
+#loadmorewordh:hover{color:#000;}
+
+
+/*公共提示框*/
+.ggts{box-shadow: 3px 3px 3px #787878;color: #ef6000;text-align: center;text-shadow: 1px 2px 3px;border-radius: 0.1rem;height: 2rem;line-height:2rem;width: 60%;text-align:center;position: fixed;top: 0;right: 0;left: 0;bottom: 0;margin: auto; background-color: #efefef;display: none;   z-index: 1000;padding: 0rem 1rem;}
+
+/*ajaxloading提示框*/
+.ajaxloading{/*background:url("../img/loading.gif") no-repeat center;*/height: 100%;width: 100%;position: fixed;top: 0;right: 0;left: 0;bottom: 0;margin: auto; display: none;   z-index: 1000;}
+
+/* 首页发布融资需求样式 start */
+#ldksq{display:none;width: 100%;height: 100%;position: fixed;left: 0;top:0;bottom: 0;right: 0;margin:auto;z-index: 99999!important;background:url("../img/lobg_03.png") repeat;}
+#ldksq #ldksq_c{background-color: #fff;width: 585px;min-height:334px;/*position: absolute;top:0;left:0;right:0;bottom: 0;*/margin:auto;border-radius: 5px;behavior: url(PIE.htc);padding:10px;position: relative;    top: 50%;
+    transform: translateY(-50%)}
+/* #ldksq #ldksq_c .error{border-bottom:1px dashed  #F67653!important;;} */
+#ldksq #ldksq_c #ldksq_lose{background: url("../img/delete.png") no-repeat;position: absolute;right: 10px;top:10px;width: 16px;height: 16px;cursor: pointer;}
+#ldksq #ldksq_c .t{font-size: 20px; color: #F67653;border-bottom: 1px solid;padding: 18px;;}
+#ldksq #ldksq_c .t .xiaozi{font-size: 12px;margin-left: 10px;}
+#ldksq #ldksq_c .t span.btn{margin-right: 28px;text-align: center;color: #e50;padding:3px;cursor:pointer;    padding: 2px 3px 4px 3px;    background: url("../image/box/cre_icon3.png") -2px -7px no-repeat;color: #fff;font-size:15px;border-radius:4px;;}
+#ldksq #ldksq_c .t span.btn:hover{text-decoration:underline;}
+#ldksq #ldksq_c .rad{overflow: hidden;padding: 15px 0;}
+#ldksq #ldksq_c .rad .leixing{float: left;width: 18%;text-align: right;}
+#ldksq #ldksq_c .rad .l{float:left;;}
+#ldksq #ldksq_c .rad .grad{position:relative;margin-top: 5px; margin-right: 5px;width:12px;height:12px;background-color:#fff;    vertical-align: middle;/* border:1px solid #ccc;border-radius:5px;; */}
+#ldksq #ldksq_c .rad .grad input{position:absolute;left:0;top:0;width:12px;height:12px;}
+#ldksq #ldksq_c .rad .gr{margin-left: 10px;}
+#ldksq #ldksq_c .rad .gr label{display:block;height:32px;width: 100px;float: left;padding-left: 20px;line-height: 22px;margin-top: -5px;}
+#ldksq #ldksq_c .rad .gs{margin-left:132px;;}
+#ldksq #ldksq_c .rad .gs label{display:block;height:32px;width: 100px;float: left;padding-left: 20px;line-height: 22px;margin-top: -5px;}
+
+#ldksq #ldksq_c .con {min-height:60px;    overflow: hidden;}
+#ldksq #ldksq_c .con p{ }
+#ldksq #ldksq_c .con p.fir1{    margin-top:0px;overflow: hidden;}
+#ldksq #ldksq_c .con p.fir1 .errorts{margin-left: 16px;}
+#ldksq #ldksq_c .con p span{display: inline-block;}
+#ldksq #ldksq_c .con p span.t1{width:91px;;}
+#ldksq #ldksq_c .con p span.t2{width:89px;;}
+#ldksq #ldksq_c .con p span.pt{text-align: right;float: left;width: 18%;margin-right: 2%;}
+#ldksq #ldksq_c .con p span.pc{width: 80%;float: left;height:48px;}
+#ldksq #ldksq_c .con p span.pc2{width: 30%;}
+
+#ldksq #ldksq_c .con p span.pc .laydate-icon{background: url("../js/skins/molv/icon.png") 101px 3px no-repeat right center;}
+#ldksq #ldksq_c .con p span.pc input{width: 133px;height:18px;padding: 3px;border: 1px solid #ccc;text-indent: 5px;}
+#ldksq #ldksq_c .con .remark{overflow: hidden;}
+#ldksq #ldksq_c .con .remark p{width: 18%;margin-right:2%;float:left;    text-align: right;}
+
+#ldksq #ldksq_c .con .remark .tex{width: 400px;    height: 100px;float: left;}
+#ldksq #ldksq_c .con .remark textarea{ height: 56px;width: 411px;padding: 10px;border: 1px solid #ccc;border-radius:2px;}
+#ldksq #ldksq_c .tjdiv{text-align: center;margin:13px 0 22px 0;}
+#ldksq #ldksq_c .tjdiv input,#ldksq #ldksq_c .tjdiv span{padding: 5px 16px;color:#fff;border-radius: 3px;    font-size: 16px;}
+#ldksq #ldksq_c .tjdiv input.res{margin-right: 35px;    background: url("../image/box/cre_icon3.png") -2px -54px no-repeat;}
+#ldksq #ldksq_c .tjdiv .sure{    background: url("../image/box/cre_icon2.png") -2px -7px  no-repeat;}
+#ldksq #ldksq_c .tjdiv .tj:hover{cursor:pointer;}
+#ldksq #ldksq_c .tjdiv input.res:hover{background-position:-2px -139px;;}
+#ldksq #ldksq_c .tjdiv .sure:hover{background-position:-2px -45px;;}
+#ldksq #ldksq_c input,textarea{border-radius:2px;behavior: url(PIE.htc);position:relative;display:inline;}
+
+
+/* 首页发布融资需求样式 end */
+
+

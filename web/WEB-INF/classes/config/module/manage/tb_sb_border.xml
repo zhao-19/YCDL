@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC 
+"-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="manage">
+
+	<select id="manage.tbsbborder.selectPageList"
+		parameterType="com.winpow.services.manage.tbsbborder.bean.Tbsbborder"
+		resultType="hashMap">
+		select * from (
+		SELECT ROW_NUMBER() over(order by lastchgtime desc) as rownumber ,
+		id,
+		userid,
+		toptype_name,
+		toptype_code,
+		type_name,
+		type_code,
+		policy_id,
+		policy_name,
+		pool_amount,
+		settlement_amount,
+		xtjsje,
+		status,
+		memo,
+		lurushijian,
+		inputuser,
+		lastchgtime,
+		pichi,qysqje,zlsfwz
+		from tb_sb_border )t where rownumber &gt; = #{offset} and rownumber &lt; =
+		#{pageSize}+#{offset}
+	</select>
+	
+	<select id="manage.tbsbborder.selectPageCount"
+		parameterType="com.winpow.services.manage.tbsbborder.bean.Tbsbborder"
+		resultType="java.lang.Integer">
+		select count(*) from (
+		SELECT ROW_NUMBER() over(order by lastchgtime desc) as rownumber ,
+		id,
+		userid,
+		toptype_name,
+		toptype_code,
+		type_name,
+		type_code,
+		policy_id,
+		policy_name,
+		pool_amount,
+		settlement_amount,
+		xtjsje,
+		status,
+		memo,
+		lurushijian,
+		inputuser,
+		lastchgtime,
+		pichi,qysqje,zlsfwz
+		from tb_sb_border )t
+	</select>
+
+	<select id="manage.tbsbborder.selectOne"
+		parameterType="com.winpow.services.manage.tbsbborder.bean.Tbsbborder"
+		resultType="com.winpow.services.manage.tbsbborder.bean.Tbsbborder">
+		SELECT
+		id,
+		userid,
+		toptype_name,
+		toptype_code,
+		type_name,
+		type_code,
+		policy_id,
+		policy_name,
+		pool_amount,
+		settlement_amount,
+		xtjsje,
+		status,
+		memo,
+		lurushijian,
+		inputuser,
+		lastchgtime,
+		pichi,qysqje,zlsfwz
+		from tb_sb_border t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+		<if test="policy_id!=null and policy_id!=''">
+			and t.policy_id=#{policy_id}
+		</if>
+		<if test="userid!=null and userid!=''">
+			and t.userid=#{userid}
+		</if>
+		<if test="pichi!=null and pichi!=''">
+			and t.pichi=#{pichi}
+		</if>
+	</select>
+
+	<select id="manage.tbsbborder.selectCount"
+		parameterType="com.winpow.services.manage.tbsbborder.bean.Tbsbborder"
+		resultType="int">
+		select count(*)
+		FROM tb_sb_border t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+	</select>
+
+	<select id="manage.tbsbborder.selectOneByCondition"
+		parameterType="com.winpow.services.manage.tbsbborder.bean.Tbsbborder"
+		resultType="com.winpow.services.manage.tbsbborder.bean.Tbsbborder">
+		SELECT
+		id,
+		userid,
+		toptype_name,
+		toptype_code,
+		type_name,
+		type_code,
+		policy_id,
+		policy_name,
+		pool_amount,
+		settlement_amount,
+		xtjsje,
+		status,
+		memo,
+		lurushijian,
+		inputuser,
+		lastchgtime,
+		pichi,qysqje,zlsfwz
+		from tb_sb_border t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+	</select>
+
+	<select id="manage.tbsbborder.selectList"
+		parameterType="com.winpow.services.manage.tbsbborder.bean.Tbsbborder"
+		resultType="com.winpow.services.manage.tbsbborder.bean.Tbsbborder">
+		SELECT
+		id,
+		userid,
+		toptype_name,
+		toptype_code,
+		type_name,
+		type_code,
+		policy_id,
+		policy_name,
+		pool_amount,
+		settlement_amount,
+		xtjsje,
+		status,
+		memo,
+		lurushijian,
+		inputuser,
+		lastchgtime,
+		pichi,qysqje,zlsfwz
+		from tb_sb_border t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+	</select>
+
+	<insert id="manage.tbsbborder.insert"
+		parameterType="com.winpow.services.manage.tbsbborder.bean.Tbsbborder"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into tb_sb_border (
+		id,
+		userid,
+		toptype_name,
+		toptype_code,
+		type_name,
+		type_code,
+		policy_id,
+		policy_name,
+		pool_amount,
+		settlement_amount,
+		xtjsje,
+		status,
+		memo,
+		lurushijian,
+		inputuser,
+		lastchgtime,
+		pichi,qysqje,zlsfwz
+		) values (
+		#{id},
+		#{userid},
+		#{toptype_name},
+		#{toptype_code},
+		#{type_name},
+		#{type_code},
+		#{policy_id},
+		#{policy_name},
+		#{pool_amount},
+		#{settlement_amount},
+		#{xtjsje},
+		#{status},
+		#{memo},
+		getdate(),
+		#{inputuser},
+		getdate(),
+		#{pichi},
+		#{qysqje},#{zlsfwz}
+		)
+	</insert>
+
+	<update id="manage.tbsbborder.update"
+		parameterType="com.winpow.services.manage.tbsbborder.bean.Tbsbborder">
+		update tb_sb_border set
+		<if test=" userid !=null and  userid !=''">
+			userid=#{userid},
+		</if>
+
+		<if test=" toptype_name !=null and  toptype_name !=''">
+			toptype_name=#{toptype_name},
+		</if>
+
+		<if test=" toptype_code !=null">
+			toptype_code=#{toptype_code},
+		</if>
+
+		<if test=" type_name !=null and  type_name !=''">
+			type_name=#{type_name},
+		</if>
+
+		<if test=" type_code !=null">
+			type_code=#{type_code},
+		</if>
+
+		<if test=" policy_id !=null and  policy_id !=''">
+			policy_id=#{policy_id},
+		</if>
+
+		<if test=" policy_name !=null and  policy_name !=''">
+			policy_name=#{policy_name},
+		</if>
+
+		<if test=" pool_amount !=null">
+			pool_amount=#{pool_amount},
+		</if>
+
+		<if test=" settlement_amount !=null">
+			settlement_amount=#{settlement_amount},
+		</if>
+
+		<if test=" xtjsje !=null and  xtjsje !=''">
+			xtjsje=#{xtjsje},
+		</if>
+
+		<if test=" status !=null and  status !=''">
+			status=#{status},
+		</if>
+
+		<if test=" memo !=null and  memo !=''">
+			memo=#{memo},
+		</if>
+		
+		<if test=" pichi !=null and  pichi !=''">
+			pichi=#{pichi},
+		</if>
+		
+		<if test=" qysqje !=null">
+			qysqje=#{qysqje},
+		</if>
+		
+		<if test=" zlsfwz !=null and  zlsfwz !=''">
+			zlsfwz=#{zlsfwz},
+		</if>
+		
+		lastchgtime=getdate()
+		where id=#{id}
+	</update>
+
+</mapper>  

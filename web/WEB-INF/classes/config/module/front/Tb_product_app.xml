@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE mapper PUBLIC 
+"-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="front">
+	
+	<select id="front.productapp.selectPageList" parameterType="com.winpow.services.manage.productapp.bean.Productapp" resultType="hashMap">
+	select * from (
+		SELECT  ROW_NUMBER() over(order by id) as  rownumber ,
+								 	id,
+			 								 	userid,
+			 								 	username,
+			 								 	prodid,
+			 								 	prodname,
+			 								 	qiyemingcheng,
+			 								 	loanamt,
+			 								 	loanuser,
+			 								 	faren,
+			 								 	chengliriqi,
+			 								 	zhuceziben,
+			 								 	gszcd,
+			 								 	hangyeid,
+			 								 	zhuanli,
+			 								 	lastsellincome,
+			 								 	lastimcome,
+			 								 	lastloanamt,
+			 								 	sellincome,
+			 								 	imcome,
+			 								 	loanamt2,
+			 								 	lianxiren,
+			 								 	lianxidianh,
+			 								 	status,
+			 								 	checkuser,
+			 								 	lurushijian,
+			 								 	inputuser,
+			 								  lastchgtime
+			 		   from Tb_product_app )t  where rownumber &gt; = #{offset} and rownumber &lt; = #{pageSize}+#{offset} 
+	</select>
+	<select id="front.productapp.selectPageCount" parameterType="com.winpow.services.manage.productapp.bean.Productapp" resultType="java.lang.Integer">
+		
+			select count(*) from (
+					SELECT  ROW_NUMBER() over(order by id) as  rownumber ,
+																	 	id,
+						 																	 	userid,
+						 																	 	username,
+						 																	 	prodid,
+						 																	 	prodname,
+						 																	 	qiyemingcheng,
+						 																	 	loanamt,
+						 																	 	loanuser,
+						 																	 	faren,
+						 																	 	chengliriqi,
+						 																	 	zhuceziben,
+						 																	 	gszcd,
+						 																	 	hangyeid,
+						 																	 	zhuanli,
+						 																	 	lastsellincome,
+						 																	 	lastimcome,
+						 																	 	lastloanamt,
+						 																	 	sellincome,
+						 																	 	imcome,
+						 																	 	loanamt2,
+						 																	 	lianxiren,
+						 																	 	lianxidianh,
+						 																	 	status,
+						 																	 	checkuser,
+						 																	 	lurushijian,
+						 																	 	inputuser,
+						 																	  lastchgtime
+						 								   from Tb_product_app )t  
+
+	</select>
+	
+	<select id="front.productapp.selectOne" parameterType="com.winpow.services.manage.productapp.bean.Productapp" resultType="com.winpow.services.manage.productapp.bean.Productapp">
+			SELECT  
+											 	id,
+				 											 	userid,
+				 											 	username,
+				 											 	prodid,
+				 											 	prodname,
+				 											 	qiyemingcheng,
+				 											 	loanamt,
+				 											 	loanuser,
+				 											 	faren,
+				 											 	chengliriqi,
+				 											 	zhuceziben,
+				 											 	gszcd,
+				 											 	hangyeid,
+				 											 	zhuanli,
+				 											 	lastsellincome,
+				 											 	lastimcome,
+				 											 	lastloanamt,
+				 											 	sellincome,
+				 											 	imcome,
+				 											 	loanamt2,
+				 											 	lianxiren,
+				 											 	lianxidianh,
+				 											 	status,
+				 											 	checkuser,
+				 											 	lurushijian,
+				 											 	inputuser,blastsellincome,blastimcome,blastloanamt,
+				 											  lastchgtime
+				 						  from Tb_product_app t  where 1=1  
+			<if test="id!=null and id!=''">
+				and t.id=#{id}
+			</if>
+	</select>
+	
+	<select id="front.productapp.selectCount" parameterType="com.winpow.services.manage.productapp.bean.Productapp" resultType="int">
+			select count(*)  
+				 FROM Tb_product_app t  where 1=1  
+				<if test="id!=null and id!=''">
+					and t.id=#{id}
+				</if>
+	</select>
+	
+	<select id="front.productapp.selectOneByCondition" parameterType="com.winpow.services.manage.productapp.bean.Productapp" resultType="com.winpow.services.manage.productapp.bean.Productapp">
+			SELECT  
+											 	id,
+				 											 	userid,
+				 											 	username,
+				 											 	prodid,
+				 											 	prodname,
+				 											 	qiyemingcheng,
+				 											 	loanamt,
+				 											 	loanuser,
+				 											 	faren,
+				 											 	chengliriqi,
+				 											 	zhuceziben,
+				 											 	gszcd,
+				 											 	hangyeid,
+				 											 	zhuanli,
+				 											 	lastsellincome,
+				 											 	lastimcome,
+				 											 	lastloanamt,
+				 											 	sellincome,
+				 											 	imcome,
+				 											 	loanamt2,
+				 											 	lianxiren,
+				 											 	lianxidianh,
+				 											 	status,
+				 											 	checkuser,
+				 											 	lurushijian,
+				 											 	inputuser,blastsellincome,blastimcome,blastloanamt,
+				 											  lastchgtime
+				 					 from  Tb_product_app   t  where 1=1  
+			<if test="id!=null and id!=''">
+				and t.id=#{id}
+			</if>
+	</select>
+	
+	<insert id="front.productapp.insert" parameterType="com.winpow.services.manage.productapp.bean.Productapp" useGeneratedKeys="true" 
+		keyProperty="id">
+	 		insert into Tb_product_app ( 
+	 								 	 
+													 	userid,
+													 	username,
+													 	prodid,
+													 	prodname,
+													 	qiyemingcheng,
+													 	loanamt,
+													 	loanuser,
+													 	faren,
+													 	chengliriqi,
+													 	zhuceziben,
+													 	gszcd,
+													 	hangyeid,
+													 	zhuanli,
+													 	lastsellincome,
+													 	lastimcome,
+													 	lastloanamt,
+													 	sellincome,
+													 	imcome,
+													 	loanamt2,
+													 	lianxiren,
+													 	lianxidianh,
+													 	status,
+													 	checkuser,
+													 	lurushijian,
+													 	inputuser,blastsellincome,blastimcome,blastloanamt,
+													  lastchgtime
+			 						) values ( 
+										  
+				 										 	#{userid},
+				 										 	#{username},
+				 										 	#{prodid},
+				 										 	#{prodname},
+				 										 	#{qiyemingcheng},
+				 										 	#{loanamt},
+				 										 	#{loanuser},
+				 										 	#{faren},
+				 										 	#{chengliriqi},
+				 										 	#{zhuceziben},
+				 										 	#{gszcd},
+				 										 	#{hangyeid},
+				 										 	#{zhuanli},
+				 										 	#{lastsellincome},
+				 										 	#{lastimcome},
+				 										 	#{lastloanamt},
+				 										 	#{sellincome},
+				 										 	#{imcome},
+				 										 	#{loanamt2},
+				 										 	#{lianxiren},
+				 										 	#{lianxidianh},
+				 										 	#{status},
+				 										 	#{checkuser},
+				 										 	#{lurushijian},
+				 										 	#{inputuser},#{blastsellincome},#{blastimcome},#{blastloanamt},
+				 											getdate()
+				 						)
+		 
+	</insert>
+	
+	<update id="front.productapp.update" parameterType="com.winpow.services.manage.productapp.bean.Productapp">
+		update tb_product_app set 
+                        
+		
+				 			                <if test="userid!=null and userid!=''">
+                        userid=#{userid},
+                        </if>
+		
+				 			                <if test="username!=null and username!=''">
+                        username=#{username},
+                        </if>
+		
+				 			                <if test="prodid!=null and prodid!=''">
+                        prodid=#{prodid},
+                        </if>
+		
+				 			                <if test="prodname!=null and prodname!=''">
+                        prodname=#{prodname},
+                        </if>
+		
+				 			                <if test="qiyemingcheng!=null and qiyemingcheng!=''">
+                        qiyemingcheng=#{qiyemingcheng},
+                        </if>
+		
+				 			                <if test="loanamt!=null and loanamt!=''">
+                        loanamt=#{loanamt},
+                        </if>
+		
+				 			                <if test="loanuser!=null and loanuser!=''">
+                        loanuser=#{loanuser},
+                        </if>
+		
+				 			                <if test="faren!=null and faren!=''">
+                        faren=#{faren},
+                        </if>
+		
+				 			                <if test="chengliriqi!=null and chengliriqi!=''">
+                        chengliriqi=#{chengliriqi},
+                        </if>
+		
+				 			                <if test="zhuceziben!=null and zhuceziben!=''">
+                        zhuceziben=#{zhuceziben},
+                        </if>
+		
+				 			                <if test="gszcd!=null and gszcd!=''">
+                        gszcd=#{gszcd},
+                        </if>
+		
+				 			                <if test="hangyeid!=null and hangyeid!=''">
+                        hangyeid=#{hangyeid},
+                        </if>
+		
+				 			                <if test="zhuanli!=null and zhuanli!=''">
+                        zhuanli=#{zhuanli},
+                        </if>
+		
+				 			                <if test="lastsellincome!=null and lastsellincome!=''">
+                        lastsellincome=#{lastsellincome},
+                        </if>
+		
+				 			                <if test="lastimcome!=null and lastimcome!=''">
+                        lastimcome=#{lastimcome},
+                        </if>
+		
+				 			                <if test="lastloanamt!=null and lastloanamt!=''">
+                        lastloanamt=#{lastloanamt},
+                        </if>
+		
+				 			                <if test="sellincome!=null and sellincome!=''">
+                        sellincome=#{sellincome},
+                        </if>
+		
+				 			                <if test="imcome!=null and imcome!=''">
+                        imcome=#{imcome},
+                        </if>
+		
+				 			                <if test="loanamt2!=null and loanamt2!=''">
+                        loanamt2=#{loanamt2},
+                        </if>
+		
+				 			                <if test="lianxiren!=null and lianxiren!=''">
+                        lianxiren=#{lianxiren},
+                        </if>
+		
+				 			                <if test="lianxidianh!=null and lianxidianh!=''">
+                        lianxidianh=#{lianxidianh},
+                        </if>
+		
+				 			                <if test="status!=null and status!=''">
+                        status=#{status},
+                        </if>
+		
+				 			                <if test="checkuser!=null and checkuser!=''">
+                        checkuser=#{checkuser},
+                        </if>
+		
+				 			         
+				 			                <if test="inputuser!=null and inputuser!=''">
+                        inputuser=#{inputuser},
+                        </if>
+                        
+                        
+                            <if test="blastsellincome!=null and blastsellincome!=''">
+                        blastsellincome=#{blastsellincome},
+                        </if>
+                            <if test="blastimcome!=null and blastimcome!=''">
+                        blastimcome=#{blastimcome},
+                        </if>
+                            <if test="blastloanamt!=null and blastloanamt!=''">
+                        blastloanamt=#{blastloanamt},
+                        </if>
+                         lastchgtime=getdate()
+          						 
+		where id=#{id}
+	</update>
+	
+	<select id="front.productapp.selectDynamic" parameterType="com.winpow.services.manage.productapp.bean.Productapp" resultType="com.winpow.core.oscache.Dynamic">
+			  select  top 10 columkey ,	 dytype ,	 compName  ,	 dystatus  ,	 dytime  from
+			   (select ID as columkey ,'1' as dytype ,username as compname ,STATUS as dystatus ,LURUSHIJIAN as dytime  from tb_product_app where LURUSHIJIAN &gt; DATEADD(day,-100,GETDATE()) union all
+			    select ID as columkey ,'2' as dytype ,username as compname ,STATUS as dystatus ,LURUSHIJIAN as dytime  from tb_incre_app where LURUSHIJIAN &gt; DATEADD(day,-100,GETDATE())  union all
+   		 	    select ID as columkey ,'3' as dytype ,INCRENAME as compname ,STATUS as dystatus ,LURUSHIJIAN as dytime ,Incamt as amt ,'被约谈' as dytypedetail from Tb_guquan_app  where LURUSHIJIAN  &gt; DATEADD(day,-100,GETDATE()) 
+			 	    )  t  order by dytime desc
+	</select>
+	
+	
+</mapper>  

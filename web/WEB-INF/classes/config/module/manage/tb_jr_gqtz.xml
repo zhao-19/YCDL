@@ -1,0 +1,452 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+"-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="manage">
+
+	<select id="manage.tbjrgqtz.selectPageList" parameterType="com.winpow.services.manage.jr.tbjrgqtz.bean.Tbjrgqtz"
+		resultType="hashMap">
+		select * from (
+		SELECT ROW_NUMBER() over(order by lastchgtime desc) as rownumber ,
+		id,
+		other_org_id,
+		org_name,
+		time_port,
+		project_count,
+		project_ht_count,
+		cast(invest_amt as decimal(18,2)) invest_amt,
+		cast(invets_ht_amt as decimal(18,2)) invets_ht_amt,
+		invest_industry,
+		invest_info,
+		cast(fund_scale as decimal(18,2)) fund_scale,
+		cast(place_scale as decimal(18,2)) place_scale,
+		cast(invest_total_amt as decimal(18,2)) invest_total_amt,
+		staff_count,
+		cast(business_income as decimal(18,2)) business_income,
+		cast(profit as decimal(18,2)) profit,
+		cast(fixed_assets as decimal(18,2)) fixed_assets,
+		cast(intangible_assets as decimal(18,2)) intangible_assets,
+		cast(salaries as decimal(18,2)) salaries,
+		cast(added_tax as decimal(18,2)) added_tax,
+		cast(income_tax as decimal(18,2)) income_tax,
+		cast(other_tax as decimal(18,2)) other_tax,
+		contact_name,
+		contact_tele,
+		contact_duty,
+		status,
+		inputtime,
+		inputuser,
+		lastchgtime,leader_tele
+		from tb_jr_gqtz where 1=1
+		<if test="org_name !=null and org_name !=''">
+			and org_name like '%'+#{org_name}+'%'
+		</if>
+		<if test="time_port !=null and time_port !=''">
+			and time_port=#{time_port}
+		</if>
+		<if test="inputuser!=null and inputuser!=''">
+			and inputuser=#{inputuser}
+		</if>
+		<if test="status!=null and status!=''">
+			and status=#{status}
+		</if>
+		)t where rownumber &gt; = #{offset} and rownumber &lt; =
+		#{pageSize}+#{offset}
+	</select>
+	<select id="manage.tbjrgqtz.selectPageCount" parameterType="com.winpow.services.manage.jr.tbjrgqtz.bean.Tbjrgqtz"
+		resultType="java.lang.Integer">
+		select count(*) from tb_jr_gqtz where 1=1
+		<if test="org_name !=null and org_name !=''">
+			and org_name like '%'+#{org_name}+'%'
+		</if>
+		<if test="time_port !=null and time_port !=''">
+			and time_port=#{time_port}
+		</if>
+		<if test="inputuser!=null and inputuser!=''">
+			and inputuser=#{inputuser}
+		</if>
+		<if test="status!=null and status!=''">
+			and status=#{status}
+		</if>
+	</select>
+
+	<select id="manage.tbjrgqtz.selectOne" parameterType="com.winpow.services.manage.jr.tbjrgqtz.bean.Tbjrgqtz"
+		resultType="com.winpow.services.manage.jr.tbjrgqtz.bean.Tbjrgqtz">
+		SELECT
+		id,
+		other_org_id,
+		org_name,
+		time_port,
+		project_count,
+		project_ht_count,
+		cast(invest_amt as decimal(18,2)) invest_amt,
+		cast(invets_ht_amt as decimal(18,2)) invets_ht_amt,
+		invest_industry,
+		invest_info,
+		cast(fund_scale as decimal(18,2)) fund_scale,
+		cast(place_scale as decimal(18,2)) place_scale,
+		cast(invest_total_amt as decimal(18,2)) invest_total_amt,
+		staff_count,
+		cast(business_income as decimal(18,2)) business_income,
+		cast(profit as decimal(18,2)) profit,
+		cast(fixed_assets as decimal(18,2)) fixed_assets,
+		cast(intangible_assets as decimal(18,2)) intangible_assets,
+		cast(salaries as decimal(18,2)) salaries,
+		cast(added_tax as decimal(18,2)) added_tax,
+		cast(income_tax as decimal(18,2)) income_tax,
+		cast(other_tax as decimal(18,2)) other_tax,
+		contact_name,
+		contact_tele,
+		contact_duty,
+		status,
+		inputtime,
+		inputuser,
+		lastchgtime,leader_tele
+		from tb_jr_gqtz t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+		<if test=" time_port !=null and  time_port !=''">
+			and time_port=#{time_port}
+		</if>
+	</select>
+
+	<select id="manage.tbjrgqtz.selectCount" parameterType="com.winpow.services.manage.jr.tbjrgqtz.bean.Tbjrgqtz"
+		resultType="int">
+		select count(*)
+		FROM tb_jr_gqtz t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+	</select>
+
+	<select id="manage.tbjrgqtz.selectOneByCondition" parameterType="com.winpow.services.manage.jr.tbjrgqtz.bean.Tbjrgqtz"
+		resultType="com.winpow.services.manage.jr.tbjrgqtz.bean.Tbjrgqtz">
+		SELECT
+		id,
+		other_org_id,
+		org_name,
+		time_port,
+		project_count,
+		project_ht_count,
+		invest_amt,
+		invets_ht_amt,
+		invest_industry,
+		invest_info,
+		fund_scale,
+		place_scale,
+		invest_total_amt,
+		staff_count,
+		business_income,
+		profit,
+		fixed_assets,
+		intangible_assets,
+		salaries,
+		added_tax,
+		income_tax,
+		other_tax,
+		contact_name,
+		contact_tele,
+		contact_duty,
+		status,
+		inputtime,
+		inputuser,
+		lastchgtime,leader_tele
+		from tb_jr_gqtz t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+	</select>
+
+	<select id="manage.tbjrgqtz.selectList" parameterType="com.winpow.services.manage.jr.tbjrgqtz.bean.Tbjrgqtz"
+		resultType="com.winpow.services.manage.jr.tbjrgqtz.bean.Tbjrgqtz">
+		SELECT
+		id,
+		other_org_id,
+		org_name,
+		time_port,
+		project_count,
+		project_ht_count,
+		invest_amt,
+		invets_ht_amt,
+		invest_industry,
+		invest_info,
+		fund_scale,
+		place_scale,
+		invest_total_amt,
+		staff_count,
+		business_income,
+		profit,
+		fixed_assets,
+		intangible_assets,
+		salaries,
+		added_tax,
+		income_tax,
+		other_tax,
+		contact_name,
+		contact_tele,
+		contact_duty,
+		status,
+		inputtime,
+		inputuser,
+		lastchgtime,leader_tele
+		from tb_jr_gqtz t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+	</select>
+
+	<insert id="manage.tbjrgqtz.insert" parameterType="com.winpow.services.manage.jr.tbjrgqtz.bean.Tbjrgqtz"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into tb_jr_gqtz (
+		id,
+		other_org_id,
+		org_name,
+		time_port,
+		project_count,
+		project_ht_count,
+		invest_amt,
+		invets_ht_amt,
+		invest_industry,
+		invest_info,
+		fund_scale,
+		place_scale,
+		invest_total_amt,
+		staff_count,
+		business_income,
+		profit,
+		fixed_assets,
+		intangible_assets,
+		salaries,
+		added_tax,
+		income_tax,
+		other_tax,
+		contact_name,
+		contact_tele,
+		contact_duty,
+		status,
+		inputtime,
+		inputuser,
+		lastchgtime,leader_tele
+		) values (
+		#{id},
+		#{other_org_id},
+		#{org_name},
+		#{time_port},
+		#{project_count},
+		#{project_ht_count},
+		#{invest_amt},
+		#{invets_ht_amt},
+		#{invest_industry},
+		#{invest_info},
+		#{fund_scale},
+		#{place_scale},
+		#{invest_total_amt},
+		#{staff_count},
+		#{business_income},
+		#{profit},
+		#{fixed_assets},
+		#{intangible_assets},
+		#{salaries},
+		#{added_tax},
+		#{income_tax},
+		#{other_tax},
+		#{contact_name},
+		#{contact_tele},
+		#{contact_duty},
+		#{status},
+		getdate(),
+		#{inputuser},
+		getdate(),#{leader_tele}
+		)
+
+	</insert>
+
+	<update id="manage.tbjrgqtz.update" parameterType="com.winpow.services.manage.jr.tbjrgqtz.bean.Tbjrgqtz">
+		update tb_jr_gqtz set
+		<if test=" other_org_id !=null and  other_org_id !=''">
+			other_org_id=#{other_org_id},
+		</if>
+
+		<if test=" org_name !=null and  org_name !=''">
+			org_name=#{org_name},
+		</if>
+
+		<if test=" time_port !=null and  time_port !=''">
+			time_port=#{time_port},
+		</if>
+
+		<if test=" project_count !=null">
+			project_count=#{project_count},
+		</if>
+
+		<if test=" project_ht_count !=null">
+			project_ht_count=#{project_ht_count},
+		</if>
+
+		<if test=" invest_amt !=null">
+			invest_amt=#{invest_amt},
+		</if>
+
+		<if test=" invets_ht_amt !=null">
+			invets_ht_amt=#{invets_ht_amt},
+		</if>
+
+		<if test=" invest_industry !=null and  invest_industry !=''">
+			invest_industry=#{invest_industry},
+		</if>
+
+		<if test=" invest_info !=null and  invest_info !=''">
+			invest_info=#{invest_info},
+		</if>
+
+		<if test=" fund_scale !=null">
+			fund_scale=#{fund_scale},
+		</if>
+
+		<if test=" place_scale !=null">
+			place_scale=#{place_scale},
+		</if>
+
+		<if test=" invest_total_amt !=null">
+			invest_total_amt=#{invest_total_amt},
+		</if>
+
+		<if test=" staff_count !=null">
+			staff_count=#{staff_count},
+		</if>
+
+		<if test=" business_income !=null">
+			business_income=#{business_income},
+		</if>
+
+		<if test=" profit !=null">
+			profit=#{profit},
+		</if>
+
+		<if test=" fixed_assets !=null">
+			fixed_assets=#{fixed_assets},
+		</if>
+
+		<if test=" intangible_assets !=null">
+			intangible_assets=#{intangible_assets},
+		</if>
+
+		<if test=" salaries !=null">
+			salaries=#{salaries},
+		</if>
+
+		<if test=" added_tax !=null">
+			added_tax=#{added_tax},
+		</if>
+
+		<if test=" income_tax !=null">
+			income_tax=#{income_tax},
+		</if>
+
+		<if test=" other_tax !=null">
+			other_tax=#{other_tax},
+		</if>
+
+		<if test=" status !=null and  status !=''">
+			status=#{status},
+		</if>
+		
+		<if test=" contact_name !=null and  contact_name !=''">
+			contact_name=#{contact_name},
+		</if>
+		
+		<if test=" contact_tele !=null and  contact_tele !=''">
+			contact_tele=#{contact_tele},
+		</if>
+		
+		<if test=" contact_duty !=null and  contact_duty !=''">
+			contact_duty=#{contact_duty},
+		</if>
+		
+		<if test=" leader_tele !=null and  leader_tele !=''">
+			leader_tele=#{leader_tele},
+		</if>
+		
+		lastchgtime=getdate()
+		where id=#{id}
+	</update>
+
+	<select id="manage.tbjrgqtz.selectByUserId" parameterType="string" resultType="com.winpow.services.manage.jr.tbjrgqtz.bean.Tbjrgqtz">
+		select 
+		o.id,
+		o.other_org_id,
+		o.org_name,
+		o.time_port,
+		o.project_count,
+		o.project_ht_count,
+		cast(o.invest_amt as decimal(18,2)) invest_amt,
+		cast(o.invets_ht_amt as decimal(18,2)) invets_ht_amt,
+		o.invest_industry,
+		o.invest_info,
+		cast(o.fund_scale as decimal(18,2)) fund_scale,
+		cast(o.place_scale as decimal(18,2)) place_scale,
+		cast(o.invest_total_amt as decimal(18,2)) invest_total_amt,
+		o.staff_count,
+		cast(o.business_income as decimal(18,2)) business_income,
+		cast(o.profit as decimal(18,2)) profit,
+		cast(o.fixed_assets as decimal(18,2)) fixed_assets,
+		cast(o.intangible_assets as decimal(18,2)) intangible_assets,
+		cast(o.salaries as decimal(18,2)) salaries,
+		cast(o.added_tax as decimal(18,2)) added_tax,
+		cast(o.income_tax as decimal(18,2)) income_tax,
+		cast(o.other_tax as decimal(18,2)) other_tax,
+		o.contact_name,
+		o.contact_tele,
+		o.contact_duty,
+		o.status,
+		o.inputtime,
+		o.inputuser,
+		o.lastchgtime,o.leader_tele
+		from tb_cust c left join tb_jr_gqtz o on c.f_id=o.other_org_id where c.userId=#{userId} and c.status='aaaaaaaaaaaaaaaaaaaaaaaaaaaaa006'
+		and o.id is not null order by o.time_port
+	</select>
+	
+	<delete id="manage.tbjrgqtz.deletebyId" parameterType="String">
+		delete from tb_jr_gqtz where id=#{id}
+	</delete>
+	
+	<select id="manage.tbjrgqtz.exportSelect" resultType="com.winpow.web.action.manage.declare.vo.Exportvo" parameterType="list">
+		select
+		id 'result1',
+		other_org_id 'result2',
+		org_name 'result3',
+		time_port 'result4',
+		project_count 'result5',
+		project_ht_count 'result6',
+		convert(varchar,cast(invest_amt as money),1) 'result7',
+		convert(varchar,cast(invets_ht_amt as money),1) 'result8',
+		invest_industry 'result9',
+		invest_info 'result10',
+		convert(varchar,cast(fund_scale as money),1) 'result11',
+		convert(varchar,cast(place_scale as money),1) 'result12',
+		convert(varchar,cast(invest_total_amt as money),1) 'result13',
+		staff_count 'result14',
+		convert(varchar,cast(business_income as money),1) 'result15',
+		convert(varchar,cast(profit as money),1) 'result16',
+		convert(varchar,cast(fixed_assets as money),1) 'result17',
+		convert(varchar,cast(intangible_assets as money),1) 'result18',
+		convert(varchar,cast(salaries as money),1) 'result19',
+		convert(varchar,cast(added_tax as money),1) 'result20',
+		convert(varchar,cast(income_tax as money),1) 'result21',
+		convert(varchar,cast(other_tax as money),1) 'result22',
+		case status
+		when 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaa080' then '未提交'
+		when 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaa081' then '审批中'
+		when 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaa083' then '审批通过'
+		when 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaa084' then '驳回'
+		else '' end 'result23',
+		contact_name 'result24',
+		contact_tele 'result25',
+		contact_duty 'result26',
+		inputtime 'result27',
+		inputuser 'result28',
+		lastchgtime 'result29'
+		from tb_jr_gqtz t order by time_port,lastchgtime
+    </select>
+</mapper>  

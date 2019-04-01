@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC 
+"-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="app">
+
+	<select id="app.appschoolhis.selectPageList"
+		parameterType="com.winpow.services.app.appschoolhis.bean.Appschoolhis"
+		resultType="hashMap">
+		select top ${pageSize} * from (
+			select row_number() over(order by lastchgtime desc) as rownumber ,c.* 
+			from tb_app_schoolhis c where 1=1
+			<if test="rele_id != null and rele_id != ''">
+				and rele_id=#{rele_id}
+			</if>
+			<if test="userid != null and userid != ''">
+				and userid=#{userid}
+			</if>
+	    ) a where rownumber > ${pageSize}*(${offset} - 1)
+	</select>
+	
+	<select id="app.appschoolhis.selectPageCount"
+		parameterType="com.winpow.services.app.appschoolhis.bean.Appschoolhis"
+		resultType="java.lang.Integer">
+		select count(*) from tb_app_schoolhis where 1=1
+		<if test="rele_id != null and rele_id != ''">
+			and rele_id=#{rele_id}
+		</if>
+		<if test="userid != null and userid != ''">
+			and userid=#{userid}
+		</if>
+	</select>
+
+	<select id="app.appschoolhis.selectOne"
+		parameterType="com.winpow.services.app.appschoolhis.bean.Appschoolhis"
+		resultType="com.winpow.services.app.appschoolhis.bean.Appschoolhis">
+		select　* from tb_app_schoolhis t where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+
+	<select id="app.appschoolhis.selectCount"
+		parameterType="com.winpow.services.app.appschoolhis.bean.Appschoolhis"
+		resultType="int">
+		select count(*)　from tb_app_schoolhis t where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+
+	<select id="app.appschoolhis.selectOneByCondition"
+		parameterType="com.winpow.services.app.appschoolhis.bean.Appschoolhis"
+		resultType="com.winpow.services.app.appschoolhis.bean.Appschoolhis">
+		select *　from tb_app_schoolhis t where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+	</select>
+
+	<select id="app.appschoolhis.selectList"
+		parameterType="com.winpow.services.app.appschoolhis.bean.Appschoolhis"
+		resultType="com.winpow.services.app.appschoolhis.bean.Appschoolhis">
+		select * from tb_app_schoolhis t where 1=1
+		<if test="pkid!=null and pkid!=''">
+			and t.pkid=#{pkid}
+		</if>
+		<if test="rele_id != null and rele_id != ''">
+			and rele_id=#{rele_id}
+		</if>
+		<if test="userid != null and userid != ''">
+			and userid=#{userid}
+		</if>
+	</select>
+
+	<insert id="app.appschoolhis.insert"
+		parameterType="com.winpow.services.app.appschoolhis.bean.Appschoolhis"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into tb_app_schoolhis (
+		pkid,
+		rele_id,
+		userid,
+		playedtime,
+		chstatus,
+		lurushijian,
+		inputuser,
+		lastchgtime
+		) values (
+		#{pkid},
+		#{rele_id},
+		#{userid},
+		#{playedtime},
+		#{chstatus},
+		getdate(),
+		#{inputuser},
+		getdate()
+		)
+	</insert>
+
+	<update id="app.appschoolhis.update"
+		parameterType="com.winpow.services.app.appschoolhis.bean.Appschoolhis">
+		update tb_app_schoolhis set
+		<if test=" rele_id !=null and  rele_id !=''">
+			rele_id=#{rele_id},
+		</if>
+
+		<if test=" userid !=null and  userid !=''">
+			userid=#{userid},
+		</if>
+
+		<if test=" playedtime !=null and  playedtime !=''">
+			playedtime=#{playedtime},
+		</if>
+
+		<if test=" chstatus !=null and  chstatus !=''">
+			chstatus=#{chstatus},
+		</if>
+		lastchgtime=getdate()
+		where pkid=#{pkid}
+	</update>
+	
+	<update id="app.appschoolhis.updateplaytime"
+		parameterType="com.winpow.services.app.appschoolhis.bean.Appschoolhis">
+		update tb_app_schoolhis set playedtime=#{playedtime},lastchgtime=getdate() where rele_id=#{rele_id} and userid=#{userid}
+	</update>
+	
+	<select id="app.appschoolhis.selectPageLists"
+		parameterType="com.winpow.services.app.appschoolhis.bean.Appschoolhis"
+		resultType="com.winpow.services.app.appschoolhis.bean.Appschoolhis">
+		select top ${pageSize} * from (
+			select row_number() over(order by c.lastchgtime desc) as rownumber ,c.*,
+			s.imgurl,s.sourcetype,s.title,s.label,s.username,s.qiyename,s.sourcetime
+			from tb_app_schoolhis c left join tb_app_school s on c.rele_id=s.pkid
+			where 1=1
+			<if test="userid != null and userid != ''">
+				and c.userid=#{userid}
+			</if>
+	    ) a where rownumber > ${pageSize}*(${offset} - 1)
+	</select>
+	
+	<delete id="app.appschoolhis.deletByPkids" parameterType="list">
+		delete from tb_app_schoolhis where 1=1 and pkid in 
+		<foreach item="item" index="index" collection="list" open="(" separator="," close=")">  
+  			#{item}  
+ 		</foreach>
+	</delete>
+
+</mapper>  

@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC 
+"-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="manage">
+
+	<select id="manage.activitiesapp.selectPageList"
+		parameterType="com.winpow.services.manage.activitiesapp.bean.Activitiesapp"
+		resultType="hashMap">
+		select top ${pageSize} * from (
+			select row_number() over(order by ap.id desc) as rownumber ,ap.* 
+			from tb_Activities_app ap
+			left join tb_Activities a on a.id=ap.activitiid
+			where 1=1
+			<if test="activitiid!=null and activitiid!=''">
+				and ap.activitiid=#{activitiid}
+			</if>
+			<if test="activities_name!=null and activities_name!=''">
+				and ap.activities_name like '%'+#{activities_name}+'%'
+			</if>
+			<if test="username!=null and username!=''">
+				and ap.username like '%'+#{username}+'%'
+			</if>
+			<if test="attendname!=null and attendname!=''">
+				and ap.attendname like '%'+#{attendname}+'%'
+			</if>
+			<if test="userid!=null and userid!=''">
+				and ap.userid like '%'+#{userid}+'%'
+			</if>
+			<if test="substation != null and substation != ''">
+				and a.substation = #{substation}
+			</if>
+	    ) a where rownumber > ${pageSize}*(${offset} - 1)
+	</select>
+	
+	<select id="manage.activitiesapp.selectPageCount"
+		parameterType="com.winpow.services.manage.activitiesapp.bean.Activitiesapp"
+		resultType="java.lang.Integer">
+		select count(*) from tb_activities_app ap
+		left join tb_Activities a on a.id=ap.activitiid
+		where 1=1
+		<if test="activitiid!=null and activitiid!=''">
+			and ap.activitiid=#{activitiid}
+		</if>
+		<if test="activities_name!=null and activities_name!=''">
+			and ap.activities_name like '%'+#{activities_name}+'%'
+		</if>
+		<if test="username!=null and username!=''">
+			and ap.username like '%'+#{username}+'%'
+		</if>
+		<if test="attendname!=null and attendname!=''">
+			and ap.attendname like '%'+#{attendname}+'%'
+		</if>
+		<if test="userid!=null and userid!=''">
+			and ap.userid like '%'+#{userid}+'%'
+		</if>
+		<if test="substation != null and substation != ''">
+			and a.substation = #{substation}
+		</if>
+	</select>
+
+	<select id="manage.activitiesapp.selectOne"
+		parameterType="com.winpow.services.manage.activitiesapp.bean.Activitiesapp"
+		resultType="com.winpow.services.manage.activitiesapp.bean.Activitiesapp">
+		select * from tb_activities_app t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+	</select>
+
+	<select id="manage.activitiesapp.selectCount"
+		parameterType="com.winpow.services.manage.activitiesapp.bean.Activitiesapp"
+		resultType="int">
+		select count(*) from tb_activities_app t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+		<if test="activitiid!=null and activitiid!=''">
+			and activitiid=#{activitiid}
+		</if>
+	</select>
+
+	<select id="manage.activitiesapp.selectList"
+		parameterType="com.winpow.services.manage.activitiesapp.bean.Activitiesapp"
+		resultType="com.winpow.services.manage.activitiesapp.bean.Activitiesapp">
+		select * from tb_activities_app t where 1=1
+		<if test="id!=null and id!=''">
+			and t.id=#{id}
+		</if>
+
+		<if test="userid!=null and userid!=''">
+			and t.userid=#{userid}
+		</if>
+		<if test="activitiid!=null and activitiid!=''">
+			and t.activitiid=#{activitiid}
+		</if>
+		<if test="stat!=null and stat!=''">
+			and t.stat=#{stat}
+		</if>
+		order by id desc
+	</select>
+
+	<insert id="manage.activitiesapp.insert"
+		parameterType="com.winpow.services.manage.activitiesapp.bean.Activitiesapp"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into tb_Activities_app (
+
+		activitiid,
+		activities_name,
+		userid,
+		username,
+		attendname,
+		attendcell,
+		attendduty,
+		checkuser,
+		lurushijian,
+		lastchgtime,stat,datasource
+		) values (
+
+		#{activitiid},
+		#{activities_name},
+		#{userid},
+		#{username},
+		#{attendname},
+		#{attendcell},
+		#{attendduty},
+		#{checkuser},
+		getdate(),
+		getdate(),'aaaaaaaaaaaaaaaaaaaaaaaaaaaaa060',
+		#{datasource}
+		)
+
+	</insert>
+    <insert id="manage.activitiesapp.insertList"
+        parameterType="java.util.Map"
+        useGeneratedKeys="true" keyProperty="id">
+        insert into tb_Activities_app (
+
+        activitiid,
+        activities_name,
+        userid,
+        username,
+        attendname,
+        attendcell,
+        attendduty,
+        checkuser,
+        lurushijian,
+        lastchgtime,stat,datasource
+        ) values 
+        <foreach collection ="list" item="item" index= "index"  separator =",">
+             (
+             #{item.activitiid}, #{item.activities_name},
+             #{item.userid},
+             #{item.username},
+             #{item.attendname},
+             #{item.attendcell}, #{item.attendduty},#{item.checkuser},
+             getdate(),
+             getdate(),'aaaaaaaaaaaaaaaaaaaaaaaaaaaaa060',
+			#{item.datasource}
+             )
+          </foreach >
+    </insert>
+	<update id="manage.activitiesapp.update"
+		parameterType="com.winpow.services.manage.activitiesapp.bean.Activitiesapp">
+		update tb_activities_app set
+		<if test="activitiid!=null and activitiid!=''">
+			activitiid=#{activitiid},
+		</if>
+
+		<if test="activities_name!=null and activities_name!=''">
+			activities_name=#{activities_name},
+		</if>
+
+		<if test="userid!=null and userid!=''">
+			userid=#{userid},
+		</if>
+
+		<if test="username!=null and username!=''">
+			username=#{username},
+		</if>
+
+		<if test="attendname!=null and attendname!=''">
+			attendname=#{attendname},
+		</if>
+
+		<if test="attendcell!=null and attendcell!=''">
+			attendcell=#{attendcell},
+		</if>
+
+		<if test="attendduty!=null and attendduty!=''">
+			attendduty=#{attendduty},
+		</if>
+
+		<if test="checkuser!=null and checkuser!=''">
+			checkuser=#{checkuser},
+		</if>
+		<if test="stat!=null and stat!=''">
+			stat=#{stat},
+		</if>
+		
+		<if test="datasource !=null and datasource !=''">
+			datasource=#{datasource},
+		</if>
+		
+		<if test="checked !=null and checked !=''">
+			checked=#{checked},
+		</if>
+		
+		<if test="checktime !=null and checktime !='' and checktime =='time'">
+			checktime=getdate(),
+		</if>
+		
+		<if test="qruserid !=null and qruserid !=''">
+			qruserid=#{qruserid},
+		</if>
+		lastchgtime=getdate()
+		where id=#{id} and userid=#{userid}
+	</update>
+
+	<delete id="manage.activitiesapp.delete"
+		parameterType="com.winpow.services.manage.activitiesapp.bean.Activitiesapp">
+		delete from tb_activities_app where
+		activitiid=#{activitiid}
+	</delete>
+	
+	<select id="manage.activitiesapp.selectListByReleid"
+        parameterType="com.winpow.services.manage.activitiesapp.bean.Activitiesapp"
+        resultType="com.winpow.services.manage.activitiesapp.bean.Activitiesapp">
+        select top ${pageSize} * from (
+	        select row_number() over (order by t.lastchgtime desc) as rownumber,* 
+	        from tb_Activities_app t where STAT='aaaaaaaaaaaaaaaaaaaaaaaaaaaaa060'
+	        <if test="activitiid!=null and activitiid!=''">
+	            and t.activitiid=#{activitiid}
+	        </if>
+        ) a where rownumber > #{pageSize}*(#{offset} - 1)
+    </select>
+    
+    <select id="manage.activitiesapp.selectListByUserid"
+        parameterType="com.winpow.services.manage.activitiesapp.bean.Activitiesapp"
+        resultType="com.winpow.services.manage.activitiesapp.bean.Activitiesapp">
+        select top ${pageSize} * from (
+	        select row_number() over (order by t.lurushijian desc) as rownumber,* 
+	        from tb_Activities_app t
+            where (t.userid=#{userid} or t.attendcell in (select c.cellphone from tb_cust c where c.userid=#{userid}))
+        ) a where rownumber > #{pageSize}*(#{offset} - 1)
+    </select>
+
+</mapper>  
